@@ -97,9 +97,7 @@ const iconBaseUrl = '/icons/ai-tools';
 
       <!-- Right Column: Tools Grid -->
       <div class="space-y-4">
-        <div
-          class="grid grid-cols-2 gap-px bg-border overflow-hidden rounded-xl border shadow-lg"
-        >
+        <div class="grid grid-cols-2 gap-px bg-border overflow-hidden rounded-xl border shadow-lg">
           {
             tools.map((tool) => (
               <a
@@ -112,6 +110,8 @@ const iconBaseUrl = '/icons/ai-tools';
                   <img
                     src={`${iconBaseUrl}/${tool.icon}.svg`}
                     alt={`${tool.name} logo`}
+                    width="32"
+                    height="32"
                     class="h-8 w-8 dark:invert"
                     loading="lazy"
                   />

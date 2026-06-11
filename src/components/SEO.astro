@@ -52,6 +52,23 @@ const siteName = 'AstroDeck';
 <meta name="description" content={description} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
+<!-- Browser UI theming (light + dark, matching --color-background tokens) -->
+<meta name="color-scheme" content="light dark" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#030303" />
+
+<!-- Structured data -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteName,
+    url: siteUrl.toString(),
+    description,
+  })}
+/>
+
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
@@ -67,12 +84,14 @@ const siteName = 'AstroDeck';
 <meta property="og:site_name" content={siteName} />
 <meta property="og:locale" content="en_US" />
 
-{type === 'article' && publishedTime && (
-  <>
-    <meta property="article:published_time" content={publishedTime.toISOString()} />
-    <meta property="article:author" content={author} />
-  </>
-)}
+{
+  type === 'article' && publishedTime && (
+    <>
+      <meta property="article:published_time" content={publishedTime.toISOString()} />
+      <meta property="article:author" content={author} />
+    </>
+  )
+}
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />

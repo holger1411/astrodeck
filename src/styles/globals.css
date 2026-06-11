@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -20,6 +20,15 @@
 }
 
 @theme {
+  /* Typography — registers the self-hosted Geist fonts (see @font-face above)
+     as Tailwind's default sans/mono stacks */
+  --font-sans:
+    'Geist', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono:
+    'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+
   /* Light mode colors */
   --color-background: oklch(100% 0 0);
   --color-foreground: oklch(9.8% 0.0016 286.75);
@@ -48,13 +57,21 @@
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
   @keyframes accordion-down {
-    from { height: 0; }
-    to { height: var(--radix-accordion-content-height); }
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
   }
 
   @keyframes accordion-up {
-    from { height: var(--radix-accordion-content-height); }
-    to { height: 0; }
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
   }
 }
 
@@ -150,7 +167,9 @@ mark {
 [data-animate] {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
 }
 
 /* When the element becomes visible */
@@ -160,49 +179,59 @@ mark {
 }
 
 /* Variant: fade only (no movement) */
-[data-animate="fade"] {
+[data-animate='fade'] {
   transform: none;
 }
-[data-animate="fade"].is-visible {
+[data-animate='fade'].is-visible {
   opacity: 1;
 }
 
 /* Variant: slide from left */
-[data-animate="slide-left"] {
+[data-animate='slide-left'] {
   opacity: 0;
   transform: translateX(-30px);
 }
-[data-animate="slide-left"].is-visible {
+[data-animate='slide-left'].is-visible {
   opacity: 1;
   transform: translateX(0);
 }
 
 /* Variant: slide from right */
-[data-animate="slide-right"] {
+[data-animate='slide-right'] {
   opacity: 0;
   transform: translateX(30px);
 }
-[data-animate="slide-right"].is-visible {
+[data-animate='slide-right'].is-visible {
   opacity: 1;
   transform: translateX(0);
 }
 
 /* Variant: scale up */
-[data-animate="scale"] {
+[data-animate='scale'] {
   opacity: 0;
   transform: scale(0.95);
 }
-[data-animate="scale"].is-visible {
+[data-animate='scale'].is-visible {
   opacity: 1;
   transform: scale(1);
 }
 
 /* Stagger delay utilities */
-[data-delay="1"] { transition-delay: 100ms; }
-[data-delay="2"] { transition-delay: 200ms; }
-[data-delay="3"] { transition-delay: 300ms; }
-[data-delay="4"] { transition-delay: 400ms; }
-[data-delay="5"] { transition-delay: 500ms; }
+[data-delay='1'] {
+  transition-delay: 100ms;
+}
+[data-delay='2'] {
+  transition-delay: 200ms;
+}
+[data-delay='3'] {
+  transition-delay: 300ms;
+}
+[data-delay='4'] {
+  transition-delay: 400ms;
+}
+[data-delay='5'] {
+  transition-delay: 500ms;
+}
 
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
@@ -217,11 +246,21 @@ mark {
 /* Replaces tailwindcss-animate plugin (not compatible with Tailwind v4) */
 
 @keyframes shadcn-in {
-  from { opacity: var(--tw-enter-opacity, 1); transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0) scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1)) rotate(var(--tw-enter-rotate, 0)); }
+  from {
+    opacity: var(--tw-enter-opacity, 1);
+    transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0)
+      scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1))
+      rotate(var(--tw-enter-rotate, 0));
+  }
 }
 
 @keyframes shadcn-out {
-  to { opacity: var(--tw-exit-opacity, 1); transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0)); }
+  to {
+    opacity: var(--tw-exit-opacity, 1);
+    transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0)
+      scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1))
+      rotate(var(--tw-exit-rotate, 0));
+  }
 }
 
 .animate-in {
@@ -245,20 +284,43 @@ mark {
 }
 
 /* Fade */
-.fade-in-0 { --tw-enter-opacity: 0; }
-.fade-out-0 { --tw-exit-opacity: 0; }
+.fade-in-0 {
+  --tw-enter-opacity: 0;
+}
+.fade-out-0 {
+  --tw-exit-opacity: 0;
+}
 
 /* Zoom */
-.zoom-in-95 { --tw-enter-scale: 0.95; }
-.zoom-out-95 { --tw-exit-scale: 0.95; }
+.zoom-in-95 {
+  --tw-enter-scale: 0.95;
+}
+.zoom-out-95 {
+  --tw-exit-scale: 0.95;
+}
 
 /* Slide */
-.slide-in-from-top-2 { --tw-enter-translate-y: -0.5rem; }
-.slide-in-from-bottom-2 { --tw-enter-translate-y: 0.5rem; }
-.slide-in-from-left-2 { --tw-enter-translate-x: -0.5rem; }
-.slide-in-from-right-2 { --tw-enter-translate-x: 0.5rem; }
-.slide-in-from-top-\[48\%\] { --tw-enter-translate-y: -48%; }
-.slide-in-from-left-\[50\%\] { --tw-enter-translate-x: -50%; }
-.slide-out-to-top-\[48\%\] { --tw-exit-translate-y: -48%; }
-.slide-out-to-left-\[50\%\] { --tw-exit-translate-x: -50%; }
-
+.slide-in-from-top-2 {
+  --tw-enter-translate-y: -0.5rem;
+}
+.slide-in-from-bottom-2 {
+  --tw-enter-translate-y: 0.5rem;
+}
+.slide-in-from-left-2 {
+  --tw-enter-translate-x: -0.5rem;
+}
+.slide-in-from-right-2 {
+  --tw-enter-translate-x: 0.5rem;
+}
+.slide-in-from-top-\[48\%\] {
+  --tw-enter-translate-y: -48%;
+}
+.slide-in-from-left-\[50\%\] {
+  --tw-enter-translate-x: -50%;
+}
+.slide-out-to-top-\[48\%\] {
+  --tw-exit-translate-y: -48%;
+}
+.slide-out-to-left-\[50\%\] {
+  --tw-exit-translate-x: -50%;
+}
