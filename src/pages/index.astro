@@ -88,6 +88,7 @@ const faqs = [
     badge="true"
     title="The Astro starter kit for AI-assisted websites."
     subtitle="Start from a complete foundation — pages, sections, and a design system — and let <mark>Claude Code, Cursor, or any coding agent</mark> build your <mark>company site, blog, or portfolio</mark>. Conventions via <mark>AGENTS.md</mark>, enforced by <mark>built-in guardrails</mark>, so AI edits never go off-system."
+    prompt="Clone https://github.com/holger1411/astrodeck as the foundation for my new website. Install the dependencies, read AGENTS.md, start the dev server, and give me a short tour of the project."
     primaryCta={{
       href: 'https://github.com/holger1411/astrodeck/releases/latest',
       label: 'Download',
@@ -116,11 +117,13 @@ const faqs = [
     features={features}
   />
 
-  <FAQ
-    title="Frequently asked questions"
-    subtitle="The short version of everything you might want to know."
-    faqs={faqs}
-  />
+  <div class="bg-muted/30">
+    <FAQ
+      title="Frequently asked questions"
+      subtitle="The short version of everything you might want to know."
+      faqs={faqs}
+    />
+  </div>
 
   <div class="section-inverted">
     <section class="py-20 md:py-32 px-6">

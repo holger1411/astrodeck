@@ -29,9 +29,11 @@ interface Props {
   primaryCta?: { href: string; label: string };
   secondaryCta?: { href: string; label: string };
   badge?: string;
+  /** Optional copy-to-clipboard starter prompt rendered above the CTA buttons */
+  prompt?: string;
 }
 
-const { title, subtitle, primaryCta, secondaryCta, badge } = Astro.props;
+const { title, subtitle, primaryCta, secondaryCta, badge, prompt } = Astro.props;
 
 // Optimized grid generation - reduced size and deterministic pattern
 // Using seeded pseudo-random for consistent SSR output
@@ -134,6 +136,42 @@ const svgHeight = gridSize * (squareSize + gap);
       {title}
     </h1>
     <p class="max-w-[800px] text-xl text-muted-foreground md:text-2xl" set:html={subtitle} />
+    {
+      prompt && (
+        <div class="w-full max-w-2xl mt-2 px-6 sm:px-0">
+          <div class="flex items-start gap-2 rounded-xl border bg-card p-4 text-left shadow-sm">
+            <code
+              id="hero-prompt-text"
+              class="flex-1 min-w-0 break-words font-mono text-sm leading-relaxed text-foreground whitespace-pre-wrap"
+            >
+              {prompt}
+            </code>
+            <button
+              type="button"
+              data-copy-prompt
+              class="shrink-0 inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-3 py-2 text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              aria-label="Copy prompt to clipboard"
+            >
+              <svg
+                class="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              <span data-copy-label>Copy</span>
+            </button>
+          </div>
+          <p class="text-center text-sm text-muted-foreground mt-5 -mb-2" aria-hidden="true">
+            or
+          </p>
+        </div>
+      )
+    }
     <div class="flex flex-col sm:flex-row gap-4 mt-4">
       {
         primaryCta && (
@@ -164,3 +202,25 @@ const svgHeight = gridSize * (squareSize + gap);
     </div>
   </div>
 </section>
+
+<script>
+  // Event delegation so the handler survives ClientRouter view transitions
+  document.addEventListener('click', async (event) => {
+    const button = (event.target as HTMLElement).closest('[data-copy-prompt]');
+    if (!button) return;
+
+    const promptEl = document.getElementById('hero-prompt-text');
+    const label = button.querySelector('[data-copy-label]');
+    if (!promptEl || !label) return;
+
+    try {
+      await navigator.clipboard.writeText(promptEl.textContent?.trim() ?? '');
+      label.textContent = 'Copied!';
+      setTimeout(() => {
+        label.textContent = 'Copy';
+      }, 2000);
+    } catch {
+      label.textContent = 'Press Ctrl+C';
+    }
+  });
+</script>
