@@ -15,14 +15,9 @@
 
 AstroDeck provides pre-built, production-ready components that help you launch landing pages, SaaS websites, and marketing sites faster. Built with [Astro](https://astro.build), [Tailwind CSS](https://tailwindcss.com), and [shadcn/ui](https://ui.shadcn.com) components.
 
-![AstroDeck Preview](cover.png)
-
-## 🎬 Demo
-
-A coding agent gets one prompt — *"Build an about page with a team section and an FAQ, and add it to the navigation."* — and assembles the page from AstroDeck's sections while the guardrails catch off-system edits:
-
 [![AstroDeck demo: prompt to finished page](https://templatedeck.com/videos/astrodeck/astrodeck-demo.gif)](https://www.astrodeck.dev/)
 
+*One prompt — "Build an about page with a team section and an FAQ" — and the agent assembles the page from AstroDeck's sections while the guardrails catch off-system edits.*
 ▶ [Watch as MP4](https://templatedeck.com/videos/astrodeck/astrodeck-demo.mp4) · [Live demo site](https://www.astrodeck.dev/)
 
 ---
