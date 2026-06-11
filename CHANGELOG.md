@@ -2,6 +2,20 @@
 
 All notable changes to AstroDeck are documented in this file.
 
+## [3.3.0] - 2026-06-11 — AI-First Homepage
+
+### Added
+
+- Copyable starter prompt in the hero — hand your coding agent a working kickoff prompt instead of downloading manually (new optional `prompt` prop on the Hero section)
+- New FAQ section on the homepage, including FAQPage structured data
+
+### Changed
+
+- Homepage repositioned around AI-assisted websites: new headline and audience-focused copy (company sites, blogs, portfolios)
+- Feature cards now explain the real differentiators: guardrails, one design system, dual With-AI/Manual docs, one-command quality checks
+- AI section reframed from standards talk to problem/solution, with an honest note on tool integration depth
+- Stats section now shows Lighthouse-100 proof instead of repeating the AI tool list
+
 ## [3.2.0] - 2026-06-11 — AI Layer v2 & Production-Readiness Pass
 
 ### Added
