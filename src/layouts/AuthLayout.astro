@@ -5,22 +5,19 @@
  * Minimal layout for authentication pages (login, signup, password reset).
  * No header/footer, includes SEO with noindex for auth pages.
  */
-import { ClientRouter } from "astro:transitions";
-import "@/styles/globals.css";
-import SEO from "@/components/SEO.astro";
-import Logo from "@/components/Logo.astro";
-import FontPreload from "@/components/FontPreload.astro";
-import ThemeScript from "@/components/ThemeScript.astro";
+import { ClientRouter } from 'astro:transitions';
+import '@/styles/globals.css';
+import SEO from '@/components/SEO.astro';
+import Logo from '@/components/Logo.astro';
+import FontPreload from '@/components/FontPreload.astro';
+import ThemeScript from '@/components/ThemeScript.astro';
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { 
-  title,
-  description = "Sign in to your AstroDeck account",
-} = Astro.props;
+const { title, description = 'Sign in to your AstroDeck account' } = Astro.props;
 
 const fullTitle = `${title} | AstroDeck`;
 ---
@@ -33,25 +30,26 @@ const fullTitle = `${title} | AstroDeck`;
     <FontPreload />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{fullTitle}</title>
-    <SEO 
-      title={fullTitle}
-      description={description}
-      noindex={true}
-    />
+    <SEO title={fullTitle} description={description} noindex={true} />
     <ClientRouter />
     <ThemeScript />
   </head>
   <body class="min-h-screen antialiased">
-    <div class="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-      <div class="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
-        <div class="absolute inset-0 bg-zinc-900" />
+    <div
+      class="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0"
+    >
+      <div
+        class="relative hidden h-full flex-col bg-muted p-10 text-primary-foreground lg:flex dark:border-r"
+      >
+        <div class="absolute inset-0 bg-primary"></div>
         <div class="relative z-20 flex items-center text-lg font-medium">
           <Logo />
         </div>
         <div class="relative z-20 mt-auto">
           <blockquote class="space-y-2">
             <p class="text-lg">
-              "AstroDeck gave us the perfect foundation to build our SaaS. Clean code, great design, and saved us months of development time."
+              "AstroDeck gave us the perfect foundation to build our SaaS. Clean code, great design,
+              and saved us months of development time."
             </p>
             <footer class="text-sm">Sofia Chen, CTO at TechStart</footer>
           </blockquote>

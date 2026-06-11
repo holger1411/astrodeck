@@ -1,33 +1,22 @@
 ---
-import AuthLayout from "@/layouts/AuthLayout.astro";
-import { LoginForm } from "@/components/LoginForm";
+import AuthLayout from '@/layouts/AuthLayout.astro';
+import { LoginForm } from '@/components/LoginForm';
 ---
 
-<AuthLayout title="Login">
+<AuthLayout
+  title="Login"
+  description="Sign in to your AstroDeck account to manage your projects, settings, and team — secure login with email and password."
+>
   <div class="flex flex-col space-y-2 text-center">
-    <h1 class="text-2xl font-semibold tracking-tight">
-      Welcome back
-    </h1>
-    <p class="text-sm text-muted-foreground">
-      Enter your credentials to sign in to your account
-    </p>
+    <h1 class="text-2xl font-semibold tracking-tight">Welcome back</h1>
+    <p class="text-sm text-muted-foreground">Enter your credentials to sign in to your account</p>
   </div>
   <LoginForm client:load />
   <p class="px-8 text-center text-sm text-muted-foreground">
-    Don't have an account?{" "}
-    <a
-      href="/signup"
-      class="underline underline-offset-4 hover:text-primary"
-    >
-      Sign up
-    </a>
+    Don't have an account?{' '}
+    <a href="/signup" class="underline underline-offset-4 hover:text-primary"> Sign up </a>
   </p>
   <p class="px-8 text-center text-sm text-muted-foreground">
-    <a
-      href="/"
-      class="underline underline-offset-4 hover:text-primary"
-    >
-      Back to home
-    </a>
+    <a href="/" class="underline underline-offset-4 hover:text-primary"> Back to home </a>
   </p>
 </AuthLayout>
