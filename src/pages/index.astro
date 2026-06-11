@@ -96,6 +96,38 @@ const faqs = [
     secondaryCta={{ href: 'https://github.com/holger1411/astrodeck', label: 'GitHub' }}
   />
 
+  <!-- Demo: the hero prompt, executed for real -->
+  <section class="px-6 pb-20">
+    <div class="container max-w-4xl mx-auto" data-animate>
+      <video
+        id="demo-video"
+        class="w-full rounded-xl border shadow-2xl shadow-foreground/10"
+        src="https://templatedeck.com/videos/astrodeck/astrodeck-demo.mp4"
+        poster="https://templatedeck.com/videos/astrodeck/astrodeck-demo-poster.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-label="Demo: a coding agent builds an about page from AstroDeck sections — the guard hook blocks an off-system color, every convention check passes"
+      ></video>
+      <p class="text-center text-sm text-muted-foreground mt-4">
+        The prompt above, executed for real — the agent assembles an about page from existing
+        sections, and the guardrails catch what drifts off.
+      </p>
+    </div>
+  </section>
+
+  <script>
+    // Respect reduced-motion: stop the autoplay loop and hand over controls
+    const demoVideo = document.getElementById('demo-video') as HTMLVideoElement | null;
+    if (demoVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      demoVideo.removeAttribute('autoplay');
+      demoVideo.pause();
+      demoVideo.controls = true;
+    }
+  </script>
+
   <LogoCloud />
 
   <AIFeature />

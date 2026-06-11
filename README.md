@@ -17,6 +17,14 @@ AstroDeck provides pre-built, production-ready components that help you launch l
 
 ![AstroDeck Preview](cover.png)
 
+## 🎬 Demo
+
+A coding agent gets one prompt — *"Build an about page with a team section and an FAQ, and add it to the navigation."* — and assembles the page from AstroDeck's sections while the guardrails catch off-system edits:
+
+[![AstroDeck demo: prompt to finished page](https://templatedeck.com/videos/astrodeck/astrodeck-demo.gif)](https://www.astrodeck.dev/)
+
+▶ [Watch as MP4](https://templatedeck.com/videos/astrodeck/astrodeck-demo.mp4) · [Live demo site](https://www.astrodeck.dev/)
+
 ---
 
 ## 🧱 Building Blocks
