@@ -5,6 +5,7 @@ import LogoCloud from '@/components/sections/LogoCloud.astro';
 import Features from '@/components/sections/Features.astro';
 import AIFeature from '@/components/sections/AIFeature.astro';
 import Stats from '@/components/sections/Stats.astro';
+import FAQ from '@/components/sections/FAQ.astro';
 
 const features = [
   {
@@ -44,6 +45,39 @@ const features = [
     icon: 'zap',
   },
 ];
+
+const faqs = [
+  {
+    question: 'Is AstroDeck free?',
+    answer:
+      'Yes. AstroDeck is MIT-licensed and completely free — for personal and commercial projects, forever.',
+  },
+  {
+    question: 'What kind of websites is it for?',
+    answer:
+      'Company and marketing sites, blogs and editorial sites, portfolios, and landing pages. It is deliberately not built for dashboards or app-heavy products.',
+  },
+  {
+    question: 'Which AI tools does it work with?',
+    answer:
+      'Any tool that supports the AGENTS.md standard: Claude Code, Cursor, GitHub Copilot, OpenAI Codex, Gemini CLI, Windsurf, Zed, Aider, and more. Claude Code gets the deepest integration — a dedicated agent, domain skills, slash commands, and the convention guard hook.',
+  },
+  {
+    question: 'Can I use it without AI?',
+    answer:
+      'Absolutely. AstroDeck is a normal, well-documented Astro starter kit. Every task in the docs is shown two ways: with AI and manually.',
+  },
+  {
+    question: 'Do I need to know Astro?',
+    answer:
+      'It helps, but it is not required. If you work with an AI assistant, it knows the conventions from AGENTS.md and does the heavy lifting. If you prefer to code yourself, the docs walk you through every task.',
+  },
+  {
+    question: 'How opinionated is it?',
+    answer:
+      'There is one design-token system (OKLCH colors, spacing, typography) and a set of conventions — that is what keeps AI output consistent. Everything is overridable: your own rules go in PROJECT.md, your own brand goes in globals.css or a DESIGN.md.',
+  },
+];
 ---
 
 <BaseLayout
@@ -80,6 +114,12 @@ const features = [
     title="More than a theme, calmer than an AI builder"
     subtitle="A complete website foundation — plus the operating layer your AI assistant needs to stay on track."
     features={features}
+  />
+
+  <FAQ
+    title="Frequently asked questions"
+    subtitle="The short version of everything you might want to know."
+    faqs={faqs}
   />
 
   <div class="section-inverted">
