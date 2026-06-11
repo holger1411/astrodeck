@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node -e \"require('node:fs').copyFileSync('dist/sitemap-index.xml','dist/sitemap.xml')\"",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",

@@ -50,27 +50,34 @@ const containerClass =
       {
         navItems.map((item) => {
           if ('children' in item && item.children) {
-            const isChildActive = item.children.some((child: {href: string}) =>
+            const isChildActive = item.children.some((child: { href: string }) =>
               currentPath.startsWith(child.href)
             );
             return (
               <div class="relative group">
                 <button
                   class:list={[
-                    'transition-colors inline-flex items-center gap-1',
+                    'transition-colors inline-flex items-center gap-1 py-2',
                     isChildActive
                       ? 'text-foreground font-medium'
                       : 'text-foreground/60 hover:text-foreground/80',
                   ]}
                 >
                   {item.label}
-                  <svg class="h-3 w-3 transition-transform group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <svg
+                    class="h-3 w-3 transition-transform group-hover:rotate-180"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
                 <div class="absolute top-full left-0 pt-2 hidden group-hover:block">
                   <div class="rounded-xl border bg-card shadow-lg p-2 min-w-[140px]">
-                    {item.children.map((child: {href: string; label: string}) => {
+                    {item.children.map((child: { href: string; label: string }) => {
                       const isActive = currentPath.startsWith(child.href);
                       return (
                         <a
@@ -92,14 +99,13 @@ const containerClass =
               </div>
             );
           }
-          const isActive = item.href === '/'
-            ? currentPath === '/'
-            : currentPath.startsWith(item.href);
+          const isActive =
+            item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
           return (
             <a
               href={item.href}
               class:list={[
-                'transition-colors',
+                'inline-block py-2 transition-colors',
                 isActive
                   ? 'text-foreground font-medium'
                   : 'text-foreground/60 hover:text-foreground/80',
@@ -148,19 +154,20 @@ const containerClass =
         aria-expanded="false"
         aria-label="Toggle navigation menu"
       >
-        <div class="w-6 h-6 relative flex flex-col justify-center items-center">
+        <span class="w-6 h-6 relative flex flex-col justify-center items-center">
           <span
             id="hamburger-top"
-            class="block w-5 h-0.5 bg-current transform transition-all duration-300 absolute -translate-y-1.5"
+            class="block w-5 h-0.5 bg-current transform transition-[transform,opacity] duration-300 absolute -translate-y-1.5"
           ></span>
           <span
             id="hamburger-middle"
-            class="block w-5 h-0.5 bg-current transform transition-all duration-300"></span>
+            class="block w-5 h-0.5 bg-current transform transition-[transform,opacity] duration-300"
+          ></span>
           <span
             id="hamburger-bottom"
-            class="block w-5 h-0.5 bg-current transform transition-all duration-300 absolute translate-y-1.5"
+            class="block w-5 h-0.5 bg-current transform transition-[transform,opacity] duration-300 absolute translate-y-1.5"
           ></span>
-        </div>
+        </span>
       </button>
     </div>
   </div>
@@ -178,8 +185,10 @@ const containerClass =
           if ('children' in item && item.children) {
             return (
               <div>
-                <p class="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{item.label}</p>
-                {item.children.map((child: {href: string; label: string}) => {
+                <p class="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  {item.label}
+                </p>
+                {item.children.map((child: { href: string; label: string }) => {
                   const isActive = currentPath.startsWith(child.href);
                   return (
                     <a
@@ -199,9 +208,8 @@ const containerClass =
               </div>
             );
           }
-          const isActive = item.href === '/'
-            ? currentPath === '/'
-            : currentPath.startsWith(item.href);
+          const isActive =
+            item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
           return (
             <a
               href={item.href}

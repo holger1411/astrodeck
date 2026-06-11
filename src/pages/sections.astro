@@ -1,17 +1,17 @@
 ---
-import FullWidthLayout from "@/layouts/FullWidthLayout.astro";
+import FullWidthLayout from '@/layouts/FullWidthLayout.astro';
 
 const sections = [
-  { id: "heroes", label: "Heroes", count: 3 },
-  { id: "ctas", label: "CTAs", count: 3 },
-  { id: "pricing", label: "Pricing", count: 4 },
-  { id: "testimonials", label: "Testimonials", count: 3 },
-  { id: "newsletters", label: "Newsletters", count: 3 },
-  { id: "faq", label: "FAQ", count: 1 },
-  { id: "stats", label: "Stats", count: 1 },
-  { id: "team", label: "Team", count: 1 },
-  { id: "comparison", label: "Comparison", count: 1 },
-  { id: "contact", label: "Contact", count: 1 },
+  { id: 'heroes', label: 'Heroes', count: 3 },
+  { id: 'ctas', label: 'CTAs', count: 3 },
+  { id: 'pricing', label: 'Pricing', count: 4 },
+  { id: 'testimonials', label: 'Testimonials', count: 3 },
+  { id: 'newsletters', label: 'Newsletters', count: 3 },
+  { id: 'faq', label: 'FAQ', count: 1 },
+  { id: 'stats', label: 'Stats', count: 1 },
+  { id: 'team', label: 'Team', count: 1 },
+  { id: 'comparison', label: 'Comparison', count: 1 },
+  { id: 'contact', label: 'Contact', count: 1 },
 ];
 
 // Code snippets for each section
@@ -425,11 +425,14 @@ import Contact from "@/components/sections/Contact.astro";
   email="hello@astrodeck.dev"
   phone="+1 (555) 000-1234"
   address="123 Developer Lane\nSan Francisco, CA 94107\nUnited States"
-/>`
+/>`,
 };
 ---
 
-<FullWidthLayout title="Sections" description="Explore reusable components and sections for your Astro.js project">
+<FullWidthLayout
+  title="Sections"
+  description="Explore reusable components and sections for your Astro.js project"
+>
   <style>
     html {
       scroll-behavior: smooth;
@@ -451,7 +454,7 @@ import Contact from "@/components/sections/Contact.astro";
       line-height: 1.5;
     }
     .code-block code {
-      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
     }
     .nav-link:not(.bg-foreground):hover {
       background-color: var(--color-muted);
@@ -463,32 +466,42 @@ import Contact from "@/components/sections/Contact.astro";
   <div class="min-h-screen">
     <!-- Header -->
     <div class="py-16 px-6 md:px-12">
-      <h1 class="text-4xl font-bold tracking-tight md:text-5xl mb-4">
-        Section Library
-      </h1>
+      <h1 class="text-4xl font-bold tracking-tight md:text-5xl mb-4">Section Library</h1>
       <p class="text-lg text-muted-foreground max-w-3xl">
-        Copy-paste ready components for your landing page. Each section is fully customizable and built with TypeScript, Tailwind CSS, and shadcn/ui.
+        Copy-paste ready components for your landing page. Each section is fully customizable and
+        built with TypeScript, Tailwind CSS, and shadcn/ui.
       </p>
     </div>
 
     <!-- Mobile Sub-Navigation -->
-    <div class="sticky top-14 z-30 lg:hidden border-b border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-6 md:px-12">
+    <div
+      class="sticky top-14 z-30 lg:hidden border-b border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-6 md:px-12"
+    >
       <button
-          id="mobile-subnav-toggle"
-          class="flex items-center justify-between w-full py-3 text-sm"
-          aria-expanded="false"
-          aria-controls="mobile-subnav-menu"
+        id="mobile-subnav-toggle"
+        class="flex items-center justify-between w-full py-3 text-sm"
+        aria-expanded="false"
+        aria-controls="mobile-subnav-menu"
+      >
+        <span class="flex items-center gap-2 text-muted-foreground">
+          <span>On this page:</span>
+          <span id="mobile-subnav-current" class="font-medium text-foreground">Heroes</span>
+        </span>
+        <svg
+          id="mobile-subnav-chevron"
+          class="h-4 w-4 text-muted-foreground transition-transform duration-200"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
         >
-          <span class="flex items-center gap-2 text-muted-foreground">
-            <span>On this page:</span>
-            <span id="mobile-subnav-current" class="font-medium text-foreground">Heroes</span>
-          </span>
-          <svg id="mobile-subnav-chevron" class="h-4 w-4 text-muted-foreground transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-        <nav id="mobile-subnav-menu" class="hidden pb-3 space-y-1" aria-label="Section navigation">
-          {sections.map((section) => (
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      <nav id="mobile-subnav-menu" class="hidden pb-3 space-y-1" aria-label="Section navigation">
+        {
+          sections.map((section) => (
             <a
               href={`#${section.id}`}
               data-section={section.id}
@@ -497,7 +510,8 @@ import Contact from "@/components/sections/Contact.astro";
               <span>{section.label}</span>
               <span class="text-xs text-muted-foreground">({section.count})</span>
             </a>
-          ))}
+          ))
+        }
       </nav>
     </div>
 
@@ -507,970 +521,2021 @@ import Contact from "@/components/sections/Contact.astro";
       <aside class="hidden lg:block lg:w-48 lg:shrink-0">
         <div class="sticky top-20">
           <nav id="sections-nav" class="space-y-1" aria-label="Section navigation">
-            <p class="text-sm font-semibold mb-4 text-muted-foreground" aria-hidden="true">Sections</p>
-            {sections.map((section) => (
-              <a
-                href={`#${section.id}`}
-                data-section={section.id}
-                class="nav-link flex items-center justify-between px-3 py-2 text-sm rounded-md transition-colors"
-              >
-                <span>{section.label}</span>
-                <span class="text-xs text-muted-foreground">({section.count})</span>
-              </a>
-            ))}
+            <p class="text-sm font-semibold mb-4 text-muted-foreground" aria-hidden="true">
+              Sections
+            </p>
+            {
+              sections.map((section) => (
+                <a
+                  href={`#${section.id}`}
+                  data-section={section.id}
+                  class="nav-link flex items-center justify-between px-3 py-2 text-sm rounded-md transition-colors"
+                >
+                  <span>{section.label}</span>
+                  <span class="text-xs text-muted-foreground">({section.count})</span>
+                </a>
+              ))
+            }
           </nav>
         </div>
       </aside>
 
       <!-- Sections Content -->
       <main class="flex-1 min-w-0 space-y-16">
-          <!-- Heroes -->
-          <section id="heroes" class="scroll-mt-20">
-            <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-2">Hero Sections</h2>
-              <p class="text-muted-foreground">Eye-catching hero sections to make a strong first impression.</p>
-            </div>
+        <!-- Heroes -->
+        <section id="heroes" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Hero Sections</h2>
+            <p class="text-muted-foreground">
+              Eye-catching hero sections to make a strong first impression.
+            </p>
+          </div>
 
-            <div class="space-y-12">
-              <!-- Hero 1: Centered with Badge -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Centered with Badge</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="heroCentered">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-heroCentered">
-                  <pre><code>{codeSnippets.heroCentered}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="min-h-[400px] flex items-center">
-                    <div class="w-full flex flex-col items-center gap-6 text-center">
-                      <div class="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium">
-                        <span class="bg-foreground text-background px-2 py-0.5 rounded-md font-semibold text-xs">NEW</span>
-                        <span>Introducing our latest feature</span>
-                      </div>
-                      <h1 class="text-4xl font-bold leading-tight tracking-tight md:text-6xl max-w-3xl">Build amazing products faster</h1>
-                      <p class="max-w-[600px] text-lg text-muted-foreground">Start with our pre-built components and focus on what matters. Ship faster, iterate quicker.</p>
-                      <div class="flex flex-col sm:flex-row gap-4 mt-4">
-                        <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-8">Get Started</a>
-                        <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-12 px-8">Learn More</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          <div class="space-y-12">
+            <!-- Hero 1: Centered with Badge -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Centered with Badge</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="heroCentered"
+                >
+                  Copy Code
+                </button>
               </div>
-
-              <!-- Hero 2: Left Aligned with Image -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Left Aligned with Visual</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="heroLeftAligned">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-heroLeftAligned">
-                  <pre><code>{codeSnippets.heroLeftAligned}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="min-h-[400px] grid lg:grid-cols-2 gap-12 items-center">
-                    <div class="space-y-6">
-                      <div class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full">🚀 Launch Week</div>
-                      <h1 class="text-4xl font-bold leading-tight tracking-tight md:text-5xl">Ship your SaaS in days, not months</h1>
-                      <p class="text-lg text-muted-foreground">Everything you need to build a modern landing page. TypeScript, Tailwind, and shadcn/ui included.</p>
-                      <div class="flex gap-4">
-                        <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8">Start Building</a>
-                        <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium border h-11 px-8">View Demo</a>
-                      </div>
-                    </div>
-                    <div class="bg-muted rounded-lg aspect-square flex items-center justify-center">
-                      <p class="text-muted-foreground">Image Placeholder</p>
-                    </div>
-                  </div>
-                </div>
+              <div class="code-block" id="code-heroCentered">
+                <pre><code>{codeSnippets.heroCentered}</code></pre>
               </div>
-
-              <!-- Hero 3: Minimal with Stats -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Minimal with Stats</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="heroMinimal">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-heroMinimal">
-                  <pre><code>{codeSnippets.heroMinimal}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="min-h-[400px] flex items-center">
-                    <div class="w-full space-y-8">
-                      <div class="max-w-3xl mx-auto text-center space-y-6">
-                        <h1 class="text-5xl font-bold leading-tight tracking-tight md:text-6xl">The complete toolkit for modern development</h1>
-                        <p class="text-xl text-muted-foreground">Join thousands of developers building with AstroDeck</p>
-                      </div>
-                      <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto pt-8">
-                        <div class="text-center">
-                          <div class="text-3xl font-bold">50K+</div>
-                          <div class="text-sm text-muted-foreground mt-1">Downloads</div>
-                        </div>
-                        <div class="text-center">
-                          <div class="text-3xl font-bold">1.2K+</div>
-                          <div class="text-sm text-muted-foreground mt-1">GitHub Stars</div>
-                        </div>
-                        <div class="text-center">
-                          <div class="text-3xl font-bold">99%</div>
-                          <div class="text-sm text-muted-foreground mt-1">Satisfaction</div>
-                        </div>
-                      </div>
+              <div class="border-t pt-6">
+                <div class="min-h-[400px] flex items-center">
+                  <div class="w-full flex flex-col items-center gap-6 text-center">
+                    <div
+                      class="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium"
+                    >
+                      <span
+                        class="bg-foreground text-background px-2 py-0.5 rounded-md font-semibold text-xs"
+                        >NEW</span
+                      >
+                      <span>Introducing our latest feature</span>
+                    </div>
+                    <h1
+                      class="text-4xl font-bold leading-tight tracking-tight md:text-6xl max-w-3xl"
+                    >
+                      Build amazing products faster
+                    </h1>
+                    <p class="max-w-[600px] text-lg text-muted-foreground">
+                      Start with our pre-built components and focus on what matters. Ship faster,
+                      iterate quicker.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 mt-4">
+                      <a
+                        href="#"
+                        class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-8"
+                        >Get Started</a
+                      >
+                      <a
+                        href="#"
+                        class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-12 px-8"
+                        >Learn More</a
+                      >
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
 
-          <!-- CTAs -->
-          <section id="ctas" class="scroll-mt-20">
-            <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-2">Call to Action</h2>
-              <p class="text-muted-foreground">Convert visitors with compelling CTAs.</p>
-            </div>
-
-            <div class="space-y-12">
-              <!-- CTA 1: Simple Centered -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Simple Centered</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="ctaSimple">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-ctaSimple">
-                  <pre><code>{codeSnippets.ctaSimple}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="rounded-lg border bg-muted/50 p-12 text-center">
-                    <h2 class="text-3xl font-bold mb-4">Ready to get started?</h2>
-                    <p class="text-muted-foreground max-w-[600px] mx-auto mb-6">Join thousands of developers already using AstroDeck to build amazing products.</p>
-                    <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8">Start Free Trial</a>
-                  </div>
-                </div>
+            <!-- Hero 2: Left Aligned with Image -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Left Aligned with Visual</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="heroLeftAligned"
+                >
+                  Copy Code
+                </button>
               </div>
-
-              <!-- CTA 2: Split with Features -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Split with Features</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="ctaSplit">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-ctaSplit">
-                  <pre><code>{codeSnippets.ctaSplit}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="rounded-lg border bg-gradient-to-br from-primary/10 to-primary/5 p-12">
-                    <div class="grid md:grid-cols-2 gap-8 items-center">
-                      <div>
-                        <h2 class="text-3xl font-bold mb-4">Build faster with our components</h2>
-                        <ul class="space-y-3">
-                          <li class="flex items-center gap-2">
-                            <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                            <span>Pre-built components</span>
-                          </li>
-                          <li class="flex items-center gap-2">
-                            <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                            <span>Full TypeScript support</span>
-                          </li>
-                          <li class="flex items-center gap-2">
-                            <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                            <span>Dark mode ready</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="space-y-4">
-                        <a href="#" class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 leading-[44px]">Get Started Free</a>
-                        <a href="#" class="block w-full text-center rounded-md text-sm font-medium border h-11 leading-[44px]">View Documentation</a>
-                      </div>
+              <div class="code-block" id="code-heroLeftAligned">
+                <pre><code>{codeSnippets.heroLeftAligned}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="min-h-[400px] grid lg:grid-cols-2 gap-12 items-center">
+                  <div class="space-y-6">
+                    <div
+                      class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full"
+                    >
+                      🚀 Launch Week
+                    </div>
+                    <h1 class="text-4xl font-bold leading-tight tracking-tight md:text-5xl">
+                      Ship your SaaS in days, not months
+                    </h1>
+                    <p class="text-lg text-muted-foreground">
+                      Everything you need to build a modern landing page. TypeScript, Tailwind, and
+                      shadcn/ui included.
+                    </p>
+                    <div class="flex gap-4">
+                      <a
+                        href="#"
+                        class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
+                        >Start Building</a
+                      >
+                      <a
+                        href="#"
+                        class="inline-flex items-center justify-center rounded-md text-sm font-medium border h-11 px-8"
+                        >View Demo</a
+                      >
                     </div>
                   </div>
-                </div>
-              </div>
-
-              <!-- CTA 3: Banner Style -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Banner Style</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="ctaBanner">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-ctaBanner">
-                  <pre><code>{codeSnippets.ctaBanner}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="rounded-lg bg-foreground text-background p-8">
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                      <div>
-                        <h3 class="text-2xl font-bold mb-2">Try AstroDeck today</h3>
-                        <p class="opacity-90">Start building your next project with our components</p>
-                      </div>
-                      <div class="flex gap-3">
-                        <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-background text-foreground hover:bg-background/90 h-10 px-6">Download Now</a>
-                        <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-background/20 hover:bg-background/10 h-10 px-6">GitHub</a>
-                      </div>
-                    </div>
+                  <div class="bg-muted rounded-lg aspect-square flex items-center justify-center">
+                    <p class="text-muted-foreground">Image Placeholder</p>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
 
-          <!-- Pricing -->
-          <section id="pricing" class="scroll-mt-20">
-            <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-2">Pricing Tables</h2>
-              <p class="text-muted-foreground">Clear pricing that converts.</p>
-            </div>
-
-            <div class="space-y-12">
-              <!-- Pricing 0: Open Source -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">AstroDeck Open Source</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="pricingOpenSource">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-pricingOpenSource">
-                  <pre><code>{codeSnippets.pricingOpenSource}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold mb-2">Free forever. Open source.</h3>
-                    <p class="text-muted-foreground">All features included. No hidden costs.</p>
-                  </div>
-                  <div class="grid md:grid-cols-3 gap-6">
-                    <div class="rounded-lg border p-6 space-y-4">
-                      <div>
-                        <h3 class="font-bold text-xl">Landing Page</h3>
-                        <p class="text-sm text-muted-foreground mt-1">Everything you need for a stunning landing page.</p>
-                      </div>
-                      <div><span class="text-4xl font-bold">Free</span></div>
-                      <ul class="space-y-2 text-sm">
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Hero & CTA sections</li>
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Logo cloud</li>
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Responsive design</li>
-                      </ul>
-                      <a href="#" class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10">View on GitHub</a>
-                    </div>
-                    <div class="rounded-lg border-2 border-primary p-6 space-y-4 relative">
-                      <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">Recommended</div>
-                      <div>
-                        <h3 class="font-bold text-xl">Full SaaS</h3>
-                        <p class="text-sm text-muted-foreground mt-1">Complete boilerplate for your SaaS product.</p>
-                      </div>
-                      <div><span class="text-4xl font-bold">Free</span></div>
-                      <ul class="space-y-2 text-sm">
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>All landing page features</li>
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Authentication layouts</li>
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>TypeScript & shadcn/ui</li>
-                      </ul>
-                      <a href="#" class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10">Get Started</a>
-                    </div>
-                    <div class="rounded-lg border p-6 space-y-4">
-                      <div>
-                        <h3 class="font-bold text-xl">Open Source</h3>
-                        <p class="text-sm text-muted-foreground mt-1">MIT licensed and open for contributions.</p>
-                      </div>
-                      <div><span class="text-4xl font-bold">Free</span></div>
-                      <ul class="space-y-2 text-sm">
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Full source code access</li>
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Regular updates</li>
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Commercial use allowed</li>
-                      </ul>
-                      <a href="#" class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10">Star on GitHub</a>
-                    </div>
-                  </div>
-                </div>
+            <!-- Hero 3: Minimal with Stats -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Minimal with Stats</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="heroMinimal"
+                >
+                  Copy Code
+                </button>
               </div>
-
-              <!-- Pricing 1: Three Column -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Three Column Layout</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="pricingThreeColumn">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-pricingThreeColumn">
-                  <pre><code>{codeSnippets.pricingThreeColumn}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="grid md:grid-cols-3 gap-6">
-                    <div class="rounded-lg border p-6 space-y-4">
-                      <div><h3 class="font-bold text-xl">Starter</h3><p class="text-sm text-muted-foreground mt-1">For small projects</p></div>
-                      <div><span class="text-4xl font-bold">$9</span><span class="text-muted-foreground">/month</span></div>
-                      <ul class="space-y-2 text-sm">
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>5 Projects</li>
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Basic Support</li>
-                      </ul>
-                      <a href="#" class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10">Get Started</a>
-                    </div>
-                    <div class="rounded-lg border-2 border-primary p-6 space-y-4 relative">
-                      <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">Popular</div>
-                      <div><h3 class="font-bold text-xl">Pro</h3><p class="text-sm text-muted-foreground mt-1">For growing teams</p></div>
-                      <div><span class="text-4xl font-bold">$29</span><span class="text-muted-foreground">/month</span></div>
-                      <ul class="space-y-2 text-sm">
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Unlimited Projects</li>
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Priority Support</li>
-                      </ul>
-                      <a href="#" class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10">Get Started</a>
-                    </div>
-                    <div class="rounded-lg border p-6 space-y-4">
-                      <div><h3 class="font-bold text-xl">Enterprise</h3><p class="text-sm text-muted-foreground mt-1">For large organizations</p></div>
-                      <div><span class="text-4xl font-bold">Custom</span></div>
-                      <ul class="space-y-2 text-sm">
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Everything in Pro</li>
-                        <li class="flex items-center gap-2"><svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>24/7 Support</li>
-                      </ul>
-                      <a href="#" class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10">Contact Sales</a>
-                    </div>
-                  </div>
-                </div>
+              <div class="code-block" id="code-heroMinimal">
+                <pre><code>{codeSnippets.heroMinimal}</code></pre>
               </div>
-
-              <!-- Pricing 2: Comparison Table -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Comparison Table</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="pricingComparison">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-pricingComparison">
-                  <pre><code>{codeSnippets.pricingComparison}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold mb-2">Choose your plan</h3>
-                    <p class="text-muted-foreground">Simple, transparent pricing</p>
-                  </div>
-                  <div class="border rounded-lg overflow-hidden">
-                    <table class="w-full">
-                      <thead class="bg-muted/50">
-                        <tr>
-                          <th class="text-left p-4 font-semibold">Features</th>
-                          <th class="text-center p-4 font-semibold">Free</th>
-                          <th class="text-center p-4 font-semibold">Pro</th>
-                          <th class="text-center p-4 font-semibold">Enterprise</th>
-                        </tr>
-                      </thead>
-                      <tbody class="divide-y">
-                        <tr><td class="p-4 text-sm">Projects</td><td class="text-center p-4 text-sm">3</td><td class="text-center p-4 text-sm">Unlimited</td><td class="text-center p-4 text-sm">Unlimited</td></tr>
-                        <tr><td class="p-4 text-sm">Storage</td><td class="text-center p-4 text-sm">1 GB</td><td class="text-center p-4 text-sm">100 GB</td><td class="text-center p-4 text-sm">Unlimited</td></tr>
-                        <tr><td class="p-4 text-sm">Support</td><td class="text-center p-4 text-sm">Community</td><td class="text-center p-4 text-sm">Email</td><td class="text-center p-4 text-sm">24/7</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Pricing 3: Toggle -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Monthly/Yearly Toggle</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="pricingToggle">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-pricingToggle">
-                  <pre><code>{codeSnippets.pricingToggle}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="text-center space-y-6">
-                    <div>
-                      <h3 class="text-2xl font-bold mb-2">Flexible pricing</h3>
-                      <p class="text-muted-foreground">Save 20% with annual billing</p>
+              <div class="border-t pt-6">
+                <div class="min-h-[400px] flex items-center">
+                  <div class="w-full space-y-8">
+                    <div class="max-w-3xl mx-auto text-center space-y-6">
+                      <h1 class="text-5xl font-bold leading-tight tracking-tight md:text-6xl">
+                        The complete toolkit for modern development
+                      </h1>
+                      <p class="text-xl text-muted-foreground">
+                        Join thousands of developers building with AstroDeck
+                      </p>
                     </div>
-                    <div class="inline-flex items-center gap-3 bg-muted p-1 rounded-lg">
-                      <button class="px-4 py-2 rounded-md bg-background text-sm font-medium">Monthly</button>
-                      <button class="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground">Yearly</button>
-                    </div>
-                    <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto mt-8">
-                      <div class="border rounded-lg p-6 text-left space-y-4">
-                        <h4 class="font-bold text-lg">Basic</h4>
-                        <div><span class="text-3xl font-bold">$19</span><span class="text-muted-foreground">/month</span></div>
-                        <a href="#" class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10">Choose Plan</a>
-                      </div>
-                      <div class="border-2 border-primary rounded-lg p-6 text-left space-y-4">
-                        <h4 class="font-bold text-lg">Professional</h4>
-                        <div><span class="text-3xl font-bold">$49</span><span class="text-muted-foreground">/month</span></div>
-                        <a href="#" class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10">Choose Plan</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Testimonials -->
-          <section id="testimonials" class="scroll-mt-20">
-            <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-2">Testimonials</h2>
-              <p class="text-muted-foreground">Build trust with social proof.</p>
-            </div>
-
-            <div class="space-y-12">
-              <!-- Testimonial 1: Grid -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Grid Layout</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="testimonialsGrid">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-testimonialsGrid">
-                  <pre><code>{codeSnippets.testimonialsGrid}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="grid md:grid-cols-3 gap-6">
-                    <div class="rounded-lg border bg-card p-6 space-y-4">
-                      <p class="text-sm leading-relaxed">"AstroDeck saved us weeks of development time. The components are beautiful and easy to customize."</p>
-                      <div class="flex items-center gap-3">
-                        <div class="h-10 w-10 rounded-full bg-muted flex items-center justify-center"><span class="text-sm font-medium">SC</span></div>
-                        <div><p class="text-sm font-medium">Sarah Chen</p><p class="text-xs text-muted-foreground">CEO, TechCorp</p></div>
-                      </div>
-                    </div>
-                    <div class="rounded-lg border bg-card p-6 space-y-4">
-                      <p class="text-sm leading-relaxed">"Best Astro boilerplate I've used. Clean code, great documentation, and excellent support."</p>
-                      <div class="flex items-center gap-3">
-                        <div class="h-10 w-10 rounded-full bg-muted flex items-center justify-center"><span class="text-sm font-medium">MJ</span></div>
-                        <div><p class="text-sm font-medium">Marcus Johnson</p><p class="text-xs text-muted-foreground">Developer</p></div>
-                      </div>
-                    </div>
-                    <div class="rounded-lg border bg-card p-6 space-y-4">
-                      <p class="text-sm leading-relaxed">"The perfect starting point for any SaaS project. Highly recommended for anyone using Astro."</p>
-                      <div class="flex items-center gap-3">
-                        <div class="h-10 w-10 rounded-full bg-muted flex items-center justify-center"><span class="text-sm font-medium">ER</span></div>
-                        <div><p class="text-sm font-medium">Emily Rodriguez</p><p class="text-xs text-muted-foreground">Product Manager</p></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Testimonial 2: Featured -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Featured Single</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="testimonialsFeatured">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-testimonialsFeatured">
-                  <pre><code>{codeSnippets.testimonialsFeatured}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="rounded-lg bg-muted/50 p-12 text-center max-w-3xl mx-auto">
-                    <svg class="h-8 w-8 text-primary mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                    <p class="text-lg leading-relaxed mb-6">AstroDeck has completely transformed how we build landing pages. The quality of the components and attention to detail is exceptional. Our development time has been cut in half.</p>
-                    <div class="flex items-center justify-center gap-4">
-                      <div class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center"><span class="font-medium text-primary">AK</span></div>
-                      <div class="text-left"><p class="font-semibold">Alex Kim</p><p class="text-sm text-muted-foreground">CTO, StartupCo</p></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Testimonial 3: Scroll -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Horizontal Scroll</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="testimonialsScroll">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-testimonialsScroll">
-                  <pre><code>{codeSnippets.testimonialsScroll}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="flex gap-6 overflow-x-auto pb-4">
-                    <div class="min-w-[300px] rounded-lg border bg-card p-6 space-y-4">
-                      <p class="text-sm">"Game changer for our team!"</p>
-                      <div class="flex items-center gap-2">
-                        <div class="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-xs">JD</div>
-                        <div class="text-xs"><p class="font-medium">Jane Doe</p><p class="text-muted-foreground">Designer</p></div>
-                      </div>
-                    </div>
-                    <div class="min-w-[300px] rounded-lg border bg-card p-6 space-y-4">
-                      <p class="text-sm">"Excellent components and documentation."</p>
-                      <div class="flex items-center gap-2">
-                        <div class="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-xs">TP</div>
-                        <div class="text-xs"><p class="font-medium">Tom Peters</p><p class="text-muted-foreground">Engineer</p></div>
-                      </div>
-                    </div>
-                    <div class="min-w-[300px] rounded-lg border bg-card p-6 space-y-4">
-                      <p class="text-sm">"Best boilerplate for Astro projects."</p>
-                      <div class="flex items-center gap-2">
-                        <div class="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-xs">LW</div>
-                        <div class="text-xs"><p class="font-medium">Lisa Wang</p><p class="text-muted-foreground">Founder</p></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Newsletters -->
-          <section id="newsletters" class="scroll-mt-20">
-            <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-2">Newsletter Signups</h2>
-              <p class="text-muted-foreground">Capture leads and grow your audience.</p>
-            </div>
-
-            <div class="space-y-12">
-              <!-- Newsletter 1: Inline -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Simple Inline</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="newsletterInline">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-newsletterInline">
-                  <pre><code>{codeSnippets.newsletterInline}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="rounded-lg border bg-muted/50 p-8 max-w-2xl mx-auto">
-                    <div class="text-center mb-6">
-                      <h3 class="text-xl font-bold mb-2">Subscribe to our newsletter</h3>
-                      <p class="text-sm text-muted-foreground">Get the latest updates delivered to your inbox.</p>
-                    </div>
-                    <div class="flex gap-2">
-                      <input type="email" placeholder="Enter your email" class="flex-1 h-10 rounded-md border px-3 text-sm" />
-                      <button class="px-6 h-10 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90">Subscribe</button>
-                    </div>
-                    <p class="text-xs text-muted-foreground text-center mt-4">We respect your privacy. Unsubscribe at any time.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Newsletter 2: Split -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Split with Visual</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="newsletterSplit">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-newsletterSplit">
-                  <pre><code>{codeSnippets.newsletterSplit}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="rounded-lg border overflow-hidden grid md:grid-cols-2">
-                    <div class="bg-primary/10 p-12 flex items-center justify-center">
+                    <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto pt-8">
                       <div class="text-center">
-                        <div class="text-6xl mb-4">📧</div>
-                        <p class="font-semibold">Stay Updated</p>
+                        <div class="text-3xl font-bold">50K+</div>
+                        <div class="text-sm text-muted-foreground mt-1">Downloads</div>
                       </div>
-                    </div>
-                    <div class="p-12 flex flex-col justify-center">
-                      <h3 class="text-2xl font-bold mb-2">Join our newsletter</h3>
-                      <p class="text-muted-foreground mb-6">Weekly insights on building better products.</p>
-                      <div class="space-y-3">
-                        <input type="email" placeholder="Your email address" class="w-full h-10 rounded-md border px-3 text-sm" />
-                        <button class="w-full h-10 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90">Get Started</button>
+                      <div class="text-center">
+                        <div class="text-3xl font-bold">1.2K+</div>
+                        <div class="text-sm text-muted-foreground mt-1">GitHub Stars</div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Newsletter 3: Bar -->
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Bottom Bar</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="newsletterBar">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-newsletterBar">
-                  <pre><code>{codeSnippets.newsletterBar}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="border-t bg-muted/30 p-6">
-                    <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-                      <div>
-                        <h4 class="font-semibold mb-1">Get product updates</h4>
-                        <p class="text-sm text-muted-foreground">Join 10,000+ subscribers</p>
-                      </div>
-                      <div class="flex gap-2 w-full md:w-auto">
-                        <input type="email" placeholder="you@example.com" class="flex-1 md:w-64 h-9 rounded-md border px-3 text-sm" />
-                        <button class="px-4 h-9 bg-foreground text-background rounded-md text-sm font-medium hover:bg-foreground/90 whitespace-nowrap">Sign Up</button>
+                      <div class="text-center">
+                        <div class="text-3xl font-bold">99%</div>
+                        <div class="text-sm text-muted-foreground mt-1">Satisfaction</div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          <!-- FAQ -->
-          <section id="faq" class="scroll-mt-20">
-            <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-2">FAQ</h2>
-              <p class="text-muted-foreground">Answer common questions with an accessible accordion.</p>
-            </div>
+        <!-- CTAs -->
+        <section id="ctas" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Call to Action</h2>
+            <p class="text-muted-foreground">Convert visitors with compelling CTAs.</p>
+          </div>
 
-            <div class="space-y-12">
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Default Accordion</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="faqDefault">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-faqDefault">
-                  <pre><code>{codeSnippets.faqDefault}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="max-w-3xl mx-auto">
-                    <div class="text-center mb-10">
-                      <h2 class="text-3xl font-bold mb-3">Frequently Asked Questions</h2>
-                      <p class="text-muted-foreground">Everything you need to know about AstroDeck</p>
-                    </div>
-                    <div class="divide-y divide-border border-y border-border">
-                      <details class="group" name="faq-demo">
-                        <summary class="flex cursor-pointer items-center justify-between gap-4 py-5 font-medium text-foreground hover:text-muted-foreground transition-colors">
-                          <span>What is AstroDeck?</span>
-                          <svg class="shrink-0 text-muted-foreground transition-transform duration-300 group-open:rotate-45" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                        </summary>
-                        <p class="pb-5 text-sm text-muted-foreground leading-relaxed">AstroDeck is an open-source component library and starter kit for building Astro.js websites. It provides pre-built, production-ready sections for landing pages and SaaS websites — fully typed with TypeScript and styled with Tailwind CSS v4.</p>
-                      </details>
-                      <details class="group" name="faq-demo">
-                        <summary class="flex cursor-pointer items-center justify-between gap-4 py-5 font-medium text-foreground hover:text-muted-foreground transition-colors">
-                          <span>Is AstroDeck free to use?</span>
-                          <svg class="shrink-0 text-muted-foreground transition-transform duration-300 group-open:rotate-45" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                        </summary>
-                        <p class="pb-5 text-sm text-muted-foreground leading-relaxed">Yes, AstroDeck is completely free and open-source under the MIT license. You can use it for personal and commercial projects without any cost or attribution requirement.</p>
-                      </details>
-                      <details class="group" name="faq-demo">
-                        <summary class="flex cursor-pointer items-center justify-between gap-4 py-5 font-medium text-foreground hover:text-muted-foreground transition-colors">
-                          <span>Does AstroDeck support dark mode?</span>
-                          <svg class="shrink-0 text-muted-foreground transition-transform duration-300 group-open:rotate-45" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                        </summary>
-                        <p class="pb-5 text-sm text-muted-foreground leading-relaxed">Absolutely. Every component is built with CSS variables and Tailwind CSS, so dark mode works out of the box. Just toggle the class on the html element and all sections adapt automatically.</p>
-                      </details>
-                      <details class="group" name="faq-demo">
-                        <summary class="flex cursor-pointer items-center justify-between gap-4 py-5 font-medium text-foreground hover:text-muted-foreground transition-colors">
-                          <span>Can I use AstroDeck with an existing Astro project?</span>
-                          <svg class="shrink-0 text-muted-foreground transition-transform duration-300 group-open:rotate-45" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                        </summary>
-                        <p class="pb-5 text-sm text-muted-foreground leading-relaxed">Yes. You can copy individual components into any Astro project. Make sure you have Tailwind CSS v4 configured via the @tailwindcss/vite plugin and the same CSS custom properties defined in your globals.css.</p>
-                      </details>
-                    </div>
-                  </div>
+          <div class="space-y-12">
+            <!-- CTA 1: Simple Centered -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Simple Centered</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="ctaSimple"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-ctaSimple">
+                <pre><code>{codeSnippets.ctaSimple}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="rounded-lg border bg-muted/50 p-12 text-center">
+                  <h2 class="text-3xl font-bold mb-4">Ready to get started?</h2>
+                  <p class="text-muted-foreground max-w-[600px] mx-auto mb-6">
+                    Join thousands of developers already using AstroDeck to build amazing products.
+                  </p>
+                  <a
+                    href="#"
+                    class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
+                    >Start Free Trial</a
+                  >
                 </div>
               </div>
             </div>
-          </section>
 
-          <!-- Stats -->
-          <section id="stats" class="scroll-mt-20">
-            <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-2">Stats</h2>
-              <p class="text-muted-foreground">Highlight key metrics that build credibility.</p>
-            </div>
-
-            <div class="space-y-12">
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Four-Column Grid</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="statsDefault">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-statsDefault">
-                  <pre><code>{codeSnippets.statsDefault}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold mb-3">Trusted by developers worldwide</h2>
-                    <p class="text-muted-foreground">Numbers that speak for themselves</p>
-                  </div>
-                  <dl class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border border-y">
-                    <div class="flex flex-col items-center text-center px-6 py-8">
-                      <dd class="text-4xl font-bold tracking-tight">50K+</dd>
-                      <dt class="mt-2 text-sm font-semibold">Downloads</dt>
-                      <p class="mt-1 text-sm text-muted-foreground">Across 80+ countries</p>
-                    </div>
-                    <div class="flex flex-col items-center text-center px-6 py-8">
-                      <dd class="text-4xl font-bold tracking-tight">1.2K+</dd>
-                      <dt class="mt-2 text-sm font-semibold">GitHub Stars</dt>
-                      <p class="mt-1 text-sm text-muted-foreground">And growing every week</p>
-                    </div>
-                    <div class="flex flex-col items-center text-center px-6 py-8">
-                      <dd class="text-4xl font-bold tracking-tight">30+</dd>
-                      <dt class="mt-2 text-sm font-semibold">Components</dt>
-                      <p class="mt-1 text-sm text-muted-foreground">Ready to copy and paste</p>
-                    </div>
-                    <div class="flex flex-col items-center text-center px-6 py-8">
-                      <dd class="text-4xl font-bold tracking-tight">99.9%</dd>
-                      <dt class="mt-2 text-sm font-semibold">Uptime</dt>
-                      <p class="mt-1 text-sm text-muted-foreground">Battle-tested infrastructure</p>
-                    </div>
-                  </dl>
-                </div>
+            <!-- CTA 2: Split with Features -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Split with Features</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="ctaSplit"
+                >
+                  Copy Code
+                </button>
               </div>
-            </div>
-          </section>
-
-          <!-- Team -->
-          <section id="team" class="scroll-mt-20">
-            <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-2">Team</h2>
-              <p class="text-muted-foreground">Introduce the people behind your product.</p>
-            </div>
-
-            <div class="space-y-12">
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Card Grid with Initials</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="teamDefault">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-teamDefault">
-                  <pre><code>{codeSnippets.teamDefault}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold mb-3">Meet Our Team</h2>
-                    <p class="text-muted-foreground">The people building AstroDeck</p>
-                  </div>
-                  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    <div class="flex flex-col items-center text-center rounded-xl border bg-card p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
-                      <div class="h-20 w-20 rounded-full bg-muted flex items-center justify-center ring-2 ring-border mb-4">
-                        <span class="text-xl font-semibold text-muted-foreground">AR</span>
-                      </div>
-                      <p class="font-semibold text-base leading-tight">Alex Rivera</p>
-                      <p class="text-sm text-muted-foreground mt-1">Co-Founder & CEO</p>
-                      <p class="text-sm text-muted-foreground mt-3 leading-relaxed">Passionate about developer experience and open source.</p>
-                      <div class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center">
-                        <a href="#" aria-label="Alex Rivera on GitHub" class="text-muted-foreground hover:text-foreground transition-colors">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                        </a>
-                        <a href="#" aria-label="Alex Rivera on X (Twitter)" class="text-muted-foreground hover:text-foreground transition-colors">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        </a>
-                      </div>
-                    </div>
-                    <div class="flex flex-col items-center text-center rounded-xl border bg-card p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
-                      <div class="h-20 w-20 rounded-full bg-muted flex items-center justify-center ring-2 ring-border mb-4">
-                        <span class="text-xl font-semibold text-muted-foreground">SC</span>
-                      </div>
-                      <p class="font-semibold text-base leading-tight">Sam Chen</p>
-                      <p class="text-sm text-muted-foreground mt-1">Lead Engineer</p>
-                      <p class="text-sm text-muted-foreground mt-3 leading-relaxed">TypeScript enthusiast and Astro core contributor.</p>
-                      <div class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center">
-                        <a href="#" aria-label="Sam Chen on GitHub" class="text-muted-foreground hover:text-foreground transition-colors">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                        </a>
-                        <a href="#" aria-label="Sam Chen on LinkedIn" class="text-muted-foreground hover:text-foreground transition-colors">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
-                        </a>
-                      </div>
-                    </div>
-                    <div class="flex flex-col items-center text-center rounded-xl border bg-card p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
-                      <div class="h-20 w-20 rounded-full bg-muted flex items-center justify-center ring-2 ring-border mb-4">
-                        <span class="text-xl font-semibold text-muted-foreground">JL</span>
-                      </div>
-                      <p class="font-semibold text-base leading-tight">Jordan Lee</p>
-                      <p class="text-sm text-muted-foreground mt-1">Design Lead</p>
-                      <p class="text-sm text-muted-foreground mt-3 leading-relaxed">Crafting accessible interfaces with Tailwind and shadcn/ui.</p>
-                      <div class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center">
-                        <a href="#" aria-label="Jordan Lee on X (Twitter)" class="text-muted-foreground hover:text-foreground transition-colors">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        </a>
-                        <a href="#" aria-label="Jordan Lee on LinkedIn" class="text-muted-foreground hover:text-foreground transition-colors">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div class="code-block" id="code-ctaSplit">
+                <pre><code>{codeSnippets.ctaSplit}</code></pre>
               </div>
-            </div>
-          </section>
-
-          <!-- Comparison -->
-          <section id="comparison" class="scroll-mt-20">
-            <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-2">Comparison</h2>
-              <p class="text-muted-foreground">Show how you stack up against the competition.</p>
-            </div>
-
-            <div class="space-y-12">
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Feature Comparison Table</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="comparisonDefault">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-comparisonDefault">
-                  <pre><code>{codeSnippets.comparisonDefault}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold mb-3">How We Compare</h2>
-                    <p class="text-muted-foreground">See why teams choose AstroDeck over the alternatives</p>
-                  </div>
-                  <div class="overflow-x-auto rounded-xl border shadow-lg">
-                    <table class="w-full min-w-[540px] border-collapse text-sm">
-                      <thead>
-                        <tr class="border-b border-border">
-                          <th scope="col" class="sticky left-0 z-10 bg-card w-40 min-w-[10rem] p-4 text-left font-medium text-muted-foreground">
-                            <span class="sr-only">Feature</span>
-                          </th>
-                          <th scope="col" class="p-4 text-center font-semibold bg-primary/8 text-foreground">
-                            <span class="inline-flex flex-col items-center gap-1">
-                              AstroDeck
-                              <span class="text-xs font-normal text-primary border border-primary/30 rounded-full px-2 py-0.5 leading-tight">Recommended</span>
-                            </span>
-                          </th>
-                          <th scope="col" class="p-4 text-center font-semibold bg-card text-foreground">Competitor A</th>
-                          <th scope="col" class="p-4 text-center font-semibold bg-card text-foreground">Competitor B</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="border-b border-border bg-card">
-                          <td class="sticky left-0 z-10 p-4 font-medium bg-card">Open source</td>
-                          <td class="p-4 text-center bg-primary/8"><span class="inline-flex items-center justify-center" aria-label="Yes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                          <td class="p-4 text-center"><span class="inline-flex items-center justify-center" aria-label="No"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-muted-foreground" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /></svg></span></td>
-                          <td class="p-4 text-center"><span class="inline-flex items-center justify-center" aria-label="No"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-muted-foreground" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /></svg></span></td>
-                        </tr>
-                        <tr class="border-b border-border bg-muted/40">
-                          <td class="sticky left-0 z-10 p-4 font-medium bg-muted/40">TypeScript support</td>
-                          <td class="p-4 text-center bg-primary/8"><span class="inline-flex items-center justify-center" aria-label="Yes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                          <td class="p-4 text-center"><span class="inline-flex items-center justify-center" aria-label="Yes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                          <td class="p-4 text-center"><span class="inline-flex items-center justify-center" aria-label="No"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-muted-foreground" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /></svg></span></td>
-                        </tr>
-                        <tr class="border-b border-border bg-card">
-                          <td class="sticky left-0 z-10 p-4 font-medium bg-card">Dark mode</td>
-                          <td class="p-4 text-center bg-primary/8"><span class="inline-flex items-center justify-center" aria-label="Yes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                          <td class="p-4 text-center"><span class="inline-flex items-center justify-center" aria-label="Yes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                          <td class="p-4 text-center"><span class="inline-flex items-center justify-center" aria-label="No"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-muted-foreground" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /></svg></span></td>
-                        </tr>
-                        <tr class="border-b border-border bg-muted/40">
-                          <td class="sticky left-0 z-10 p-4 font-medium bg-muted/40">Tailwind CSS v4</td>
-                          <td class="p-4 text-center bg-primary/8"><span class="inline-flex items-center justify-center" aria-label="Yes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                          <td class="p-4 text-center"><span class="inline-flex items-center justify-center" aria-label="No"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-muted-foreground" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /></svg></span></td>
-                          <td class="p-4 text-center"><span class="inline-flex items-center justify-center" aria-label="No"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-muted-foreground" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /></svg></span></td>
-                        </tr>
-                        <tr class="bg-card">
-                          <td class="sticky left-0 z-10 p-4 font-medium bg-card">Updates per year</td>
-                          <td class="p-4 text-center bg-primary/8 font-medium">Unlimited</td>
-                          <td class="p-4 text-center text-muted-foreground">12</td>
-                          <td class="p-4 text-center text-muted-foreground">4</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Contact -->
-          <section id="contact" class="scroll-mt-20">
-            <div class="mb-8">
-              <h2 class="text-3xl font-bold mb-2">Contact</h2>
-              <p class="text-muted-foreground">Let visitors reach you with a clean contact form.</p>
-            </div>
-
-            <div class="space-y-12">
-              <div class="border rounded-lg p-8 bg-card">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Split with Form</h3>
-                  <button class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors" data-code="contactDefault">
-                    Copy Code
-                  </button>
-                </div>
-                <div class="code-block" id="code-contactDefault">
-                  <pre><code>{codeSnippets.contactDefault}</code></pre>
-                </div>
-                <div class="border-t pt-6">
-                  <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
+              <div class="border-t pt-6">
+                <div class="rounded-lg border bg-gradient-to-br from-primary/10 to-primary/5 p-12">
+                  <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div>
-                      <h2 class="text-3xl font-bold leading-tight md:text-4xl">Get in Touch</h2>
-                      <p class="mt-4 text-muted-foreground text-lg leading-relaxed">Have a question or want to contribute? We would love to hear from you.</p>
-                      <ul class="mt-8 space-y-5" aria-label="Contact information">
-                        <li class="flex items-start gap-3">
-                          <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
-                          </span>
-                          <div>
-                            <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Email</p>
-                            <a href="mailto:hello@astrodeck.dev" class="text-sm text-foreground hover:text-primary transition-colors">hello@astrodeck.dev</a>
-                          </div>
+                      <h2 class="text-3xl font-bold mb-4">Build faster with our components</h2>
+                      <ul class="space-y-3">
+                        <li class="flex items-center gap-2">
+                          <svg
+                            class="h-5 w-5 text-primary"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M5 13l4 4L19 7"></path></svg
+                          >
+                          <span>Pre-built components</span>
                         </li>
-                        <li class="flex items-start gap-3">
-                          <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6 19.79 19.79 0 0 1 1.58 5.08 2 2 0 0 1 3.54 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.6a16 16 0 0 0 5.67 5.67l1.06-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.28 18z" /></svg>
-                          </span>
-                          <div>
-                            <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Phone</p>
-                            <a href="tel:+15550001234" class="text-sm text-foreground hover:text-primary transition-colors">+1 (555) 000-1234</a>
-                          </div>
+                        <li class="flex items-center gap-2">
+                          <svg
+                            class="h-5 w-5 text-primary"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M5 13l4 4L19 7"></path></svg
+                          >
+                          <span>Full TypeScript support</span>
                         </li>
-                        <li class="flex items-start gap-3">
-                          <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></svg>
-                          </span>
-                          <div>
-                            <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Address</p>
-                            <address class="text-sm text-foreground not-italic">123 Developer Lane<br />San Francisco, CA 94107<br />United States</address>
-                          </div>
+                        <li class="flex items-center gap-2">
+                          <svg
+                            class="h-5 w-5 text-primary"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M5 13l4 4L19 7"></path></svg
+                          >
+                          <span>Dark mode ready</span>
                         </li>
                       </ul>
                     </div>
-                    <div class="rounded-lg border bg-card p-6 md:p-8">
-                      <form action="#" method="POST" novalidate>
-                        <div class="space-y-5">
-                          <div class="space-y-1.5">
-                            <label for="demo-contact-name" class="text-sm font-medium leading-none">Name <span class="text-destructive" aria-hidden="true">*</span></label>
-                            <input id="demo-contact-name" type="text" name="name" required autocomplete="name" placeholder="Jane Smith" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" />
-                          </div>
-                          <div class="space-y-1.5">
-                            <label for="demo-contact-email" class="text-sm font-medium leading-none">Email <span class="text-destructive" aria-hidden="true">*</span></label>
-                            <input id="demo-contact-email" type="email" name="email" required autocomplete="email" placeholder="jane@example.com" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" />
-                          </div>
-                          <div class="space-y-1.5">
-                            <label for="demo-contact-subject" class="text-sm font-medium leading-none">Subject</label>
-                            <input id="demo-contact-subject" type="text" name="subject" placeholder="How can we help?" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" />
-                          </div>
-                          <div class="space-y-1.5">
-                            <label for="demo-contact-message" class="text-sm font-medium leading-none">Message <span class="text-destructive" aria-hidden="true">*</span></label>
-                            <textarea id="demo-contact-message" name="message" required rows="4" placeholder="Tell us more about your project..." class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-y min-h-[100px]"></textarea>
-                          </div>
-                          <p class="text-xs text-muted-foreground"><span class="text-destructive" aria-hidden="true">*</span> Required fields</p>
-                          <button type="submit" class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                            Send Message
-                          </button>
-                        </div>
-                      </form>
+                    <div class="space-y-4">
+                      <a
+                        href="#"
+                        class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 leading-[44px]"
+                        >Get Started Free</a
+                      >
+                      <a
+                        href="#"
+                        class="block w-full text-center rounded-md text-sm font-medium border h-11 leading-[44px]"
+                        >View Documentation</a
+                      >
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-        </main>
-      </div>
+
+            <!-- CTA 3: Banner Style -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Banner Style</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="ctaBanner"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-ctaBanner">
+                <pre><code>{codeSnippets.ctaBanner}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="rounded-lg bg-foreground text-background p-8">
+                  <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div>
+                      <h3 class="text-2xl font-bold mb-2">Try AstroDeck today</h3>
+                      <p class="opacity-90">Start building your next project with our components</p>
+                    </div>
+                    <div class="flex gap-3">
+                      <a
+                        href="#"
+                        class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-background text-foreground hover:bg-background/90 h-10 px-6"
+                        >Download Now</a
+                      >
+                      <a
+                        href="#"
+                        class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-background/20 hover:bg-background/10 h-10 px-6"
+                        >GitHub</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pricing -->
+        <section id="pricing" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Pricing Tables</h2>
+            <p class="text-muted-foreground">Clear pricing that converts.</p>
+          </div>
+
+          <div class="space-y-12">
+            <!-- Pricing 0: Open Source -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">AstroDeck Open Source</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="pricingOpenSource"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-pricingOpenSource">
+                <pre><code>{codeSnippets.pricingOpenSource}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="text-center mb-8">
+                  <h3 class="text-2xl font-bold mb-2">Free forever. Open source.</h3>
+                  <p class="text-muted-foreground">All features included. No hidden costs.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6">
+                  <div class="rounded-lg border p-6 space-y-4">
+                    <div>
+                      <h3 class="font-bold text-xl">Landing Page</h3>
+                      <p class="text-sm text-muted-foreground mt-1">
+                        Everything you need for a stunning landing page.
+                      </p>
+                    </div>
+                    <div><span class="text-4xl font-bold">Free</span></div>
+                    <ul class="space-y-2 text-sm">
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >Hero & CTA sections
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >Logo cloud
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >Responsive design
+                      </li>
+                    </ul>
+                    <a
+                      href="#"
+                      class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
+                      >View on GitHub</a
+                    >
+                  </div>
+                  <div class="rounded-lg border-2 border-primary p-6 space-y-4 relative">
+                    <div
+                      class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full"
+                    >
+                      Recommended
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-xl">Full SaaS</h3>
+                      <p class="text-sm text-muted-foreground mt-1">
+                        Complete boilerplate for your SaaS product.
+                      </p>
+                    </div>
+                    <div><span class="text-4xl font-bold">Free</span></div>
+                    <ul class="space-y-2 text-sm">
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >All landing page features
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >Authentication layouts
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >TypeScript & shadcn/ui
+                      </li>
+                    </ul>
+                    <a
+                      href="#"
+                      class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10"
+                      >Get Started</a
+                    >
+                  </div>
+                  <div class="rounded-lg border p-6 space-y-4">
+                    <div>
+                      <h3 class="font-bold text-xl">Open Source</h3>
+                      <p class="text-sm text-muted-foreground mt-1">
+                        MIT licensed and open for contributions.
+                      </p>
+                    </div>
+                    <div><span class="text-4xl font-bold">Free</span></div>
+                    <ul class="space-y-2 text-sm">
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >Full source code access
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >Regular updates
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >Commercial use allowed
+                      </li>
+                    </ul>
+                    <a
+                      href="#"
+                      class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
+                      >Star on GitHub</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pricing 1: Three Column -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Three Column Layout</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="pricingThreeColumn"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-pricingThreeColumn">
+                <pre><code>{codeSnippets.pricingThreeColumn}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="grid md:grid-cols-3 gap-6">
+                  <div class="rounded-lg border p-6 space-y-4">
+                    <div>
+                      <h3 class="font-bold text-xl">Starter</h3><p
+                        class="text-sm text-muted-foreground mt-1"
+                      >
+                        For small projects
+                      </p>
+                    </div>
+                    <div>
+                      <span class="text-4xl font-bold">$9</span><span class="text-muted-foreground"
+                        >/month</span>
+                    </div>
+                    <ul class="space-y-2 text-sm">
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >5 Projects
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >Basic Support
+                      </li>
+                    </ul>
+                    <a
+                      href="#"
+                      class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
+                      >Get Started</a
+                    >
+                  </div>
+                  <div class="rounded-lg border-2 border-primary p-6 space-y-4 relative">
+                    <div
+                      class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full"
+                    >
+                      Popular
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-xl">Pro</h3><p
+                        class="text-sm text-muted-foreground mt-1"
+                      >
+                        For growing teams
+                      </p>
+                    </div>
+                    <div>
+                      <span class="text-4xl font-bold">$29</span><span class="text-muted-foreground"
+                        >/month</span>
+                    </div>
+                    <ul class="space-y-2 text-sm">
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >Unlimited Projects
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >Priority Support
+                      </li>
+                    </ul>
+                    <a
+                      href="#"
+                      class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10"
+                      >Get Started</a
+                    >
+                  </div>
+                  <div class="rounded-lg border p-6 space-y-4">
+                    <div>
+                      <h3 class="font-bold text-xl">Enterprise</h3><p
+                        class="text-sm text-muted-foreground mt-1"
+                      >
+                        For large organizations
+                      </p>
+                    </div>
+                    <div><span class="text-4xl font-bold">Custom</span></div>
+                    <ul class="space-y-2 text-sm">
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >Everything in Pro
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <svg
+                          class="h-4 w-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 13l4 4L19 7"></path></svg
+                        >24/7 Support
+                      </li>
+                    </ul>
+                    <a
+                      href="#"
+                      class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
+                      >Contact Sales</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pricing 2: Comparison Table -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Comparison Table</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="pricingComparison"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-pricingComparison">
+                <pre><code>{codeSnippets.pricingComparison}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="text-center mb-8">
+                  <h3 class="text-2xl font-bold mb-2">Choose your plan</h3>
+                  <p class="text-muted-foreground">Simple, transparent pricing</p>
+                </div>
+                <div class="border rounded-lg overflow-hidden">
+                  <table class="w-full">
+                    <thead class="bg-muted/50">
+                      <tr>
+                        <th class="text-left p-4 font-semibold">Features</th>
+                        <th class="text-center p-4 font-semibold">Free</th>
+                        <th class="text-center p-4 font-semibold">Pro</th>
+                        <th class="text-center p-4 font-semibold">Enterprise</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                      <tr
+                        ><td class="p-4 text-sm">Projects</td><td class="text-center p-4 text-sm"
+                          >3</td
+                        ><td class="text-center p-4 text-sm">Unlimited</td><td
+                          class="text-center p-4 text-sm">Unlimited</td
+                        ></tr
+                      >
+                      <tr
+                        ><td class="p-4 text-sm">Storage</td><td class="text-center p-4 text-sm"
+                          >1 GB</td
+                        ><td class="text-center p-4 text-sm">100 GB</td><td
+                          class="text-center p-4 text-sm">Unlimited</td
+                        ></tr
+                      >
+                      <tr
+                        ><td class="p-4 text-sm">Support</td><td class="text-center p-4 text-sm"
+                          >Community</td
+                        ><td class="text-center p-4 text-sm">Email</td><td
+                          class="text-center p-4 text-sm">24/7</td
+                        ></tr
+                      >
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pricing 3: Toggle -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Monthly/Yearly Toggle</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="pricingToggle"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-pricingToggle">
+                <pre><code>{codeSnippets.pricingToggle}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="text-center space-y-6">
+                  <div>
+                    <h3 class="text-2xl font-bold mb-2">Flexible pricing</h3>
+                    <p class="text-muted-foreground">Save 20% with annual billing</p>
+                  </div>
+                  <div class="inline-flex items-center gap-3 bg-muted p-1 rounded-lg">
+                    <button class="px-4 py-2 rounded-md bg-background text-sm font-medium"
+                      >Monthly</button
+                    >
+                    <button class="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground"
+                      >Yearly</button
+                    >
+                  </div>
+                  <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto mt-8">
+                    <div class="border rounded-lg p-6 text-left space-y-4">
+                      <h4 class="font-bold text-lg">Basic</h4>
+                      <div>
+                        <span class="text-3xl font-bold">$19</span><span
+                          class="text-muted-foreground">/month</span>
+                      </div>
+                      <a
+                        href="#"
+                        class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
+                        >Choose Plan</a
+                      >
+                    </div>
+                    <div class="border-2 border-primary rounded-lg p-6 text-left space-y-4">
+                      <h4 class="font-bold text-lg">Professional</h4>
+                      <div>
+                        <span class="text-3xl font-bold">$49</span><span
+                          class="text-muted-foreground">/month</span>
+                      </div>
+                      <a
+                        href="#"
+                        class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10"
+                        >Choose Plan</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Testimonials</h2>
+            <p class="text-muted-foreground">Build trust with social proof.</p>
+          </div>
+
+          <div class="space-y-12">
+            <!-- Testimonial 1: Grid -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Grid Layout</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="testimonialsGrid"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-testimonialsGrid">
+                <pre><code>{codeSnippets.testimonialsGrid}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="grid md:grid-cols-3 gap-6">
+                  <div class="rounded-lg border bg-card p-6 space-y-4">
+                    <p class="text-sm leading-relaxed">
+                      "AstroDeck saved us weeks of development time. The components are beautiful
+                      and easy to customize."
+                    </p>
+                    <div class="flex items-center gap-3">
+                      <div class="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
+                        <span class="text-sm font-medium">SC</span>
+                      </div>
+                      <div>
+                        <p class="text-sm font-medium">Sarah Chen</p><p
+                          class="text-xs text-muted-foreground"
+                        >
+                          CEO, TechCorp
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="rounded-lg border bg-card p-6 space-y-4">
+                    <p class="text-sm leading-relaxed">
+                      "Best Astro boilerplate I've used. Clean code, great documentation, and
+                      excellent support."
+                    </p>
+                    <div class="flex items-center gap-3">
+                      <div class="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
+                        <span class="text-sm font-medium">MJ</span>
+                      </div>
+                      <div>
+                        <p class="text-sm font-medium">Marcus Johnson</p><p
+                          class="text-xs text-muted-foreground"
+                        >
+                          Developer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="rounded-lg border bg-card p-6 space-y-4">
+                    <p class="text-sm leading-relaxed">
+                      "The perfect starting point for any SaaS project. Highly recommended for
+                      anyone using Astro."
+                    </p>
+                    <div class="flex items-center gap-3">
+                      <div class="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
+                        <span class="text-sm font-medium">ER</span>
+                      </div>
+                      <div>
+                        <p class="text-sm font-medium">Emily Rodriguez</p><p
+                          class="text-xs text-muted-foreground"
+                        >
+                          Product Manager
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial 2: Featured -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Featured Single</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="testimonialsFeatured"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-testimonialsFeatured">
+                <pre><code>{codeSnippets.testimonialsFeatured}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="rounded-lg bg-muted/50 p-12 text-center max-w-3xl mx-auto">
+                  <svg
+                    class="h-8 w-8 text-primary mx-auto mb-6"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    ><path
+                      d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"
+                    ></path></svg
+                  >
+                  <p class="text-lg leading-relaxed mb-6">
+                    AstroDeck has completely transformed how we build landing pages. The quality of
+                    the components and attention to detail is exceptional. Our development time has
+                    been cut in half.
+                  </p>
+                  <div class="flex items-center justify-center gap-4">
+                    <div
+                      class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center"
+                    >
+                      <span class="font-medium text-primary">AK</span>
+                    </div>
+                    <div class="text-left">
+                      <p class="font-semibold">Alex Kim</p><p class="text-sm text-muted-foreground">
+                        CTO, StartupCo
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial 3: Scroll -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Horizontal Scroll</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="testimonialsScroll"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-testimonialsScroll">
+                <pre><code>{codeSnippets.testimonialsScroll}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="flex gap-6 overflow-x-auto pb-4">
+                  <div class="min-w-[300px] rounded-lg border bg-card p-6 space-y-4">
+                    <p class="text-sm">"Game changer for our team!"</p>
+                    <div class="flex items-center gap-2">
+                      <div
+                        class="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-xs"
+                      >
+                        JD
+                      </div>
+                      <div class="text-xs">
+                        <p class="font-medium">Jane Doe</p><p class="text-muted-foreground">
+                          Designer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="min-w-[300px] rounded-lg border bg-card p-6 space-y-4">
+                    <p class="text-sm">"Excellent components and documentation."</p>
+                    <div class="flex items-center gap-2">
+                      <div
+                        class="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-xs"
+                      >
+                        TP
+                      </div>
+                      <div class="text-xs">
+                        <p class="font-medium">Tom Peters</p><p class="text-muted-foreground">
+                          Engineer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="min-w-[300px] rounded-lg border bg-card p-6 space-y-4">
+                    <p class="text-sm">"Best boilerplate for Astro projects."</p>
+                    <div class="flex items-center gap-2">
+                      <div
+                        class="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-xs"
+                      >
+                        LW
+                      </div>
+                      <div class="text-xs">
+                        <p class="font-medium">Lisa Wang</p><p class="text-muted-foreground">
+                          Founder
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Newsletters -->
+        <section id="newsletters" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Newsletter Signups</h2>
+            <p class="text-muted-foreground">Capture leads and grow your audience.</p>
+          </div>
+
+          <div class="space-y-12">
+            <!-- Newsletter 1: Inline -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Simple Inline</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="newsletterInline"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-newsletterInline">
+                <pre><code>{codeSnippets.newsletterInline}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="rounded-lg border bg-muted/50 p-8 max-w-2xl mx-auto">
+                  <div class="text-center mb-6">
+                    <h3 class="text-xl font-bold mb-2">Subscribe to our newsletter</h3>
+                    <p class="text-sm text-muted-foreground">
+                      Get the latest updates delivered to your inbox.
+                    </p>
+                  </div>
+                  <div class="flex gap-2">
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      class="flex-1 h-10 rounded-md border px-3 text-sm"
+                    />
+                    <button
+                      class="px-6 h-10 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90"
+                      >Subscribe</button
+                    >
+                  </div>
+                  <p class="text-xs text-muted-foreground text-center mt-4">
+                    We respect your privacy. Unsubscribe at any time.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Newsletter 2: Split -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Split with Visual</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="newsletterSplit"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-newsletterSplit">
+                <pre><code>{codeSnippets.newsletterSplit}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="rounded-lg border overflow-hidden grid md:grid-cols-2">
+                  <div class="bg-primary/10 p-12 flex items-center justify-center">
+                    <div class="text-center">
+                      <div class="text-6xl mb-4">📧</div>
+                      <p class="font-semibold">Stay Updated</p>
+                    </div>
+                  </div>
+                  <div class="p-12 flex flex-col justify-center">
+                    <h3 class="text-2xl font-bold mb-2">Join our newsletter</h3>
+                    <p class="text-muted-foreground mb-6">
+                      Weekly insights on building better products.
+                    </p>
+                    <div class="space-y-3">
+                      <input
+                        type="email"
+                        placeholder="Your email address"
+                        class="w-full h-10 rounded-md border px-3 text-sm"
+                      />
+                      <button
+                        class="w-full h-10 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90"
+                        >Get Started</button
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Newsletter 3: Bar -->
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Bottom Bar</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="newsletterBar"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-newsletterBar">
+                <pre><code>{codeSnippets.newsletterBar}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="border-t bg-muted/30 p-6">
+                  <div
+                    class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4"
+                  >
+                    <div>
+                      <h4 class="font-semibold mb-1">Get product updates</h4>
+                      <p class="text-sm text-muted-foreground">Join 10,000+ subscribers</p>
+                    </div>
+                    <div class="flex gap-2 w-full md:w-auto">
+                      <input
+                        type="email"
+                        placeholder="you@example.com"
+                        class="flex-1 md:w-64 h-9 rounded-md border px-3 text-sm"
+                      />
+                      <button
+                        class="px-4 h-9 bg-foreground text-background rounded-md text-sm font-medium hover:bg-foreground/90 whitespace-nowrap"
+                        >Sign Up</button
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">FAQ</h2>
+            <p class="text-muted-foreground">
+              Answer common questions with an accessible accordion.
+            </p>
+          </div>
+
+          <div class="space-y-12">
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Default Accordion</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="faqDefault"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-faqDefault">
+                <pre><code>{codeSnippets.faqDefault}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="max-w-3xl mx-auto">
+                  <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold mb-3">Frequently Asked Questions</h2>
+                    <p class="text-muted-foreground">Everything you need to know about AstroDeck</p>
+                  </div>
+                  <div class="divide-y divide-border border-y border-border">
+                    <details class="group" name="faq-demo">
+                      <summary
+                        class="flex cursor-pointer items-center justify-between gap-4 py-5 font-medium text-foreground hover:text-muted-foreground transition-colors"
+                      >
+                        <span>What is AstroDeck?</span>
+                        <svg
+                          class="shrink-0 text-muted-foreground transition-transform duration-300 group-open:rotate-45"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          ><line x1="12" y1="5" x2="12" y2="19"></line><line
+                            x1="5"
+                            y1="12"
+                            x2="19"
+                            y2="12"></line></svg
+                        >
+                      </summary>
+                      <p class="pb-5 text-sm text-muted-foreground leading-relaxed">
+                        AstroDeck is an open-source component library and starter kit for building
+                        Astro.js websites. It provides pre-built, production-ready sections for
+                        landing pages and SaaS websites — fully typed with TypeScript and styled
+                        with Tailwind CSS v4.
+                      </p>
+                    </details>
+                    <details class="group" name="faq-demo">
+                      <summary
+                        class="flex cursor-pointer items-center justify-between gap-4 py-5 font-medium text-foreground hover:text-muted-foreground transition-colors"
+                      >
+                        <span>Is AstroDeck free to use?</span>
+                        <svg
+                          class="shrink-0 text-muted-foreground transition-transform duration-300 group-open:rotate-45"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          ><line x1="12" y1="5" x2="12" y2="19"></line><line
+                            x1="5"
+                            y1="12"
+                            x2="19"
+                            y2="12"></line></svg
+                        >
+                      </summary>
+                      <p class="pb-5 text-sm text-muted-foreground leading-relaxed">
+                        Yes, AstroDeck is completely free and open-source under the MIT license. You
+                        can use it for personal and commercial projects without any cost or
+                        attribution requirement.
+                      </p>
+                    </details>
+                    <details class="group" name="faq-demo">
+                      <summary
+                        class="flex cursor-pointer items-center justify-between gap-4 py-5 font-medium text-foreground hover:text-muted-foreground transition-colors"
+                      >
+                        <span>Does AstroDeck support dark mode?</span>
+                        <svg
+                          class="shrink-0 text-muted-foreground transition-transform duration-300 group-open:rotate-45"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          ><line x1="12" y1="5" x2="12" y2="19"></line><line
+                            x1="5"
+                            y1="12"
+                            x2="19"
+                            y2="12"></line></svg
+                        >
+                      </summary>
+                      <p class="pb-5 text-sm text-muted-foreground leading-relaxed">
+                        Absolutely. Every component is built with CSS variables and Tailwind CSS, so
+                        dark mode works out of the box. Just toggle the class on the html element
+                        and all sections adapt automatically.
+                      </p>
+                    </details>
+                    <details class="group" name="faq-demo">
+                      <summary
+                        class="flex cursor-pointer items-center justify-between gap-4 py-5 font-medium text-foreground hover:text-muted-foreground transition-colors"
+                      >
+                        <span>Can I use AstroDeck with an existing Astro project?</span>
+                        <svg
+                          class="shrink-0 text-muted-foreground transition-transform duration-300 group-open:rotate-45"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          ><line x1="12" y1="5" x2="12" y2="19"></line><line
+                            x1="5"
+                            y1="12"
+                            x2="19"
+                            y2="12"></line></svg
+                        >
+                      </summary>
+                      <p class="pb-5 text-sm text-muted-foreground leading-relaxed">
+                        Yes. You can copy individual components into any Astro project. Make sure
+                        you have Tailwind CSS v4 configured via the @tailwindcss/vite plugin and the
+                        same CSS custom properties defined in your globals.css.
+                      </p>
+                    </details>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Stats -->
+        <section id="stats" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Stats</h2>
+            <p class="text-muted-foreground">Highlight key metrics that build credibility.</p>
+          </div>
+
+          <div class="space-y-12">
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Four-Column Grid</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="statsDefault"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-statsDefault">
+                <pre><code>{codeSnippets.statsDefault}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="text-center mb-10">
+                  <h2 class="text-3xl font-bold mb-3">Trusted by developers worldwide</h2>
+                  <p class="text-muted-foreground">Numbers that speak for themselves</p>
+                </div>
+                <dl
+                  class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border border-y"
+                >
+                  <div class="flex flex-col items-center text-center px-6 py-8">
+                    <dd class="text-4xl font-bold tracking-tight">50K+</dd>
+                    <dt class="mt-2 text-sm font-semibold">Downloads</dt>
+                    <p class="mt-1 text-sm text-muted-foreground">Across 80+ countries</p>
+                  </div>
+                  <div class="flex flex-col items-center text-center px-6 py-8">
+                    <dd class="text-4xl font-bold tracking-tight">1.2K+</dd>
+                    <dt class="mt-2 text-sm font-semibold">GitHub Stars</dt>
+                    <p class="mt-1 text-sm text-muted-foreground">And growing every week</p>
+                  </div>
+                  <div class="flex flex-col items-center text-center px-6 py-8">
+                    <dd class="text-4xl font-bold tracking-tight">30+</dd>
+                    <dt class="mt-2 text-sm font-semibold">Components</dt>
+                    <p class="mt-1 text-sm text-muted-foreground">Ready to copy and paste</p>
+                  </div>
+                  <div class="flex flex-col items-center text-center px-6 py-8">
+                    <dd class="text-4xl font-bold tracking-tight">99.9%</dd>
+                    <dt class="mt-2 text-sm font-semibold">Uptime</dt>
+                    <p class="mt-1 text-sm text-muted-foreground">Battle-tested infrastructure</p>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Team -->
+        <section id="team" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Team</h2>
+            <p class="text-muted-foreground">Introduce the people behind your product.</p>
+          </div>
+
+          <div class="space-y-12">
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Card Grid with Initials</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="teamDefault"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-teamDefault">
+                <pre><code>{codeSnippets.teamDefault}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="text-center mb-10">
+                  <h2 class="text-3xl font-bold mb-3">Meet Our Team</h2>
+                  <p class="text-muted-foreground">The people building AstroDeck</p>
+                </div>
+                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  <div
+                    class="flex flex-col items-center text-center rounded-xl border bg-card p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                  >
+                    <div
+                      class="h-20 w-20 rounded-full bg-muted flex items-center justify-center ring-2 ring-border mb-4"
+                    >
+                      <span class="text-xl font-semibold text-muted-foreground">AR</span>
+                    </div>
+                    <p class="font-semibold text-base leading-tight">Alex Rivera</p>
+                    <p class="text-sm text-muted-foreground mt-1">Co-Founder & CEO</p>
+                    <p class="text-sm text-muted-foreground mt-3 leading-relaxed">
+                      Passionate about developer experience and open source.
+                    </p>
+                    <div
+                      class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center"
+                    >
+                      <a
+                        href="#"
+                        aria-label="Alex Rivera on GitHub"
+                        class="text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          class="h-4 w-4"
+                          aria-hidden="true"
+                          ><path
+                            d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"
+                          ></path></svg
+                        >
+                      </a>
+                      <a
+                        href="#"
+                        aria-label="Alex Rivera on X (Twitter)"
+                        class="text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          class="h-4 w-4"
+                          aria-hidden="true"
+                          ><path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                          ></path></svg
+                        >
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="flex flex-col items-center text-center rounded-xl border bg-card p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                  >
+                    <div
+                      class="h-20 w-20 rounded-full bg-muted flex items-center justify-center ring-2 ring-border mb-4"
+                    >
+                      <span class="text-xl font-semibold text-muted-foreground">SC</span>
+                    </div>
+                    <p class="font-semibold text-base leading-tight">Sam Chen</p>
+                    <p class="text-sm text-muted-foreground mt-1">Lead Engineer</p>
+                    <p class="text-sm text-muted-foreground mt-3 leading-relaxed">
+                      TypeScript enthusiast and Astro core contributor.
+                    </p>
+                    <div
+                      class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center"
+                    >
+                      <a
+                        href="#"
+                        aria-label="Sam Chen on GitHub"
+                        class="text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          class="h-4 w-4"
+                          aria-hidden="true"
+                          ><path
+                            d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"
+                          ></path></svg
+                        >
+                      </a>
+                      <a
+                        href="#"
+                        aria-label="Sam Chen on LinkedIn"
+                        class="text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          class="h-4 w-4"
+                          aria-hidden="true"
+                          ><path
+                            d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
+                          ></path></svg
+                        >
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="flex flex-col items-center text-center rounded-xl border bg-card p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                  >
+                    <div
+                      class="h-20 w-20 rounded-full bg-muted flex items-center justify-center ring-2 ring-border mb-4"
+                    >
+                      <span class="text-xl font-semibold text-muted-foreground">JL</span>
+                    </div>
+                    <p class="font-semibold text-base leading-tight">Jordan Lee</p>
+                    <p class="text-sm text-muted-foreground mt-1">Design Lead</p>
+                    <p class="text-sm text-muted-foreground mt-3 leading-relaxed">
+                      Crafting accessible interfaces with Tailwind and shadcn/ui.
+                    </p>
+                    <div
+                      class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center"
+                    >
+                      <a
+                        href="#"
+                        aria-label="Jordan Lee on X (Twitter)"
+                        class="text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          class="h-4 w-4"
+                          aria-hidden="true"
+                          ><path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                          ></path></svg
+                        >
+                      </a>
+                      <a
+                        href="#"
+                        aria-label="Jordan Lee on LinkedIn"
+                        class="text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          class="h-4 w-4"
+                          aria-hidden="true"
+                          ><path
+                            d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
+                          ></path></svg
+                        >
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Comparison -->
+        <section id="comparison" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Comparison</h2>
+            <p class="text-muted-foreground">Show how you stack up against the competition.</p>
+          </div>
+
+          <div class="space-y-12">
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Feature Comparison Table</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="comparisonDefault"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-comparisonDefault">
+                <pre><code>{codeSnippets.comparisonDefault}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="text-center mb-10">
+                  <h2 class="text-3xl font-bold mb-3">How We Compare</h2>
+                  <p class="text-muted-foreground">
+                    See why teams choose AstroDeck over the alternatives
+                  </p>
+                </div>
+                <div class="overflow-x-auto rounded-xl border shadow-lg">
+                  <table class="w-full min-w-[540px] border-collapse text-sm">
+                    <thead>
+                      <tr class="border-b border-border">
+                        <th
+                          scope="col"
+                          class="sticky left-0 z-10 bg-card w-40 min-w-[10rem] p-4 text-left font-medium text-muted-foreground"
+                        >
+                          <span class="sr-only">Feature</span>
+                        </th>
+                        <th
+                          scope="col"
+                          class="p-4 text-center font-semibold bg-primary/8 text-foreground"
+                        >
+                          <span class="inline-flex flex-col items-center gap-1">
+                            AstroDeck
+                            <span
+                              class="text-xs font-normal text-primary border border-primary/30 rounded-full px-2 py-0.5 leading-tight"
+                              >Recommended</span
+                            >
+                          </span>
+                        </th>
+                        <th
+                          scope="col"
+                          class="p-4 text-center font-semibold bg-card text-foreground"
+                          >Competitor A</th
+                        >
+                        <th
+                          scope="col"
+                          class="p-4 text-center font-semibold bg-card text-foreground"
+                          >Competitor B</th
+                        >
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="border-b border-border bg-card">
+                        <td class="sticky left-0 z-10 p-4 font-medium bg-card">Open source</td>
+                        <td class="p-4 text-center bg-primary/8"
+                          ><span class="inline-flex items-center justify-center" aria-label="Yes"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-primary"
+                              aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg
+                            ></span
+                          ></td
+                        >
+                        <td class="p-4 text-center"
+                          ><span class="inline-flex items-center justify-center" aria-label="No"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-muted-foreground"
+                              aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line></svg
+                            ></span
+                          ></td
+                        >
+                        <td class="p-4 text-center"
+                          ><span class="inline-flex items-center justify-center" aria-label="No"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-muted-foreground"
+                              aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line></svg
+                            ></span
+                          ></td
+                        >
+                      </tr>
+                      <tr class="border-b border-border bg-muted/40">
+                        <td class="sticky left-0 z-10 p-4 font-medium bg-muted/40"
+                          >TypeScript support</td
+                        >
+                        <td class="p-4 text-center bg-primary/8"
+                          ><span class="inline-flex items-center justify-center" aria-label="Yes"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-primary"
+                              aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg
+                            ></span
+                          ></td
+                        >
+                        <td class="p-4 text-center"
+                          ><span class="inline-flex items-center justify-center" aria-label="Yes"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-primary"
+                              aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg
+                            ></span
+                          ></td
+                        >
+                        <td class="p-4 text-center"
+                          ><span class="inline-flex items-center justify-center" aria-label="No"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-muted-foreground"
+                              aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line></svg
+                            ></span
+                          ></td
+                        >
+                      </tr>
+                      <tr class="border-b border-border bg-card">
+                        <td class="sticky left-0 z-10 p-4 font-medium bg-card">Dark mode</td>
+                        <td class="p-4 text-center bg-primary/8"
+                          ><span class="inline-flex items-center justify-center" aria-label="Yes"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-primary"
+                              aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg
+                            ></span
+                          ></td
+                        >
+                        <td class="p-4 text-center"
+                          ><span class="inline-flex items-center justify-center" aria-label="Yes"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-primary"
+                              aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg
+                            ></span
+                          ></td
+                        >
+                        <td class="p-4 text-center"
+                          ><span class="inline-flex items-center justify-center" aria-label="No"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-muted-foreground"
+                              aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line></svg
+                            ></span
+                          ></td
+                        >
+                      </tr>
+                      <tr class="border-b border-border bg-muted/40">
+                        <td class="sticky left-0 z-10 p-4 font-medium bg-muted/40"
+                          >Tailwind CSS v4</td
+                        >
+                        <td class="p-4 text-center bg-primary/8"
+                          ><span class="inline-flex items-center justify-center" aria-label="Yes"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-primary"
+                              aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg
+                            ></span
+                          ></td
+                        >
+                        <td class="p-4 text-center"
+                          ><span class="inline-flex items-center justify-center" aria-label="No"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-muted-foreground"
+                              aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line></svg
+                            ></span
+                          ></td
+                        >
+                        <td class="p-4 text-center"
+                          ><span class="inline-flex items-center justify-center" aria-label="No"
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-muted-foreground"
+                              aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line></svg
+                            ></span
+                          ></td
+                        >
+                      </tr>
+                      <tr class="bg-card">
+                        <td class="sticky left-0 z-10 p-4 font-medium bg-card">Updates per year</td>
+                        <td class="p-4 text-center bg-primary/8 font-medium">Unlimited</td>
+                        <td class="p-4 text-center text-muted-foreground">12</td>
+                        <td class="p-4 text-center text-muted-foreground">4</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Contact</h2>
+            <p class="text-muted-foreground">Let visitors reach you with a clean contact form.</p>
+          </div>
+
+          <div class="space-y-12">
+            <div class="border rounded-lg p-8 bg-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Split with Form</h3>
+                <button
+                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
+                  data-code="contactDefault"
+                >
+                  Copy Code
+                </button>
+              </div>
+              <div class="code-block" id="code-contactDefault">
+                <pre><code>{codeSnippets.contactDefault}</code></pre>
+              </div>
+              <div class="border-t pt-6">
+                <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
+                  <div>
+                    <h2 class="text-3xl font-bold leading-tight md:text-4xl">Get in Touch</h2>
+                    <p class="mt-4 text-muted-foreground text-lg leading-relaxed">
+                      Have a question or want to contribute? We would love to hear from you.
+                    </p>
+                    <ul class="mt-8 space-y-5" aria-label="Contact information">
+                      <li class="flex items-start gap-3">
+                        <span
+                          class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted"
+                          aria-hidden="true"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="text-muted-foreground"
+                            ><rect width="20" height="16" x="2" y="4" rx="2"></rect><path
+                              d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg
+                          >
+                        </span>
+                        <div>
+                          <p
+                            class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5"
+                          >
+                            Email
+                          </p>
+                          <a
+                            href="mailto:hello@astrodeck.dev"
+                            class="text-sm text-foreground hover:text-primary transition-colors"
+                            >hello@astrodeck.dev</a
+                          >
+                        </div>
+                      </li>
+                      <li class="flex items-start gap-3">
+                        <span
+                          class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted"
+                          aria-hidden="true"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="text-muted-foreground"
+                            ><path
+                              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6 19.79 19.79 0 0 1 1.58 5.08 2 2 0 0 1 3.54 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.6a16 16 0 0 0 5.67 5.67l1.06-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.28 18z"
+                            ></path></svg
+                          >
+                        </span>
+                        <div>
+                          <p
+                            class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5"
+                          >
+                            Phone
+                          </p>
+                          <a
+                            href="tel:+15550001234"
+                            class="text-sm text-foreground hover:text-primary transition-colors"
+                            >+1 (555) 000-1234</a
+                          >
+                        </div>
+                      </li>
+                      <li class="flex items-start gap-3">
+                        <span
+                          class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted"
+                          aria-hidden="true"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="text-muted-foreground"
+                            ><path
+                              d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+                            ></path><circle cx="12" cy="10" r="3"></circle></svg
+                          >
+                        </span>
+                        <div>
+                          <p
+                            class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5"
+                          >
+                            Address
+                          </p>
+                          <address class="text-sm text-foreground not-italic">
+                            123 Developer Lane<br />San Francisco, CA 94107<br />United States
+                          </address>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="rounded-lg border bg-card p-6 md:p-8">
+                    <form action="#" method="POST" novalidate>
+                      <div class="space-y-5">
+                        <div class="space-y-1.5">
+                          <label for="demo-contact-name" class="text-sm font-medium leading-none"
+                            >Name <span class="text-destructive" aria-hidden="true">*</span></label
+                          >
+                          <input
+                            id="demo-contact-name"
+                            type="text"
+                            name="name"
+                            required
+                            autocomplete="name"
+                            placeholder="Jane Smith"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                          />
+                        </div>
+                        <div class="space-y-1.5">
+                          <label for="demo-contact-email" class="text-sm font-medium leading-none"
+                            >Email <span class="text-destructive" aria-hidden="true">*</span></label
+                          >
+                          <input
+                            id="demo-contact-email"
+                            type="email"
+                            name="email"
+                            required
+                            autocomplete="email"
+                            placeholder="jane@example.com"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                          />
+                        </div>
+                        <div class="space-y-1.5">
+                          <label for="demo-contact-subject" class="text-sm font-medium leading-none"
+                            >Subject</label
+                          >
+                          <input
+                            id="demo-contact-subject"
+                            type="text"
+                            name="subject"
+                            placeholder="How can we help?"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                          />
+                        </div>
+                        <div class="space-y-1.5">
+                          <label for="demo-contact-message" class="text-sm font-medium leading-none"
+                            >Message <span class="text-destructive" aria-hidden="true">*</span
+                            ></label
+                          >
+                          <textarea
+                            id="demo-contact-message"
+                            name="message"
+                            required
+                            rows="4"
+                            placeholder="Tell us more about your project..."
+                            class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-y min-h-[100px]"
+                          ></textarea>
+                        </div>
+                        <p class="text-xs text-muted-foreground">
+                          <span class="text-destructive" aria-hidden="true">*</span> Required fields
+                        </p>
+                        <button
+                          type="submit"
+                          class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                        >
+                          Send Message
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   </div>
 
@@ -1478,25 +2543,25 @@ import Contact from "@/components/sections/Contact.astro";
     // Copy code functionality
     document.addEventListener('DOMContentLoaded', () => {
       const copyButtons = document.querySelectorAll('.copy-btn');
-      
-      copyButtons.forEach(button => {
+
+      copyButtons.forEach((button) => {
         button.addEventListener('click', async () => {
           const codeId = button.getAttribute('data-code');
           const codeBlock = document.getElementById(`code-${codeId}`);
-          
+
           // Toggle code visibility
           codeBlock?.classList.toggle('show');
-          
+
           if (codeBlock?.classList.contains('show')) {
             // Copy to clipboard
             const codeText = codeBlock.querySelector('code')?.textContent || '';
-            
+
             try {
               await navigator.clipboard.writeText(codeText);
-              const originalText = button.textContent;
+
               button.textContent = 'Copied!';
               button.classList.add('bg-primary', 'text-primary-foreground');
-              
+
               setTimeout(() => {
                 button.textContent = 'Hide Code';
                 button.classList.remove('bg-primary', 'text-primary-foreground');
@@ -1523,7 +2588,7 @@ import Contact from "@/components/sections/Contact.astro";
         mobileToggle.setAttribute('aria-expanded', String(isOpen));
       });
 
-      mobileMenu?.querySelectorAll('a').forEach(link => {
+      mobileMenu?.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', () => {
           mobileMenu.classList.add('hidden');
           mobileChevron?.classList.remove('rotate-180');
@@ -1538,14 +2603,14 @@ import Contact from "@/components/sections/Contact.astro";
       const observerOptions = {
         root: null,
         rootMargin: '-100px 0px -66%',
-        threshold: 0
+        threshold: 0,
       };
 
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const id = entry.target.getAttribute('id');
-            navLinks.forEach(link => {
+            navLinks.forEach((link) => {
               link.classList.remove('bg-foreground', 'text-background');
               const countSpan = link.querySelector('.text-xs');
               if (countSpan) {
@@ -1554,7 +2619,7 @@ import Contact from "@/components/sections/Contact.astro";
               }
             });
             const activeLinks = document.querySelectorAll(`[data-section="${id}"]`);
-            activeLinks.forEach(link => {
+            activeLinks.forEach((link) => {
               link.classList.add('bg-foreground', 'text-background');
               const countSpan = link.querySelector('.text-xs');
               if (countSpan) {
@@ -1574,7 +2639,7 @@ import Contact from "@/components/sections/Contact.astro";
         });
       }, observerOptions);
 
-      pageSections.forEach(section => observer.observe(section));
+      pageSections.forEach((section) => observer.observe(section));
     });
   </script>
 </FullWidthLayout>
