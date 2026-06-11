@@ -32,3 +32,6 @@ npm-debug.log*
 # Plenum reports (local only, not tracked)
 system/reports/*.md
 !system/reports/.gitkeep
+
+# Claude Code local settings (per-developer, not shipped)
+.claude/settings.local.json

@@ -1,6 +1,7 @@
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import eslintPluginAstro from 'eslint-plugin-astro';
+import globals from 'globals';
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -8,6 +9,13 @@ export default tseslint.config(
   ...eslintPluginAstro.configs.recommended,
   {
     ignores: ['dist/**', 'node_modules/**', '.astro/**'],
+  },
+  {
+    // Node.js tooling scripts (hooks, KPI checks) run outside the browser
+    files: ['.claude/**/*.mjs', 'eslint.config.mjs', 'astro.config.mjs'],
+    languageOptions: {
+      globals: globals.node,
+    },
   },
   {
     rules: {
