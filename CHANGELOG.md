@@ -2,6 +2,29 @@
 
 All notable changes to AstroDeck are documented in this file.
 
+## [3.2.0] - 2026-06-11 — AI Layer v2 & Production-Readiness Pass
+
+### Added
+
+- New convention guard hook for Claude Code — blocks deprecated Astro patterns and design-system drift automatically
+- New npm run check:kpis — one command for all static convention checks (colors, inline styles, deprecated imports, alt texts, meta descriptions)
+- Browser theming (theme-color light/dark, color-scheme) and WebSite JSON-LD structured data
+- sitemap.xml now emitted alongside sitemap-index.xml
+- CLAUDE.md entry point for Claude Code (AGENTS.md + PROJECT.md remain the source of truth)
+
+### Changed
+
+- Geist brand fonts now active site-wide (were loaded but never applied)
+- Slash commands accept arguments (/new-page, /new-section, /theme, /plenum); review agents are now strictly read-only
+- AI layer (.claude/) unified in English; measure-and-learn loop scoped to build-relevant changes
+- ESLint and Prettier pass cleanly across the entire codebase
+
+### Fixed
+
+- Accessibility & validity: 0 W3C errors, Lighthouse Accessibility and Best Practices at 100, WCAG 2.5.8 tap-target sizes on all nav and footer links
+- Vercel Analytics only renders on Vercel deployments — no more 404 console error on local preview or other hosts
+- AuthLayout panel uses semantic tokens (bg-primary) instead of hardcoded bg-zinc-900
+
 ## [3.1.5] - 2026-06-09
 
 ### Changed

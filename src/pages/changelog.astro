@@ -3,6 +3,22 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
 const releases = [
   {
+    version: '3.2.0',
+    date: '2026-06-11',
+    tag: 'minor',
+    title: 'AI Layer v2 & Production-Readiness Pass',
+    highlights: [
+      'Geist brand fonts now active site-wide (were loaded but never applied)',
+      'New convention guard hook for Claude Code — blocks deprecated Astro patterns and design-system drift automatically',
+      'New npm run check:kpis — one command for all static convention checks (colors, inline styles, deprecated imports, alt texts, meta descriptions)',
+      'Slash commands accept arguments (/new-page, /new-section, /theme, /plenum); review agents are now strictly read-only',
+      'Accessibility & validity: 0 W3C errors, Lighthouse Accessibility and Best Practices at 100, WCAG 2.5.8 tap-target sizes on all nav and footer links',
+      'Browser theming (theme-color light/dark, color-scheme) and WebSite JSON-LD structured data',
+      'Vercel Analytics only renders on Vercel deployments — no more 404 console error on local preview or other hosts',
+      'sitemap.xml now emitted alongside sitemap-index.xml; ESLint and Prettier pass cleanly across the entire codebase',
+    ],
+  },
+  {
     version: '3.1.5',
     date: '2026-06-09',
     tag: 'patch',
