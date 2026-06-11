@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
@@ -13,7 +13,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         Typography & Content Elements
       </h1>
       <p class="text-lg text-muted-foreground">
-        A comprehensive showcase of typographic styles and content formatting available in AstroDeck.
+        A comprehensive showcase of typographic styles and content formatting available in
+        AstroDeck.
       </p>
       <div class="flex items-center gap-4 text-sm text-muted-foreground mt-6">
         <time datetime="2024-12-23">December 23, 2024</time>
@@ -59,8 +60,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         </p>
 
         <p class="text-lg mb-4">
-          <strong>Large paragraph text</strong> can be used for introductions or emphasis. It draws
-          attention without overwhelming the reader.
+          <strong>Large paragraph text</strong> can be used for introductions or emphasis. It draws attention
+          without overwhelming the reader.
         </p>
 
         <p class="text-sm text-muted-foreground mb-4">
@@ -69,8 +70,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         </p>
 
         <p class="mb-4">
-          You can use <strong>bold text</strong> for emphasis, <em>italic text</em> for subtle
-          stress, and <code class="px-1.5 py-0.5 bg-muted rounded text-sm font-mono">inline code</code>
+          You can use <strong>bold text</strong> for emphasis, <em>italic text</em> for subtle stress,
+          and <code class="px-1.5 py-0.5 bg-muted rounded text-sm font-mono">inline code</code>
           for technical references.
         </p>
       </section>
@@ -93,9 +94,21 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         <p class="mb-4">Use numbered lists for sequential steps or ranked items:</p>
         <ol class="list-decimal pl-6 mb-6 space-y-2">
           <li>Clone the repository from GitHub</li>
-          <li>Install dependencies with <code class="px-1.5 py-0.5 bg-muted rounded text-sm font-mono">npm install</code></li>
-          <li>Start the development server with <code class="px-1.5 py-0.5 bg-muted rounded text-sm font-mono">npm run dev</code></li>
-          <li>Open your browser to <code class="px-1.5 py-0.5 bg-muted rounded text-sm font-mono">localhost:4321</code></li>
+          <li>
+            Install dependencies with <code class="px-1.5 py-0.5 bg-muted rounded text-sm font-mono"
+              >npm install</code
+            >
+          </li>
+          <li>
+            Start the development server with <code
+              class="px-1.5 py-0.5 bg-muted rounded text-sm font-mono">npm run dev</code
+            >
+          </li>
+          <li>
+            Open your browser to <code class="px-1.5 py-0.5 bg-muted rounded text-sm font-mono"
+              >localhost:4321</code
+            >
+          </li>
           <li>Start building your project</li>
         </ol>
 
@@ -127,8 +140,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 
         <blockquote class="border-l-4 border-primary pl-6 py-2 my-6 italic text-muted-foreground">
           "AstroDeck combines the best of modern web development: blazing-fast performance,
-          beautiful design, and developer-friendly tooling. It's the perfect starting point
-          for any landing page or SaaS website."
+          beautiful design, and developer-friendly tooling. It's the perfect starting point for any
+          landing page or SaaS website."
         </blockquote>
 
         <blockquote class="border-l-4 border-primary pl-6 py-2 my-6">
@@ -143,12 +156,11 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
       <!-- Code Blocks Section -->
       <section>
         <h2 class="text-3xl font-bold mt-12 mb-6">Code Examples</h2>
-        <p class="mb-4">
-          Display code with proper syntax highlighting and formatting:
-        </p>
+        <p class="mb-4">Display code with proper syntax highlighting and formatting:</p>
 
         <div class="bg-muted/50 rounded-lg p-6 my-6 overflow-x-auto">
-          <pre class="font-mono text-sm"><code>{`import BaseLayout from "@/layouts/BaseLayout.astro";
+          <pre
+            class="font-mono text-sm"><code>{`import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
 
 <BaseLayout title="Home" description="Welcome">
@@ -172,12 +184,26 @@ import Hero from "@/components/sections/Hero.astro";
       <section>
         <h2 class="text-3xl font-bold mt-12 mb-6">Links</h2>
         <p class="mb-4">
-          Links are styled with <a href="/" class="text-primary underline hover:no-underline font-medium">appropriate contrast and hover states</a>
+          Links are styled with <a
+            href="/"
+            class="text-primary underline hover:no-underline font-medium"
+            >appropriate contrast and hover states</a
+          >
           to ensure they're easily identifiable. External links can include
-          <a href="https://github.com/holger1411/astrodeck" target="_blank" rel="noopener noreferrer" class="text-primary underline hover:no-underline font-medium inline-flex items-center gap-1">
+          <a
+            href="https://github.com/holger1411/astrodeck"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-primary underline hover:no-underline font-medium inline-flex items-center gap-1"
+          >
             an icon
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              ></path>
             </svg>
           </a> to indicate they open in a new tab.
         </p>

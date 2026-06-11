@@ -5,9 +5,9 @@
  * Custom error page for when users navigate to non-existent routes.
  * Uses MinimalLayout for a clean, distraction-free design.
  */
-import MinimalLayout from "@/layouts/MinimalLayout.astro";
-import Logo from "@/components/Logo.astro";
-import { Button } from "@/components/ui/button";
+import MinimalLayout from '@/layouts/MinimalLayout.astro';
+import Logo from '@/components/Logo.astro';
+import { Button } from '@/components/ui/button';
 ---
 
 <MinimalLayout
@@ -23,17 +23,18 @@ import { Button } from "@/components/ui/button";
       </div>
 
       <!-- 404 Number with gradient -->
-      <h1 class="text-9xl font-bold bg-gradient-to-r from-primary to-primary/50 bg-clip-text text-transparent">
+      <h1
+        class="text-9xl font-bold bg-gradient-to-r from-primary to-primary/50 bg-clip-text text-transparent"
+      >
         404
       </h1>
 
       <!-- Error message -->
       <div class="space-y-3">
-        <h2 class="text-2xl font-semibold text-foreground">
-          Page not found
-        </h2>
+        <h2 class="text-2xl font-semibold text-foreground">Page not found</h2>
         <p class="text-muted-foreground">
-          Sorry, we couldn't find the page you're looking for. It might have been moved, deleted, or never existed.
+          Sorry, we couldn't find the page you're looking for. It might have been moved, deleted, or
+          never existed.
         </p>
       </div>
 
@@ -41,17 +42,37 @@ import { Button } from "@/components/ui/button";
       <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
         <Button asChild>
           <a href="/">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-              <polyline points="9 22 9 12 15 12 15 22"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 mr-2"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
             Back to Home
           </a>
         </Button>
         <Button variant="outline" asChild>
           <a href="/blog">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 mr-2"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
             </svg>
             Read Blog
           </a>
@@ -60,7 +81,10 @@ import { Button } from "@/components/ui/button";
 
       <!-- Help text -->
       <p class="text-sm text-muted-foreground pt-4">
-        If you believe this is an error, please <a href="https://github.com/holger1411/astrodeck/issues" class="text-primary hover:underline">report it on GitHub</a>.
+        If you believe this is an error, please <a
+          href="https://github.com/holger1411/astrodeck/issues"
+          class="text-primary hover:underline">report it on GitHub</a
+        >.
       </p>
     </div>
   </div>

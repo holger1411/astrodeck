@@ -7,20 +7,15 @@ import {
   DialogDescription,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from "@/components/ui/accordion";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-  TooltipProvider,
-} from "@/components/ui/tooltip";
+} from '@/components/ui/accordion';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import {
   Select,
   SelectTrigger,
@@ -29,7 +24,7 @@ import {
   SelectItem,
   SelectGroup,
   SelectLabel,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -37,8 +32,8 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
 
 export function DialogDemo() {
   return (
@@ -54,8 +49,7 @@ export function DialogDemo() {
           </DialogDescription>
         </DialogHeader>
         <p className="text-sm text-muted-foreground">
-          This is additional dialog body content. You can put any React
-          elements here.
+          This is additional dialog body content. You can put any React elements here.
         </p>
         <DialogFooter>
           <DialogClose asChild>
@@ -76,22 +70,22 @@ export function AccordionDemo() {
       <AccordionItem value="item-1">
         <AccordionTrigger>What is AstroDeck?</AccordionTrigger>
         <AccordionContent>
-          AstroDeck is an open-source component library and starter kit for
-          building Astro.js websites with pre-built, production-ready sections.
+          AstroDeck is an open-source component library and starter kit for building Astro.js
+          websites with pre-built, production-ready sections.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
         <AccordionTrigger>Which UI library does it use?</AccordionTrigger>
         <AccordionContent>
-          AstroDeck uses shadcn/ui components built on Radix UI primitives,
-          fully accessible and keyboard-navigable out of the box.
+          AstroDeck uses shadcn/ui components built on Radix UI primitives, fully accessible and
+          keyboard-navigable out of the box.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-3">
         <AccordionTrigger>Does it support dark mode?</AccordionTrigger>
         <AccordionContent>
-          Yes. All components use CSS variables via Tailwind CSS v4, so dark
-          mode works automatically without any extra configuration.
+          Yes. All components use CSS variables via Tailwind CSS v4, so dark mode works
+          automatically without any extra configuration.
         </AccordionContent>
       </AccordionItem>
     </Accordion>
@@ -108,20 +102,17 @@ export function TabsDemo() {
       </TabsList>
       <TabsContent value="overview" className="mt-4">
         <p className="text-sm text-muted-foreground">
-          This is the overview tab. Display your main content and summary
-          information here.
+          This is the overview tab. Display your main content and summary information here.
         </p>
       </TabsContent>
       <TabsContent value="analytics" className="mt-4">
         <p className="text-sm text-muted-foreground">
-          This is the analytics tab. Show charts, metrics, and usage data in
-          this panel.
+          This is the analytics tab. Show charts, metrics, and usage data in this panel.
         </p>
       </TabsContent>
       <TabsContent value="settings" className="mt-4">
         <p className="text-sm text-muted-foreground">
-          This is the settings tab. Manage preferences and configuration
-          options here.
+          This is the settings tab. Manage preferences and configuration options here.
         </p>
       </TabsContent>
     </Tabs>

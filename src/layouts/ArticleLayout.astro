@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "./BaseLayout.astro";
+import BaseLayout from './BaseLayout.astro';
 
 interface Props {
   title: string;
@@ -15,12 +15,14 @@ const { title, description, publishDate, author } = Astro.props;
   <article class="container max-w-3xl py-12">
     <header class="mb-8">
       <h1 class="text-4xl font-bold tracking-tight mb-4">{title}</h1>
-      {(publishDate || author) && (
-        <div class="flex items-center gap-4 text-muted-foreground text-sm">
-          {publishDate && <time datetime={publishDate}>{publishDate}</time>}
-          {author && <span>by {author}</span>}
-        </div>
-      )}
+      {
+        (publishDate || author) && (
+          <div class="flex items-center gap-4 text-muted-foreground text-sm">
+            {publishDate && <time datetime={publishDate}>{publishDate}</time>}
+            {author && <span>by {author}</span>}
+          </div>
+        )
+      }
     </header>
     <div class="prose prose-neutral dark:prose-invert max-w-none">
       <slot />

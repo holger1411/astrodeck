@@ -1,52 +1,58 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import Hero from "@/components/sections/Hero.astro";
-import LogoCloud from "@/components/sections/LogoCloud.astro";
-import Features from "@/components/sections/Features.astro";
-import AIFeature from "@/components/sections/AIFeature.astro";
-import Stats from "@/components/sections/Stats.astro";
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import LogoCloud from '@/components/sections/LogoCloud.astro';
+import Features from '@/components/sections/Features.astro';
+import AIFeature from '@/components/sections/AIFeature.astro';
+import Stats from '@/components/sections/Stats.astro';
 
 const features = [
   {
-    title: "Astro.js Powered",
-    description: "Built with Astro for lightning-fast performance and optimal SEO out of the box.",
-    icon: "zap",
+    title: 'Astro.js Powered',
+    description: 'Built with Astro for lightning-fast performance and optimal SEO out of the box.',
+    icon: 'zap',
   },
   {
-    title: "shadcn/ui Components",
-    description: "Beautiful, accessible components built with Radix UI and Tailwind CSS.",
-    icon: "shield",
+    title: 'shadcn/ui Components',
+    description: 'Beautiful, accessible components built with Radix UI and Tailwind CSS.',
+    icon: 'shield',
   },
   {
-    title: "TypeScript Ready",
-    description: "Full TypeScript support for type-safe development and better DX.",
-    icon: "chart",
+    title: 'TypeScript Ready',
+    description: 'Full TypeScript support for type-safe development and better DX.',
+    icon: 'chart',
   },
   {
-    title: "Dark Mode",
-    description: "Built-in dark mode support with seamless theme switching.",
-    icon: "users",
+    title: 'Dark Mode',
+    description: 'Built-in dark mode support with seamless theme switching.',
+    icon: 'users',
   },
   {
-    title: "Responsive Design",
-    description: "Mobile-first approach ensuring perfect display on all devices.",
-    icon: "globe",
+    title: 'Responsive Design',
+    description: 'Mobile-first approach ensuring perfect display on all devices.',
+    icon: 'globe',
   },
   {
-    title: "Ready to Deploy",
-    description: "Optimized for Vercel, Netlify, and other modern hosting platforms.",
-    icon: "lock",
+    title: 'Ready to Deploy',
+    description: 'Optimized for Vercel, Netlify, and other modern hosting platforms.',
+    icon: 'lock',
   },
 ];
 ---
 
-<BaseLayout title="Astro.js Starter Kit" description="Open-source Astro.js starter kit with ready-to-use components, shadcn/ui, Tailwind CSS, and TypeScript. Build production-ready websites faster.">
+<BaseLayout
+  title="Astro.js Starter Kit"
+  description="Open-source Astro.js starter kit with ready-to-use components, shadcn/ui, Tailwind CSS, and TypeScript. Build production-ready websites faster."
+>
   <Hero
     badge="true"
     title="Your Astro project, ready to take off."
     subtitle="AstroDeck is a production-ready <mark>Astro.js starter kit</mark> with pre-built components, shadcn/ui, dark mode, and TypeScript. <mark>Built AI-friendly</mark> with <mark>AGENTS.md</mark> – the open standard supported by OpenAI, GitHub, Google, and all major coding assistants. Plus a dedicated <mark>Claude Code Agent</mark> for intelligent project guidance."
-    primaryCta={{ href: "https://github.com/holger1411/astrodeck/releases/latest", label: "Download" }}
-    secondaryCta={{ href: "https://github.com/holger1411/astrodeck", label: "GitHub" }}
+    primaryCta={{
+      href: 'https://github.com/holger1411/astrodeck/releases/latest',
+      label: 'Download',
+    }}
+    secondaryCta={{ href: 'https://github.com/holger1411/astrodeck', label: 'GitHub' }}
   />
 
   <LogoCloud />
@@ -56,10 +62,10 @@ const features = [
   <div class="section-inverted py-8">
     <Stats
       stats={[
-        { value: "16", label: "Sections", description: "Pre-built, ready to use" },
-        { value: "11", label: "UI Components", description: "shadcn/ui + Radix" },
-        { value: "11", label: "Pages", description: "Templates & examples" },
-        { value: "8+", label: "AI Tools", description: "Claude, Cursor, Copilot, Windsurf & more" },
+        { value: '16', label: 'Sections', description: 'Pre-built, ready to use' },
+        { value: '11', label: 'UI Components', description: 'shadcn/ui + Radix' },
+        { value: '11', label: 'Pages', description: 'Templates & examples' },
+        { value: '8+', label: 'AI Tools', description: 'Claude, Cursor, Copilot, Windsurf & more' },
       ]}
     />
   </div>
@@ -77,15 +83,21 @@ const features = [
           Ready to build something amazing?
         </h2>
         <p class="mt-6 text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-          Download AstroDeck, open it in your favorite AI coding tool, and start building. Free and open source — forever.
+          Download AstroDeck, open it in your favorite AI coding tool, and start building. Free and
+          open source — forever.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 mt-10 justify-center">
           <a
             href="https://github.com/holger1411/astrodeck/releases/latest"
             class="group relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-semibold ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 h-12 px-12 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 overflow-hidden"
           >
-            <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" aria-hidden="true"></span>
-            <span class="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-0.5">Download</span>
+            <span
+              class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"
+              aria-hidden="true"></span>
+            <span
+              class="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-0.5"
+              >Download</span
+            >
           </a>
           <a
             href="https://github.com/holger1411/astrodeck"

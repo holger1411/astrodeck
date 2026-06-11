@@ -49,37 +49,32 @@ interface Props {
   features: FeatureRow[];
 }
 
-const {
-  title = "How We Compare",
-  subtitle,
-  columns,
-  features,
-} = Astro.props;
+const { title = 'How We Compare', subtitle, columns, features } = Astro.props;
 ---
 
 <section class="py-16 md:py-24 px-6">
   <div class="container max-w-5xl mx-auto">
-
-    <!-- Section header -->
+    {/* Section header */}
     <div class="flex flex-col items-center space-y-4 text-center mb-12">
       <h2 class="text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">
         {title}
       </h2>
-      {subtitle && (
-        <p class="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-          {subtitle}
-        </p>
-      )}
+      {
+        subtitle && (
+          <p class="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+            {subtitle}
+          </p>
+        )
+      }
     </div>
 
-    <!-- Scroll wrapper — enables horizontal scroll on small screens -->
+    {/* Scroll wrapper — enables horizontal scroll on small screens */}
     <div class="overflow-x-auto rounded-xl border shadow-lg">
       <table class="w-full min-w-[540px] border-collapse text-sm">
-
-        <!-- Column headers -->
+        {/* Column headers */}
         <thead>
           <tr class="border-b border-border">
-            <!-- Empty top-left cell above the feature label column -->
+            {/* Empty top-left cell above the feature label column */}
             <th
               scope="col"
               class="sticky left-0 z-10 bg-card w-40 min-w-[10rem] p-4 text-left font-medium text-muted-foreground"
@@ -87,111 +82,110 @@ const {
               <span class="sr-only">Feature</span>
             </th>
 
-            {columns.map((col) => (
-              <th
-                scope="col"
-                class:list={[
-                  "p-4 text-center font-semibold",
-                  col.highlighted
-                    ? "bg-primary/8 text-foreground"
-                    : "bg-card text-foreground",
-                ]}
-              >
-                {col.highlighted ? (
-                  <span class="inline-flex flex-col items-center gap-1">
-                    {col.name}
-                    <span class="text-xs font-normal text-primary border border-primary/30 rounded-full px-2 py-0.5 leading-tight">
-                      Recommended
+            {
+              columns.map((col) => (
+                <th
+                  scope="col"
+                  class:list={[
+                    'p-4 text-center font-semibold',
+                    col.highlighted ? 'bg-primary/8 text-foreground' : 'bg-card text-foreground',
+                  ]}
+                >
+                  {col.highlighted ? (
+                    <span class="inline-flex flex-col items-center gap-1">
+                      {col.name}
+                      <span class="text-xs font-normal text-primary border border-primary/30 rounded-full px-2 py-0.5 leading-tight">
+                        Recommended
+                      </span>
                     </span>
-                  </span>
-                ) : (
-                  col.name
-                )}
-              </th>
-            ))}
+                  ) : (
+                    col.name
+                  )}
+                </th>
+              ))
+            }
           </tr>
         </thead>
 
-        <!-- Feature rows -->
+        {/* Feature rows */}
         <tbody>
-          {features.map((row, rowIndex) => (
-            <tr
-              class:list={[
-                "border-b border-border last:border-b-0",
-                rowIndex % 2 === 0 ? "bg-card" : "bg-muted/40",
-              ]}
-            >
-              <!-- Feature label — sticky on horizontal scroll -->
-              <td
+          {
+            features.map((row, rowIndex) => (
+              <tr
                 class:list={[
-                  "sticky left-0 z-10 p-4 font-medium text-foreground",
-                  rowIndex % 2 === 0 ? "bg-card" : "bg-muted/40",
+                  'border-b border-border last:border-b-0',
+                  rowIndex % 2 === 0 ? 'bg-card' : 'bg-muted/40',
                 ]}
               >
-                {row.name}
-              </td>
+                {/* Feature label — sticky on horizontal scroll */}
+                <td
+                  class:list={[
+                    'sticky left-0 z-10 p-4 font-medium text-foreground',
+                    rowIndex % 2 === 0 ? 'bg-card' : 'bg-muted/40',
+                  ]}
+                >
+                  {row.name}
+                </td>
 
-              {row.values.map((value, colIndex) => {
-                const col = columns[colIndex];
-                const isHighlighted = col?.highlighted ?? false;
+                {row.values.map((value, colIndex) => {
+                  const col = columns[colIndex];
+                  const isHighlighted = col?.highlighted ?? false;
 
-                return (
-                  <td
-                    class:list={[
-                      "p-4 text-center align-middle",
-                      isHighlighted && "bg-primary/8",
-                    ]}
-                  >
-                    {typeof value === "boolean" ? (
-                      value ? (
-                        /* Checkmark */
-                        <span class="inline-flex items-center justify-center" aria-label="Yes">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="h-5 w-5 text-primary"
-                            aria-hidden="true"
-                          >
-                            <polyline points="20 6 9 17 4 12" />
-                          </svg>
-                        </span>
+                  return (
+                    <td
+                      class:list={['p-4 text-center align-middle', isHighlighted && 'bg-primary/8']}
+                    >
+                      {typeof value === 'boolean' ? (
+                        value ? (
+                          /* Checkmark */
+                          <span class="inline-flex items-center justify-center" aria-label="Yes">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-primary"
+                              aria-hidden="true"
+                            >
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          </span>
+                        ) : (
+                          /* Dash */
+                          <span class="inline-flex items-center justify-center" aria-label="No">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5 text-muted-foreground"
+                              aria-hidden="true"
+                            >
+                              <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                          </span>
+                        )
                       ) : (
-                        /* Dash */
-                        <span class="inline-flex items-center justify-center" aria-label="No">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="h-5 w-5 text-muted-foreground"
-                            aria-hidden="true"
-                          >
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                          </svg>
+                        <span
+                          class:list={[isHighlighted ? 'font-medium' : 'text-muted-foreground']}
+                        >
+                          {value}
                         </span>
-                      )
-                    ) : (
-                      <span class:list={[isHighlighted ? "font-medium" : "text-muted-foreground"]}>
-                        {value}
-                      </span>
-                    )}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))
+          }
         </tbody>
-
       </table>
     </div>
-
   </div>
 </section>

@@ -1,18 +1,16 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-  const allPosts = await getCollection("blog");
+  const allPosts = await getCollection('blog');
 
   // Get all unique tags
   const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
 
   // Return a path for each tag with filtered posts
   return uniqueTags.map((tag) => {
-    const filteredPosts = allPosts.filter((post) =>
-      post.data.tags.includes(tag)
-    );
+    const filteredPosts = allPosts.filter((post) => post.data.tags.includes(tag));
     return {
       params: { tag },
       props: { posts: filteredPosts },
@@ -24,24 +22,19 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 
 // Sort posts by date (newest first)
-const sortedPosts = posts.sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 // Format date helper
 function formatDate(date: Date) {
-  return new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
 }
 ---
 
-<BaseLayout
-  title={`Posts tagged "${tag}"`}
-  description={`All blog posts tagged with ${tag}`}
->
+<BaseLayout title={`Posts tagged "${tag}"`} description={`All blog posts tagged with ${tag}`}>
   <div class="container max-w-4xl mx-auto py-16">
     <div class="mb-16">
       <a
@@ -55,7 +48,7 @@ function formatDate(date: Date) {
       </h1>
       <p class="text-xl text-muted-foreground">
         {sortedPosts.length}
-        {sortedPosts.length === 1 ? "post" : "posts"}
+        {sortedPosts.length === 1 ? 'post' : 'posts'}
       </p>
     </div>
 
@@ -68,9 +61,7 @@ function formatDate(date: Date) {
                 {post.data.title}
               </h2>
 
-              <p class="text-lg text-muted-foreground">
-                {post.data.description}
-              </p>
+              <p class="text-lg text-muted-foreground">{post.data.description}</p>
 
               <div class="flex items-center gap-4 text-sm text-muted-foreground">
                 <time datetime={post.data.pubDate.toISOString()}>

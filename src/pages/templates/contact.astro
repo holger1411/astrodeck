@@ -1,20 +1,23 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import Contact from "@/components/sections/Contact.astro";
-import FAQ from "@/components/sections/FAQ.astro";
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Contact from '@/components/sections/Contact.astro';
+import FAQ from '@/components/sections/FAQ.astro';
 
 const faqs = [
   {
-    question: "What are your support hours?",
-    answer: "Our support team is available Monday to Friday, 9 AM to 6 PM Pacific Time. Pro and Enterprise customers receive priority routing and can expect a first response within 2 hours. Enterprise customers on the 24/7 add-on have access to round-the-clock phone and Slack support.",
+    question: 'What are your support hours?',
+    answer:
+      'Our support team is available Monday to Friday, 9 AM to 6 PM Pacific Time. Pro and Enterprise customers receive priority routing and can expect a first response within 2 hours. Enterprise customers on the 24/7 add-on have access to round-the-clock phone and Slack support.',
   },
   {
-    question: "How do I report a security vulnerability?",
-    answer: "We take security seriously. Please disclose vulnerabilities responsibly by emailing security@nebula.dev. We will acknowledge your report within 24 hours and aim to resolve confirmed issues within 72 hours. We maintain a public bug bounty program — details are available on our security page.",
+    question: 'How do I report a security vulnerability?',
+    answer:
+      'We take security seriously. Please disclose vulnerabilities responsibly by emailing security@nebula.dev. We will acknowledge your report within 24 hours and aim to resolve confirmed issues within 72 hours. We maintain a public bug bounty program — details are available on our security page.',
   },
   {
-    question: "Can I request a live product demo?",
-    answer: "Absolutely. Use the contact form above or email sales@nebula.dev to schedule a 30-minute demo with a solutions engineer. We tailor every demo to your specific use case and tech stack — no generic slide decks.",
+    question: 'Can I request a live product demo?',
+    answer:
+      'Absolutely. Use the contact form above or email sales@nebula.dev to schedule a 30-minute demo with a solutions engineer. We tailor every demo to your specific use case and tech stack — no generic slide decks.',
   },
 ];
 ---
@@ -29,7 +32,7 @@ const faqs = [
       subtitle="Whether you have a question about pricing, need a demo, or want to report a bug — the right person at Nebula is ready to help."
       email="hello@nebula.dev"
       phone="+1 (415) 555-0182"
-      address={"Nebula Technologies Inc.\n340 Pine Street, Suite 800\nSan Francisco, CA 94104"}
+      address={'Nebula Technologies Inc.\n340 Pine Street, Suite 800\nSan Francisco, CA 94104'}
     />
   </div>
 

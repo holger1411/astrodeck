@@ -1,4 +1,5 @@
 ---
+
 ---
 
 <button
@@ -18,15 +19,15 @@
     stroke-linecap="round"
     stroke-linejoin="round"
   >
-    <circle cx="12" cy="12" r="4" />
-    <path d="M12 2v2" />
-    <path d="M12 20v2" />
-    <path d="m4.93 4.93 1.41 1.41" />
-    <path d="m17.66 17.66 1.41 1.41" />
-    <path d="M2 12h2" />
-    <path d="M20 12h2" />
-    <path d="m6.34 17.66-1.41 1.41" />
-    <path d="m19.07 4.93-1.41 1.41" />
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2"></path>
+    <path d="M12 20v2"></path>
+    <path d="m4.93 4.93 1.41 1.41"></path>
+    <path d="m17.66 17.66 1.41 1.41"></path>
+    <path d="M2 12h2"></path>
+    <path d="M20 12h2"></path>
+    <path d="m6.34 17.66-1.41 1.41"></path>
+    <path d="m19.07 4.93-1.41 1.41"></path>
   </svg>
   <svg
     class="moon-icon h-5 w-5"
@@ -38,40 +39,48 @@
     stroke-linecap="round"
     stroke-linejoin="round"
   >
-    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
   </svg>
 </button>
 
 <style>
-  .sun-icon { display: none; }
-  .moon-icon { display: block; }
-  :global(.dark) .sun-icon { display: block; }
-  :global(.dark) .moon-icon { display: none; }
+  .sun-icon {
+    display: none;
+  }
+  .moon-icon {
+    display: block;
+  }
+  :global(.dark) .sun-icon {
+    display: block;
+  }
+  :global(.dark) .moon-icon {
+    display: none;
+  }
 </style>
 
 <script>
   function updateAriaStates() {
-    const isDark = document.documentElement.classList.contains("dark");
-    document.querySelectorAll<HTMLButtonElement>(".theme-toggle").forEach(toggle => {
-      toggle.setAttribute("aria-checked", String(isDark));
+    const isDark = document.documentElement.classList.contains('dark');
+    document.querySelectorAll<HTMLButtonElement>('.theme-toggle').forEach((toggle) => {
+      toggle.setAttribute('aria-checked', String(isDark));
     });
   }
 
   function initThemeToggles() {
     updateAriaStates();
 
-    document.querySelectorAll(".theme-toggle").forEach(toggle => {
+    document.querySelectorAll('.theme-toggle').forEach((toggle) => {
       const newToggle = toggle.cloneNode(true) as Element;
       toggle.replaceWith(newToggle);
 
-      newToggle.addEventListener("click", () => {
-        const isDark = document.documentElement.classList.contains("dark");
+      newToggle.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.contains('dark');
         if (isDark) {
-          document.documentElement.classList.remove("dark");
-          localStorage.setItem("theme", "light");
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
         } else {
-          document.documentElement.classList.add("dark");
-          localStorage.setItem("theme", "dark");
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
         }
         updateAriaStates();
       });
@@ -82,14 +91,14 @@
 
   if (!window.__themeToggleInit) {
     window.__themeToggleInit = true;
-    document.addEventListener("astro:after-swap", initThemeToggles);
+    document.addEventListener('astro:after-swap', initThemeToggles);
 
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-      if (!localStorage.getItem("theme")) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
         if (e.matches) {
-          document.documentElement.classList.add("dark");
+          document.documentElement.classList.add('dark');
         } else {
-          document.documentElement.classList.remove("dark");
+          document.documentElement.classList.remove('dark');
         }
         updateAriaStates();
       }

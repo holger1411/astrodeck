@@ -7,13 +7,7 @@ interface Props {
   address?: string;
 }
 
-const {
-  title = "Get in Touch",
-  subtitle,
-  email,
-  phone,
-  address,
-} = Astro.props;
+const { title = 'Get in Touch', subtitle, email, phone, address } = Astro.props;
 
 const hasContactInfo = email || phone || address;
 ---
@@ -21,132 +15,131 @@ const hasContactInfo = email || phone || address;
 <section class="py-16 md:py-24">
   <div class="container max-w-5xl mx-auto px-6">
     <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
-
       <!-- Left column: info -->
       <div>
         <h2 class="text-3xl font-bold leading-tight md:text-4xl">
           {title}
         </h2>
-        {subtitle && (
-          <p class="mt-4 text-muted-foreground text-lg leading-relaxed">
-            {subtitle}
-          </p>
-        )}
+        {subtitle && <p class="mt-4 text-muted-foreground text-lg leading-relaxed">{subtitle}</p>}
 
-        {hasContactInfo && (
-          <ul class="mt-8 space-y-5" aria-label="Contact information">
-            {email && (
-              <li class="flex items-start gap-3">
-                <span
-                  class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted"
-                  aria-hidden="true"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="text-muted-foreground"
+        {
+          hasContactInfo && (
+            <ul class="mt-8 space-y-5" aria-label="Contact information">
+              {email && (
+                <li class="flex items-start gap-3">
+                  <span
+                    class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted"
+                    aria-hidden="true"
                   >
-                    <rect width="20" height="16" x="2" y="4" rx="2" />
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                  </svg>
-                </span>
-                <div>
-                  <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Email</p>
-                  <a
-                    href={`mailto:${email}`}
-                    class="text-sm text-foreground hover:text-primary transition-colors"
-                  >
-                    {email}
-                  </a>
-                </div>
-              </li>
-            )}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="text-muted-foreground"
+                    >
+                      <rect width="20" height="16" x="2" y="4" rx="2" />
+                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                    </svg>
+                  </span>
+                  <div>
+                    <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">
+                      Email
+                    </p>
+                    <a
+                      href={`mailto:${email}`}
+                      class="text-sm text-foreground hover:text-primary transition-colors"
+                    >
+                      {email}
+                    </a>
+                  </div>
+                </li>
+              )}
 
-            {phone && (
-              <li class="flex items-start gap-3">
-                <span
-                  class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted"
-                  aria-hidden="true"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="text-muted-foreground"
+              {phone && (
+                <li class="flex items-start gap-3">
+                  <span
+                    class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted"
+                    aria-hidden="true"
                   >
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6 19.79 19.79 0 0 1 1.58 5.08 2 2 0 0 1 3.54 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.6a16 16 0 0 0 5.67 5.67l1.06-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.28 18z" />
-                  </svg>
-                </span>
-                <div>
-                  <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Phone</p>
-                  <a
-                    href={`tel:${phone}`}
-                    class="text-sm text-foreground hover:text-primary transition-colors"
-                  >
-                    {phone}
-                  </a>
-                </div>
-              </li>
-            )}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="text-muted-foreground"
+                    >
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6 19.79 19.79 0 0 1 1.58 5.08 2 2 0 0 1 3.54 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.6a16 16 0 0 0 5.67 5.67l1.06-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.28 18z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">
+                      Phone
+                    </p>
+                    <a
+                      href={`tel:${phone}`}
+                      class="text-sm text-foreground hover:text-primary transition-colors"
+                    >
+                      {phone}
+                    </a>
+                  </div>
+                </li>
+              )}
 
-            {address && (
-              <li class="flex items-start gap-3">
-                <span
-                  class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted"
-                  aria-hidden="true"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="text-muted-foreground"
+              {address && (
+                <li class="flex items-start gap-3">
+                  <span
+                    class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted"
+                    aria-hidden="true"
                   >
-                    <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
-                    <circle cx="12" cy="10" r="3" />
-                  </svg>
-                </span>
-                <div>
-                  <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Address</p>
-                  <address class="text-sm text-foreground not-italic whitespace-pre-line">
-                    {address}
-                  </address>
-                </div>
-              </li>
-            )}
-          </ul>
-        )}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="text-muted-foreground"
+                    >
+                      <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                  </span>
+                  <div>
+                    <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">
+                      Address
+                    </p>
+                    <address class="text-sm text-foreground not-italic whitespace-pre-line">
+                      {address}
+                    </address>
+                  </div>
+                </li>
+              )}
+            </ul>
+          )
+        }
       </div>
 
       <!-- Right column: form -->
       <div class="rounded-lg border bg-card p-6 md:p-8">
         <form action="#" method="POST" novalidate>
           <div class="space-y-5">
-
             <!-- Name -->
             <div class="space-y-1.5">
-              <label
-                for="contact-name"
-                class="text-sm font-medium leading-none"
-              >
+              <label for="contact-name" class="text-sm font-medium leading-none">
                 Name <span class="text-destructive" aria-hidden="true">*</span>
               </label>
               <input
@@ -162,10 +155,7 @@ const hasContactInfo = email || phone || address;
 
             <!-- Email -->
             <div class="space-y-1.5">
-              <label
-                for="contact-email"
-                class="text-sm font-medium leading-none"
-              >
+              <label for="contact-email" class="text-sm font-medium leading-none">
                 Email <span class="text-destructive" aria-hidden="true">*</span>
               </label>
               <input
@@ -181,10 +171,7 @@ const hasContactInfo = email || phone || address;
 
             <!-- Subject -->
             <div class="space-y-1.5">
-              <label
-                for="contact-subject"
-                class="text-sm font-medium leading-none"
-              >
+              <label for="contact-subject" class="text-sm font-medium leading-none">
                 Subject
               </label>
               <input
@@ -199,10 +186,7 @@ const hasContactInfo = email || phone || address;
 
             <!-- Message -->
             <div class="space-y-1.5">
-              <label
-                for="contact-message"
-                class="text-sm font-medium leading-none"
-              >
+              <label for="contact-message" class="text-sm font-medium leading-none">
                 Message <span class="text-destructive" aria-hidden="true">*</span>
               </label>
               <textarea
@@ -227,11 +211,9 @@ const hasContactInfo = email || phone || address;
             >
               Send Message
             </button>
-
           </div>
         </form>
       </div>
-
     </div>
   </div>
 </section>

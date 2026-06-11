@@ -22,26 +22,33 @@ const { title, testimonials } = Astro.props;
       </h2>
     </div>
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-12">
-    {testimonials.map((testimonial, index) => (
-      <div class="rounded-lg border bg-card p-6" data-animate data-delay={String(Math.min(index + 1, 5))}>
-        <blockquote class="text-sm leading-relaxed">
-          "{testimonial.quote}"
-        </blockquote>
-        <div class="mt-4 flex items-center gap-3">
-          <div class="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
-            <span class="text-sm font-medium">
-              {testimonial.author.split(" ").map((n) => n[0]).join("")}
-            </span>
+      {
+        testimonials.map((testimonial, index) => (
+          <div
+            class="rounded-lg border bg-card p-6"
+            data-animate
+            data-delay={String(Math.min(index + 1, 5))}
+          >
+            <blockquote class="text-sm leading-relaxed">"{testimonial.quote}"</blockquote>
+            <div class="mt-4 flex items-center gap-3">
+              <div class="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
+                <span class="text-sm font-medium">
+                  {testimonial.author
+                    .split(' ')
+                    .map((n) => n[0])
+                    .join('')}
+                </span>
+              </div>
+              <div>
+                <p class="text-sm font-medium">{testimonial.author}</p>
+                <p class="text-xs text-muted-foreground">
+                  {testimonial.role}, {testimonial.company}
+                </p>
+              </div>
+            </div>
           </div>
-          <div>
-            <p class="text-sm font-medium">{testimonial.author}</p>
-            <p class="text-xs text-muted-foreground">
-              {testimonial.role}, {testimonial.company}
-            </p>
-          </div>
-        </div>
-      </div>
-    ))}
+        ))
+      }
     </div>
   </div>
 </section>

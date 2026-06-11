@@ -1,106 +1,119 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import HeroGradient from "@/components/sections/HeroGradient.astro";
-import Features from "@/components/sections/Features.astro";
-import Comparison from "@/components/sections/Comparison.astro";
-import ContentBlock from "@/components/sections/ContentBlock.astro";
-import Stats from "@/components/sections/Stats.astro";
-import Testimonials from "@/components/sections/Testimonials.astro";
-import FAQ from "@/components/sections/FAQ.astro";
-import CTA from "@/components/sections/CTA.astro";
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HeroGradient from '@/components/sections/HeroGradient.astro';
+import Features from '@/components/sections/Features.astro';
+import Comparison from '@/components/sections/Comparison.astro';
+import ContentBlock from '@/components/sections/ContentBlock.astro';
+import Stats from '@/components/sections/Stats.astro';
+import Testimonials from '@/components/sections/Testimonials.astro';
+import FAQ from '@/components/sections/FAQ.astro';
+import CTA from '@/components/sections/CTA.astro';
 
 const features = [
   {
-    title: "One-Command Deploy",
-    description: "Push to production in seconds. Nebula CLI handles versioning, rollbacks, and environment promotion automatically.",
-    icon: "zap",
+    title: 'One-Command Deploy',
+    description:
+      'Push to production in seconds. Nebula CLI handles versioning, rollbacks, and environment promotion automatically.',
+    icon: 'zap',
   },
   {
-    title: "Zero-Config CI/CD",
-    description: "Connect your GitHub or GitLab repo and get a full pipeline — tests, previews, and staged rollouts — without touching YAML.",
-    icon: "shield",
+    title: 'Zero-Config CI/CD',
+    description:
+      'Connect your GitHub or GitLab repo and get a full pipeline — tests, previews, and staged rollouts — without touching YAML.',
+    icon: 'shield',
   },
   {
-    title: "Live Performance Metrics",
-    description: "Track Core Web Vitals, error rates, and latency in real time. Get Slack alerts before your users notice a problem.",
-    icon: "chart",
+    title: 'Live Performance Metrics',
+    description:
+      'Track Core Web Vitals, error rates, and latency in real time. Get Slack alerts before your users notice a problem.',
+    icon: 'chart',
   },
   {
-    title: "Team Access Controls",
-    description: "Role-based permissions, audit logs, and SSO keep your production environment secure across teams of any size.",
-    icon: "users",
+    title: 'Team Access Controls',
+    description:
+      'Role-based permissions, audit logs, and SSO keep your production environment secure across teams of any size.',
+    icon: 'users',
   },
   {
-    title: "Multi-Region by Default",
-    description: "Every deployment is automatically distributed across 8 edge regions. No extra configuration, no extra cost.",
-    icon: "globe",
+    title: 'Multi-Region by Default',
+    description:
+      'Every deployment is automatically distributed across 8 edge regions. No extra configuration, no extra cost.',
+    icon: 'globe',
   },
   {
-    title: "Secret Management",
-    description: "Store environment variables and secrets with AES-256 encryption. Rotate keys without redeploying your application.",
-    icon: "lock",
+    title: 'Secret Management',
+    description:
+      'Store environment variables and secrets with AES-256 encryption. Rotate keys without redeploying your application.',
+    icon: 'lock',
   },
 ];
 
 const comparisonColumns = [
-  { name: "Nebula", highlighted: true },
-  { name: "Vercel" },
-  { name: "Railway" },
+  { name: 'Nebula', highlighted: true },
+  { name: 'Vercel' },
+  { name: 'Railway' },
 ];
 
 const comparisonFeatures = [
-  { name: "One-command deploy", values: [true, true, true] },
-  { name: "Zero-config CI/CD", values: [true, false, false] },
-  { name: "Built-in secret management", values: [true, false, true] },
-  { name: "Multi-region (all plans)", values: [true, false, false] },
-  { name: "Live performance metrics", values: [true, true, false] },
-  { name: "Price (entry tier)", values: ["$0", "$20/mo", "$5/mo"] },
+  { name: 'One-command deploy', values: [true, true, true] },
+  { name: 'Zero-config CI/CD', values: [true, false, false] },
+  { name: 'Built-in secret management', values: [true, false, true] },
+  { name: 'Multi-region (all plans)', values: [true, false, false] },
+  { name: 'Live performance metrics', values: [true, true, false] },
+  { name: 'Price (entry tier)', values: ['$0', '$20/mo', '$5/mo'] },
 ];
 
 const stats = [
-  { value: "85K+", label: "Downloads", description: "In the first 6 months" },
-  { value: "4.2K", label: "GitHub Stars", description: "And growing daily" },
-  { value: "180+", label: "Contributors", description: "Open-source community" },
-  { value: "42", label: "Countries", description: "Global early adopters" },
+  { value: '85K+', label: 'Downloads', description: 'In the first 6 months' },
+  { value: '4.2K', label: 'GitHub Stars', description: 'And growing daily' },
+  { value: '180+', label: 'Contributors', description: 'Open-source community' },
+  { value: '42', label: 'Countries', description: 'Global early adopters' },
 ];
 
 const testimonials = [
   {
-    quote: "I replaced a 300-line deployment script with a single Nebula config. What used to take our team an afternoon now takes five minutes.",
-    author: "Ravi Mehta",
-    role: "Senior DevOps Engineer",
-    company: "PulseStack",
+    quote:
+      'I replaced a 300-line deployment script with a single Nebula config. What used to take our team an afternoon now takes five minutes.',
+    author: 'Ravi Mehta',
+    role: 'Senior DevOps Engineer',
+    company: 'PulseStack',
   },
   {
-    quote: "We shipped our first production app on day two of the beta. The zero-config CI/CD is genuinely magic — I didn't write a single pipeline file.",
-    author: "Chloe Dupont",
-    role: "Indie Developer",
-    company: "Side Project Club",
+    quote:
+      "We shipped our first production app on day two of the beta. The zero-config CI/CD is genuinely magic — I didn't write a single pipeline file.",
+    author: 'Chloe Dupont',
+    role: 'Indie Developer',
+    company: 'Side Project Club',
   },
   {
-    quote: "Multi-region out of the box was the feature that sold me. Our global team saw a 200ms latency improvement on day one, with zero extra effort.",
-    author: "Kwame Asante",
-    role: "CTO",
-    company: "Beacon Commerce",
+    quote:
+      'Multi-region out of the box was the feature that sold me. Our global team saw a 200ms latency improvement on day one, with zero extra effort.',
+    author: 'Kwame Asante',
+    role: 'CTO',
+    company: 'Beacon Commerce',
   },
 ];
 
 const faqs = [
   {
-    question: "Is Nebula open source?",
-    answer: "The Nebula CLI and core runtime are MIT-licensed and available on GitHub. The hosted platform (cloud infrastructure, dashboard, and managed CI/CD) is a commercial service with a generous free tier.",
+    question: 'Is Nebula open source?',
+    answer:
+      'The Nebula CLI and core runtime are MIT-licensed and available on GitHub. The hosted platform (cloud infrastructure, dashboard, and managed CI/CD) is a commercial service with a generous free tier.',
   },
   {
-    question: "How does Nebula handle database deployments?",
-    answer: "Nebula integrates natively with Postgres, MySQL, and Redis. Schema migrations are run atomically as part of each deployment, and Nebula automatically creates a database snapshot before applying changes so you can roll back instantly.",
+    question: 'How does Nebula handle database deployments?',
+    answer:
+      'Nebula integrates natively with Postgres, MySQL, and Redis. Schema migrations are run atomically as part of each deployment, and Nebula automatically creates a database snapshot before applying changes so you can roll back instantly.',
   },
   {
-    question: "Can I self-host Nebula?",
-    answer: "Yes. The Enterprise plan includes a self-hosted distribution you can run in your own VPC or on-premise environment. It includes the full feature set plus dedicated support from our infrastructure team.",
+    question: 'Can I self-host Nebula?',
+    answer:
+      'Yes. The Enterprise plan includes a self-hosted distribution you can run in your own VPC or on-premise environment. It includes the full feature set plus dedicated support from our infrastructure team.',
   },
   {
-    question: "What frameworks does Nebula support?",
-    answer: "Nebula supports any containerized application, with first-class presets for Next.js, Astro, Remix, Django, Rails, and Laravel. If your stack isn't listed, you can bring your own Dockerfile and Nebula will handle the rest.",
+    question: 'What frameworks does Nebula support?',
+    answer:
+      "Nebula supports any containerized application, with first-class presets for Next.js, Astro, Remix, Django, Rails, and Laravel. If your stack isn't listed, you can bring your own Dockerfile and Nebula will handle the rest.",
   },
 ];
 ---
@@ -113,8 +126,8 @@ const faqs = [
     badge="Open Source"
     title="Deploy without the drama."
     subtitle="<mark>Nebula</mark> replaces your patchwork of deployment scripts, CI configs, and cloud consoles with a single platform. Ship to production in seconds — not sprints."
-    primaryCta={{ href: "/signup", label: "Start Building Free" }}
-    secondaryCta={{ href: "https://github.com/nebula/nebula", label: "Star on GitHub" }}
+    primaryCta={{ href: '/signup', label: 'Start Building Free' }}
+    secondaryCta={{ href: 'https://github.com/nebula/nebula', label: 'Star on GitHub' }}
   />
 
   <div class="section-muted">
@@ -139,9 +152,9 @@ const faqs = [
       description="Connect your repository and Nebula reads your project structure to automatically configure a production-grade pipeline. Preview deployments on every pull request, automated testing with zero YAML, and staged rollouts that let you ship to 10% of users before going global."
       imageSide="right"
       features={[
-        "Preview environments created automatically for every branch and pull request",
-        "Parallelized test runs that finish in under 90 seconds for most projects",
-        "Staged rollouts with automatic promotion or instant rollback based on error thresholds",
+        'Preview environments created automatically for every branch and pull request',
+        'Parallelized test runs that finish in under 90 seconds for most projects',
+        'Staged rollouts with automatic promotion or instant rollback based on error thresholds',
       ]}
     />
   </div>
@@ -153,10 +166,7 @@ const faqs = [
   />
 
   <div class="section-muted">
-    <Testimonials
-      title="What early adopters are saying"
-      testimonials={testimonials}
-    />
+    <Testimonials title="What early adopters are saying" testimonials={testimonials} />
   </div>
 
   <FAQ
@@ -169,7 +179,7 @@ const faqs = [
     <CTA
       title="Ship your next project with Nebula."
       description="Join 85,000+ developers who have already ditched their deployment scripts. The free tier is genuinely generous — no credit card needed."
-      cta={{ href: "/signup", label: "Get Started Free" }}
+      cta={{ href: '/signup', label: 'Get Started Free' }}
     />
   </div>
 </BaseLayout>

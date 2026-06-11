@@ -43,13 +43,13 @@ interface Props {
 const { title, subtitle, faqs } = Astro.props;
 
 const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
   mainEntity: faqs.map((faq) => ({
-    "@type": "Question",
+    '@type': 'Question',
     name: faq.question,
     acceptedAnswer: {
-      "@type": "Answer",
+      '@type': 'Answer',
       text: faq.answer,
     },
   })),

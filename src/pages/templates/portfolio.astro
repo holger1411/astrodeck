@@ -1,69 +1,72 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import HeroSplit from "@/components/sections/HeroSplit.astro";
-import LogoCloud from "@/components/sections/LogoCloud.astro";
-import Stats from "@/components/sections/Stats.astro";
-import ContentBlock from "@/components/sections/ContentBlock.astro";
-import Team from "@/components/sections/Team.astro";
-import Testimonials from "@/components/sections/Testimonials.astro";
-import Newsletter from "@/components/sections/Newsletter.astro";
-import CTA from "@/components/sections/CTA.astro";
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HeroSplit from '@/components/sections/HeroSplit.astro';
+import LogoCloud from '@/components/sections/LogoCloud.astro';
+import Stats from '@/components/sections/Stats.astro';
+import ContentBlock from '@/components/sections/ContentBlock.astro';
+import Team from '@/components/sections/Team.astro';
+import Testimonials from '@/components/sections/Testimonials.astro';
+import Newsletter from '@/components/sections/Newsletter.astro';
+import CTA from '@/components/sections/CTA.astro';
 
 const stats = [
-  { value: "240+", label: "Projects Completed", description: "Across web, mobile & brand" },
-  { value: "98%", label: "Happy Clients", description: "Based on post-project surveys" },
-  { value: "14", label: "Awards Won", description: "Including 3 Awwwards Site of the Day" },
-  { value: "11", label: "Years in Business", description: "Founded in San Francisco, 2014" },
+  { value: '240+', label: 'Projects Completed', description: 'Across web, mobile & brand' },
+  { value: '98%', label: 'Happy Clients', description: 'Based on post-project surveys' },
+  { value: '14', label: 'Awards Won', description: 'Including 3 Awwwards Site of the Day' },
+  { value: '11', label: 'Years in Business', description: 'Founded in San Francisco, 2014' },
 ];
 
 const members = [
   {
-    name: "Elena Vasquez",
-    role: "Founder & Creative Director",
-    bio: "Former design lead at Figma. Obsessed with the intersection of craft and business impact.",
+    name: 'Elena Vasquez',
+    role: 'Founder & Creative Director',
+    bio: 'Former design lead at Figma. Obsessed with the intersection of craft and business impact.',
     social: {
-      twitter: "https://twitter.com/elenavasquez",
-      linkedin: "https://linkedin.com/in/elenavasquez",
+      twitter: 'https://twitter.com/elenavasquez',
+      linkedin: 'https://linkedin.com/in/elenavasquez',
     },
   },
   {
-    name: "James Thornton",
-    role: "Head of Engineering",
-    bio: "Full-stack engineer with a decade of experience building scalable web products for Series A and B startups.",
+    name: 'James Thornton',
+    role: 'Head of Engineering',
+    bio: 'Full-stack engineer with a decade of experience building scalable web products for Series A and B startups.',
     social: {
-      github: "https://github.com/jthornton",
-      linkedin: "https://linkedin.com/in/jamesthornton",
+      github: 'https://github.com/jthornton',
+      linkedin: 'https://linkedin.com/in/jamesthornton',
     },
   },
   {
-    name: "Aiko Nakamura",
-    role: "Lead UX Researcher",
-    bio: "Combines qualitative research and data analysis to uncover insights that drive meaningful design decisions.",
+    name: 'Aiko Nakamura',
+    role: 'Lead UX Researcher',
+    bio: 'Combines qualitative research and data analysis to uncover insights that drive meaningful design decisions.',
     social: {
-      linkedin: "https://linkedin.com/in/aikonakamura",
-      twitter: "https://twitter.com/aikonakamura",
+      linkedin: 'https://linkedin.com/in/aikonakamura',
+      twitter: 'https://twitter.com/aikonakamura',
     },
   },
 ];
 
 const testimonials = [
   {
-    quote: "Acme completely reimagined our brand identity. The rebrand drove a 40% increase in inbound leads within the first quarter. I can't recommend them highly enough.",
-    author: "Daniel Park",
-    role: "CMO",
-    company: "Vantage Health",
+    quote:
+      "Acme completely reimagined our brand identity. The rebrand drove a 40% increase in inbound leads within the first quarter. I can't recommend them highly enough.",
+    author: 'Daniel Park',
+    role: 'CMO',
+    company: 'Vantage Health',
   },
   {
-    quote: "We came with a vague idea and a tight deadline. Acme delivered a polished, pixel-perfect product two weeks early. Their process is remarkably efficient.",
-    author: "Lucia Fernandez",
-    role: "Co-Founder",
-    company: "Sprout Finance",
+    quote:
+      'We came with a vague idea and a tight deadline. Acme delivered a polished, pixel-perfect product two weeks early. Their process is remarkably efficient.',
+    author: 'Lucia Fernandez',
+    role: 'Co-Founder',
+    company: 'Sprout Finance',
   },
   {
-    quote: "Working with Acme felt like having a world-class in-house design team. They asked hard questions, challenged our assumptions, and delivered something we're genuinely proud of.",
-    author: "Tom Wren",
-    role: "CPO",
-    company: "Stackline",
+    quote:
+      "Working with Acme felt like having a world-class in-house design team. They asked hard questions, challenged our assumptions, and delivered something we're genuinely proud of.",
+    author: 'Tom Wren',
+    role: 'CPO',
+    company: 'Stackline',
   },
 ];
 ---
@@ -76,8 +79,8 @@ const testimonials = [
     tagline="Award-winning design & engineering"
     title="We design products people actually use."
     subtitle="Acme Studio is a full-service design and engineering agency. We partner with ambitious founders and product teams to craft brands, interfaces, and digital experiences that drive real business results."
-    primaryCta={{ href: "/contact", label: "Start a Project" }}
-    secondaryCta={{ href: "/work", label: "View Our Work" }}
+    primaryCta={{ href: '/contact', label: 'Start a Project' }}
+    secondaryCta={{ href: '/work', label: 'View Our Work' }}
   />
 
   <LogoCloud title="Trusted by leading brands:" />
@@ -92,9 +95,9 @@ const testimonials = [
     description="We are a team of 18 designers, engineers, and strategists who believe that exceptional craft and clear thinking are not mutually exclusive. Every project starts with a deep understanding of your users, your market, and your goals — then we build backward from there."
     imageSide="right"
     features={[
-      "Strategy-first approach — we understand your business before we touch a pixel",
-      "End-to-end delivery from discovery and design through to engineering and launch",
-      "Transparent process with weekly check-ins, shared Figma files, and live staging environments",
+      'Strategy-first approach — we understand your business before we touch a pixel',
+      'End-to-end delivery from discovery and design through to engineering and launch',
+      'Transparent process with weekly check-ins, shared Figma files, and live staging environments',
     ]}
   />
 
@@ -105,9 +108,9 @@ const testimonials = [
       description="Our four-phase engagement model — Discover, Define, Design, Deliver — gives you predictable timelines and consistent quality regardless of project size. We embed with your team using the tools you already use, so there's no overhead and no surprises."
       imageSide="left"
       features={[
-        "Kick-off workshop in week one to align on goals, constraints, and success metrics",
-        "Iterative design sprints with structured feedback rounds — no big-reveal moments",
-        "Handoff includes production-ready code, a design system, and documentation",
+        'Kick-off workshop in week one to align on goals, constraints, and success metrics',
+        'Iterative design sprints with structured feedback rounds — no big-reveal moments',
+        'Handoff includes production-ready code, a design system, and documentation',
       ]}
     />
   </div>
@@ -119,10 +122,7 @@ const testimonials = [
   />
 
   <div class="section-muted">
-    <Testimonials
-      title="What our clients say"
-      testimonials={testimonials}
-    />
+    <Testimonials title="What our clients say" testimonials={testimonials} />
   </div>
 
   <div class="section-inverted">
@@ -137,6 +137,6 @@ const testimonials = [
   <CTA
     title="Have a project in mind?"
     description="We take on a limited number of new clients each quarter. Tell us about your project and we'll let you know if we're a good fit."
-    cta={{ href: "/contact", label: "Get in Touch" }}
+    cta={{ href: '/contact', label: 'Get in Touch' }}
   />
 </BaseLayout>

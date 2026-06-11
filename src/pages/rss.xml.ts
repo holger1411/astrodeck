@@ -3,9 +3,7 @@ import { getCollection } from 'astro:content';
 
 export async function GET(context: import('astro').APIContext) {
   const blog = await getCollection('blog');
-  const sortedPosts = blog.sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-  );
+  const sortedPosts = blog.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
   return rss({
     title: 'AstroDeck Blog',

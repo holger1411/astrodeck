@@ -75,7 +75,11 @@ const iconPaths: Record<string, string> = {
     >
       {
         features.map((feature, index) => (
-          <div class="relative overflow-hidden bg-card px-10 py-12" data-animate data-delay={String(Math.min(index + 1, 5))}>
+          <div
+            class="relative overflow-hidden bg-card px-10 py-12"
+            data-animate
+            data-delay={String(Math.min(index + 1, 5))}
+          >
             <div class="inline-flex p-1.5 border border-foreground rounded-xl mb-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

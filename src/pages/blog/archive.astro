@@ -1,33 +1,26 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
 // Get all blog posts and sort by date (newest first)
-const allPosts = await getCollection("blog");
-const sortedPosts = allPosts.sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 // Format date helper
 function formatDate(date: Date) {
-  return new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
 }
 ---
 
-<BaseLayout
-  title="Blog Archive"
-  description="Complete archive of all blog posts"
->
+<BaseLayout title="Blog Archive" description="Complete archive of all blog posts">
   <div class="container max-w-4xl mx-auto py-16">
     <div class="mb-16">
       <h1 class="text-6xl font-bold tracking-tight mb-6">Archive</h1>
-      <p class="text-xl text-muted-foreground">
-        Complete list of all blog posts.
-      </p>
+      <p class="text-xl text-muted-foreground">Complete list of all blog posts.</p>
     </div>
 
     <ul class="space-y-6">

@@ -52,16 +52,16 @@ const getCircularIntensity = (x: number, y: number): number => {
   const dx = x - centerX;
   const dy = y - centerY;
   const distance = Math.sqrt(dx * dx + dy * dy);
-  
+
   // Create concentric circles effect
   const angle = Math.atan2(dy, dx);
   const circlePattern = Math.sin(distance * 0.25 + angle * 2) * 2 + 2;
   const randomFactor = seededRandom(x, y) * 1.5;
-  
+
   // Fade out towards edges
   const maxRadius = gridSize / 2;
-  const fadeFactor = Math.max(0, 1 - (distance / maxRadius));
-  
+  const fadeFactor = Math.max(0, 1 - distance / maxRadius);
+
   const combined = (circlePattern + randomFactor) * fadeFactor;
   return Math.floor(Math.min(4, combined));
 };
@@ -85,66 +85,82 @@ const svgHeight = gridSize * (squareSize + gap);
 ---
 
 <section class="min-h-[70vh] flex items-center py-[10vh] md:py-[12vh] relative overflow-hidden">
-  <!-- GitHub Contribution Grid Background as SVG -->
+  {/* GitHub Contribution Grid Background as SVG */}
   <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none z-0">
-    <svg 
-      width={svgWidth} 
-      height={svgHeight} 
+    <svg
+      width={svgWidth}
+      height={svgHeight}
       viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-      xmlns="http://www.w3.org/2000/svg" 
+      xmlns="http://www.w3.org/2000/svg"
       class="text-foreground"
       aria-hidden="true"
     >
-      {rects.map(rect => (
-        <rect
-          x={rect.x}
-          y={rect.y}
-          width={squareSize}
-          height={squareSize}
-          rx="2"
-          fill="currentColor"
-          opacity={rect.opacity}
-        />
-      ))}
+      {
+        rects.map((rect) => (
+          <rect
+            x={rect.x}
+            y={rect.y}
+            width={squareSize}
+            height={squareSize}
+            rx="2"
+            fill="currentColor"
+            opacity={rect.opacity}
+          />
+        ))
+      }
     </svg>
   </div>
 
-  <div class="container max-w-5xl mx-auto flex flex-col items-center gap-6 text-center relative z-10" data-animate="fade">
-    {badge && (
-      <a href="/changelog" class="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium hover:bg-muted transition-colors">
-        <span class="bg-foreground text-background px-2 py-0.5 rounded-md font-semibold text-xs">
-          v3.1.5
-        </span>
-        <span>Open Source & MIT Licensed</span>
-      </a>
-    )}
-    <h1 class="text-5xl font-bold leading-tight tracking-tight md:text-7xl lg:text-8xl lg:leading-[1.1] max-w-5xl">
+  <div
+    class="container max-w-5xl mx-auto flex flex-col items-center gap-6 text-center relative z-10"
+    data-animate="fade"
+  >
+    {
+      badge && (
+        <a
+          href="/changelog"
+          class="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium hover:bg-muted transition-colors"
+        >
+          <span class="bg-foreground text-background px-2 py-0.5 rounded-md font-semibold text-xs">
+            v3.1.5
+          </span>
+          <span>Open Source & MIT Licensed</span>
+        </a>
+      )
+    }
+    <h1
+      class="text-5xl font-bold leading-tight tracking-tight md:text-7xl lg:text-8xl lg:leading-[1.1] max-w-5xl"
+    >
       {title}
     </h1>
     <p class="max-w-[800px] text-xl text-muted-foreground md:text-2xl" set:html={subtitle} />
     <div class="flex flex-col sm:flex-row gap-4 mt-4">
-      {primaryCta && (
-        <a
-          href={primaryCta.href}
-          class="group relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-semibold ring-offset-background transition-[background-color,transform,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 h-12 px-12 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 overflow-hidden"
-        >
-          <!-- Shine effect overlay -->
-          <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
+      {
+        primaryCta && (
+          <a
+            href={primaryCta.href}
+            class="group relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-semibold ring-offset-background transition-[background-color,transform,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 h-12 px-12 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 overflow-hidden"
+          >
+            {/* Shine effect overlay */}
+            <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
 
-          <!-- Button text -->
-          <span class="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-0.5">
-            {primaryCta.label}
-          </span>
-        </a>
-      )}
-      {secondaryCta && (
-        <a
-          href={secondaryCta.href}
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-12 px-8"
-        >
-          {secondaryCta.label}
-        </a>
-      )}
+            {/* Button text */}
+            <span class="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-0.5">
+              {primaryCta.label}
+            </span>
+          </a>
+        )
+      }
+      {
+        secondaryCta && (
+          <a
+            href={secondaryCta.href}
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-12 px-8"
+          >
+            {secondaryCta.label}
+          </a>
+        )
+      }
     </div>
   </div>
 </section>

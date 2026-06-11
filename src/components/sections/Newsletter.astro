@@ -7,10 +7,10 @@ interface Props {
 }
 
 const {
-  title = "Stay in the Loop",
+  title = 'Stay in the Loop',
   description,
-  placeholder = "Enter your email",
-  buttonText = "Subscribe",
+  placeholder = 'Enter your email',
+  buttonText = 'Subscribe',
 } = Astro.props;
 ---
 
@@ -20,13 +20,7 @@ const {
       <h2 class="text-3xl font-bold leading-[1.1] sm:text-3xl md:text-4xl">
         {title}
       </h2>
-      {
-        description && (
-          <p class="mt-4 text-muted-foreground max-w-[520px] mx-auto">
-            {description}
-          </p>
-        )
-      }
+      {description && <p class="mt-4 text-muted-foreground max-w-[520px] mx-auto">{description}</p>}
       <form
         action="#"
         method="POST"
@@ -50,9 +44,7 @@ const {
           {buttonText}
         </button>
       </form>
-      <p class="mt-4 text-xs text-muted-foreground">
-        No spam. Unsubscribe anytime.
-      </p>
+      <p class="mt-4 text-xs text-muted-foreground">No spam. Unsubscribe anytime.</p>
     </div>
   </div>
 </section>

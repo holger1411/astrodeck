@@ -8,23 +8,23 @@
 ---
 
 <script is:inline>
-  (function() {
+  (function () {
     function applyTheme() {
-      const theme = localStorage.getItem("theme");
-      if (theme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else if (theme === "light") {
-        document.documentElement.classList.remove("dark");
-      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        document.documentElement.classList.add("dark");
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
       } else {
-        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.remove('dark');
       }
     }
     applyTheme();
     if (!window.__themeSwapInit) {
       window.__themeSwapInit = true;
-      document.addEventListener("astro:after-swap", applyTheme);
+      document.addEventListener('astro:after-swap', applyTheme);
     }
   })();
 </script>

@@ -1,87 +1,98 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import BaseLayout from '@/layouts/BaseLayout.astro';
 
 const pages = [
   {
-    href: "/",
-    name: "Home",
-    description: "The AstroDeck homepage — centered hero with GitHub grid pattern, feature grid, AI tools showcase, pricing, testimonials, and CTA.",
-    screenshot: "/screenshots/home.png",
-    category: "Landing Page",
+    href: '/',
+    name: 'Home',
+    description:
+      'The AstroDeck homepage — centered hero with GitHub grid pattern, feature grid, AI tools showcase, pricing, testimonials, and CTA.',
+    screenshot: '/screenshots/home.png',
+    category: 'Landing Page',
   },
   {
-    href: "/templates/saas",
-    name: "SaaS Landing",
-    description: "A full-featured B2B SaaS landing page for Nebula with hero, logo cloud, features, stats, pricing tiers, testimonials, FAQ, and CTA.",
-    screenshot: "/screenshots/saas.png",
-    category: "Landing Page",
+    href: '/templates/saas',
+    name: 'SaaS Landing',
+    description:
+      'A full-featured B2B SaaS landing page for Nebula with hero, logo cloud, features, stats, pricing tiers, testimonials, FAQ, and CTA.',
+    screenshot: '/screenshots/saas.png',
+    category: 'Landing Page',
   },
   {
-    href: "/templates/portfolio",
-    name: "Portfolio / Agency",
-    description: "Split-hero layout with app mockup, client logos, alternating content blocks, team profiles, testimonials, and newsletter signup.",
-    screenshot: "/screenshots/portfolio.png",
-    category: "Landing Page",
+    href: '/templates/portfolio',
+    name: 'Portfolio / Agency',
+    description:
+      'Split-hero layout with app mockup, client logos, alternating content blocks, team profiles, testimonials, and newsletter signup.',
+    screenshot: '/screenshots/portfolio.png',
+    category: 'Landing Page',
   },
   {
-    href: "/templates/startup",
-    name: "Startup / Product Launch",
-    description: "Gradient-glow hero, feature grid, competitor comparison table, content deep-dive, early adopter testimonials, and FAQ.",
-    screenshot: "/screenshots/startup.png",
-    category: "Landing Page",
+    href: '/templates/startup',
+    name: 'Startup / Product Launch',
+    description:
+      'Gradient-glow hero, feature grid, competitor comparison table, content deep-dive, early adopter testimonials, and FAQ.',
+    screenshot: '/screenshots/startup.png',
+    category: 'Landing Page',
   },
   {
-    href: "/templates/contact",
-    name: "Contact & About",
-    description: "Team grid, company stats, contact form with address details, newsletter signup, and support FAQs.",
-    screenshot: "/screenshots/contact.png",
-    category: "Utility Page",
+    href: '/templates/contact',
+    name: 'Contact & About',
+    description:
+      'Team grid, company stats, contact form with address details, newsletter signup, and support FAQs.',
+    screenshot: '/screenshots/contact.png',
+    category: 'Utility Page',
   },
   {
-    href: "/blog",
-    name: "Blog",
-    description: "Blog listing with pagination, tag filtering, and content collection integration. Includes RSS feed and archive page.",
-    screenshot: "/screenshots/blog.png",
-    category: "Content Page",
+    href: '/blog',
+    name: 'Blog',
+    description:
+      'Blog listing with pagination, tag filtering, and content collection integration. Includes RSS feed and archive page.',
+    screenshot: '/screenshots/blog.png',
+    category: 'Content Page',
   },
   {
-    href: "/docs",
-    name: "Documentation",
-    description: "AI-first documentation with sidebar navigation, two-column layout showing AI and manual approaches side by side.",
-    screenshot: "/screenshots/docs.png",
-    category: "Content Page",
+    href: '/docs',
+    name: 'Documentation',
+    description:
+      'AI-first documentation with sidebar navigation, two-column layout showing AI and manual approaches side by side.',
+    screenshot: '/screenshots/docs.png',
+    category: 'Content Page',
   },
   {
-    href: "/login",
-    name: "Login",
-    description: "Split-screen authentication layout with dark branding panel, testimonial quote, and centered login form with social auth.",
-    screenshot: "/screenshots/login.png",
-    category: "Utility Page",
+    href: '/login',
+    name: 'Login',
+    description:
+      'Split-screen authentication layout with dark branding panel, testimonial quote, and centered login form with social auth.',
+    screenshot: '/screenshots/login.png',
+    category: 'Utility Page',
   },
   {
-    href: "/sections",
-    name: "Sections Showcase",
-    description: "Interactive component library showcasing all available sections with live previews and copy-paste code snippets.",
-    screenshot: "/screenshots/sections.png",
-    category: "Content Page",
+    href: '/sections',
+    name: 'Sections Showcase',
+    description:
+      'Interactive component library showcasing all available sections with live previews and copy-paste code snippets.',
+    screenshot: '/screenshots/sections.png',
+    category: 'Content Page',
   },
   {
-    href: "/changelog",
-    name: "Changelog",
-    description: "Release history timeline with version badges, dates, and categorized changes. Pulse animation on the latest entry.",
-    screenshot: "/screenshots/changelog.png",
-    category: "Content Page",
+    href: '/changelog',
+    name: 'Changelog',
+    description:
+      'Release history timeline with version badges, dates, and categorized changes. Pulse animation on the latest entry.',
+    screenshot: '/screenshots/changelog.png',
+    category: 'Content Page',
   },
   {
-    href: "/content",
-    name: "Content Demo",
-    description: "Typography and content formatting demo page showing prose styles, headings, lists, code blocks, and rich text rendering.",
-    screenshot: "/screenshots/content.png",
-    category: "Content Page",
+    href: '/content',
+    name: 'Content Demo',
+    description:
+      'Typography and content formatting demo page showing prose styles, headings, lists, code blocks, and rich text rendering.',
+    screenshot: '/screenshots/content.png',
+    category: 'Content Page',
   },
 ];
 
-const categories = [...new Set(pages.map(p => p.category))];
+const categories = [...new Set(pages.map((p) => p.category))];
 ---
 
 <BaseLayout
@@ -91,69 +102,73 @@ const categories = [...new Set(pages.map(p => p.category))];
   <div class="py-16 md:py-20 px-6">
     <div class="container max-w-5xl mx-auto">
       <div class="mb-12" data-animate="fade">
-        <h1 class="text-4xl font-bold tracking-tight md:text-5xl">
-          Pages
-        </h1>
+        <h1 class="text-4xl font-bold tracking-tight md:text-5xl">Pages</h1>
         <p class="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-          Every page included in AstroDeck — from landing pages to utility screens. Each one is production-ready, fully responsive, and works in light and dark mode.
+          Every page included in AstroDeck — from landing pages to utility screens. Each one is
+          production-ready, fully responsive, and works in light and dark mode.
         </p>
       </div>
 
-      {categories.map((category) => (
-        <div class="mb-16">
-          <h2 class="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-6" data-animate>
-            {category}s
-          </h2>
-          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {pages
-              .filter(p => p.category === category)
-              .map((page, i) => (
-                <a
-                  href={page.href}
-                  class="group flex flex-col rounded-xl border bg-card overflow-hidden transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 hover:border-primary/40"
-                  data-animate
-                  data-delay={String(Math.min(i + 1, 5))}
-                >
-                  <div class="relative aspect-video overflow-hidden bg-muted border-b">
-                    <img
-                      src={page.screenshot}
-                      alt={`${page.name} page preview`}
-                      width="640"
-                      height="360"
-                      loading="lazy"
-                      decoding="async"
-                      class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-
-                  <div class="p-5 flex flex-col flex-1">
-                    <div class="flex items-center justify-between mb-2">
-                      <h3 class="font-semibold text-base group-hover:text-primary transition-colors">
-                        {page.name}
-                      </h3>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary"
-                        aria-hidden="true"
-                      >
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
+      {
+        categories.map((category) => (
+          <div class="mb-16">
+            <h2
+              class="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-6"
+              data-animate
+            >
+              {category}s
+            </h2>
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {pages
+                .filter((p) => p.category === category)
+                .map((page, i) => (
+                  <a
+                    href={page.href}
+                    class="group flex flex-col rounded-xl border bg-card overflow-hidden transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 hover:border-primary/40"
+                    data-animate
+                    data-delay={String(Math.min(i + 1, 5))}
+                  >
+                    <div class="relative aspect-video overflow-hidden bg-muted border-b">
+                      <img
+                        src={page.screenshot}
+                        alt={`${page.name} page preview`}
+                        width="640"
+                        height="360"
+                        loading="lazy"
+                        decoding="async"
+                        class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      />
                     </div>
-                    <p class="text-sm text-muted-foreground leading-relaxed">
-                      {page.description}
-                    </p>
-                  </div>
-                </a>
-              ))}
+
+                    <div class="p-5 flex flex-col flex-1">
+                      <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-semibold text-base group-hover:text-primary transition-colors">
+                          {page.name}
+                        </h3>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary"
+                          aria-hidden="true"
+                        >
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                      <p class="text-sm text-muted-foreground leading-relaxed">
+                        {page.description}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </BaseLayout>

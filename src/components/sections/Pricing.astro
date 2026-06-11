@@ -59,63 +59,67 @@ const { title, subtitle, tiers } = Astro.props;
       <h2 id="pricing-heading" class="text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">
         {title}
       </h2>
-      {subtitle && (
-        <p class="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-          {subtitle}
-        </p>
-      )}
+      {
+        subtitle && (
+          <p class="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+            {subtitle}
+          </p>
+        )
+      }
     </div>
     <div class="grid gap-6 mt-12 md:grid-cols-2 lg:grid-cols-3">
-    {tiers.map((tier, index) => (
-      <div
-        data-animate
-        data-delay={String(Math.min(index + 1, 5))}
-        class:list={[
-          "flex flex-col rounded-xl border bg-card p-6",
-          tier.highlighted && "border-primary shadow-2xl shadow-primary/20 lg:scale-105",
-        ]}
-      >
-        <div class="mb-4">
-          <h3 class="text-xl font-semibold">{tier.name}</h3>
-          <p class="text-sm text-muted-foreground mt-1">{tier.description}</p>
-        </div>
-        <div class="mb-6">
-          <span class="text-4xl font-bold">{tier.price}</span>
-          {tier.price !== "Custom" && <span class="text-muted-foreground">/month</span>}
-        </div>
-        <ul class="mb-6 flex-1 space-y-2">
-          {tier.features.map((feature) => (
-            <li class="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="h-4 w-4 text-primary"
-                aria-hidden="true"
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span class="text-sm">{feature}</span>
-            </li>
-          ))}
-        </ul>
-        <a
-          href={tier.cta.href}
-          class:list={[
-            "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 h-10 px-4 py-2 w-full",
-            tier.highlighted
-              ? "bg-primary text-primary-foreground hover:bg-primary/90"
-              : "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-          ]}
-        >
-          {tier.cta.label}
-        </a>
-      </div>
-    ))}
+      {
+        tiers.map((tier, index) => (
+          <div
+            data-animate
+            data-delay={String(Math.min(index + 1, 5))}
+            class:list={[
+              'flex flex-col rounded-xl border bg-card p-6',
+              tier.highlighted && 'border-primary shadow-2xl shadow-primary/20 lg:scale-105',
+            ]}
+          >
+            <div class="mb-4">
+              <h3 class="text-xl font-semibold">{tier.name}</h3>
+              <p class="text-sm text-muted-foreground mt-1">{tier.description}</p>
+            </div>
+            <div class="mb-6">
+              <span class="text-4xl font-bold">{tier.price}</span>
+              {tier.price !== 'Custom' && <span class="text-muted-foreground">/month</span>}
+            </div>
+            <ul class="mb-6 flex-1 space-y-2">
+              {tier.features.map((feature) => (
+                <li class="flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-4 w-4 text-primary"
+                    aria-hidden="true"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span class="text-sm">{feature}</span>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={tier.cta.href}
+              class:list={[
+                'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 h-10 px-4 py-2 w-full',
+                tier.highlighted
+                  ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                  : 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+              ]}
+            >
+              {tier.cta.label}
+            </a>
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>

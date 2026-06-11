@@ -1,30 +1,28 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
-import type { GetStaticPaths, Page } from "astro";
-import type { CollectionEntry } from "astro:content";
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths, Page } from 'astro';
+import type { CollectionEntry } from 'astro:content';
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const allPosts = await getCollection("blog");
-  const sortedPosts = allPosts.sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-  );
+  const allPosts = await getCollection('blog');
+  const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
   return paginate(sortedPosts, { pageSize: 7 });
 }) satisfies GetStaticPaths;
 
 interface Props {
-  page: Page<CollectionEntry<"blog">>;
+  page: Page<CollectionEntry<'blog'>>;
 }
 
 const { page } = Astro.props;
 
 // Format date helper
 function formatDate(date: Date) {
-  return new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
 }
 ---
@@ -37,7 +35,9 @@ function formatDate(date: Date) {
     <div class="mb-20">
       <h1 class="text-7xl font-bold tracking-tight mb-8">Blog</h1>
       <p class="text-xl text-muted-foreground">
-        Where ancient monsters navigate modern bureaucracy, mythical creatures struggle with technology, and the supernatural discovers that HOA violations are scarier than dragonslayers.
+        Where ancient monsters navigate modern bureaucracy, mythical creatures struggle with
+        technology, and the supernatural discovers that HOA violations are scarier than
+        dragonslayers.
       </p>
     </div>
 
@@ -45,76 +45,84 @@ function formatDate(date: Date) {
       {
         page.data.map((post, index) => (
           <article class="group">
-            <a href={`/blog/${post.id}`} class="flex items-center justify-between gap-8 -mx-6 px-6 py-4 rounded-lg transition-colors hover:bg-accent/50">
+            <a
+              href={`/blog/${post.id}`}
+              class="flex items-center justify-between gap-8 -mx-6 px-6 py-4 rounded-lg transition-colors hover:bg-accent/50"
+            >
               <h2 class="text-4xl font-bold tracking-tight group-hover:text-primary transition-colors flex-1">
                 {post.data.title}
               </h2>
-              <time datetime={post.data.pubDate.toISOString()} class="text-sm text-muted-foreground whitespace-nowrap">
+              <time
+                datetime={post.data.pubDate.toISOString()}
+                class="text-sm text-muted-foreground whitespace-nowrap"
+              >
                 {formatDate(post.data.pubDate)}
               </time>
             </a>
-            {index < page.data.length - 1 && (
-              <div class="mt-8 border-b border-border"></div>
-            )}
+            {index < page.data.length - 1 && <div class="mt-8 border-b border-border" />}
           </article>
         ))
       }
     </div>
 
-    {(page.url.prev || page.url.next) && (
-      <nav class="mt-16 flex items-center justify-between gap-8 pt-8 border-t">
-        {page.url.prev ? (
-          <a
-            href={page.url.prev}
-            class="group flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+    {
+      (page.url.prev || page.url.next) && (
+        <nav class="mt-16 flex items-center justify-between gap-8 pt-8 border-t">
+          {page.url.prev ? (
+            <a
+              href={page.url.prev}
+              class="group flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
             >
-              <path d="m15 18-6-6 6-6"></path>
-            </svg>
-            <span>Previous</span>
-          </a>
-        ) : (
-          <div></div>
-        )}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+              <span>Previous</span>
+            </a>
+          ) : (
+            <div />
+          )}
 
-        <div class="flex items-center gap-2 text-sm text-muted-foreground">
-          <span>Page {page.currentPage} of {page.lastPage}</span>
-        </div>
+          <div class="flex items-center gap-2 text-sm text-muted-foreground">
+            <span>
+              Page {page.currentPage} of {page.lastPage}
+            </span>
+          </div>
 
-        {page.url.next ? (
-          <a
-            href={page.url.next}
-            class="group flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
-          >
-            <span>Next</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+          {page.url.next ? (
+            <a
+              href={page.url.next}
+              class="group flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
             >
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
-          </a>
-        ) : (
-          <div></div>
-        )}
-      </nav>
-    )}
+              <span>Next</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </a>
+          ) : (
+            <div />
+          )}
+        </nav>
+      )
+    }
   </div>
 </BaseLayout>

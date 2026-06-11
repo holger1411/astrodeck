@@ -31,7 +31,7 @@
 
     // Check for reduced motion preference
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      elements.forEach(el => el.classList.add('is-visible'));
+      elements.forEach((el) => el.classList.add('is-visible'));
       return;
     }
 

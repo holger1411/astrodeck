@@ -1,308 +1,304 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import BaseLayout from '@/layouts/BaseLayout.astro';
 
 const releases = [
   {
-    version: "3.1.5",
-    date: "2026-06-09",
-    tag: "patch",
-    title: "Astro 6.4.4 & Tailwind CSS 4.3.0 Update",
+    version: '3.1.5',
+    date: '2026-06-09',
+    tag: 'patch',
+    title: 'Astro 6.4.4 & Tailwind CSS 4.3.0 Update',
+    highlights: ['Updated Astro from 6.1.10 to 6.4.4', 'Updated Tailwind CSS from 4.2.4 to 4.3.0'],
+  },
+  {
+    version: '3.1.4',
+    date: '2026-04-29',
+    tag: 'patch',
+    title: 'Astro 6.1.10 & Tailwind CSS 4.2.4 Update',
     highlights: [
-      "Updated Astro from 6.1.10 to 6.4.4",
-      "Updated Tailwind CSS from 4.2.4 to 4.3.0",
+      'Updated Astro from 6.1.7 to 6.1.10',
+      'Updated Tailwind CSS from 4.2.2 to 4.2.4',
+      'Added DESIGN.md handling note to AGENTS.md (instructs agents how to apply a Google Stitch DESIGN.md when dropped in)',
     ],
   },
   {
-    version: "3.1.4",
-    date: "2026-04-29",
-    tag: "patch",
-    title: "Astro 6.1.10 & Tailwind CSS 4.2.4 Update",
+    version: '3.1.3',
+    date: '2026-04-16',
+    tag: 'patch',
+    title: 'Astro 6.1.7 Update',
+    highlights: ['Updated Astro from 6.1.5 to 6.1.7'],
+  },
+  {
+    version: '3.1.1',
+    date: '2026-04-06',
+    tag: 'patch',
+    title: 'Astro 6.1.3 & Tailwind CSS 4.2.2 Update',
+    highlights: ['Updated Astro from 6.0.6 to 6.1.3', 'Updated Tailwind CSS from 4.2.1 to 4.2.2'],
+  },
+  {
+    version: '3.1.0',
+    date: '2026-03-26',
+    tag: 'minor',
+    title: 'Hybrid AI Architecture — Design Knowledge Base, Portable Prompts & Multi-Agent Review',
     highlights: [
-      "Updated Astro from 6.1.7 to 6.1.10",
-      "Updated Tailwind CSS from 4.2.2 to 4.2.4",
-      "Added DESIGN.md handling note to AGENTS.md (instructs agents how to apply a Google Stitch DESIGN.md when dropped in)",
+      'system/globals/ — 8 canonical design knowledge files (colors, typography, spacing, interaction, imagery, effects, responsiveness, accessibility)',
+      'system/prompts/ — 7 standalone self-audit prompts that work in any AI tool (ChatGPT, Gemini, Cursor, etc.)',
+      'Plenum multi-agent review — /plenum spawns 6 domain-specific review agents (Design, UX, A11y, Perf, SEO, Code) with scope-based auto-selection',
+      'Skills slimmed down — design knowledge moved to globals, skills now reference canonical sources',
+      'Updated .cursor/rules, .windsurfrules, .github/copilot-instructions.md with globals references',
+      'New skill chains for design system changes and pre-launch reviews',
+      'Updated docs page with AI Architecture and Quality Gates sections',
+      'Updated README with AI tool pathways, design knowledge base, and portable prompts documentation',
     ],
   },
   {
-    version: "3.1.3",
-    date: "2026-04-16",
-    tag: "patch",
-    title: "Astro 6.1.7 Update",
+    version: '3.0.5',
+    date: '2026-03-19',
+    tag: 'patch',
+    title: 'Live Component Demos, Pricing Fixes & Test Framework',
     highlights: [
-      "Updated Astro from 6.1.5 to 6.1.7",
+      'Live interactive demos for all 6 React components on /components page (Dialog, Accordion, Tabs, Tooltip, Select, Dropdown)',
+      'Pricing section: fixed rounded-lg, font-bold h3, missing tablet grid, scale overflow, and missing ARIA attributes',
+      'New page creation now defaults to adding Header + Footer navigation',
+      'New section creation now requires placement on a page',
+      'AI test framework with dynamic test cases from docs and variance rules',
     ],
   },
   {
-    version: "3.1.1",
-    date: "2026-04-06",
-    tag: "patch",
-    title: "Astro 6.1.3 & Tailwind CSS 4.2.2 Update",
+    version: '3.0.4',
+    date: '2026-03-19',
+    tag: 'patch',
+    title: 'Release Process Fix & Documentation',
     highlights: [
-      "Updated Astro from 6.0.6 to 6.1.3",
-      "Updated Tailwind CSS from 4.2.1 to 4.2.2",
+      'Fixed Hero badge and changelog page that were stuck at v3.0.1 after v3.0.2/v3.0.3 releases',
+      'Documented release process in AGENTS.md with all 4 required update locations',
+      'Added Release entry to Skill Chains table for automated workflow',
+      'Clarified release process applies to AstroDeck framework only, not user projects',
     ],
   },
   {
-    version: "3.1.0",
-    date: "2026-03-26",
-    tag: "minor",
-    title: "Hybrid AI Architecture — Design Knowledge Base, Portable Prompts & Multi-Agent Review",
+    version: '3.0.3',
+    date: '2026-03-19',
+    tag: 'patch',
+    title: 'Agent Skills Hardening — Non-Negotiable Rules & Skill Chains',
     highlights: [
-      "system/globals/ — 8 canonical design knowledge files (colors, typography, spacing, interaction, imagery, effects, responsiveness, accessibility)",
-      "system/prompts/ — 7 standalone self-audit prompts that work in any AI tool (ChatGPT, Gemini, Cursor, etc.)",
-      "Plenum multi-agent review — /plenum spawns 6 domain-specific review agents (Design, UX, A11y, Perf, SEO, Code) with scope-based auto-selection",
-      "Skills slimmed down — design knowledge moved to globals, skills now reference canonical sources",
-      "Updated .cursor/rules, .windsurfrules, .github/copilot-instructions.md with globals references",
-      "New skill chains for design system changes and pre-launch reviews",
-      "Updated docs page with AI Architecture and Quality Gates sections",
-      "Updated README with AI tool pathways, design knowledge base, and portable prompts documentation",
+      'Non-Negotiable sections in all 6 domain skills — pressure-resistant rules against common rationalizations',
+      'Skill Chains table in AGENTS.md — mandatory skill execution order per task type',
+      'Optimized all 7 skill descriptions to trigger-only format for better discoverability',
+      'Inspired by the superpowers agent framework patterns',
     ],
   },
   {
-    version: "3.0.5",
-    date: "2026-03-19",
-    tag: "patch",
-    title: "Live Component Demos, Pricing Fixes & Test Framework",
+    version: '3.0.2',
+    date: '2026-03-19',
+    tag: 'patch',
+    title: 'Astro 6.0.6 Update',
+    highlights: ['Updated Astro from 6.0.4 to 6.0.6'],
+  },
+  {
+    version: '3.0.1',
+    date: '2026-03-16',
+    tag: 'patch',
+    title: 'Components Page, Three-Tier Docs & Homepage CTA',
     highlights: [
-      "Live interactive demos for all 6 React components on /components page (Dialog, Accordion, Tabs, Tooltip, Select, Dropdown)",
-      "Pricing section: fixed rounded-lg, font-bold h3, missing tablet grid, scale overflow, and missing ARIA attributes",
-      "New page creation now defaults to adding Header + Footer navigation",
-      "New section creation now requires placement on a page",
-      "AI test framework with dynamic test cases from docs and variance rules",
+      'Components page (/components) with full-width layout, sidebar nav, live demos, and copy-paste code',
+      'Three-tier architecture docs (Components / Sections / Pages) across README, AGENTS.md, docs, and Claude agent',
+      'CTA section on homepage with Download and GitHub buttons',
+      'Stats section on homepage (16 sections, 11 components, 11 pages, 5 AI agents)',
+      'Download links now use /releases/latest — no more manual URL updates on release',
+      'Team grid auto-centers for 3 or fewer members',
     ],
   },
   {
-    version: "3.0.4",
-    date: "2026-03-19",
-    tag: "patch",
-    title: "Release Process Fix & Documentation",
+    version: '3.0.0',
+    date: '2026-03-16',
+    tag: 'major',
+    title: 'Templates, Multi-Agent Support & 6 New Sections',
     highlights: [
-      "Fixed Hero badge and changelog page that were stuck at v3.0.1 after v3.0.2/v3.0.3 releases",
-      "Documented release process in AGENTS.md with all 4 required update locations",
-      "Added Release entry to Skill Chains table for automated workflow",
-      "Clarified release process applies to AstroDeck framework only, not user projects",
-    ],
-  },
-  {
-    version: "3.0.3",
-    date: "2026-03-19",
-    tag: "patch",
-    title: "Agent Skills Hardening — Non-Negotiable Rules & Skill Chains",
-    highlights: [
-      "Non-Negotiable sections in all 6 domain skills — pressure-resistant rules against common rationalizations",
-      "Skill Chains table in AGENTS.md — mandatory skill execution order per task type",
-      "Optimized all 7 skill descriptions to trigger-only format for better discoverability",
-      "Inspired by the superpowers agent framework patterns",
-    ],
-  },
-  {
-    version: "3.0.2",
-    date: "2026-03-19",
-    tag: "patch",
-    title: "Astro 6.0.6 Update",
-    highlights: [
-      "Updated Astro from 6.0.4 to 6.0.6",
-    ],
-  },
-  {
-    version: "3.0.1",
-    date: "2026-03-16",
-    tag: "patch",
-    title: "Components Page, Three-Tier Docs & Homepage CTA",
-    highlights: [
-      "Components page (/components) with full-width layout, sidebar nav, live demos, and copy-paste code",
-      "Three-tier architecture docs (Components / Sections / Pages) across README, AGENTS.md, docs, and Claude agent",
-      "CTA section on homepage with Download and GitHub buttons",
-      "Stats section on homepage (16 sections, 11 components, 11 pages, 5 AI agents)",
-      "Download links now use /releases/latest — no more manual URL updates on release",
-      "Team grid auto-centers for 3 or fewer members",
-    ],
-  },
-  {
-    version: "3.0.0",
-    date: "2026-03-16",
-    tag: "major",
-    title: "Templates, Multi-Agent Support & 6 New Sections",
-    highlights: [
-      "6 new section components: FAQ (with Schema.org LD+JSON), Stats, Team, Comparison, Newsletter, Contact",
-      "2 new Hero variants: HeroSplit (split layout) and HeroGradient (animated gradient orbs)",
-      "6 new shadcn/ui components: Dialog, Accordion, Tabs, Tooltip, Select, DropdownMenu",
-      "4 page templates: SaaS, Portfolio, Startup, Contact — each with unique Hero and section backgrounds",
-      "Pages overview (/pages): central gallery with screenshot previews for all pages",
-      "Multi-agent support: .cursor/rules, .github/copilot-instructions.md, .windsurfrules",
-      "Component registry (src/registry.json): machine-readable catalog for AI agents",
-      "CSS animation system with data-animate attributes and scroll-triggered transitions",
-      "Section background variants: section-muted (gray) and section-inverted (dark/light swap)",
-      "Tailwind CSS updated to v4.2.1",
+      '6 new section components: FAQ (with Schema.org LD+JSON), Stats, Team, Comparison, Newsletter, Contact',
+      '2 new Hero variants: HeroSplit (split layout) and HeroGradient (animated gradient orbs)',
+      '6 new shadcn/ui components: Dialog, Accordion, Tabs, Tooltip, Select, DropdownMenu',
+      '4 page templates: SaaS, Portfolio, Startup, Contact — each with unique Hero and section backgrounds',
+      'Pages overview (/pages): central gallery with screenshot previews for all pages',
+      'Multi-agent support: .cursor/rules, .github/copilot-instructions.md, .windsurfrules',
+      'Component registry (src/registry.json): machine-readable catalog for AI agents',
+      'CSS animation system with data-animate attributes and scroll-triggered transitions',
+      'Section background variants: section-muted (gray) and section-inverted (dark/light swap)',
+      'Tailwind CSS updated to v4.2.1',
     ],
     breaking: [
       "Navigation restructured: 'Pages' is now a direct link to /pages overview",
-      "Template pages use BaseLayout (boxed) instead of FullWidthLayout",
+      'Template pages use BaseLayout (boxed) instead of FullWidthLayout',
     ],
   },
   {
-    version: "2.0.4",
-    date: "2026-03-15",
-    tag: "patch",
-    title: "Changelog Polish, Blog Refresh & Footer Redesign",
+    version: '2.0.4',
+    date: '2026-03-15',
+    tag: 'patch',
+    title: 'Changelog Polish, Blog Refresh & Footer Redesign',
     highlights: [
       "Changelog page: latest release highlighted with larger pulsing dot and 'Latest' badge",
-      "Changelog badges now visible in dark mode with semi-transparent styling",
-      "All changelog dates corrected to match actual GitHub release dates",
-      "Hero version badge now links to changelog page",
-      "Blog: tutorial posts replaced with 5 new funny fictional posts, dates spread Nov 2025 – Mar 2026",
+      'Changelog badges now visible in dark mode with semi-transparent styling',
+      'All changelog dates corrected to match actual GitHub release dates',
+      'Hero version badge now links to changelog page',
+      'Blog: tutorial posts replaced with 5 new funny fictional posts, dates spread Nov 2025 – Mar 2026',
       "Footer restructured: 'AstroDeck' and 'Pages' columns matching header navigation",
     ],
   },
   {
-    version: "2.0.3",
-    date: "2026-03-15",
-    tag: "patch",
-    title: "Documentation Page, Navigation Overhaul & Design Tokens",
+    version: '2.0.3',
+    date: '2026-03-15',
+    tag: 'patch',
+    title: 'Documentation Page, Navigation Overhaul & Design Tokens',
     highlights: [
-      "New /docs page with AI-first two-column layout — every task shown as AI prompt and manual steps side by side",
-      "9 documentation sections: Getting Started, Pages, Sections, Components, Theme, Design Tokens, Blog, Deploy, Structure",
-      "Design Tokens reference table with all CSS variables and their Tailwind utility classes",
+      'New /docs page with AI-first two-column layout — every task shown as AI prompt and manual steps side by side',
+      '9 documentation sections: Getting Started, Pages, Sections, Components, Theme, Design Tokens, Blog, Deploy, Structure',
+      'Design Tokens reference table with all CSS variables and their Tailwind utility classes',
       "Mobile collapsible 'On this page' sub-navigation for /docs and /sections pages",
       "Header dropdown menu: Blog, Content, and Login grouped under 'Pages'",
-      "Active page highlighting in main navigation with aria-current support",
-      "Responsive design skill added to agent and QA/UI-design skills with breakpoint checklists",
+      'Active page highlighting in main navigation with aria-current support',
+      'Responsive design skill added to agent and QA/UI-design skills with breakpoint checklists',
     ],
   },
   {
-    version: "2.0.2",
-    date: "2026-03-15",
-    tag: "patch",
-    title: "Self-Improving Skill System & Quality Fixes",
+    version: '2.0.2',
+    date: '2026-03-15',
+    tag: 'patch',
+    title: 'Self-Improving Skill System & Quality Fixes',
     highlights: [
-      "Added 6 domain skills (ui-design, tailwind, astro, accessibility, qa, content-seo) with KPIs and self-improving learnings",
-      "New /launch-check command for production-readiness checks across all Lighthouse categories",
-      "Fixed ESLint errors, TypeScript errors, inline styles, hardcoded colors, and design inconsistencies",
-      "Footer updated with templatedeck.com link",
+      'Added 6 domain skills (ui-design, tailwind, astro, accessibility, qa, content-seo) with KPIs and self-improving learnings',
+      'New /launch-check command for production-readiness checks across all Lighthouse categories',
+      'Fixed ESLint errors, TypeScript errors, inline styles, hardcoded colors, and design inconsistencies',
+      'Footer updated with templatedeck.com link',
     ],
   },
   {
-    version: "2.0.1",
-    date: "2026-03-14",
-    tag: "patch",
-    title: "Changelog Page",
+    version: '2.0.1',
+    date: '2026-03-14',
+    tag: 'patch',
+    title: 'Changelog Page',
     highlights: [
-      "New Changelog page with timeline design showing all releases at a glance",
-      "Changelog added to main navigation",
+      'New Changelog page with timeline design showing all releases at a glance',
+      'Changelog added to main navigation',
     ],
   },
   {
-    version: "2.0.0",
-    date: "2026-03-14",
-    tag: "major",
-    title: "Astro 6.0 + Vite 7",
+    version: '2.0.0',
+    date: '2026-03-14',
+    tag: 'major',
+    title: 'Astro 6.0 + Vite 7',
     highlights: [
-      "Upgraded to Astro 6.0 with Vite 7 — faster dev server with unified dev/production code paths",
-      "Node.js 22+ now required (dropped Node 18/20)",
-      "Migrated view transitions from ViewTransitions to ClientRouter",
-      "All AI tooling (agents, commands, docs) updated for Astro 6",
-      "Added comprehensive CHANGELOG with full release history",
+      'Upgraded to Astro 6.0 with Vite 7 — faster dev server with unified dev/production code paths',
+      'Node.js 22+ now required (dropped Node 18/20)',
+      'Migrated view transitions from ViewTransitions to ClientRouter',
+      'All AI tooling (agents, commands, docs) updated for Astro 6',
+      'Added comprehensive CHANGELOG with full release history',
     ],
     breaking: [
-      "Node.js 22+ required",
-      "Zod imports moved from astro:content to astro/zod",
-      "ViewTransitions renamed to ClientRouter",
+      'Node.js 22+ required',
+      'Zod imports moved from astro:content to astro/zod',
+      'ViewTransitions renamed to ClientRouter',
     ],
   },
   {
-    version: "1.5.2",
-    date: "2026-03-12",
-    tag: "patch",
-    title: "Dark Mode Architecture",
+    version: '1.5.2',
+    date: '2026-03-12',
+    tag: 'patch',
+    title: 'Dark Mode Architecture',
     highlights: [
-      "Refactored dark mode system for better theme persistence",
-      "Fixed TypeScript error with querySelectorAll generics",
+      'Refactored dark mode system for better theme persistence',
+      'Fixed TypeScript error with querySelectorAll generics',
     ],
   },
   {
-    version: "1.5.1",
-    date: "2026-01-27",
-    tag: "patch",
-    title: "Contrast Improvements",
+    version: '1.5.1',
+    date: '2026-01-27',
+    tag: 'patch',
+    title: 'Contrast Improvements',
     highlights: [
-      "Improved muted-foreground contrast in light mode",
-      "Dark mode contrast improvements and theme persistence fix",
+      'Improved muted-foreground contrast in light mode',
+      'Dark mode contrast improvements and theme persistence fix',
     ],
   },
   {
-    version: "1.5.0",
-    date: "2026-01-26",
-    tag: "minor",
-    title: "Copy-Code Buttons",
+    version: '1.5.0',
+    date: '2026-01-26',
+    tag: 'minor',
+    title: 'Copy-Code Buttons',
     highlights: [
-      "Added functional copy-code buttons to the sections showcase page",
-      "Updated all dependencies with security fixes",
+      'Added functional copy-code buttons to the sections showcase page',
+      'Updated all dependencies with security fixes',
     ],
   },
   {
-    version: "1.4.0",
-    date: "2025-12-27",
-    tag: "minor",
-    title: "Content Layer API",
+    version: '1.4.0',
+    date: '2025-12-27',
+    tag: 'minor',
+    title: 'Content Layer API',
+    highlights: ['Migrated to Content Layer API for future Astro compatibility'],
+  },
+  {
+    version: '1.3.0',
+    date: '2025-12-26',
+    tag: 'minor',
+    title: 'SEO & Layouts',
     highlights: [
-      "Migrated to Content Layer API for future Astro compatibility",
+      'Added MinimalLayout for standalone pages (404, maintenance, landing)',
+      'Comprehensive SEO support: OpenGraph, Twitter Cards, canonical URLs, sitemap, RSS',
+      'Responsive header with hamburger menu and accessibility improvements',
+      'Added PROJECT.md for user-specific AI instructions',
     ],
   },
   {
-    version: "1.3.0",
-    date: "2025-12-26",
-    tag: "minor",
-    title: "SEO & Layouts",
+    version: '1.2.0',
+    date: '2025-12-25',
+    tag: 'minor',
+    title: 'Claude Code Agent',
     highlights: [
-      "Added MinimalLayout for standalone pages (404, maintenance, landing)",
-      "Comprehensive SEO support: OpenGraph, Twitter Cards, canonical URLs, sitemap, RSS",
-      "Responsive header with hamburger menu and accessibility improvements",
-      "Added PROJECT.md for user-specific AI instructions",
+      'Introduced Claude Code AI Agent for intelligent project assistance',
+      'Added AI feature section to homepage with tools grid',
+      'Consolidated AI guidelines into the AGENTS.md standard',
     ],
   },
   {
-    version: "1.2.0",
-    date: "2025-12-25",
-    tag: "minor",
-    title: "Claude Code Agent",
+    version: '1.1.0',
+    date: '2025-12-23',
+    tag: 'minor',
+    title: 'AI-Friendly & Tailwind v4',
     highlights: [
-      "Introduced Claude Code AI Agent for intelligent project assistance",
-      "Added AI feature section to homepage with tools grid",
-      "Consolidated AI guidelines into the AGENTS.md standard",
+      'Added AGENTS.md — AI-friendly development documentation',
+      'Migrated to Tailwind CSS v4 with @tailwindcss/vite plugin',
+      'Vercel Analytics integration',
+      'Redesigned features section and footer',
     ],
   },
   {
-    version: "1.1.0",
-    date: "2025-12-23",
-    tag: "minor",
-    title: "AI-Friendly & Tailwind v4",
+    version: '1.0.0',
+    date: '2025-12-21',
+    tag: 'major',
+    title: 'Initial Release',
     highlights: [
-      "Added AGENTS.md — AI-friendly development documentation",
-      "Migrated to Tailwind CSS v4 with @tailwindcss/vite plugin",
-      "Vercel Analytics integration",
-      "Redesigned features section and footer",
-    ],
-  },
-  {
-    version: "1.0.0",
-    date: "2025-12-21",
-    tag: "major",
-    title: "Initial Release",
-    highlights: [
-      "15+ pre-built sections: Hero, CTA, Features, Pricing, Testimonials, Newsletter, and more",
-      "4 layout templates: Base, Full-Width, Auth, and Minimal",
-      "shadcn/ui components with Radix UI primitives",
-      "Dark mode with theme persistence",
-      "Blog system with Content Collections",
-      "Full TypeScript support with ESLint and Prettier",
+      '15+ pre-built sections: Hero, CTA, Features, Pricing, Testimonials, Newsletter, and more',
+      '4 layout templates: Base, Full-Width, Auth, and Minimal',
+      'shadcn/ui components with Radix UI primitives',
+      'Dark mode with theme persistence',
+      'Blog system with Content Collections',
+      'Full TypeScript support with ESLint and Prettier',
     ],
   },
 ];
 
 const tagStyles: Record<string, { bg: string; text: string; label: string }> = {
-  major: { bg: "bg-primary", text: "text-primary-foreground", label: "Major" },
-  minor: { bg: "bg-foreground/10 border border-foreground/20", text: "text-foreground", label: "Minor" },
-  patch: { bg: "bg-foreground/5 border border-foreground/15", text: "text-muted-foreground", label: "Patch" },
+  major: { bg: 'bg-primary', text: 'text-primary-foreground', label: 'Major' },
+  minor: {
+    bg: 'bg-foreground/10 border border-foreground/20',
+    text: 'text-foreground',
+    label: 'Minor',
+  },
+  patch: {
+    bg: 'bg-foreground/5 border border-foreground/15',
+    text: 'text-muted-foreground',
+    label: 'Patch',
+  },
 };
 ---
 
@@ -312,115 +308,105 @@ const tagStyles: Record<string, { bg: string; text: string; label: string }> = {
 >
   <div class="container max-w-3xl mx-auto py-16 px-6">
     <header class="mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-        Changelog
-      </h1>
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Changelog</h1>
       <p class="text-lg text-muted-foreground">
         New features, improvements, and fixes in every AstroDeck release.
       </p>
     </header>
 
-    <!-- Timeline -->
+    {/* Timeline */}
     <div class="relative">
-      <!-- Timeline line -->
+      {/* Timeline line */}
       <div class="absolute left-[7px] top-2 bottom-0 w-px bg-border" aria-hidden="true"></div>
 
       <div class="space-y-12">
-        {releases.map((release, index) => (
-          <article class="relative pl-10">
-            <!-- Timeline dot -->
-            <div
-              class:list={[
-                "absolute left-0 rounded-full border-2 border-background",
-                index === 0
-                  ? "top-1.5 w-[19px] h-[19px] bg-primary -ml-[2px] animate-pulse"
-                  : "top-2 w-[15px] h-[15px]",
-                index !== 0 && (release.tag === "major" ? "bg-primary" : "bg-muted-foreground/40"),
-              ]}
-              aria-hidden="true"
-            />
-
-            <!-- Version header -->
-            <div class="flex flex-wrap items-center gap-3 mb-3">
-              <h2 class="text-2xl font-bold">v{release.version}</h2>
-              {index === 0 && (
-                <span class="px-2 py-0.5 rounded-md text-xs font-semibold bg-primary text-primary-foreground">
-                  Latest
-                </span>
-              )}
-              <span
+        {
+          releases.map((release, index) => (
+            <article class="relative pl-10">
+              {/* Timeline dot */}
+              <div
                 class:list={[
-                  "px-2 py-0.5 rounded-md text-xs font-semibold",
-                  tagStyles[release.tag].bg,
-                  tagStyles[release.tag].text,
+                  'absolute left-0 rounded-full border-2 border-background',
+                  index === 0
+                    ? 'top-1.5 w-[19px] h-[19px] bg-primary -ml-[2px] animate-pulse'
+                    : 'top-2 w-[15px] h-[15px]',
+                  index !== 0 &&
+                    (release.tag === 'major' ? 'bg-primary' : 'bg-muted-foreground/40'),
                 ]}
-              >
-                {tagStyles[release.tag].label}
-              </span>
-              <time
-                datetime={release.date}
-                class="text-sm text-muted-foreground"
-              >
-                {new Date(release.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
-            </div>
+                aria-hidden="true"
+              />
 
-            <!-- Title -->
-            <p class="text-lg font-medium text-foreground/80 mb-4">
-              {release.title}
-            </p>
-
-            <!-- Breaking changes -->
-            {release.breaking && release.breaking.length > 0 && (
-              <div class="mb-4 rounded-lg border border-destructive/30 bg-destructive/5 p-4">
-                <p class="text-sm font-semibold text-destructive mb-2">Breaking Changes</p>
-                <ul class="space-y-1">
-                  {release.breaking.map((item) => (
-                    <li class="text-sm text-muted-foreground flex items-start gap-2">
-                      <span class="text-destructive mt-0.5 shrink-0">!</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+              {/* Version header */}
+              <div class="flex flex-wrap items-center gap-3 mb-3">
+                <h2 class="text-2xl font-bold">v{release.version}</h2>
+                {index === 0 && (
+                  <span class="px-2 py-0.5 rounded-md text-xs font-semibold bg-primary text-primary-foreground">
+                    Latest
+                  </span>
+                )}
+                <span
+                  class:list={[
+                    'px-2 py-0.5 rounded-md text-xs font-semibold',
+                    tagStyles[release.tag].bg,
+                    tagStyles[release.tag].text,
+                  ]}
+                >
+                  {tagStyles[release.tag].label}
+                </span>
+                <time datetime={release.date} class="text-sm text-muted-foreground">
+                  {new Date(release.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
               </div>
-            )}
 
-            <!-- Highlights -->
-            <ul class="space-y-2">
-              {release.highlights.map((item) => (
-                <li class="text-muted-foreground flex items-start gap-2">
-                  <svg
-                    class="h-5 w-5 text-primary shrink-0 mt-0.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+              {/* Title */}
+              <p class="text-lg font-medium text-foreground/80 mb-4">{release.title}</p>
 
-            {index < releases.length - 1 && (
-              <div class="mt-8" aria-hidden="true" />
-            )}
-          </article>
-        ))}
+              {/* Breaking changes */}
+              {release.breaking && release.breaking.length > 0 && (
+                <div class="mb-4 rounded-lg border border-destructive/30 bg-destructive/5 p-4">
+                  <p class="text-sm font-semibold text-destructive mb-2">Breaking Changes</p>
+                  <ul class="space-y-1">
+                    {release.breaking.map((item) => (
+                      <li class="text-sm text-muted-foreground flex items-start gap-2">
+                        <span class="text-destructive mt-0.5 shrink-0">!</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Highlights */}
+              <ul class="space-y-2">
+                {release.highlights.map((item) => (
+                  <li class="text-muted-foreground flex items-start gap-2">
+                    <svg
+                      class="h-5 w-5 text-primary shrink-0 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      aria-hidden="true"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {index < releases.length - 1 && <div class="mt-8" aria-hidden="true" />}
+            </article>
+          ))
+        }
       </div>
     </div>
 
-    <!-- Footer CTA -->
+    {/* Footer CTA */}
     <div class="mt-16 text-center">
       <p class="text-muted-foreground mb-4">
         View the full technical changelog and source code on GitHub.
@@ -432,8 +418,18 @@ const tagStyles: Record<string, { bg: string; text: string; label: string }> = {
         class="inline-flex items-center gap-2 justify-center rounded-md bg-primary text-primary-foreground font-medium h-10 px-6 hover:bg-primary/90 transition-colors text-sm"
       >
         All Releases on GitHub
-        <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+        <svg
+          class="h-3 w-3"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
         </svg>
       </a>
     </div>

@@ -208,10 +208,24 @@
       "variants": 1,
       "props": {
         "title": { "type": "string", "required": true, "description": "Section heading" },
-        "subtitle": { "type": "string", "required": false, "description": "Supporting text below heading" },
-        "faqs": { "type": "Array<{ question: string; answer: string }>", "required": true, "description": "Array of FAQ items" }
+        "subtitle": {
+          "type": "string",
+          "required": false,
+          "description": "Supporting text below heading"
+        },
+        "faqs": {
+          "type": "Array<{ question: string; answer: string }>",
+          "required": true,
+          "description": "Array of FAQ items"
+        }
       },
-      "features": ["responsive", "dark-mode", "seo-structured-data", "css-only-animation", "accessible"],
+      "features": [
+        "responsive",
+        "dark-mode",
+        "seo-structured-data",
+        "css-only-animation",
+        "accessible"
+      ],
       "category": "faq",
       "notes": "Uses name='faq' attribute on <details> for exclusive accordion behavior (only one open at a time). No JavaScript required. The + icon rotates to x when open."
     },
@@ -222,8 +236,16 @@
       "variants": 1,
       "props": {
         "title": { "type": "string", "required": false, "description": "Optional section heading" },
-        "subtitle": { "type": "string", "required": false, "description": "Optional supporting text" },
-        "stats": { "type": "Array<{ value: string; label: string; description?: string }>", "required": true, "description": "Array of stat items" }
+        "subtitle": {
+          "type": "string",
+          "required": false,
+          "description": "Optional supporting text"
+        },
+        "stats": {
+          "type": "Array<{ value: string; label: string; description?: string }>",
+          "required": true,
+          "description": "Array of stat items"
+        }
       },
       "features": ["responsive", "dark-mode", "semantic-html"],
       "category": "social-proof",
@@ -235,9 +257,18 @@
       "description": "Team member grid with avatar (image or auto-generated initials), name, role, optional bio, and social links (GitHub, LinkedIn, Twitter/X).",
       "variants": 1,
       "props": {
-        "title": { "type": "string", "required": false, "default": "Meet Our Team", "description": "Section heading" },
+        "title": {
+          "type": "string",
+          "required": false,
+          "default": "Meet Our Team",
+          "description": "Section heading"
+        },
         "subtitle": { "type": "string", "required": false, "description": "Supporting text" },
-        "members": { "type": "Array<{ name: string; role: string; bio?: string; image?: string; social?: { github?: string; linkedin?: string; twitter?: string } }>", "required": true, "description": "Array of team members" }
+        "members": {
+          "type": "Array<{ name: string; role: string; bio?: string; image?: string; social?: { github?: string; linkedin?: string; twitter?: string } }>",
+          "required": true,
+          "description": "Array of team members"
+        }
       },
       "features": ["responsive", "dark-mode", "accessible", "hover-effects"],
       "category": "team",
@@ -249,10 +280,23 @@
       "description": "Feature comparison table across multiple products/services. Supports boolean (checkmark/dash) and string values. One column can be highlighted.",
       "variants": 1,
       "props": {
-        "title": { "type": "string", "required": false, "default": "How We Compare", "description": "Section heading" },
+        "title": {
+          "type": "string",
+          "required": false,
+          "default": "How We Compare",
+          "description": "Section heading"
+        },
         "subtitle": { "type": "string", "required": false, "description": "Supporting text" },
-        "columns": { "type": "Array<{ name: string; highlighted?: boolean }>", "required": true, "description": "Products/services to compare" },
-        "features": { "type": "Array<{ name: string; values: (string | boolean)[] }>", "required": true, "description": "Feature rows with one value per column" }
+        "columns": {
+          "type": "Array<{ name: string; highlighted?: boolean }>",
+          "required": true,
+          "description": "Products/services to compare"
+        },
+        "features": {
+          "type": "Array<{ name: string; values: (string | boolean)[] }>",
+          "required": true,
+          "description": "Feature rows with one value per column"
+        }
       },
       "features": ["responsive", "dark-mode", "accessible", "horizontally-scrollable"],
       "category": "comparison",
@@ -264,10 +308,25 @@
       "description": "Email signup section with centered card layout containing headline, description, inline email form, and privacy note.",
       "variants": 1,
       "props": {
-        "title": { "type": "string", "required": false, "default": "Stay in the Loop", "description": "Section heading" },
+        "title": {
+          "type": "string",
+          "required": false,
+          "default": "Stay in the Loop",
+          "description": "Section heading"
+        },
         "description": { "type": "string", "required": false, "description": "Supporting text" },
-        "placeholder": { "type": "string", "required": false, "default": "Enter your email", "description": "Input placeholder text" },
-        "buttonText": { "type": "string", "required": false, "default": "Subscribe", "description": "Submit button text" }
+        "placeholder": {
+          "type": "string",
+          "required": false,
+          "default": "Enter your email",
+          "description": "Input placeholder text"
+        },
+        "buttonText": {
+          "type": "string",
+          "required": false,
+          "default": "Subscribe",
+          "description": "Submit button text"
+        }
       },
       "features": ["responsive", "dark-mode", "accessible"],
       "category": "conversion",
@@ -279,11 +338,28 @@
       "description": "Two-column contact section with info (email, phone, address) on the left and a 4-field form (name, email, subject, message) on the right.",
       "variants": 1,
       "props": {
-        "title": { "type": "string", "required": false, "default": "Get in Touch", "description": "Section heading" },
+        "title": {
+          "type": "string",
+          "required": false,
+          "default": "Get in Touch",
+          "description": "Section heading"
+        },
         "subtitle": { "type": "string", "required": false, "description": "Supporting text" },
-        "email": { "type": "string", "required": false, "description": "Contact email with mailto link" },
-        "phone": { "type": "string", "required": false, "description": "Phone number with tel link" },
-        "address": { "type": "string", "required": false, "description": "Physical address, supports multiline" }
+        "email": {
+          "type": "string",
+          "required": false,
+          "description": "Contact email with mailto link"
+        },
+        "phone": {
+          "type": "string",
+          "required": false,
+          "description": "Phone number with tel link"
+        },
+        "address": {
+          "type": "string",
+          "required": false,
+          "description": "Physical address, supports multiline"
+        }
       },
       "features": ["responsive", "dark-mode", "accessible", "semantic-html"],
       "category": "contact",
@@ -331,7 +407,14 @@
           "description": "Additional Tailwind classes merged via cn()"
         }
       },
-      "exports": ["Card", "CardHeader", "CardFooter", "CardTitle", "CardDescription", "CardContent"],
+      "exports": [
+        "Card",
+        "CardHeader",
+        "CardFooter",
+        "CardTitle",
+        "CardDescription",
+        "CardContent"
+      ],
       "features": ["dark-mode", "composable"],
       "notes": "Base Card renders as a rounded-lg border bg-card shadow-sm div. All sub-components accept standard HTMLDivElement/heading attributes plus className."
     },
@@ -552,7 +635,16 @@
     {
       "name": "SaaS Landing Page",
       "description": "Complete SaaS landing page combining hero, feature highlights, AI tooling showcase, social proof logos, content marketing blocks, pricing tiers, testimonials, and a conversion-focused CTA.",
-      "sections": ["Hero", "LogoCloud", "Features", "AIFeature", "ContentBlock", "Pricing", "Testimonials", "CTA"],
+      "sections": [
+        "Hero",
+        "LogoCloud",
+        "Features",
+        "AIFeature",
+        "ContentBlock",
+        "Pricing",
+        "Testimonials",
+        "CTA"
+      ],
       "layout": "BaseLayout",
       "example": "See src/pages/index.astro for reference"
     },
