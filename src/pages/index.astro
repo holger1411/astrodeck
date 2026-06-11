@@ -8,46 +8,52 @@ import Stats from '@/components/sections/Stats.astro';
 
 const features = [
   {
-    title: 'Astro.js Powered',
-    description: 'Built with Astro for lightning-fast performance and optimal SEO out of the box.',
-    icon: 'zap',
-  },
-  {
-    title: 'shadcn/ui Components',
-    description: 'Beautiful, accessible components built with Radix UI and Tailwind CSS.',
-    icon: 'shield',
-  },
-  {
-    title: 'TypeScript Ready',
-    description: 'Full TypeScript support for type-safe development and better DX.',
-    icon: 'chart',
-  },
-  {
-    title: 'Dark Mode',
-    description: 'Built-in dark mode support with seamless theme switching.',
-    icon: 'users',
-  },
-  {
-    title: 'Responsive Design',
-    description: 'Mobile-first approach ensuring perfect display on all devices.',
+    title: 'For Real Websites',
+    description:
+      'Company sites, blogs, portfolios, landing pages — with working example pages for each. Deliberately not built for dashboards or app-heavy products.',
     icon: 'globe',
   },
   {
-    title: 'Ready to Deploy',
-    description: 'Optimized for Vercel, Netlify, and other modern hosting platforms.',
+    title: 'AI Guardrails Built In',
+    description:
+      'A convention guard hook blocks off-system edits — hardcoded colors, deprecated patterns — before they ever reach your code.',
+    icon: 'shield',
+  },
+  {
+    title: 'One Design System',
+    description:
+      'OKLCH color tokens, spacing, and typography defined once. Dark mode included — and your AI assistant cannot break it.',
+    icon: 'chart',
+  },
+  {
+    title: 'Docs for Humans & AI',
+    description:
+      'Every task is documented two ways: tell your coding assistant what you want, or follow the manual steps yourself.',
+    icon: 'users',
+  },
+  {
+    title: 'Quality Checks in One Command',
+    description:
+      'npm run check:kpis verifies colors, alt texts, meta descriptions, and deprecated imports. Lighthouse scores of 99-100 out of the box.',
     icon: 'lock',
+  },
+  {
+    title: 'Astro Performance',
+    description:
+      'Static HTML with islands architecture: fast loads, clean SEO, sitemap and RSS included — what content sites actually need.',
+    icon: 'zap',
   },
 ];
 ---
 
 <BaseLayout
-  title="Astro.js Starter Kit"
-  description="Open-source Astro.js starter kit with ready-to-use components, shadcn/ui, Tailwind CSS, and TypeScript. Build production-ready websites faster."
+  title="Astro Starter Kit for AI-Assisted Websites"
+  description="Open-source Astro starter kit for AI-assisted websites. Build company sites, blogs, and portfolios with Claude Code, Cursor & Co. on guarded design rails."
 >
   <Hero
     badge="true"
-    title="Your Astro project, ready to take off."
-    subtitle="AstroDeck is a production-ready <mark>Astro.js starter kit</mark> with pre-built components, shadcn/ui, dark mode, and TypeScript. <mark>Built AI-friendly</mark> with <mark>AGENTS.md</mark> – the open standard supported by OpenAI, GitHub, Google, and all major coding assistants. Plus a dedicated <mark>Claude Code Agent</mark> for intelligent project guidance."
+    title="The Astro starter kit for AI-assisted websites."
+    subtitle="Start from a complete foundation — pages, sections, and a design system — and let <mark>Claude Code, Cursor, or any coding agent</mark> build your <mark>company site, blog, or portfolio</mark>. Conventions via <mark>AGENTS.md</mark>, enforced by <mark>built-in guardrails</mark>, so AI edits never go off-system."
     primaryCta={{
       href: 'https://github.com/holger1411/astrodeck/releases/latest',
       label: 'Download',
@@ -62,29 +68,27 @@ const features = [
   <div class="section-inverted py-8">
     <Stats
       stats={[
-        { value: '16', label: 'Sections', description: 'Pre-built, ready to use' },
+        { value: '16', label: 'Sections', description: 'Hero, pricing, FAQ, team & more' },
         { value: '11', label: 'UI Components', description: 'shadcn/ui + Radix' },
-        { value: '11', label: 'Pages', description: 'Templates & examples' },
-        { value: '8+', label: 'AI Tools', description: 'Claude, Cursor, Copilot, Windsurf & more' },
+        { value: '11', label: 'Example Pages', description: 'SaaS, portfolio, blog & more' },
+        { value: '100', label: 'Lighthouse', description: 'Accessibility, Best Practices & SEO' },
       ]}
     />
   </div>
 
   <Features
-    title="Everything you need, right out of the box"
-    subtitle="Built with modern technologies and best practices to help you ship faster."
+    title="More than a theme, calmer than an AI builder"
+    subtitle="A complete website foundation — plus the operating layer your AI assistant needs to stay on track."
     features={features}
   />
 
   <div class="section-inverted">
     <section class="py-20 md:py-32 px-6">
       <div class="container max-w-3xl mx-auto text-center" data-animate="scale">
-        <h2 class="text-3xl font-bold leading-tight md:text-5xl">
-          Ready to build something amazing?
-        </h2>
+        <h2 class="text-3xl font-bold leading-tight md:text-5xl">Start from a clean foundation.</h2>
         <p class="mt-6 text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-          Download AstroDeck, open it in your favorite AI coding tool, and start building. Free and
-          open source — forever.
+          Download AstroDeck, open it in your coding assistant, and say what you want to build. Free
+          and open source — forever.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 mt-10 justify-center">
           <a
