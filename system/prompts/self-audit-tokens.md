@@ -7,7 +7,7 @@ You are auditing an Astro.js v6 project with Tailwind CSS v4 (@tailwindcss/vite)
 
 ### Token System
 - All colors MUST be defined as CSS custom properties in `src/styles/globals.css`
-- Color format MUST be OKLCH (e.g. `oklch(0.97 0.001 286.38)`), never HSL, RGB, or hex
+- Color format MUST be OKLCH with percent lightness (e.g. `oklch(97% 0.001 286.38)`), never HSL, RGB, or hex
 - Tailwind classes MUST reference tokens via `--color-*` (e.g. `bg-primary`, `text-foreground`), never hardcoded Tailwind colors (e.g. `bg-blue-500`, `text-gray-800`)
 - No inline `style` attributes with color values
 - No `tailwind.config.mjs` or `tailwind.config.js` file should exist — Tailwind v4 uses CSS-based config

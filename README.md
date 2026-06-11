@@ -996,7 +996,7 @@ AstroDeck follows the **[AGENTS.md standard](https://agents.md)** – an open fo
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ Config | Via `contextFileName` setting |
 | [Windsurf](https://windsurf.com) | ✅ Native | Reads AGENTS.md automatically |
 | [Zed](https://zed.dev) | ✅ Native | Priority-based file loading |
-| [Claude Code](https://claude.ai/code) | ✅ Symlink | Via `PROJECT.md → AGENTS.md` |
+| [Claude Code](https://claude.ai/code) | ✅ Native | Via `CLAUDE.md` + full `.claude/` integration (agent, commands, skills, hooks) |
 | [Aider](https://aider.chat) | ✅ Config | Via `read: AGENTS.md` |
 
 **Plus many more:** Factory, Amp, RooCode, Devin, Kilo Code, Warp, and others.  
@@ -1008,6 +1008,7 @@ AstroDeck follows the **[AGENTS.md standard](https://agents.md)** – an open fo
 astrodeck/
 ├── PROJECT.md              # 🎯 YOUR project customizations (HIGHEST PRIORITY)
 ├── AGENTS.md              # 📄 AstroDeck defaults (all AI tools)
+├── CLAUDE.md              # 🔗 Claude Code entry point → AGENTS.md + PROJECT.md
 ├── .cursorrules           # 🔗 Symlink → AGENTS.md (Cursor)
 ├── .cursor/rules          # 📄 Cursor rules directory
 ├── .github/copilot-instructions.md  # 📄 GitHub Copilot instructions
@@ -1048,15 +1049,27 @@ astrodeck/
     │   ├── theme.md       #    /theme - Customize colors
     │   ├── launch-check.md #   /launch-check - Pre-launch KPI check
     │   └── plenum.md      #    /plenum - Multi-agent review
-    └── skills/            # 🧠 7 domain skills with KPIs
-        ├── ui-design/     # Visual hierarchy, spacing, typography
-        ├── tailwind/      # Tailwind v4, OKLCH, dark mode
-        ├── accessibility/ # WCAG 2.1 AA, ARIA, keyboard nav
-        ├── astro/         # Astro 6, Content Collections, TypeScript
-        ├── content-seo/   # Meta tags, structured data, RSS
-        ├── qa/            # Testing, Lighthouse, launch readiness
-        └── readme/        # Project documentation
+    ├── skills/            # 🧠 7 domain skills with KPIs
+    │   ├── ui-design/     # Visual hierarchy, spacing, typography
+    │   ├── tailwind/      # Tailwind v4, OKLCH, dark mode
+    │   ├── accessibility/ # WCAG 2.1 AA, ARIA, keyboard nav
+    │   ├── astro/         # Astro 6, Content Collections, TypeScript
+    │   ├── content-seo/   # Meta tags, structured data, RSS
+    │   ├── qa/            # Testing, Lighthouse, launch readiness
+    │   └── readme/        # Project documentation
+    ├── hooks/
+    │   └── guard-conventions.mjs  # 🛡️ Auto-blocks deprecated patterns & design-system drift
+    ├── scripts/
+    │   └── check-kpis.mjs # ✅ All static convention checks (npm run check:kpis)
+    └── settings.json      # ⚙️ Hook registration for Claude Code
 ```
+
+#### Deterministic Guardrails (Hooks + KPI Script)
+
+Prompt-based rules can be forgotten — hooks cannot. AstroDeck ships two enforcement layers for Claude Code:
+
+- **Convention guard hook** (`.claude/hooks/guard-conventions.mjs`): blocks deprecated Astro patterns (`ViewTransitions`, `z` from `astro:content`) and `tailwind.config.*` creation *before* they reach your codebase, and warns the assistant when an edit introduces hardcoded Tailwind colors, inline styles, or relative `../` imports — so it self-corrects immediately.
+- **KPI check script** (`npm run check:kpis`): one command that runs every static convention check (hardcoded colors, inline styles, deprecated imports, missing alt attributes, non-OKLCH tokens, missing meta descriptions). It is the single source of truth referenced by `/audit`, `/launch-check`, and the skills — and it works for human contributors and CI, too.
 
 #### Design Knowledge Base (`system/globals/`)
 
