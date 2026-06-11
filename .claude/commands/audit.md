@@ -1,71 +1,72 @@
 ---
 description: Run a comprehensive quality audit on the project
+argument-hint: [focus area, e.g. "accessibility" or "colors" — optional]
 ---
 
 # Project Audit
 
 Perform a comprehensive quality check of the AstroDeck project.
 
-## Audit Categories
+Focus requested by the user (audit everything if empty): $ARGUMENTS
 
-### 1. Code Quality
+## 1. Static convention checks (single source of truth)
+
+Run the bundled KPI script — it covers hardcoded colors, inline styles,
+tailwind.config existence, deprecated Astro patterns, missing alt attributes,
+relative imports, non-OKLCH tokens, and pages without descriptions:
+
+```bash
+npm run check:kpis
+```
+
+Do NOT re-implement these checks with ad-hoc greps — the script is canonical.
+
+## 2. Code Quality
+
 ```bash
 npm run lint
 npm run format:check
 npx tsc --noEmit
 ```
 
-### 2. Build Verification
+## 3. Build Verification
+
 ```bash
 npm run build
 ```
+
 Check for warnings or errors in the build output.
 
-### 3. Import Consistency
-Use the Grep tool to search for relative imports that should use `@/` alias:
-- Pattern: `from ['"]\.\.\/` in `src/**/*.{astro,ts,tsx}` files
+## 4. Accessibility (beyond the static checks)
 
-### 4. Hardcoded Colors
-Use the Grep tool to search for hardcoded Tailwind colors instead of CSS variables:
-- Pattern: `(bg|text|border)-(red|blue|green|yellow|purple|pink|gray|slate|zinc)-[0-9]+` in `src/**/*.astro` files
-- Exceptions: Intentional use in decorative elements is acceptable
-
-### 5. Deprecated Patterns
-Check for patterns that are no longer valid in Astro 6:
-- `ViewTransitions` import (should be `ClientRouter`)
-- `import { z } from 'astro:content'` (should be `from 'astro/zod'`)
-- `import { z } from 'astro:schema'` (should be `from 'astro/zod'`)
-- HSL color values in `globals.css` (should be OKLCH)
-- `tailwind.config.mjs` file (Tailwind v4 uses CSS-based config)
-
-### 6. Accessibility
-Check for:
-- [ ] Images without alt text: search for `<img` without `alt=`
-- [ ] Buttons without accessible labels
+- [ ] Buttons without accessible labels (`<button>` without text content or `aria-label`)
 - [ ] Missing ARIA attributes on interactive elements
 - [ ] Proper heading hierarchy (h1 -> h2 -> h3, no skipping)
 
-### 7. SEO
+## 5. SEO
+
 Verify each page has:
+
 - [ ] Unique title tag
 - [ ] Meta description (150-160 chars)
 - [ ] OpenGraph tags (via SEO component)
-- [ ] Proper heading hierarchy
 
-### 8. Performance
-- [ ] Run `npm run build` - check bundle size
+## 6. Performance
+
+- [ ] Run `npm run build` — check bundle size
 - [ ] Verify images use Astro's `<Image />` component where possible
 - [ ] Check for unnecessary `client:load` directives (prefer `client:visible` or `client:idle`)
 - [ ] External scripts have SRI integrity attributes
 
-### 9. Theme Consistency
+## 7. Theme Consistency
+
 - [ ] All color tokens use `--color-` prefix with OKLCH format
 - [ ] Both `@theme` and `.dark` blocks are in sync
-- [ ] No inline styles (`style="..."`)
 
 ## Skills
 
-Für Details: `qa` und `accessibility` Skills konsultieren (`.claude/skills/qa/SKILL.md`, `.claude/skills/accessibility/SKILL.md`).
+For details, consult the `qa` and `accessibility` skills
+(`.claude/skills/qa/SKILL.md`, `.claude/skills/accessibility/SKILL.md`).
 
 ## Output Format
 

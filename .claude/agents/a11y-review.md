@@ -1,6 +1,7 @@
 ---
 name: a11y-review
-description: Accessibility review agent for Plenum multi-agent review
+description: Read-only accessibility reviewer (WCAG 2.1 AA, ARIA, keyboard navigation, contrast) for the /plenum multi-agent review. Reports findings, never implements fixes.
+tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
 

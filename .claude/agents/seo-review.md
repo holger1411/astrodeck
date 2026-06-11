@@ -1,6 +1,7 @@
 ---
 name: seo-review
-description: SEO review agent for Plenum multi-agent review
+description: Read-only SEO reviewer (meta tags, headings, structured data, sitemap) for the /plenum multi-agent review. Reports findings, never implements fixes.
+tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
 

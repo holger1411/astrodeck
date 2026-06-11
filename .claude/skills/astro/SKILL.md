@@ -7,19 +7,20 @@ description: Use when creating or modifying .astro/.tsx files, configuring astro
 
 ## Domain
 
-Astro 6 Patterns, Islands Architecture, Content Collections, Routing, Build
+Astro 6 patterns, Islands Architecture, Content Collections, routing, build
 
 ## KPIs
 
-| Metrik | Ziel | Messung |
-|--------|------|---------|
+| Metric | Target | Measurement |
+|--------|--------|-------------|
 | TypeScript Errors | 0 | `npx tsc --noEmit 2>&1 \| grep "error TS" \| wc -l` |
 | Build Warnings | 0 | `npm run build 2>&1 \| grep -i "warn" \| wc -l` |
-| Build-Zeit | <3s | `npm run build` Timing-Output |
+| Build Time | <3s | `npm run build` timing output |
+| Deprecated patterns / relative imports | 0 | `npm run check:kpis` |
 
-## Regeln
+## Rules
 
-### ClientRouter (NICHT ViewTransitions)
+### ClientRouter (NOT ViewTransitions)
 
 ```astro
 ---
@@ -30,7 +31,7 @@ import { ClientRouter } from 'astro:transitions';
   <ClientRouter />
 </head>
 
-// ❌ Veraltet
+// ❌ Deprecated
 import { ViewTransitions } from 'astro:transitions';
 ```
 
@@ -40,7 +41,7 @@ import { ViewTransitions } from 'astro:transitions';
 // ✅ Astro 6
 import { z } from 'astro/zod';
 
-// ❌ Veraltet
+// ❌ Deprecated
 import { z } from 'astro:content';
 import { z } from 'astro:schema';
 ```
@@ -68,41 +69,41 @@ export const collections = { blog };
 
 ```astro
 ---
-// Nutzung in Seiten
+// Usage in pages
 import { getCollection } from 'astro:content';
 const posts = await getCollection('blog');
 ---
 ```
 
-### .astro vs .tsx Entscheidung
+### .astro vs .tsx Decision
 
-| Verwende .astro wenn... | Verwende .tsx wenn... |
-|------------------------|----------------------|
-| Statischer Content | Client-side Interaktivität nötig |
-| Server-side Rendering | State Management nötig |
-| Layout-Komponenten | Event Handlers nötig |
-| Section-Komponenten | Formulare mit Validierung |
-| SEO/Meta-Komponenten | Komplexe UI (Dialogs, Dropdowns) |
+| Use .astro when... | Use .tsx when... |
+|--------------------|------------------|
+| Static content | Client-side interactivity needed |
+| Server-side rendering | State management needed |
+| Layout components | Event handlers needed |
+| Section components | Forms with validation |
+| SEO/meta components | Complex UI (dialogs, dropdowns) |
 
 ### Client Directives
 
 ```astro
-<!-- Sofort laden (für above-the-fold Interaktivität) -->
+<!-- Load immediately (above-the-fold interactivity) -->
 <Component client:load />
 
-<!-- Laden wenn sichtbar (für below-the-fold) -->
+<!-- Load when visible (below-the-fold) -->
 <Component client:visible />
 
-<!-- Laden im Idle (für nicht-kritische UI) -->
+<!-- Load on idle (non-critical UI) -->
 <Component client:idle />
 
-<!-- Nur auf bestimmter Plattform -->
+<!-- Only on a specific platform -->
 <Component client:only="react" />
 ```
 
-**Faustregel:** `client:visible` > `client:idle` > `client:load`. Nur `client:load` für sofort sichtbare interaktive Elemente.
+**Rule of thumb:** `client:visible` > `client:idle` > `client:load`. Use `client:load` only for immediately visible interactive elements.
 
-### Props-Interface-Pattern
+### Props Interface Pattern
 
 ```astro
 ---
@@ -122,16 +123,16 @@ const {
 ---
 ```
 
-### Slot-Komposition
+### Slot Composition
 
 ```astro
-<!-- Benannte Slots -->
+<!-- Named slots -->
 <section>
   <div class="header">
     <slot name="header" />
   </div>
   <div class="content">
-    <slot />  <!-- Default Slot -->
+    <slot />  <!-- Default slot -->
   </div>
   <div class="footer">
     <slot name="footer" />
@@ -156,9 +157,9 @@ export default defineConfig({
 });
 ```
 
-### Import-Alias
+### Import Alias
 
-Immer `@/` verwenden (konfiguriert in `tsconfig.json`):
+Always use `@/` (configured in `tsconfig.json`):
 
 ```typescript
 // ✅
@@ -171,14 +172,17 @@ import Hero from '../../components/sections/Hero.astro';
 
 ## Non-Negotiable
 
-Diese Regeln gelten immer — auch unter Zeitdruck, auch bei "funktioniert doch":
+These rules always apply — even under time pressure, even when "it works anyway":
 
-- **Kein `ViewTransitions`.** Immer `ClientRouter`. "Aber die Doku sagt ViewTransitions" — die Doku ist veraltet, Astro 6 nutzt ClientRouter.
-- **Kein `z` aus `astro:content` oder `astro:schema`.** Immer `import { z } from 'astro/zod'`. Andere Imports kompilieren, brechen aber bei Content Collections.
-- **Kein Commit mit TypeScript-Fehlern.** "Ist nur ein Type-Fehler, funktioniert trotzdem" — Type-Fehler in .astro-Dateien werden zu Runtime-Bugs.
-- **Immer `@/` Import-Alias.** Relative Imports (`../../`) funktionieren, aber jedes Datei-Verschieben bricht sie. `@/` ist refactoring-sicher.
-- **Kein `client:load` ohne guten Grund.** `client:visible` oder `client:idle` sind fast immer besser. "Brauche ich sofort" stimmt selten für below-the-fold Elemente.
+- **No `ViewTransitions`.** Always `ClientRouter`. "But the docs say ViewTransitions" — those docs are outdated; Astro 6 uses ClientRouter.
+- **No `z` from `astro:content` or `astro:schema`.** Always `import { z } from 'astro/zod'`. Other imports compile but break Content Collections.
+- **No commit with TypeScript errors.** "It's just a type error, it still works" — type errors in .astro files become runtime bugs.
+- **Always the `@/` import alias.** Relative imports (`../../`) work, but every file move breaks them. `@/` is refactoring-safe.
+- **No `client:load` without good reason.** `client:visible` or `client:idle` are almost always better. "I need it immediately" is rarely true for below-the-fold elements.
 
-## Vor dem Anwenden
+The convention guard hook (`.claude/hooks/guard-conventions.mjs`) blocks the
+deprecated patterns automatically and warns on relative imports.
 
-Lies `LEARNINGS.md` in diesem Verzeichnis, um bekannte Anti-Patterns zu vermeiden.
+## Before Applying
+
+Read `LEARNINGS.md` in this directory to avoid known anti-patterns.

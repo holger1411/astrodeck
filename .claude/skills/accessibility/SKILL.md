@@ -21,7 +21,7 @@ WCAG 2.1 AA, ARIA, Keyboard Navigation, Contrast, Screen Readers
 |--------|--------|-------------|
 | Lighthouse Accessibility | >90 | Lighthouse JSON → `categories.accessibility.score * 100` |
 | Pa11y Errors | 0 | `npx pa11y <URL> --reporter=json` |
-| Images without Alt | 0 | Grep: `<img` without `alt=` in src/ |
+| Images without Alt | 0 | `npm run check:kpis` |
 
 ## Non-Negotiable
 

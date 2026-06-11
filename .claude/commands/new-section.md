@@ -1,17 +1,23 @@
 ---
 description: Create a new reusable section component
+argument-hint: [SectionName] [purpose] — e.g. "TeamGrid shows team members with photos"
 ---
 
 # Create New Section
 
 Create a new section component following AstroDeck patterns from `@AGENTS.md`.
 
+Arguments provided by the user: $ARGUMENTS
+
 ## Gather Information
 
-Ask the user for:
+Parse the arguments above. Only ask for what is still missing:
+
 1. **Section name** (PascalCase, e.g., "TeamGrid", "PricingTable")
-2. **Purpose** - What content will it display?
-3. **Variants needed** - default | centered | wide | compact
+2. **Purpose** — what content will it display?
+3. **Variants needed** — default | centered | wide | compact (default: just `default`)
+
+If name and purpose are given, proceed without further questions.
 
 ## Template
 
@@ -54,7 +60,8 @@ const variantClasses = {
 
 ## Skills
 
-Für Patterns: `astro` und `ui-design` Skills konsultieren (`.claude/skills/astro/SKILL.md`, `.claude/skills/ui-design/SKILL.md`).
+For patterns, consult the `astro` and `ui-design` skills
+(`.claude/skills/astro/SKILL.md`, `.claude/skills/ui-design/SKILL.md`).
 
 ## Placement
 

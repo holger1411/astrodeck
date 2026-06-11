@@ -1,6 +1,7 @@
 ---
 name: design-review
-description: Visual design review agent for Plenum multi-agent review
+description: Read-only visual design reviewer (typography, spacing, hierarchy, layout consistency) for the /plenum multi-agent review. Reports findings, never implements fixes.
+tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
 

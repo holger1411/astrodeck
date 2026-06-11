@@ -1,17 +1,25 @@
 ---
 description: Create a new AstroDeck page with proper layout and SEO
+argument-hint: [page name] [layout] [sections...] — e.g. "pricing BaseLayout Hero, Pricing, FAQ, CTA"
 ---
 
 # Create New Page
 
 Create a new page following AstroDeck conventions from `@AGENTS.md`.
 
+Arguments provided by the user: $ARGUMENTS
+
 ## Gather Information
 
-Ask the user for:
+Parse the arguments above. Only ask for what is still missing:
+
 1. **Page name** (e.g., "about", "pricing", "contact")
-2. **Layout type** - BaseLayout | FullWidthLayout | MinimalLayout | AuthLayout
-3. **Sections needed** - List from available: Hero, Features, CTA, Pricing, FAQ, Testimonials, Contact
+2. **Layout type** — BaseLayout | FullWidthLayout | MinimalLayout | AuthLayout (default: BaseLayout)
+3. **Sections needed** — list from available: Hero, Features, CTA, Pricing, FAQ, Testimonials, Contact, Stats, Team, LogoCloud, Newsletter, Comparison
+
+If the page name is given and the rest is unspecified, pick a sensible layout
+and section combination for the page type and say what you chose — do not
+interrogate the user.
 
 ## Template
 
@@ -31,7 +39,8 @@ const description = "[SEO description, 150-160 chars]";
 
 ## Skills
 
-Für Patterns: `astro` und `content-seo` Skills konsultieren (`.claude/skills/astro/SKILL.md`, `.claude/skills/content-seo/SKILL.md`).
+For patterns, consult the `astro` and `content-seo` skills
+(`.claude/skills/astro/SKILL.md`, `.claude/skills/content-seo/SKILL.md`).
 
 ## Navigation
 

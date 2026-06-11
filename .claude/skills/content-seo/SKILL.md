@@ -19,7 +19,7 @@ Content Collections, Meta Tags, OpenGraph, Structured Data, RSS, Sitemap
 | Metric | Target | Measurement |
 |--------|--------|-------------|
 | Lighthouse SEO | >90 | Lighthouse JSON → `categories.seo.score * 100` |
-| Pages without Description | 0 | Grep: pages without `description` prop |
+| Pages without Description | 0 | `npm run check:kpis` |
 | Pages without OG-Image | 0 | HTML check in dist/ |
 
 ## Rules

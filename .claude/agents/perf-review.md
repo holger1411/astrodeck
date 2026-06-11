@@ -1,6 +1,7 @@
 ---
 name: perf-review
-description: Performance review agent for Plenum multi-agent review
+description: Read-only performance reviewer (bundle size, images, client directives, Core Web Vitals) for the /plenum multi-agent review. Reports findings, never implements fixes.
+tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
 

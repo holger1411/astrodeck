@@ -30,6 +30,7 @@ Testing, Validation, Code Quality, Launch Readiness
 
 ```bash
 # Full QA pipeline
+npm run check:kpis    # All static convention checks (single source of truth)
 npm run lint          # ESLint errors/warnings
 npm run format:check  # Prettier formatting
 npx tsc --noEmit      # TypeScript errors

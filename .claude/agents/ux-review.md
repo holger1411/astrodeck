@@ -1,6 +1,7 @@
 ---
 name: ux-review
-description: UX & interaction review agent for Plenum multi-agent review
+description: Read-only UX and interaction reviewer (navigation, flows, affordances, feedback states) for the /plenum multi-agent review. Reports findings, never implements fixes.
+tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
 

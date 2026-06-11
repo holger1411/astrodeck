@@ -1,6 +1,7 @@
 ---
 name: code-review
-description: Code quality review agent for Plenum multi-agent review
+description: Read-only code quality reviewer (TypeScript, conventions, DRY, deprecated patterns) for the /plenum multi-agent review. Reports findings, never implements fixes.
+tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
 

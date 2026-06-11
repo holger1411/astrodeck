@@ -1,10 +1,13 @@
 ---
 description: Customize the AstroDeck theme colors and design tokens
+argument-hint: [color description] — e.g. "make primary forest green" or "warm beige palette"
 ---
 
 # Customize Theme
 
 Modify the design system in `src/styles/globals.css` using Tailwind CSS v4's `@theme` directive and OKLCH color format.
+
+Color request from the user (ask if empty): $ARGUMENTS
 
 ## Current Theme Location
 
@@ -46,7 +49,7 @@ All design tokens are in `src/styles/globals.css` under:
 ## How to Customize
 
 1. **Read current values** from `src/styles/globals.css`
-2. **Ask user** for new colors (hex, HSL, OKLCH, or color name)
+2. **Use the user's color request** from the arguments above; only ask if no colors were given (hex, HSL, OKLCH, or color name accepted)
 3. **Convert to OKLCH** format: `oklch(lightness% chroma hue)`
 4. **Update both** `@theme` and `.dark` sections
 5. **Check contrast** - foreground must be readable on background
@@ -85,7 +88,7 @@ User wants: "Make primary color forest green"
 
 ## Skills
 
-Für Farbtheorie und Utility-Patterns: `ui-design` und `tailwind` Skills konsultieren (`.claude/skills/ui-design/SKILL.md`, `.claude/skills/tailwind/SKILL.md`).
+For color theory and utility patterns, consult the `ui-design` and `tailwind` skills (`.claude/skills/ui-design/SKILL.md`, `.claude/skills/tailwind/SKILL.md`).
 
 ## Checklist
 

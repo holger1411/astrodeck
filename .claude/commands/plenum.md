@@ -1,14 +1,17 @@
 ---
 description: Multi-agent review — spawns domain-specific review agents in parallel and consolidates findings
+argument-hint: [scope] — e.g. "all", "pricing page", "Hero component", "diff", "performance"
 ---
 
 # Plenum: Multi-Agent Review Orchestrator
 
 You are the Plenum orchestrator. Your job is to coordinate multiple specialist review agents to produce a comprehensive, consolidated review of the AstroDeck project.
 
+Scope requested by the user: $ARGUMENTS
+
 ## Step 1: Clarify Scope
 
-Ask the user what they want reviewed. Options:
+If the scope above is empty, ask the user what they want reviewed. Options:
 - **Whole project** — full review of all pages and components
 - **Specific page** — e.g., "review the pricing page"
 - **Component** — e.g., "review the Hero component"
