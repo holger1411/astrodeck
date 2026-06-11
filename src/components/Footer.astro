@@ -52,13 +52,13 @@ const containerClass =
       <!-- AstroDeck -->
       <div>
         <h3 class="font-semibold mb-4">AstroDeck</h3>
-        <ul class="space-y-2">
+        <ul class="space-y-0">
           {
             footerLinks.astrodeck.map((link) => (
               <li>
                 <a
                   href={link.href}
-                  class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  class="inline-block py-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
                 </a>
@@ -71,13 +71,13 @@ const containerClass =
       <!-- Pages -->
       <div>
         <h3 class="font-semibold mb-4">Pages</h3>
-        <ul class="space-y-2">
+        <ul class="space-y-0">
           {
             footerLinks.pages.map((link) => (
               <li>
                 <a
                   href={link.href}
-                  class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  class="inline-block py-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
                 </a>
@@ -94,7 +94,7 @@ const containerClass =
         <p class="text-sm text-muted-foreground mt-1">
           for <a
             href="https://templatedeck.com"
-            class="font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1"
+            class="font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1 py-1"
             target="_blank"
             rel="noopener noreferrer"
           >
