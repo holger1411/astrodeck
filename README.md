@@ -7,7 +7,7 @@
 
 # AstroDeck
 
-[![Version](https://img.shields.io/badge/version-3.3.0-blue.svg)](https://github.com/holger1411/astrodeck/releases)
+[![Version](https://img.shields.io/badge/version-3.4.0-blue.svg)](https://github.com/holger1411/astrodeck/releases)
 [![Astro](https://img.shields.io/badge/Astro-6.x-orange.svg)](https://astro.build)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
@@ -142,11 +142,11 @@ Download the latest release directly:
 
 ```bash
 # Download the latest version
-wget https://github.com/holger1411/astrodeck/archive/refs/tags/v3.3.0.zip
+wget https://github.com/holger1411/astrodeck/archive/refs/tags/v3.4.0.zip
 
 # Extract
-unzip v3.3.0.zip
-cd astrodeck-3.3.0
+unzip v3.4.0.zip
+cd astrodeck-3.4.0
 
 # Install and run
 npm install
@@ -1056,7 +1056,7 @@ astrodeck/
     │   ├── ui-design/     # Visual hierarchy, spacing, typography
     │   ├── tailwind/      # Tailwind v4, OKLCH, dark mode
     │   ├── accessibility/ # WCAG 2.1 AA, ARIA, keyboard nav
-    │   ├── astro/         # Astro 6, Content Collections, TypeScript
+    │   ├── astro/         # Astro 7, Content Collections, TypeScript
     │   ├── content-seo/   # Meta tags, structured data, RSS
     │   ├── qa/            # Testing, Lighthouse, launch readiness
     │   └── readme/        # Project documentation

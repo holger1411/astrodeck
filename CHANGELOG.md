@@ -2,6 +2,18 @@
 
 All notable changes to AstroDeck are documented in this file.
 
+## [3.4.0] - 2026-08-07 — Astro 7.2 & Tailwind CSS 4.3.3 Update
+
+### Changed
+
+- Updated Astro from 6.4.4 to 7.2.0 (new Rust-based compiler, Vite 8)
+- Updated Tailwind CSS from 4.3.0 to 4.3.3
+- Updated @astrojs/react from 5.x to 6.0.2, @astrojs/rss to 4.0.19, @astrojs/sitemap to 3.7.3
+
+### Added
+
+- Demo video embedded on the homepage and at the top of the README
+
 ## [3.3.0] - 2026-06-11 — AI-First Homepage
 
 ### Added
