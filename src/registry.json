@@ -1,6 +1,6 @@
 {
   "$schema": "https://astrodeck.dev/registry-schema.json",
-  "version": "3.0.0",
+  "version": "3.4.1",
   "sections": [
     {
       "name": "Hero",
@@ -21,7 +21,7 @@
         "badge": {
           "type": "string",
           "required": false,
-          "description": "When provided, shows a pill badge linking to /changelog. The badge text is split: left side shows the hardcoded version 'v3.0.0', right side shows this prop value"
+          "description": "When provided, shows a pill badge linking to /changelog. The badge is split: left side shows the current release version (hardcoded in source, updated on every release), right side shows 'Open Source & MIT Licensed'"
         },
         "primaryCta": {
           "type": "{ href: string; label: string }",
@@ -32,11 +32,93 @@
           "type": "{ href: string; label: string }",
           "required": false,
           "description": "Secondary outlined button (border-input, bg-background)"
+        },
+        "prompt": {
+          "type": "string",
+          "required": false,
+          "description": "Optional starter prompt rendered in a copyable code block below the subtitle, with a copy-to-clipboard button. Intended to hand a coding agent a kickoff prompt."
         }
       },
       "features": ["responsive", "dark-mode", "decorative-svg-background", "view-transitions-safe"],
       "category": "hero",
-      "notes": "Min height 70vh. The badge prop value is displayed on the right of the badge pill; the left label is hardcoded to 'v3.0.0' in source. Update that hardcoded string when bumping version."
+      "notes": "Min height 70vh. The version label in the badge is hardcoded in source — update it when bumping the release version (see release checklist)."
+    },
+    {
+      "name": "HeroGradient",
+      "file": "src/components/sections/HeroGradient.astro",
+      "description": "Centered hero with an animated gradient glow background — three large blurred OKLCH orbs that drift slowly via a CSS float animation. Glow intensity is stronger in dark mode. Same content structure as Hero (badge, title, subtitle, two CTAs) without the contribution-grid background.",
+      "variants": 1,
+      "props": {
+        "title": {
+          "type": "string",
+          "required": true,
+          "description": "Main headline text rendered as h1"
+        },
+        "subtitle": {
+          "type": "string",
+          "required": true,
+          "description": "Supporting text rendered as paragraph; supports HTML via set:html"
+        },
+        "badge": {
+          "type": "string",
+          "required": false,
+          "description": "Optional pill badge text shown above the headline, linking to /changelog"
+        },
+        "primaryCta": {
+          "type": "{ href: string; label: string }",
+          "required": false,
+          "description": "Primary button with shine hover effect"
+        },
+        "secondaryCta": {
+          "type": "{ href: string; label: string }",
+          "required": false,
+          "description": "Secondary outlined button"
+        }
+      },
+      "features": ["responsive", "dark-mode", "animated-background", "reduced-motion-safe"],
+      "category": "hero",
+      "notes": "Orb colors and opacity are defined via CSS custom properties in the component <style> block. Respects prefers-reduced-motion (animation disabled). Use as a premium alternative to Hero on landing pages."
+    },
+    {
+      "name": "HeroSplit",
+      "file": "src/components/sections/HeroSplit.astro",
+      "description": "Split-layout hero: text column (tagline pill, h1, subtitle, CTAs) on the left and a visual on the right. Renders a decorative browser-window mock-up when no image is passed. Stacks vertically on mobile (md:grid-cols-2).",
+      "variants": 1,
+      "props": {
+        "title": {
+          "type": "string",
+          "required": true,
+          "description": "Main headline text rendered as h1"
+        },
+        "subtitle": {
+          "type": "string",
+          "required": true,
+          "description": "Supporting text rendered as paragraph; supports HTML via set:html"
+        },
+        "tagline": {
+          "type": "string",
+          "required": false,
+          "description": "Small pill above the headline (e.g. \"Now in Beta\"); omit to hide"
+        },
+        "primaryCta": {
+          "type": "{ href: string; label: string }",
+          "required": false,
+          "description": "Primary button"
+        },
+        "secondaryCta": {
+          "type": "{ href: string; label: string }",
+          "required": false,
+          "description": "Secondary outlined button"
+        },
+        "image": {
+          "type": "{ src: string; alt: string }",
+          "required": false,
+          "description": "Replaces the decorative mock-up with a real image; alt is required for accessibility"
+        }
+      },
+      "features": ["responsive", "dark-mode", "view-transitions-safe"],
+      "category": "hero",
+      "notes": "Designed for product landing pages. Left column uses data-animate=\"slide-left\", right column data-animate=\"slide-right\"."
     },
     {
       "name": "Features",
@@ -207,7 +289,11 @@
       "description": "Accordion-style FAQ section using CSS-only <details>/<summary> elements with smooth height animation. Includes Schema.org FAQPage structured data (LD+JSON) for SEO rich results.",
       "variants": 1,
       "props": {
-        "title": { "type": "string", "required": true, "description": "Section heading" },
+        "title": {
+          "type": "string",
+          "required": true,
+          "description": "Section heading"
+        },
         "subtitle": {
           "type": "string",
           "required": false,
@@ -235,7 +321,11 @@
       "description": "Key metrics grid with large values, labels, and optional descriptions. Values are strings for flexible formatting (e.g. '10K+', '99.9%', '$0').",
       "variants": 1,
       "props": {
-        "title": { "type": "string", "required": false, "description": "Optional section heading" },
+        "title": {
+          "type": "string",
+          "required": false,
+          "description": "Optional section heading"
+        },
         "subtitle": {
           "type": "string",
           "required": false,
@@ -263,7 +353,11 @@
           "default": "Meet Our Team",
           "description": "Section heading"
         },
-        "subtitle": { "type": "string", "required": false, "description": "Supporting text" },
+        "subtitle": {
+          "type": "string",
+          "required": false,
+          "description": "Supporting text"
+        },
         "members": {
           "type": "Array<{ name: string; role: string; bio?: string; image?: string; social?: { github?: string; linkedin?: string; twitter?: string } }>",
           "required": true,
@@ -286,7 +380,11 @@
           "default": "How We Compare",
           "description": "Section heading"
         },
-        "subtitle": { "type": "string", "required": false, "description": "Supporting text" },
+        "subtitle": {
+          "type": "string",
+          "required": false,
+          "description": "Supporting text"
+        },
         "columns": {
           "type": "Array<{ name: string; highlighted?: boolean }>",
           "required": true,
@@ -314,7 +412,11 @@
           "default": "Stay in the Loop",
           "description": "Section heading"
         },
-        "description": { "type": "string", "required": false, "description": "Supporting text" },
+        "description": {
+          "type": "string",
+          "required": false,
+          "description": "Supporting text"
+        },
         "placeholder": {
           "type": "string",
           "required": false,
@@ -344,7 +446,11 @@
           "default": "Get in Touch",
           "description": "Section heading"
         },
-        "subtitle": { "type": "string", "required": false, "description": "Supporting text" },
+        "subtitle": {
+          "type": "string",
+          "required": false,
+          "description": "Supporting text"
+        },
         "email": {
           "type": "string",
           "required": false,
@@ -476,6 +582,211 @@
       "exports": ["Label"],
       "features": ["dark-mode", "accessible"],
       "notes": "Use htmlFor to associate with an Input's id. Automatically styles as disabled when peer input is disabled (peer-disabled:opacity-70)."
+    },
+    {
+      "name": "Accordion",
+      "file": "src/components/ui/accordion.tsx",
+      "description": "shadcn/ui Accordion built on Radix UI Accordion. Vertically stacked expandable panels with animated open/close (accordion-down / accordion-up keyframes from globals.css).",
+      "type": "react",
+      "props": {
+        "type": {
+          "type": "string",
+          "required": true,
+          "options": ["single", "multiple"],
+          "description": "single = only one item open at a time; multiple = any number open"
+        },
+        "collapsible": {
+          "type": "boolean",
+          "default": false,
+          "description": "With type=\"single\", allows closing the open item by clicking it again"
+        },
+        "className": {
+          "type": "string",
+          "required": false,
+          "description": "Additional Tailwind classes merged via cn()"
+        }
+      },
+      "exports": ["Accordion", "AccordionItem", "AccordionTrigger", "AccordionContent"],
+      "features": ["dark-mode", "accessible", "keyboard-navigable", "animated"],
+      "notes": "Each AccordionItem needs a unique value prop. For static FAQ content without JS, prefer the FAQ section (native <details>) instead."
+    },
+    {
+      "name": "Dialog",
+      "file": "src/components/ui/dialog.tsx",
+      "description": "shadcn/ui Dialog (modal) built on Radix UI Dialog. Renders in a portal with a backdrop overlay, focus trap, Escape-to-close, and a built-in close button with sr-only label.",
+      "type": "react",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "required": false,
+          "description": "Controlled open state"
+        },
+        "onOpenChange": {
+          "type": "(open: boolean) => void",
+          "required": false,
+          "description": "Callback for controlled usage"
+        },
+        "className": {
+          "type": "string",
+          "required": false,
+          "description": "Additional Tailwind classes merged via cn()"
+        }
+      },
+      "exports": [
+        "Dialog",
+        "DialogPortal",
+        "DialogOverlay",
+        "DialogTrigger",
+        "DialogClose",
+        "DialogContent",
+        "DialogHeader",
+        "DialogFooter",
+        "DialogTitle",
+        "DialogDescription"
+      ],
+      "features": ["dark-mode", "accessible", "keyboard-navigable", "focus-trap", "animated"],
+      "notes": "Always include DialogTitle (and ideally DialogDescription) inside DialogContent — Radix warns and screen readers lose context without them. Use DialogTrigger asChild to wrap a Button."
+    },
+    {
+      "name": "DropdownMenu",
+      "file": "src/components/ui/dropdown-menu.tsx",
+      "description": "shadcn/ui DropdownMenu built on Radix UI DropdownMenu. Trigger-anchored menu with items, checkbox items, radio groups, labels, separators, keyboard shortcuts hints, and nested sub-menus.",
+      "type": "react",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "required": false,
+          "description": "Controlled open state"
+        },
+        "onOpenChange": {
+          "type": "(open: boolean) => void",
+          "required": false,
+          "description": "Callback for controlled usage"
+        },
+        "className": {
+          "type": "string",
+          "required": false,
+          "description": "Additional Tailwind classes merged via cn()"
+        }
+      },
+      "exports": [
+        "DropdownMenu",
+        "DropdownMenuTrigger",
+        "DropdownMenuContent",
+        "DropdownMenuItem",
+        "DropdownMenuCheckboxItem",
+        "DropdownMenuRadioItem",
+        "DropdownMenuLabel",
+        "DropdownMenuSeparator",
+        "DropdownMenuShortcut",
+        "DropdownMenuGroup",
+        "DropdownMenuPortal",
+        "DropdownMenuSub",
+        "DropdownMenuSubContent",
+        "DropdownMenuSubTrigger",
+        "DropdownMenuRadioGroup"
+      ],
+      "features": ["dark-mode", "accessible", "keyboard-navigable", "animated"],
+      "notes": "Use DropdownMenuTrigger asChild to wrap a Button. DropdownMenuShortcut is purely visual — it does not register keyboard shortcuts."
+    },
+    {
+      "name": "Select",
+      "file": "src/components/ui/select.tsx",
+      "description": "shadcn/ui Select built on Radix UI Select. Custom-styled single-value select with a trigger button, popover list, groups, labels, separators, and scroll buttons for long lists.",
+      "type": "react",
+      "props": {
+        "value": {
+          "type": "string",
+          "required": false,
+          "description": "Controlled selected value"
+        },
+        "defaultValue": {
+          "type": "string",
+          "required": false,
+          "description": "Uncontrolled initial value"
+        },
+        "onValueChange": {
+          "type": "(value: string) => void",
+          "required": false,
+          "description": "Callback when the selection changes"
+        },
+        "className": {
+          "type": "string",
+          "required": false,
+          "description": "Additional Tailwind classes merged via cn()"
+        }
+      },
+      "exports": [
+        "Select",
+        "SelectGroup",
+        "SelectValue",
+        "SelectTrigger",
+        "SelectContent",
+        "SelectLabel",
+        "SelectItem",
+        "SelectSeparator",
+        "SelectScrollUpButton",
+        "SelectScrollDownButton"
+      ],
+      "features": ["dark-mode", "accessible", "keyboard-navigable", "animated"],
+      "notes": "SelectTrigger needs an accessible name: pair it with a Label via id/htmlFor or pass aria-label. Put the placeholder on SelectValue, not on the trigger."
+    },
+    {
+      "name": "Tabs",
+      "file": "src/components/ui/tabs.tsx",
+      "description": "shadcn/ui Tabs built on Radix UI Tabs. Horizontal tab list with roving keyboard focus and a content panel per tab.",
+      "type": "react",
+      "props": {
+        "defaultValue": {
+          "type": "string",
+          "required": false,
+          "description": "Uncontrolled initially active tab (matches a TabsTrigger/TabsContent value)"
+        },
+        "value": {
+          "type": "string",
+          "required": false,
+          "description": "Controlled active tab"
+        },
+        "onValueChange": {
+          "type": "(value: string) => void",
+          "required": false,
+          "description": "Callback when the active tab changes"
+        },
+        "className": {
+          "type": "string",
+          "required": false,
+          "description": "Additional Tailwind classes merged via cn()"
+        }
+      },
+      "exports": ["Tabs", "TabsList", "TabsTrigger", "TabsContent"],
+      "features": ["dark-mode", "accessible", "keyboard-navigable"],
+      "notes": "Each TabsTrigger and TabsContent pair must share the same value. Arrow keys move between tabs; Home/End jump to first/last."
+    },
+    {
+      "name": "Tooltip",
+      "file": "src/components/ui/tooltip.tsx",
+      "description": "shadcn/ui Tooltip built on Radix UI Tooltip. Small popover shown on hover or keyboard focus of the trigger, with a fade/zoom animation.",
+      "type": "react",
+      "props": {
+        "delayDuration": {
+          "type": "number",
+          "required": false,
+          "description": "Delay in ms before the tooltip opens (set on TooltipProvider or Tooltip)"
+        },
+        "sideOffset": {
+          "type": "number",
+          "default": 4,
+          "description": "Distance in px between trigger and TooltipContent"
+        },
+        "className": {
+          "type": "string",
+          "required": false,
+          "description": "Additional Tailwind classes merged via cn()"
+        }
+      },
+      "exports": ["Tooltip", "TooltipTrigger", "TooltipContent", "TooltipProvider"],
+      "features": ["dark-mode", "accessible", "keyboard-navigable", "animated"],
+      "notes": "Wrap tooltips in a single TooltipProvider per island. Tooltips are for supplementary hints only — never put essential information exclusively in a tooltip."
     }
   ],
   "layouts": [

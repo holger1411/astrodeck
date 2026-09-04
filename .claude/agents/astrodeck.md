@@ -22,7 +22,7 @@ Changes are measured and validated. The agent learns from results and improves o
 
 ## Tech Stack
 
-- **Astro v6.x** with Vite 7
+- **Astro v7.x** with Vite 8
 - **Tailwind CSS v4** via `@tailwindcss/vite` (NOT @astrojs/tailwind)
 - **OKLCH color format** in `@theme` directive (NOT HSL, NOT tailwind.config.mjs)
 - **TypeScript** with strict types
@@ -171,7 +171,7 @@ Before completing any task, verify:
 3. **Types** — Props interface defined with TypeScript
 4. **Responsive** — Mobile-first breakpoints (`text-3xl md:text-5xl`, not desktop-down). Verify layout at all breakpoints (375px, 768px, 1024px, 1280px). Check: navigation accessible on mobile, grids stack properly, no horizontal overflow, text readable, touch targets min 44px
 5. **Dark Mode** — Works in both themes (uses CSS variables, not hardcoded colors)
-6. **Astro 6 Patterns** — `ClientRouter` (not ViewTransitions), `z` from `astro/zod` (not `astro:content`)
+6. **Astro 6+ Patterns** — `ClientRouter` (not ViewTransitions), `z` from `astro/zod` (not `astro:content`)
 
 ## Warning Triggers
 
@@ -188,7 +188,7 @@ Alert the user when detecting:
 | Deprecated | ViewTransitions, HSL colors, z from astro:content | `astro` | Fix immediately |
 | Wrong Tailwind | `tailwind.config.mjs`, `@astrojs/tailwind`, hardcoded colors | `tailwind` | Block + fix |
 
-## Astro 6 Migration Checklist
+## Astro 6+ Migration Checklist
 
 When reviewing existing code, watch for:
 - [ ] `ViewTransitions` → `ClientRouter` from `astro:transitions`

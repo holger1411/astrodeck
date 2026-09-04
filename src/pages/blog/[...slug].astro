@@ -36,7 +36,14 @@ function formatDate(date: Date) {
 }
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description}>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.image}
+  type="article"
+  publishedTime={post.data.pubDate}
+  author={post.data.author}
+>
   <article class="pb-12">
     <div class="container max-w-3xl mx-auto pt-12 mb-8">
       <a

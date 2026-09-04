@@ -155,7 +155,7 @@ export function TooltipDemo() {
 export function SelectDemo() {
   return (
     <Select>
-      <SelectTrigger className="w-[200px]">
+      <SelectTrigger className="w-[200px]" aria-label="Fruit">
         <SelectValue placeholder="Pick a fruit" />
       </SelectTrigger>
       <SelectContent>

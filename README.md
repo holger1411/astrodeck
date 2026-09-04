@@ -7,8 +7,8 @@
 
 # AstroDeck
 
-[![Version](https://img.shields.io/badge/version-3.4.0-blue.svg)](https://github.com/holger1411/astrodeck/releases)
-[![Astro](https://img.shields.io/badge/Astro-6.x-orange.svg)](https://astro.build)
+[![Version](https://img.shields.io/badge/version-3.4.1-blue.svg)](https://github.com/holger1411/astrodeck/releases)
+[![Astro](https://img.shields.io/badge/Astro-7.x-orange.svg)](https://astro.build)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 **A modern, open-source component library and starter kit for building stunning Astro.js websites in minutes. Built AI-friendly for seamless development with Claude, Cursor, and other coding assistants.**
@@ -142,11 +142,11 @@ Download the latest release directly:
 
 ```bash
 # Download the latest version
-wget https://github.com/holger1411/astrodeck/archive/refs/tags/v3.4.0.zip
+wget https://github.com/holger1411/astrodeck/archive/refs/tags/v3.4.1.zip
 
 # Extract
-unzip v3.4.0.zip
-cd astrodeck-3.4.0
+unzip v3.4.1.zip
+cd astrodeck-3.4.1
 
 # Install and run
 npm install
@@ -199,7 +199,7 @@ This command:
 **Expected output:**
 
 ```
-  🚀  astro  v6.x.x started in 234ms
+  🚀  astro  v7.x.x started in 234ms
 
   ┃ Local    http://localhost:4321/
   ┃ Network  use --host to expose
@@ -1149,7 +1149,7 @@ See `PROJECT.md` for a complete template with examples.
 #### `AGENTS.md` - AstroDeck Defaults
 
 The main configuration file containing:
-- Project overview and tech stack (Astro v6.0.4, Tailwind v4.2.1)
+- Project overview and tech stack (Astro v7, Tailwind v4 — exact versions in package.json)
 - Code conventions and patterns
 - Import aliases and file organization
 - Do's and Don'ts for code generation
@@ -1204,7 +1204,7 @@ Different tools get different levels of AstroDeck's hybrid AI architecture. Pick
 
 **For AI Assistants:**
 - 🎯 Understanding of project structure and patterns
-- 🎯 Knowledge of tech stack specifics (Tailwind v4, Astro v6)
+- 🎯 Knowledge of tech stack specifics (Tailwind v4, Astro v7)
 - 🎯 Awareness of coding conventions (imports, styling, types)
 - 🎯 Context for generating appropriate solutions
 - 🎯 Ability to provide better explanations

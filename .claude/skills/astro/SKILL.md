@@ -7,7 +7,7 @@ description: Use when creating or modifying .astro/.tsx files, configuring astro
 
 ## Domain
 
-Astro 6 patterns, Islands Architecture, Content Collections, routing, build
+Astro 6+ patterns, Islands Architecture, Content Collections, routing, build
 
 ## KPIs
 

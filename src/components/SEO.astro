@@ -45,6 +45,28 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const socialImageURL = new URL(image, siteUrl);
 
 const siteName = 'AstroDeck';
+
+// JSON-LD: BlogPosting for articles, WebSite for everything else
+const structuredData =
+  type === 'article'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: title,
+        description,
+        image: socialImageURL.toString(),
+        url: canonicalURL.toString(),
+        ...(publishedTime && { datePublished: publishedTime.toISOString() }),
+        author: { '@type': 'Person', name: author },
+        publisher: { '@type': 'Organization', name: siteName, url: siteUrl.toString() },
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: siteName,
+        url: siteUrl.toString(),
+        description,
+      };
 ---
 
 <!-- Primary Meta Tags -->
@@ -58,16 +80,7 @@ const siteName = 'AstroDeck';
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#030303" />
 
 <!-- Structured data -->
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: siteName,
-    url: siteUrl.toString(),
-    description,
-  })}
-/>
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

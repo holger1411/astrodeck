@@ -3,6 +3,20 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
 const releases = [
   {
+    version: '3.4.1',
+    date: '2026-09-04',
+    tag: 'patch',
+    title: 'Astro 7.3.1, Blog SEO & Registry Completion',
+    highlights: [
+      'Updated Astro from 7.2.0 to 7.3.1, @astrojs/react to 6.0.5, @astrojs/sitemap to 3.7.4, and all Radix UI packages to their latest patches — npm audit reports 0 vulnerabilities',
+      'Blog posts now emit article Open Graph metadata (og:type, published time, author) and BlogPosting JSON-LD structured data',
+      'Component registry (src/registry.json) is complete again: HeroGradient, HeroSplit, Accordion, Dialog, DropdownMenu, Select, Tabs, and Tooltip added, Hero prompt prop documented',
+      'Accessibility: icon button and select demo on the Components page now have accessible names — Lighthouse Accessibility 100 on every page',
+      'Docs updated to the current stack (Astro 7, Vite 8) in AGENTS.md, README, CONTRIBUTING, and the AI agent definitions',
+      'Build output (dist/) is no longer tracked in git',
+    ],
+  },
+  {
     version: '3.4.0',
     date: '2026-08-07',
     tag: 'minor',

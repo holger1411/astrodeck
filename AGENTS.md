@@ -66,9 +66,9 @@ AstroDeck is designed to be AI-friendly and serves as your **starting point** fo
 
 ```
 ┌─────────────────────────────────────┐
-│       Astro v6.0.4 (latest)         │  ← Framework (island architecture)
+│   Astro v7.x (Vite 8) — latest      │  ← Framework (island architecture)
 ├─────────────────────────────────────┤
-│    Tailwind CSS v4.2.1 (latest)     │  ← Styling (utility-first)
+│    Tailwind CSS v4.x (latest)       │  ← Styling (utility-first)
 │         via @tailwindcss/vite       │  ← Uses Vite plugin (NOT Astro integration)
 ├─────────────────────────────────────┤
 │  shadcn/ui + Radix UI (6 packages)  │  ← UI Components (React)

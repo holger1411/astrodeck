@@ -2,6 +2,23 @@
 
 All notable changes to AstroDeck are documented in this file.
 
+## [3.4.1] - 2026-09-04 — Astro 7.3.1, Blog SEO & Registry Completion
+
+### Changed
+
+- Updated Astro from 7.2.0 to 7.3.1, @astrojs/react to 6.0.5, @astrojs/sitemap to 3.7.4, and all Radix UI packages to their latest patches (npm audit: 0 vulnerabilities)
+- Documentation now references the current stack (Astro 7, Vite 8) in AGENTS.md, README.md, CONTRIBUTING.md, and the AI agent definitions
+- Build output (`dist/`) is no longer tracked in git
+
+### Added
+
+- Blog posts emit article Open Graph metadata (`og:type`, `article:published_time`, `article:author`) and BlogPosting JSON-LD structured data
+- Component registry (`src/registry.json`) completed: HeroGradient, HeroSplit, Accordion, Dialog, DropdownMenu, Select, Tabs, and Tooltip added; Hero `prompt` prop documented
+
+### Fixed
+
+- Accessibility: icon button and select demo on the Components page had no accessible name (Lighthouse Accessibility 95 → 100)
+
 ## [3.4.0] - 2026-08-07 — Astro 7.2 & Tailwind CSS 4.3.3 Update
 
 ### Changed

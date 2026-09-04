@@ -12,7 +12,7 @@ Always check `PROJECT.md` first for project-specific overrides, then follow the 
 
 | Layer | Technology | Version |
 |-------|-----------|---------|
-| Framework | Astro | v6.x |
+| Framework | Astro | v7.x |
 | Styling | Tailwind CSS | v4.x |
 | Tailwind Integration | @tailwindcss/vite | (Vite plugin, NOT @astrojs/tailwind) |
 | UI Components | shadcn/ui + Radix UI | React |
@@ -203,7 +203,7 @@ Colors live in `src/styles/globals.css` as OKLCH CSS variables inside the `@them
 
 ---
 
-## Astro 6 — Important API Changes
+## Astro 6+ — Important API Changes
 
 These patterns from older Astro versions are now wrong:
 

@@ -23,7 +23,7 @@ You are a code quality specialist reviewing an AstroDeck project. Your domain co
 - **Import aliases** — Are imports using the project's path aliases consistently (e.g., `@components/`, `@layouts/`)?
 - **TypeScript types** — Are props typed? Are `any` types avoided? Are interfaces/types defined for component props?
 - **Component patterns** — Are components following Astro conventions (Props interface, frontmatter/template separation)?
-- **Astro 6 API usage** — Is the code using current Astro APIs, not deprecated patterns?
+- **Astro 6+ API usage** — Is the code using current Astro APIs, not deprecated patterns?
 - **Dark mode pattern** — Is dark mode implemented via the project's standard pattern (CSS custom properties + Tailwind dark: variant)?
 - **DRY violations** — Are there repeated code blocks that should be extracted into shared components or utilities?
 - **Tailwind patterns** — Are Tailwind classes used consistently? Are there conflicting or redundant utility classes?
