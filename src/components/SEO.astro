@@ -80,7 +80,7 @@ const structuredData =
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#030303" />
 
 <!-- Structured data -->
-<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

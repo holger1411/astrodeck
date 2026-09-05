@@ -49,56 +49,6 @@ const containerClass =
     <nav class="hidden md:flex items-center gap-6 text-sm">
       {
         navItems.map((item) => {
-          if ('children' in item && item.children) {
-            const isChildActive = item.children.some((child: { href: string }) =>
-              currentPath.startsWith(child.href)
-            );
-            return (
-              <div class="relative group">
-                <button
-                  class:list={[
-                    'transition-colors inline-flex items-center gap-1 py-2',
-                    isChildActive
-                      ? 'text-foreground font-medium'
-                      : 'text-foreground/60 hover:text-foreground/80',
-                  ]}
-                >
-                  {item.label}
-                  <svg
-                    class="h-3 w-3 transition-transform group-hover:rotate-180"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    aria-hidden="true"
-                  >
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                <div class="absolute top-full left-0 pt-2 hidden group-hover:block">
-                  <div class="rounded-xl border bg-card shadow-lg p-2 min-w-[140px]">
-                    {item.children.map((child: { href: string; label: string }) => {
-                      const isActive = currentPath.startsWith(child.href);
-                      return (
-                        <a
-                          href={child.href}
-                          class:list={[
-                            'block px-3 py-2 rounded-lg text-sm transition-colors',
-                            isActive
-                              ? 'text-foreground font-medium bg-muted'
-                              : 'text-foreground/60 hover:text-foreground hover:bg-muted',
-                          ]}
-                          aria-current={isActive ? 'page' : undefined}
-                        >
-                          {child.label}
-                        </a>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            );
-          }
           const isActive =
             item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
           return (
@@ -182,32 +132,6 @@ const containerClass =
     >
       {
         navItems.map((item) => {
-          if ('children' in item && item.children) {
-            return (
-              <div>
-                <p class="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  {item.label}
-                </p>
-                {item.children.map((child: { href: string; label: string }) => {
-                  const isActive = currentPath.startsWith(child.href);
-                  return (
-                    <a
-                      href={child.href}
-                      class:list={[
-                        'block px-3 py-2 pl-6 rounded-md text-base font-medium transition-colors',
-                        isActive
-                          ? 'bg-accent text-accent-foreground'
-                          : 'hover:bg-accent hover:text-accent-foreground',
-                      ]}
-                      aria-current={isActive ? 'page' : undefined}
-                    >
-                      {child.label}
-                    </a>
-                  );
-                })}
-              </div>
-            );
-          }
           const isActive =
             item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
           return (

@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 
 export async function getStaticPaths() {
   const blogPosts = await getCollection('blog');
@@ -39,7 +40,7 @@ function formatDate(date: Date) {
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
-  image={post.data.image}
+  image={post.data.image?.src}
   type="article"
   publishedTime={post.data.pubDate}
   author={post.data.author}
@@ -104,7 +105,14 @@ function formatDate(date: Date) {
         >
           {
             post.data.image ? (
-              <img src={post.data.image} alt={post.data.title} class="w-full h-full object-cover" />
+              <Image
+                src={post.data.image}
+                alt={post.data.title}
+                widths={[640, 1024, 1280]}
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                loading="eager"
+                class="w-full h-full object-cover"
+              />
             ) : (
               <div class="w-full h-full flex items-center justify-center">
                 <svg

@@ -13,7 +13,7 @@ Astro 6+ patterns, Islands Architecture, Content Collections, routing, build
 
 | Metric | Target | Measurement |
 |--------|--------|-------------|
-| TypeScript Errors | 0 | `npx tsc --noEmit 2>&1 \| grep "error TS" \| wc -l` |
+| TypeScript Errors | 0 | `npm run check` (astro check — 0 errors) |
 | Build Warnings | 0 | `npm run build 2>&1 \| grep -i "warn" \| wc -l` |
 | Build Time | <3s | `npm run build` timing output |
 | Deprecated patterns / relative imports | 0 | `npm run check:kpis` |

@@ -33,9 +33,11 @@ Testing, Validation, Code Quality, Launch Readiness
 npm run check:kpis    # All static convention checks (single source of truth)
 npm run lint          # ESLint errors/warnings
 npm run format:check  # Prettier formatting
-npx tsc --noEmit      # TypeScript errors
+npm run check         # Astro type check — covers .astro templates, which tsc alone does not
 npm run build         # Astro build (0 errors, 0 warnings)
 ```
+
+Shortcut: `npm run validate` runs check:kpis, lint, format:check and check in sequence.
 
 ### Pre-Launch Checklist
 

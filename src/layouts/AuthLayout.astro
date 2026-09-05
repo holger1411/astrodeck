@@ -5,12 +5,9 @@
  * Minimal layout for authentication pages (login, signup, password reset).
  * No header/footer, includes SEO with noindex for auth pages.
  */
-import { ClientRouter } from 'astro:transitions';
 import '@/styles/globals.css';
-import SEO from '@/components/SEO.astro';
+import Head from '@/components/Head.astro';
 import Logo from '@/components/Logo.astro';
-import FontPreload from '@/components/FontPreload.astro';
-import ThemeScript from '@/components/ThemeScript.astro';
 
 interface Props {
   title: string;
@@ -18,21 +15,12 @@ interface Props {
 }
 
 const { title, description = 'Sign in to your AstroDeck account' } = Astro.props;
-
-const fullTitle = `${title} | AstroDeck`;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <FontPreload />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{fullTitle}</title>
-    <SEO title={fullTitle} description={description} noindex={true} />
-    <ClientRouter />
-    <ThemeScript />
+    <Head title={title} description={description} noindex={true} />
   </head>
   <body class="min-h-screen antialiased">
     <div

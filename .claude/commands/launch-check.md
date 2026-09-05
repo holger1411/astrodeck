@@ -44,7 +44,7 @@ Also extract the detailed performance metrics:
 ## 3. Build & types
 
 ```bash
-npx tsc --noEmit 2>&1 | grep "error TS" | wc -l
+npm run check 2>&1 | grep -E "[0-9]+ errors?"
 npm run build
 ```
 
@@ -56,6 +56,7 @@ npm run build
 ```bash
 npm run lint
 npm run format:check
+npm run check
 ```
 
 - ESLint errors/warnings: target 0

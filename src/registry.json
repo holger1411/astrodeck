@@ -41,12 +41,12 @@
       },
       "features": ["responsive", "dark-mode", "decorative-svg-background", "view-transitions-safe"],
       "category": "hero",
-      "notes": "Min height 70vh. The version label in the badge is hardcoded in source — update it when bumping the release version (see release checklist)."
+      "notes": "Min height 70vh. The version label in the badge is hardcoded in source \u2014 update it when bumping the release version (see release checklist)."
     },
     {
       "name": "HeroGradient",
       "file": "src/components/sections/HeroGradient.astro",
-      "description": "Centered hero with an animated gradient glow background — three large blurred OKLCH orbs that drift slowly via a CSS float animation. Glow intensity is stronger in dark mode. Same content structure as Hero (badge, title, subtitle, two CTAs) without the contribution-grid background.",
+      "description": "Centered hero with an animated gradient glow background \u2014 three large blurred OKLCH orbs that drift slowly via a CSS float animation. Glow intensity is stronger in dark mode. Same content structure as Hero (badge, title, subtitle, two CTAs) without the contribution-grid background.",
       "variants": 1,
       "props": {
         "title": {
@@ -170,12 +170,12 @@
       },
       "features": ["responsive", "dark-mode"],
       "category": "pricing",
-      "notes": "Grid is lg:grid-cols-3. The '/month' suffix is only hidden when price === 'Custom' — use exactly that string for enterprise/contact tiers."
+      "notes": "Grid is lg:grid-cols-3. The '/month' suffix is only hidden when price === 'Custom' \u2014 use exactly that string for enterprise/contact tiers."
     },
     {
       "name": "Testimonials",
       "file": "src/components/sections/Testimonials.astro",
-      "description": "Testimonial card grid section. Each card shows a blockquote, auto-generated avatar initials, author name, role, and company. No image support — avatars are initials-only.",
+      "description": "Testimonial card grid section. Each card shows a blockquote, auto-generated avatar initials, author name, role, and company. No image support \u2014 avatars are initials-only.",
       "variants": 1,
       "props": {
         "title": {
@@ -191,7 +191,7 @@
       },
       "features": ["responsive", "dark-mode"],
       "category": "social-proof",
-      "notes": "Grid is md:grid-cols-2 lg:grid-cols-3. Avatar is a muted circle with initials — no photo upload needed."
+      "notes": "Grid is md:grid-cols-2 lg:grid-cols-3. Avatar is a muted circle with initials \u2014 no photo upload needed."
     },
     {
       "name": "CTA",
@@ -259,7 +259,7 @@
     {
       "name": "LogoCloud",
       "file": "src/components/sections/LogoCloud.astro",
-      "description": "Technology stack logo bar showing inline SVG logos for Astro, Tailwind CSS, React, TypeScript, shadcn/ui, and Claude Code. Hardcoded logos — not configurable via props. Accepts only a custom label text.",
+      "description": "Technology stack logo bar showing inline SVG logos for Astro, Tailwind CSS, React, TypeScript, shadcn/ui, and Claude Code. Hardcoded logos \u2014 not configurable via props. Accepts only a custom label text.",
       "variants": 1,
       "props": {
         "title": {
@@ -271,12 +271,12 @@
       },
       "features": ["responsive", "dark-mode"],
       "category": "social-proof",
-      "notes": "All 6 logos (Astro, Tailwind, React, TypeScript, shadcn/ui, Claude Code) are hardcoded inline SVGs — they cannot be swapped via props. Edit the component directly to change logos. Layout: flex-col on mobile, flex-row on lg."
+      "notes": "All 6 logos (Astro, Tailwind, React, TypeScript, shadcn/ui, Claude Code) are hardcoded inline SVGs \u2014 they cannot be swapped via props. Edit the component directly to change logos. Layout: flex-col on mobile, flex-row on lg."
     },
     {
       "name": "AIFeature",
       "file": "src/components/sections/AIFeature.astro",
-      "description": "Marketing section highlighting AI-friendly development. Left column: text about AGENTS.md standard and Claude Code Agent with external links. Right column: 2-column grid of 8 AI tool cards (OpenAI Codex, GitHub Copilot, Cursor, Google Jules, Gemini CLI, Windsurf, VS Code, Claude Code). No props — fully self-contained.",
+      "description": "Marketing section highlighting AI-friendly development. Left column: text about AGENTS.md standard and Claude Code Agent with external links. Right column: 2-column grid of 8 AI tool cards (OpenAI Codex, GitHub Copilot, Cursor, Google Jules, Gemini CLI, Windsurf, VS Code, Claude Code). No props \u2014 fully self-contained.",
       "variants": 1,
       "props": {},
       "features": ["responsive", "dark-mode", "external-links"],
@@ -432,7 +432,7 @@
       },
       "features": ["responsive", "dark-mode", "accessible"],
       "category": "conversion",
-      "notes": "Form action='#' is a placeholder — connect to your own backend. Has bg-muted/30 background to stand out from adjacent sections. Includes 'No spam. Unsubscribe anytime.' privacy note."
+      "notes": "Form action='#' is a placeholder \u2014 connect to your own backend. Has bg-muted/30 background to stand out from adjacent sections. Includes 'No spam. Unsubscribe anytime.' privacy note."
     },
     {
       "name": "Contact",
@@ -469,7 +469,7 @@
       },
       "features": ["responsive", "dark-mode", "accessible", "semantic-html"],
       "category": "contact",
-      "notes": "Form action='#' — connect to your own backend. Required fields marked with red asterisk. Uses native HTML form elements (no React). Stacked on mobile, side-by-side on desktop."
+      "notes": "Form action='#' \u2014 connect to your own backend. Required fields marked with red asterisk. Uses native HTML form elements (no React). Stacked on mobile, side-by-side on desktop."
     }
   ],
   "ui": [
@@ -645,7 +645,7 @@
         "DialogDescription"
       ],
       "features": ["dark-mode", "accessible", "keyboard-navigable", "focus-trap", "animated"],
-      "notes": "Always include DialogTitle (and ideally DialogDescription) inside DialogContent — Radix warns and screen readers lose context without them. Use DialogTrigger asChild to wrap a Button."
+      "notes": "Always include DialogTitle (and ideally DialogDescription) inside DialogContent \u2014 Radix warns and screen readers lose context without them. Use DialogTrigger asChild to wrap a Button."
     },
     {
       "name": "DropdownMenu",
@@ -687,7 +687,7 @@
         "DropdownMenuRadioGroup"
       ],
       "features": ["dark-mode", "accessible", "keyboard-navigable", "animated"],
-      "notes": "Use DropdownMenuTrigger asChild to wrap a Button. DropdownMenuShortcut is purely visual — it does not register keyboard shortcuts."
+      "notes": "Use DropdownMenuTrigger asChild to wrap a Button. DropdownMenuShortcut is purely visual \u2014 it does not register keyboard shortcuts."
     },
     {
       "name": "Select",
@@ -786,7 +786,7 @@
       },
       "exports": ["Tooltip", "TooltipTrigger", "TooltipContent", "TooltipProvider"],
       "features": ["dark-mode", "accessible", "keyboard-navigable", "animated"],
-      "notes": "Wrap tooltips in a single TooltipProvider per island. Tooltips are for supplementary hints only — never put essential information exclusively in a tooltip."
+      "notes": "Wrap tooltips in a single TooltipProvider per island. Tooltips are for supplementary hints only \u2014 never put essential information exclusively in a tooltip."
     }
   ],
   "layouts": [
@@ -798,7 +798,7 @@
         "title": {
           "type": "string",
           "required": true,
-          "description": "Page title — appended with '| AstroDeck' automatically"
+          "description": "Page title \u2014 appended with '| AstroDeck' automatically"
         },
         "description": {
           "type": "string",
@@ -815,7 +815,7 @@
           "type": "'website' | 'article'",
           "required": false,
           "default": "website",
-          "description": "OpenGraph type — use 'article' for blog posts"
+          "description": "OpenGraph type \u2014 use 'article' for blog posts"
         },
         "publishedTime": {
           "type": "Date",
@@ -826,6 +826,12 @@
           "type": "string",
           "required": false,
           "description": "Article author name (only relevant when type='article')"
+        },
+        "noindex": {
+          "type": "boolean",
+          "required": false,
+          "default": false,
+          "description": "Adds <meta name=\"robots\" content=\"noindex, nofollow\"> \u2014 for pages that must not be indexed"
         }
       },
       "features": ["seo", "dark-mode", "view-transitions", "skip-to-content", "analytics"],
@@ -840,7 +846,7 @@
         "title": {
           "type": "string",
           "required": true,
-          "description": "Page title — appended with '| AstroDeck' automatically"
+          "description": "Page title \u2014 appended with '| AstroDeck' automatically"
         },
         "description": {
           "type": "string",
@@ -852,6 +858,12 @@
           "type": "string",
           "required": false,
           "description": "OpenGraph image URL"
+        },
+        "noindex": {
+          "type": "boolean",
+          "required": false,
+          "default": false,
+          "description": "Adds <meta name=\"robots\" content=\"noindex, nofollow\"> \u2014 for pages that must not be indexed"
         }
       },
       "features": ["seo", "dark-mode", "view-transitions", "skip-to-content"],
@@ -866,7 +878,7 @@
         "title": {
           "type": "string",
           "required": true,
-          "description": "Page title — appended with '| AstroDeck' automatically"
+          "description": "Page title \u2014 appended with '| AstroDeck' automatically"
         },
         "description": {
           "type": "string",
@@ -898,7 +910,7 @@
         "title": {
           "type": "string",
           "required": true,
-          "description": "Page title — appended with '| AstroDeck' automatically"
+          "description": "Page title \u2014 appended with '| AstroDeck' automatically"
         },
         "description": {
           "type": "string",
@@ -909,7 +921,7 @@
       },
       "features": ["dark-mode", "view-transitions", "noindex"],
       "useCases": ["Login page", "Signup page", "Password reset page"],
-      "notes": "noindex is always true — cannot be overridden via props. The left-panel testimonial quote and attribution are hardcoded in the component. The Logo component is auto-included. Slot content is constrained to sm:w-[350px] for form layout."
+      "notes": "noindex is always true \u2014 cannot be overridden via props. The left-panel testimonial quote and attribution are hardcoded in the component. The Logo component is auto-included. Slot content is constrained to sm:w-[350px] for form layout."
     },
     {
       "name": "ArticleLayout",
@@ -939,7 +951,7 @@
       },
       "features": ["seo", "dark-mode", "view-transitions", "prose-typography", "analytics"],
       "useCases": ["Blog posts", "Documentation articles", "Changelogs"],
-      "notes": "Inherits all BaseLayout features including Vercel Analytics. Content is wrapped in prose prose-neutral dark:prose-invert — add standard HTML/Markdown; no extra styling needed."
+      "notes": "Inherits all BaseLayout features including Vercel Analytics. Content is wrapped in prose prose-neutral dark:prose-invert \u2014 add standard HTML/Markdown; no extra styling needed."
     }
   ],
   "pageTemplates": [

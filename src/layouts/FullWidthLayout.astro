@@ -5,37 +5,32 @@
  * Layout for showcase pages, portfolios, and galleries that need
  * full viewport width. Includes SEO meta tags.
  */
-import { ClientRouter } from 'astro:transitions';
 import '@/styles/globals.css';
+import Head from '@/components/Head.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
-import SEO from '@/components/SEO.astro';
-import FontPreload from '@/components/FontPreload.astro';
-import ThemeScript from '@/components/ThemeScript.astro';
 import AnimationObserver from '@/components/AnimationObserver.astro';
 
 interface Props {
   title: string;
   description?: string;
   image?: string;
+  /** Exclude the page from search engines (adds robots noindex, nofollow) */
+  noindex?: boolean;
 }
 
-const { title, description = 'AstroDeck - Modern Astro.js Component Library', image } = Astro.props;
-
-const fullTitle = `${title} | AstroDeck`;
+const {
+  title,
+  description = 'AstroDeck - Modern Astro.js Component Library',
+  image,
+  noindex = false,
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <FontPreload />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{fullTitle}</title>
-    <SEO title={fullTitle} description={description} image={image} />
-    <ClientRouter />
-    <ThemeScript />
+    <Head title={title} description={description} image={image} noindex={noindex} />
   </head>
   <body class="min-h-screen flex flex-col antialiased">
     <a

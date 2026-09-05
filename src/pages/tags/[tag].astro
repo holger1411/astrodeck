@@ -55,38 +55,40 @@ function formatDate(date: Date) {
     <div class="space-y-12">
       {
         sortedPosts.map((post) => (
-          <article class="group">
-            <a href={`/blog/${post.id}`} class="block space-y-4">
-              <h2 class="text-3xl font-bold tracking-tight group-hover:text-primary transition-colors">
+          <article class="space-y-4">
+            <h2 class="text-3xl font-bold tracking-tight">
+              <a
+                href={`/blog/${post.id}`}
+                class="inline-block py-1 hover:text-primary transition-colors"
+              >
                 {post.data.title}
-              </h2>
+              </a>
+            </h2>
 
-              <p class="text-lg text-muted-foreground">{post.data.description}</p>
+            <p class="text-lg text-muted-foreground">{post.data.description}</p>
 
-              <div class="flex items-center gap-4 text-sm text-muted-foreground">
-                <time datetime={post.data.pubDate.toISOString()}>
-                  {formatDate(post.data.pubDate)}
-                </time>
-                <span>•</span>
-                <span>{post.data.author}</span>
+            <div class="flex items-center gap-4 text-sm text-muted-foreground">
+              <time datetime={post.data.pubDate.toISOString()}>
+                {formatDate(post.data.pubDate)}
+              </time>
+              <span>•</span>
+              <span>{post.data.author}</span>
+            </div>
+
+            {post.data.tags.length > 1 && (
+              <div class="flex flex-wrap gap-2">
+                {post.data.tags
+                  .filter((t) => t !== tag)
+                  .map((t) => (
+                    <a
+                      href={`/tags/${t}`}
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+                    >
+                      {t}
+                    </a>
+                  ))}
               </div>
-
-              {post.data.tags.length > 1 && (
-                <div class="flex flex-wrap gap-2">
-                  {post.data.tags
-                    .filter((t) => t !== tag)
-                    .map((t) => (
-                      <a
-                        href={`/tags/${t}`}
-                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
-                        onclick={(e: Event) => e.stopPropagation()}
-                      >
-                        {t}
-                      </a>
-                    ))}
-                </div>
-              )}
-            </a>
+            )}
           </article>
         ))
       }

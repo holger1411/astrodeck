@@ -29,13 +29,10 @@
  * Use for: Blog posts, about pages, documentation, content pages
  * Don't use for: Full-width showcases (use FullWidthLayout), auth pages (use AuthLayout)
  */
-import { ClientRouter } from 'astro:transitions';
 import '@/styles/globals.css';
+import Head from '@/components/Head.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
-import SEO from '@/components/SEO.astro';
-import FontPreload from '@/components/FontPreload.astro';
-import ThemeScript from '@/components/ThemeScript.astro';
 import Analytics from '@vercel/analytics/astro';
 import AnimationObserver from '@/components/AnimationObserver.astro';
 
@@ -46,6 +43,8 @@ interface Props {
   type?: 'website' | 'article';
   publishedTime?: Date;
   author?: string;
+  /** Exclude the page from search engines (adds robots noindex, nofollow) */
+  noindex?: boolean;
 }
 
 const {
@@ -55,9 +54,8 @@ const {
   type = 'website',
   publishedTime,
   author,
+  noindex = false,
 } = Astro.props;
-
-const fullTitle = `${title} | AstroDeck`;
 
 // Vercel Analytics only works on Vercel deployments; rendering it elsewhere
 // (local preview, other hosts) produces a 404 on /_vercel/insights/script.js
@@ -67,21 +65,15 @@ const enableAnalytics = !!process.env.VERCEL;
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <FontPreload />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{fullTitle}</title>
-    <SEO
-      title={fullTitle}
+    <Head
+      title={title}
       description={description}
       image={image}
       type={type}
       publishedTime={publishedTime}
       author={author}
+      noindex={noindex}
     />
-    <ClientRouter />
-    <ThemeScript />
   </head>
   <body class="min-h-screen flex flex-col antialiased">
     <a

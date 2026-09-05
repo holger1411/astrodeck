@@ -26,8 +26,11 @@ Do NOT re-implement these checks with ad-hoc greps — the script is canonical.
 ```bash
 npm run lint
 npm run format:check
-npx tsc --noEmit
+npm run check
 ```
+
+`npm run check` runs `astro check`, which type-checks `.astro` templates as well as
+TypeScript — `tsc` alone skips template expressions.
 
 ## 3. Build Verification
 

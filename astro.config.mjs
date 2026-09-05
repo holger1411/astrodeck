@@ -10,7 +10,7 @@ export default defineConfig({
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,
-      lastmod: new Date(),
+      // No lastmod: a build-time date would mark every page as changed on every deploy
     }),
   ],
   vite: {

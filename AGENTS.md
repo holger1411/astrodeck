@@ -398,6 +398,9 @@ npm run lint         # Run ESLint
 npm run lint:fix     # Run ESLint with auto-fix
 npm run format       # Format code with Prettier
 npm run format:check # Check code formatting
+npm run check        # Astro type check (.astro templates + TypeScript)
+npm run check:kpis   # Static convention checks (colors, imports, alt texts, ...)
+npm run validate     # check:kpis + lint + format:check + check in one go
 ```
 
 ---

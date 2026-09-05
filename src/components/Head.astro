@@ -1,0 +1,61 @@
+---
+/**
+ * Head Component
+ *
+ * The shared <head> content for every layout: charset, viewport, font preload,
+ * favicon, title, SEO meta tags, ClientRouter for view transitions, and the
+ * inline theme script. Layouts render this once so head markup is defined in
+ * exactly one place.
+ *
+ * @example
+ * ```astro
+ * <head>
+ *   <Head title="About Us" description="Learn about our company" />
+ * </head>
+ * ```
+ */
+import { ClientRouter } from 'astro:transitions';
+import SEO from '@/components/SEO.astro';
+import FontPreload from '@/components/FontPreload.astro';
+import ThemeScript from '@/components/ThemeScript.astro';
+
+interface Props {
+  /** Page title — the '| AstroDeck' suffix is appended here */
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  author?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image,
+  type = 'website',
+  publishedTime,
+  author,
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = `${title} | AstroDeck`;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<FontPreload />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>{fullTitle}</title>
+<SEO
+  title={fullTitle}
+  description={description}
+  image={image}
+  type={type}
+  publishedTime={publishedTime}
+  author={author}
+  noindex={noindex}
+/>
+<ClientRouter />
+<ThemeScript />

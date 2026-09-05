@@ -15,11 +15,8 @@
  * </MinimalLayout>
  * ```
  */
-import { ClientRouter } from 'astro:transitions';
 import '@/styles/globals.css';
-import SEO from '@/components/SEO.astro';
-import FontPreload from '@/components/FontPreload.astro';
-import ThemeScript from '@/components/ThemeScript.astro';
+import Head from '@/components/Head.astro';
 
 interface Props {
   title: string;
@@ -34,21 +31,12 @@ const {
   image,
   noindex = false,
 } = Astro.props;
-
-const fullTitle = `${title} | AstroDeck`;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <FontPreload />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{fullTitle}</title>
-    <SEO title={fullTitle} description={description} image={image} noindex={noindex} />
-    <ClientRouter />
-    <ThemeScript />
+    <Head title={title} description={description} image={image} noindex={noindex} />
   </head>
   <body class="min-h-screen antialiased">
     <main id="main-content" class="min-h-screen">
