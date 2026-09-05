@@ -1,0 +1,29 @@
+# AstroDeck
+
+> Open-source Astro starter kit for AI-assisted websites. Company sites, blogs, portfolios, and landing pages built with Claude Code, Cursor, or any coding agent — on guarded design rails (AGENTS.md conventions, a convention guard hook, one OKLCH design-token system, and one-command quality checks). MIT licensed.
+
+AstroDeck is a normal, well-documented Astro 7 + Tailwind CSS 4 + shadcn/ui project. Every task in the docs is shown two ways: with an AI assistant and manually. Conventions live in AGENTS.md (the AGENTS.md standard), project-specific overrides in PROJECT.md.
+
+## Docs
+
+- [Documentation](https://astrodeck.dev/docs): Getting started, building blocks, creating pages and sections, theming, blog posts, deployment, AI architecture, quality gates, project structure
+- [Full documentation for LLMs](https://astrodeck.dev/llms-full.txt): AGENTS.md conventions plus the README in one plain-text file
+- [Changelog](https://astrodeck.dev/changelog): Release history
+
+## Building blocks
+
+- [Sections](https://astrodeck.dev/sections): 16 page sections (Hero, HeroGradient, HeroSplit, Features, Pricing, FAQ, Testimonials, Team, Stats, CTA, Contact, Newsletter, LogoCloud, Comparison, ContentBlock, AIFeature)
+- [Components](https://astrodeck.dev/components): 11 shadcn/ui React components (Button, Card, Badge, Input, Label, Accordion, Dialog, DropdownMenu, Select, Tabs, Tooltip)
+- [Pages](https://astrodeck.dev/pages): Example pages and templates (SaaS, startup, portfolio, contact, blog, login, 404)
+- [Component registry](https://github.com/holger1411/astrodeck/blob/main/src/registry.json): Machine-readable catalog of every section, component, and layout with props
+
+## Source
+
+- [GitHub repository](https://github.com/holger1411/astrodeck): Source code, issues, releases
+- [AGENTS.md](https://github.com/holger1411/astrodeck/blob/main/AGENTS.md): Conventions for AI coding assistants
+- [Latest release](https://github.com/holger1411/astrodeck/releases/latest): Download
+
+## Optional
+
+- [Blog](https://astrodeck.dev/blog): Demo blog content showcasing Content Collections, pagination, tags, and RSS
+- [RSS feed](https://astrodeck.dev/rss.xml): Blog feed with full article content

@@ -43,6 +43,30 @@ function grepFiles(files, regex, { excludeContent = false } = {}) {
 const HARDCODED_COLOR =
   /\b(?:bg|text|border|ring|fill|stroke)-(?:red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|slate|gray|zinc|neutral|stone)-\d{2,3}\b/;
 
+// Registry sync: every section, UI component, and layout must be catalogued in
+// src/registry.json, and every registry entry must point to an existing file.
+function registryDrift() {
+  const registryPath = join(SRC, 'registry.json');
+  if (!existsSync(registryPath)) return ['src/registry.json (missing)'];
+  const registry = JSON.parse(readFileSync(registryPath, 'utf8'));
+  const registered = new Set(
+    ['sections', 'ui', 'layouts'].flatMap((key) => (registry[key] ?? []).map((e) => e.file))
+  );
+  const onDisk = allFiles
+    .filter(
+      (f) =>
+        (f.includes(join('src', 'components', 'sections')) && f.endsWith('.astro')) ||
+        (f.includes(join('src', 'components', 'ui')) && f.endsWith('.tsx')) ||
+        (f.includes(join('src', 'layouts')) && f.endsWith('.astro'))
+    )
+    .map((f) => relative(ROOT, f));
+  const missing = onDisk.filter((f) => !registered.has(f)).map((f) => `${f} (not in registry)`);
+  const stale = [...registered]
+    .filter((f) => !existsSync(join(ROOT, f)))
+    .map((f) => `${f} (registry entry, file missing)`);
+  return [...missing, ...stale];
+}
+
 const checks = [
   {
     name: 'Hardcoded Tailwind colors',
@@ -112,6 +136,13 @@ const checks = [
       ? grepFiles([join(SRC, 'styles/globals.css')], /(hsl\(|rgb\(|#[0-9a-fA-F]{3,8}\b)/)
       : [],
     fix: 'All design tokens must use oklch(L% C H).',
+  },
+  {
+    name: 'Registry drift (src/registry.json vs. files)',
+    target: 0,
+    level: 'error',
+    hits: registryDrift(),
+    fix: 'Add the component to src/registry.json (or remove the stale entry).',
   },
   {
     name: 'Pages without description prop',

@@ -3,6 +3,23 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
 const releases = [
   {
+    version: '3.5.0',
+    date: '2026-09-05',
+    tag: 'minor',
+    title: 'React 19, LLM-Readable Docs, CI & Blog Extras',
+    highlights: [
+      'Upgraded to React 19.2 — shadcn/ui components migrated to the React 19 type APIs (ComponentRef, SubmitEvent)',
+      'New /llms.txt and /llms-full.txt (generated from AGENTS.md + README at build time) so AI agents can read the docs directly',
+      'GitHub Actions CI workflow runs the full validate pipeline and the build on every push and pull request',
+      'New npm run check (astro check) and npm run validate — one command for convention checks, lint, format, and Astro type checking',
+      'KPI script now detects registry drift: every section, UI component, and layout must be catalogued in src/registry.json',
+      'Blog: reading time on posts and the post list, related posts by shared tags, optimized cover images via the image() schema helper, full article content in the RSS feed',
+      'Shared Head component for all layouts; noindex prop available on every layout',
+      'Web manifest, PNG favicon fallback, and apple-touch-icon; security headers via vercel.json',
+      'Fixed nested links on tag pages and a missing main landmark on the auth layout; sitemap no longer stamps every page with the build date',
+    ],
+  },
+  {
     version: '3.4.1',
     date: '2026-09-04',
     tag: 'patch',

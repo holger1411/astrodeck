@@ -2,6 +2,33 @@
 
 All notable changes to AstroDeck are documented in this file.
 
+## [3.5.0] - 2026-09-05 — React 19, LLM-Readable Docs, CI & Blog Extras
+
+### Added
+
+- `/llms.txt` and `/llms-full.txt` — the latter is generated from AGENTS.md and README.md at build time, so AI agents can read the docs directly
+- GitHub Actions CI workflow (`.github/workflows/ci.yml`): runs `npm run validate` and the build on every push and pull request
+- `npm run check` (astro check) and `npm run validate` (check:kpis + lint + format:check + check)
+- Registry drift check in `npm run check:kpis`: every section, UI component, and layout must be catalogued in `src/registry.json`
+- Blog: reading time on posts and the post list, related posts by shared tags, full article content and tag categories in the RSS feed
+- Shared `Head.astro` component used by all layouts; `noindex` prop on BaseLayout and FullWidthLayout
+- Web manifest, PNG favicon fallback (32px), apple-touch-icon, and 192/512px icons
+- Security headers via `vercel.json` (nosniff, frame deny, referrer policy, permissions policy, HSTS)
+- `engines.node >= 22` and `.nvmrc`
+
+### Changed
+
+- Upgraded React and React DOM from 18.3 to 19.2; shadcn/ui components use `React.ComponentRef` and `React.SubmitEvent`
+- Blog cover images use the `image()` schema helper and `<Image />` with responsive widths (reference images relative to the markdown file)
+- Sitemap no longer sets `lastmod` to the build date
+- ESLint config uses `defineConfig` from `eslint/config`
+
+### Fixed
+
+- Tag pages rendered nested links with a no-op `onclick` string (invalid HTML)
+- Auth layout had no `<main>` landmark
+- Dead dropdown code in the Header caused three type errors under `astro check`
+
 ## [3.4.1] - 2026-09-04 — Astro 7.3.1, Blog SEO & Registry Completion
 
 ### Changed

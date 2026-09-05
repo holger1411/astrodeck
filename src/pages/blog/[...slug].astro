@@ -3,29 +3,47 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
+import { getReadingTime } from '@/lib/reading-time';
 
 export async function getStaticPaths() {
   const blogPosts = await getCollection('blog');
   const sortedPosts = blogPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-  return sortedPosts.map((post, index) => ({
-    params: { slug: post.id },
-    props: {
-      post,
-      prevPost: index < sortedPosts.length - 1 ? sortedPosts[index + 1] : null,
-      nextPost: index > 0 ? sortedPosts[index - 1] : null,
-    },
-  }));
+  return sortedPosts.map((post, index) => {
+    // Related posts: most shared tags first, newest first on ties, max 3
+    const relatedPosts = sortedPosts
+      .filter((other) => other.id !== post.id)
+      .map((other) => ({
+        post: other,
+        shared: other.data.tags.filter((tag) => post.data.tags.includes(tag)).length,
+      }))
+      .filter(({ shared }) => shared > 0)
+      .sort((a, b) => b.shared - a.shared)
+      .slice(0, 3)
+      .map(({ post }) => post);
+
+    return {
+      params: { slug: post.id },
+      props: {
+        post,
+        prevPost: index < sortedPosts.length - 1 ? sortedPosts[index + 1] : null,
+        nextPost: index > 0 ? sortedPosts[index - 1] : null,
+        relatedPosts,
+      },
+    };
+  });
 }
 
 interface Props {
   post: CollectionEntry<'blog'>;
   prevPost: CollectionEntry<'blog'> | null;
   nextPost: CollectionEntry<'blog'> | null;
+  relatedPosts: CollectionEntry<'blog'>[];
 }
 
-const { post, prevPost, nextPost } = Astro.props;
+const { post, prevPost, nextPost, relatedPosts } = Astro.props;
 const { Content } = await render(post);
+const readingTime = getReadingTime(post.body ?? '');
 
 // Format date helper
 function formatDate(date: Date) {
@@ -81,6 +99,8 @@ function formatDate(date: Date) {
           </time>
           <span>•</span>
           <span>{post.data.author}</span>
+          <span>•</span>
+          <span>{readingTime.text}</span>
         </div>
 
         {
@@ -142,6 +162,36 @@ function formatDate(date: Date) {
       <div class="prose prose-neutral dark:prose-invert max-w-none">
         <Content />
       </div>
+
+      {
+        relatedPosts.length > 0 && (
+          <aside class="mt-16 pt-8 border-t" aria-labelledby="related-heading">
+            <h2 id="related-heading" class="text-xl font-bold tracking-tight mb-6">
+              Related posts
+            </h2>
+            <ul class="grid gap-4 sm:grid-cols-3">
+              {relatedPosts.map((related) => (
+                <li>
+                  <a
+                    href={`/blog/${related.id}`}
+                    class="group block h-full rounded-lg border border-border bg-card p-4 transition-colors hover:bg-accent/50"
+                  >
+                    <time
+                      datetime={related.data.pubDate.toISOString()}
+                      class="text-xs text-muted-foreground"
+                    >
+                      {formatDate(related.data.pubDate)}
+                    </time>
+                    <span class="mt-2 block text-sm font-medium leading-snug group-hover:text-primary transition-colors">
+                      {related.data.title}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        )
+      }
 
       <footer class="mt-12 pt-8 border-t">
         <nav class="flex items-center justify-between gap-8">

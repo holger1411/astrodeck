@@ -7,7 +7,7 @@
 
 # AstroDeck
 
-[![Version](https://img.shields.io/badge/version-3.4.1-blue.svg)](https://github.com/holger1411/astrodeck/releases)
+[![Version](https://img.shields.io/badge/version-3.5.0-blue.svg)](https://github.com/holger1411/astrodeck/releases)
 [![Astro](https://img.shields.io/badge/Astro-7.x-orange.svg)](https://astro.build)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
@@ -37,6 +37,8 @@ AstroDeck uses a three-tier architecture. Everything you need to build a website
 ## 🚀 Features
 
 - **🤖 AI-Friendly Development** - AGENTS.md standard + multi-agent compatibility (Claude Code, Cursor, Copilot, Windsurf) helps you build faster with any AI assistant
+- **📄 LLM-Readable Docs** - `/llms.txt` and `/llms-full.txt` (generated from AGENTS.md + README at build time) so AI agents can read the docs directly
+- **✅ CI Included** - GitHub Actions workflow runs `npm run validate` (convention checks, lint, format, astro check) and the build on every push and PR
 - **Three-Tier Architecture** - Components, Sections, and Pages provide building blocks at every level of abstraction
 - **Multiple Layout Templates** - Boxed, Full-Width, Minimal, Auth, and Article layouts for different page types
 - **Fully Responsive** - Mobile-first design that looks great on all devices
@@ -46,7 +48,7 @@ AstroDeck uses a three-tier architecture. Everything you need to build a website
 - **Animation System** - CSS-only scroll animations via `data-animate` attributes
 - **Component Registry** - Machine-readable `src/registry.json` catalog for tooling integration
 - **Lightning Fast** - Astro's zero-JS by default approach for optimal performance
-- **SEO Optimized** - Built-in OpenGraph, Twitter Cards, sitemap, RSS feed, and canonical URLs
+- **SEO Optimized** - Built-in OpenGraph, Twitter Cards, BlogPosting structured data, sitemap, full-content RSS feed, and canonical URLs
 - **Code Quality Tools** - ESLint and Prettier configured for Astro and TypeScript
 - **Easy Customization** - Tailwind CSS for rapid styling adjustments
 - **Production Ready** - Optimized builds with analytics integration
@@ -142,11 +144,11 @@ Download the latest release directly:
 
 ```bash
 # Download the latest version
-wget https://github.com/holger1411/astrodeck/archive/refs/tags/v3.4.1.zip
+wget https://github.com/holger1411/astrodeck/archive/refs/tags/v3.5.0.zip
 
 # Extract
-unzip v3.4.1.zip
-cd astrodeck-3.4.1
+unzip v3.5.0.zip
+cd astrodeck-3.5.0
 
 # Install and run
 npm install

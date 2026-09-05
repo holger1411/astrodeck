@@ -9,7 +9,7 @@ type LoginFormProps = React.HTMLAttributes<HTMLDivElement>;
 export function LoginForm({ className, ...props }: LoginFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  async function onSubmit(event: React.FormEvent) {
+  async function onSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsLoading(true);
 

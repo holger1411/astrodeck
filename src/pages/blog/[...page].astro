@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import type { GetStaticPaths, Page } from 'astro';
 import type { CollectionEntry } from 'astro:content';
+import { getReadingTime } from '@/lib/reading-time';
 
 export const getStaticPaths = (async ({ paginate }) => {
   const allPosts = await getCollection('blog');
@@ -52,12 +53,12 @@ function formatDate(date: Date) {
               <h2 class="text-4xl font-bold tracking-tight group-hover:text-primary transition-colors flex-1">
                 {post.data.title}
               </h2>
-              <time
-                datetime={post.data.pubDate.toISOString()}
-                class="text-sm text-muted-foreground whitespace-nowrap"
-              >
-                {formatDate(post.data.pubDate)}
-              </time>
+              <div class="flex flex-col items-end gap-1 text-sm text-muted-foreground whitespace-nowrap">
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {formatDate(post.data.pubDate)}
+                </time>
+                <span class="text-xs">{getReadingTime(post.body ?? '').text}</span>
+              </div>
             </a>
             {index < page.data.length - 1 && <div class="mt-8 border-b border-border" />}
           </article>
