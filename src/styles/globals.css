@@ -241,8 +241,8 @@ mark {
   transition-delay: 500ms;
 }
 
-/* Respect reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
+/* Reduced motion, and no JavaScript (nothing would add .is-visible): show content at once */
+@media (prefers-reduced-motion: reduce), (scripting: none) {
   [data-animate] {
     opacity: 1 !important;
     transform: none !important;

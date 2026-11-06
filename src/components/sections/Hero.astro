@@ -140,7 +140,7 @@ const svgHeight = gridSize * (squareSize + gap);
         ))
     }
     <h1
-      class="text-5xl font-bold leading-tight tracking-tight md:text-7xl lg:text-8xl lg:leading-[1.1] max-w-5xl"
+      class="text-4xl font-bold leading-tight tracking-tight hyphens-auto break-words sm:text-5xl md:text-7xl lg:text-8xl lg:leading-[1.1] max-w-5xl"
     >
       {title}
     </h1>
@@ -186,7 +186,7 @@ const svgHeight = gridSize * (squareSize + gap);
         primaryCta && (
           <a
             href={primaryCta.href}
-            class="group relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-semibold ring-offset-background transition-[background-color,transform,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 h-12 px-12 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 overflow-hidden"
+            class="group relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-semibold ring-offset-background transition-[background-color,transform,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 h-12 px-6 sm:px-12 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 overflow-hidden"
           >
             {/* Shine effect overlay */}
             <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-primary-foreground/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
@@ -202,7 +202,7 @@ const svgHeight = gridSize * (squareSize + gap);
         secondaryCta && (
           <a
             href={secondaryCta.href}
-            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-12 px-8"
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-12 px-6 sm:px-8"
           >
             {secondaryCta.label}
           </a>

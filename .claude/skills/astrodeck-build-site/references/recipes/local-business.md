@@ -27,6 +27,7 @@ Small offer → fold services into `/` and keep three pages (`/`, `/about`, `/co
 
 - Section: HeroSplit — name + what you do + where, primary CTA = the main action (call/book), image = the user's own photo of the place or work; without a photo use Hero with `plain`
 - Section: Features — 3 to 6 services or reasons, each a concrete fact from the brief, icons from `IconName`
+  (with 4 items, `columns={2}` avoids an empty grid cell)
 - Section: ContentBlock — the approach or story in the owner's words, `features` = what a first visit looks like
 - Section: Testimonials — only with real quotes the owner supplied; otherwise omit
 - Section: FAQ — real questions from the brief (parking, insurance, booking, cancellations)

@@ -149,12 +149,17 @@
           "type": "Feature[]",
           "required": true,
           "description": "Array of feature cards. icon must be an IconName exported from src/lib/icons.ts (zap, shield, chart, users, globe, lock, heart, star, clock, calendar, map-pin, phone, mail, check, sparkles, leaf, rocket, code, palette, message, camera, book, home, settings). Unknown names are a TypeScript error."
+        },
+        "columns": {
+          "type": "2 | 3",
+          "required": false,
+          "description": "Columns from the md breakpoint. Default 3; use 2 for 2 or 4 items so no grid cell stays empty."
         }
       },
       "example": "---\nimport Features from \"@/components/sections/Features.astro\";\n---\n\n<Features\n  title=\"Why choose this starter?\"\n  subtitle=\"Everything you need to build fast\"\n  features={[\n    { icon: \"zap\", title: \"Fast by default\", description: \"Static HTML with minimal JavaScript.\" },\n    { icon: \"shield\", title: \"Type safe\", description: \"TypeScript props on every section.\" },\n    { icon: \"globe\", title: \"SEO ready\", description: \"Meta tags, sitemap and structured data.\" },\n  ]}\n/>",
       "features": ["responsive", "dark-mode"],
       "category": "features",
-      "notes": "Grid is sm:grid-cols-2 md:grid-cols-3. To add icons, add a key + 24x24 stroke path to src/lib/icons.ts; IconName updates automatically."
+      "notes": "Grid is sm:grid-cols-2 md:grid-cols-3 (md:grid-cols-2 with columns={2}). To add icons, add a key + 24x24 stroke path to src/lib/icons.ts; IconName updates automatically."
     },
     {
       "name": "Pricing",

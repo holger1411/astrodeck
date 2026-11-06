@@ -53,15 +53,17 @@ export interface SiteConfig {
   blogIntro?: string;
 }
 
+// The TODO(brief) markers flag starter placeholders: replace each value from PROJECT.md and
+// delete the marker. `grep -rn "TODO(brief)" src` must return nothing before the handover.
 export const site: SiteConfig = {
-  name: 'Your Site',
+  name: 'Your Site', // TODO(brief): site name
   url: SITE_URL,
-  description: 'A new website. Replace this description with one sentence about your site.',
+  description: 'A new website. Replace this description with one sentence about your site.', // TODO(brief): 50-160 characters
   lang: 'en',
   locale: 'en_US',
-  titleTemplate: '%s | Your Site',
-  author: 'Your Name',
-  logo: { text: 'Your Site' },
+  titleTemplate: '%s | Your Site', // TODO(brief): '%s | <site name>'
+  author: 'Your Name', // TODO(brief): owner or company
+  logo: { text: 'Your Site' }, // TODO(brief): wordmark text or logo image
   nav: [
     { href: '/', label: 'Home' },
     // starter:blog-nav
@@ -69,7 +71,7 @@ export const site: SiteConfig = {
   footer: {
     groups: [],
     // The footer renders "© <year> " in front of this text
-    copyright: 'Your Site. All rights reserved.',
+    copyright: 'Your Site. All rights reserved.', // TODO(brief): '<site name>. All rights reserved.'
   },
   social: [],
   contact: {},

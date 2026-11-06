@@ -27,7 +27,7 @@
  *
  * @customization
  * - Add new icons to `src/lib/icons.ts` (the IconName type updates automatically)
- * - Change grid columns by modifying the grid class
+ * - `columns={2}` for 2 or 4 items, so no grid cell stays empty (default 3 from md up)
  * - Adjust spacing with py-* and gap-* classes
  */
 import { icons, type IconName } from '@/lib/icons';
@@ -42,9 +42,11 @@ interface Props {
   title: string;
   subtitle?: string;
   features: Feature[];
+  /** Columns from the md breakpoint: 3 (default) or 2, e.g. for 4 items */
+  columns?: 2 | 3;
 }
 
-const { title, subtitle, features } = Astro.props;
+const { title, subtitle, features, columns = 3 } = Astro.props;
 ---
 
 <section class="py-16 md:py-24 px-6">
@@ -62,12 +64,15 @@ const { title, subtitle, features } = Astro.props;
       }
     </div>
     <div
-      class="grid gap-px sm:grid-cols-2 md:grid-cols-3 mt-12 bg-border overflow-hidden rounded-xl border shadow-lg"
+      class:list={[
+        'grid gap-px sm:grid-cols-2 mt-12 bg-border overflow-hidden rounded-xl border shadow-lg',
+        columns === 3 && 'md:grid-cols-3',
+      ]}
     >
       {
         features.map((feature, index) => (
           <div
-            class="relative overflow-hidden bg-card px-10 py-12"
+            class="relative overflow-hidden bg-card px-6 py-12 sm:px-10"
             data-animate
             data-delay={String(Math.min(index + 1, 5))}
           >
@@ -85,7 +90,7 @@ const { title, subtitle, features } = Astro.props;
                 <path d={icons[feature.icon]} />
               </svg>
             </div>
-            <h3 class="text-xl font-semibold mb-2">{feature.title}</h3>
+            <h3 class="text-xl font-semibold mb-2 hyphens-auto break-words">{feature.title}</h3>
             <p class="text-sm text-muted-foreground">{feature.description}</p>
           </div>
         ))
