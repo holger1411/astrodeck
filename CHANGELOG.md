@@ -2,6 +2,176 @@
 
 All notable changes to AstroDeck are documented in this file.
 
+## [Unreleased] — Agent-first website builder kit
+
+### Added
+
+- Agent-first workflow: download AstroDeck, open it in your coding agent, describe your site. The `astrodeck-build-site` skill runs adaptive intake, a structured brief in `PROJECT.md`, demo cleanup, site config, theme, pages composed from registry sections, `npm run verify`, the vibe2prod audit and a handover summary
+- `AGENTS.md` rewritten as a compact index (golden rules, commands, task → skill, Astro 7 / Tailwind 4 notes). Read natively by Codex, Cursor, GitHub Copilot and Windsurf, by Claude Code via `@AGENTS.md` in `CLAUDE.md`, by Gemini CLI via `.gemini/settings.json`
+- Portable Agent Skills in `.agents/skills/`: `astrodeck-build-site` (intake, brief template, content rules, design system, quality checklist, five site recipes), `astrodeck-new-page`, `astrodeck-new-section`, `astrodeck-theme`, `astrodeck-cleanup`. `.claude/skills/` is a generated mirror (`npm run sync:agents`)
+- `brief/` drop folder for briefing material (texts, PDFs, `DESIGN.md`, logos, images, links)
+- vibe2prod v0.9.1 bundled in `.agents/skills/vibe2prod/` (MIT, license included); `npm run setup:audit` installs its runtime (Lighthouse, axe CLI, Playwright + Chromium)
+- Central site config `src/config/site.ts` and `src/config/site-url.mjs`: name, URL, description, language, title template, logo, navigation, footer, social links, contact, OG image, feature flags
+- `npm run theme`: OKLCH color tokens for light and dark mode from a brand color or a `DESIGN.md`, with a WCAG contrast gate and suggestions
+- `npm run starter:clean` (`--dry-run`, `--yes`, `--keep-blog`): removes the demo in one step, driven by `starter.manifest.json`
+- `npm run verify`: Prettier, ESLint, astro check, design lint, docs lint, registry check, skills mirror check, tests, build and checks on the built HTML (one h1, unique titles, meta descriptions, internal links, alt text). `npm run verify -- --starter` also fails on demo leftovers
+- `npm run lint:design` (rules shared with the Claude Code hook), `npm run lint:docs` (dead paths, version and count drift, skill front matter), `npm run check:registry` (files, props, page templates, recipes)
+- Registry entries with `useWhen` hints and usage examples; `IntegrationGrid` section; icon set in `src/lib/icons.ts`
+- `.mcp.json` with the Astro Docs MCP and shadcn MCP servers; setup for Codex, Cursor and VS Code in `docs/agents/mcp-setup.md`; supported agents in `docs/agents/supported-agents.md`
+- Eval cases in `evals/` (one-sentence brief, Markdown brief, `DESIGN.md`) for rerunning the workflow with any agent
+- Optional Claude Code review subagent `astrodeck-reviewer`
+
+### Changed
+
+- All sections are data-driven: content comes in through props, no AstroDeck copy inside components; forms post to an endpoint you configure
+- Demo pages use fictional brands and mark demo-only content with `data-demo`; demo CTAs link where their label says
+- astrodeck.dev rewritten for 4.0: home page, docs (workflow, config, theme, cleanup, verify, vibe2prod, supported agents, migration), pages overview, section library with the registry snippet per component, `llms.txt`
+- README rewritten user-first; CONTRIBUTING points to `AGENTS.md` and the skill references; maintainer docs in `docs/maintainers/`
+- Design rules consolidated into `.agents/skills/astrodeck-build-site/references/design-system.md`, aligned with the code
+
+### Fixed
+
+- Missing or duplicate h1 on several demo pages, dead demo links and decorative icons with alt text (found by the built-HTML check)
+- Contact section without a form no longer leaves an empty column; IntegrationGrid opens only external links in a new tab
+- RSS language is derived from `site.locale` instead of a hardcoded `-us` suffix
+
+### Breaking changes / Migrating from 3.x
+
+- Brand, URL, navigation and footer moved from Header, Footer and SEO components into `src/config/site.ts` and `src/config/site-url.mjs`. Pages pass plain titles; the layout applies `titleTemplate`
+- Section props: Hero `badge` is an object, LogoCloud requires `logos`, `AIFeature` is replaced by `IntegrationGrid`, Contact renders a form only with a `form` prop, Newsletter requires `action`, ContentBlock takes an optional `image`, Features icons are `IconName` values
+- Removed `.cursorrules`, `.windsurfrules` and `.cursor/rules`: Cursor and Windsurf read `AGENTS.md`
+- Removed the Claude Code slash commands (`/new-page`, `/new-section`, `/theme`, `/audit`, `/launch-check`, `/plenum`), the old Claude skills, the `astrodeck` agent and the six review agents: use the skills in `.agents/skills/` and the optional `astrodeck-reviewer` subagent
+- `.claude/skills/` is generated: edit `.agents/skills/`, then run `npm run sync:agents`
+- `npm run check:kpis` is replaced by `npm run verify`; `npm run validate` is now verify without the build
+- The `system/` design docs are replaced by `.agents/skills/astrodeck-build-site/references/design-system.md`
+
+#### Site config
+
+Before (3.x):
+
+```astro
+// 3.x: hardcoded in Header.astro, Footer.astro, SEO.astro
+const navItems = [{ href: '/', label: 'Home' }, ...];
+```
+
+After (4.0):
+
+```astro
+// 4.0: src/config/site.ts
+export const site: SiteConfig = {
+  name: 'Brand', url: SITE_URL, titleTemplate: '%s | Brand',
+  nav: [{ href: '/', label: 'Home' }], footer: { ... },
+};
+```
+
+#### Hero badge
+
+Before (3.x):
+
+```astro
+<Hero badge="true" ... />
+```
+
+After (4.0):
+
+```astro
+<Hero badge={{ label: 'New: online booking', href: '/news' }} ... />
+```
+
+#### LogoCloud
+
+Before (3.x):
+
+```astro
+<LogoCloud />
+```
+
+After (4.0):
+
+```astro
+<LogoCloud title="Built with:" logos={[
+  { name: 'Astro', src: '/icons/tech/astro.svg', href: 'https://astro.build' },
+]} />
+```
+
+#### AIFeature → IntegrationGrid
+
+Before (3.x):
+
+```astro
+<AIFeature />
+```
+
+After (4.0):
+
+```astro
+<IntegrationGrid title="Works with your tools" items={[
+  { name: 'GitHub', href: 'https://github.com', icon: 'code' },
+]} />
+```
+
+#### Contact form
+
+Before (3.x):
+
+```astro
+<Contact email="hello@example.com" />
+```
+
+After (4.0):
+
+```astro
+<Contact email="hello@example.com"
+  form={{ action: 'https://your-form-backend.example/submit' }} />
+```
+
+#### Newsletter
+
+Before (3.x):
+
+```astro
+<Newsletter title="Stay in the loop" />
+```
+
+After (4.0):
+
+```astro
+<Newsletter action="https://your-provider.example/subscribe" title="Stay in the loop" />
+```
+
+#### ContentBlock image
+
+Before (3.x):
+
+```astro
+<ContentBlock title="..." description="..." />
+```
+
+After (4.0):
+
+```astro
+<ContentBlock title="..." description="..."
+  image={{ src: photo, alt: 'What the photo shows' }} />
+```
+
+#### Commands → skills
+
+Before (3.x):
+
+```astro
+/new-page, /new-section, /theme
+/audit, /launch-check, /plenum
+npm run check:kpis
+```
+
+After (4.0):
+
+```astro
+astrodeck-new-page, astrodeck-new-section, astrodeck-theme
+vibe2prod, astrodeck-reviewer (Claude Code)
+npm run verify
+```
+
 ## [3.5.1] - 2026-11-06 — Astro 7.4.7 & Tailwind CSS 4.3.4 — Security Update
 
 ### Changed

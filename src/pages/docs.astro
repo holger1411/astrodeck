@@ -369,7 +369,9 @@ const structure = [
             </div>
             <p class="text-sm text-muted-foreground mt-3">
               The agent installs everything, asks a few questions in one message (each with a
-              proposed default), shows a preview at <code class={ic}>http://localhost:4321</code>
+              proposed default), shows a preview at <code class={ic}>http://localhost:4321</code>{
+                ' '
+              }
               and iterates with you. You do not need to run any command yourself.
             </p>
           </div>
@@ -503,7 +505,7 @@ npm run dev`}</code></pre>
           <p class="text-muted-foreground">
             Brand, navigation, footer, SEO defaults and feature flags live in one typed file: <code
               class={ic}>src/config/site.ts</code
-            >. The production URL lives in <code class={ic}>src/config/site-url.mjs</code>
+            >. The production URL lives in <code class={ic}>src/config/site-url.mjs</code>{' '}
             (<code class={ic}>SITE_URL</code>), shared with <code class={ic}>astro.config.mjs</code
             >.
           </p>
@@ -558,7 +560,9 @@ npm run dev`}</code></pre>
         <div class="mb-8">
           <h2 class="text-3xl font-bold mb-2">Theme &amp; Branding</h2>
           <p class="text-muted-foreground">
-            <code class={ic}>npm run theme</code> writes OKLCH color tokens for light and dark mode into
+            <code class={ic}>npm run theme</code> writes OKLCH color tokens for light and dark mode into{
+              ' '
+            }
             <code class={ic}>src/styles/globals.css</code> and checks WCAG contrast of the key text pairs.
             It fails when a pair is too weak and suggests the nearest passing value.
           </p>
@@ -685,7 +689,7 @@ npm run starter:clean -- --yes       # remove the demo
 npm run starter:clean -- --yes --keep-blog`}</code></pre>
             <p class="text-sm text-muted-foreground mt-3">
               It is one-shot and destructive: it runs only while the <code class={ic}>starter/</code
-              >
+              >{' '}
               folder exists and refuses afterwards. Without <code class={ic}>--yes</code> it asks for
               confirmation.
             </p>
@@ -918,7 +922,7 @@ codex mcp add shadcn -- npx shadcn@latest mcp`}</code></pre>
 npm run preview   # serve the build locally`}</code></pre>
             <p class="text-sm text-muted-foreground mt-3">
               Set <code class={ic}>SITE_URL</code> in <code class={ic}>src/config/site-url.mjs</code
-              >
+              >{' '}
               first: canonical URLs, sitemap and RSS use it.
             </p>
           </div>
