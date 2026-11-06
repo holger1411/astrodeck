@@ -207,7 +207,7 @@ const telHref = phone ? `tel:${phone.replace(/[^\d+]/g, '')}` : undefined;
       {
         form && (
           <div class="rounded-lg border bg-card p-6 md:p-8">
-            <form action={form.action} method={form.method ?? 'post'} novalidate>
+            <form action={form.action} method={form.method ?? 'post'}>
               <div class="space-y-5">
                 {/* Name */}
                 <div class="space-y-1.5">

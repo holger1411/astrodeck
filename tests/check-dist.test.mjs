@@ -16,6 +16,7 @@ test('bad fixture triggers each rule', () => {
   assert.deepEqual(rules(f), [
     'alt-quality',
     'demo-leftover',
+    'form-novalidate',
     'h1-count',
     'internal-link',
     'link-scheme',
@@ -46,4 +47,14 @@ test('bad fixture triggers each rule', () => {
 test('demo-leftover only fires in starter mode', () => {
   const f = checkDist(join(FIX, 'dist-bad'), { starter: false });
   assert.ok(!rules(f).includes('demo-leftover'));
+});
+
+test('form-novalidate flags forms with required fields and novalidate, not optional-only forms', () => {
+  const f = checkDist(join(FIX, 'dist-bad'), { starter: false }).filter(
+    (x) => x.rule === 'form-novalidate'
+  );
+  assert.equal(f.length, 1);
+  assert.equal(f[0].file, 'index.html');
+  assert.match(f[0].message, /novalidate/);
+  assert.match(f[0].message, /action="\/x"/);
 });

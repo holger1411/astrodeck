@@ -2,7 +2,7 @@
 /**
  * Built-HTML check: scans every .html file in a build output directory.
  * Rules: h1-count, title-empty, title-unique, meta-description, meta-length, internal-link,
- * link-scheme, alt-quality, demo-leftover (starter mode only).
+ * link-scheme, alt-quality, form-novalidate, demo-leftover (starter mode only).
  * meta-length mirrors the vibe2prod gates S1/S2: the home page title has 30-60 characters and
  * its description at least 50; no description is longer than 160 characters.
  * Usage: node scripts/check-dist.mjs [--starter] [dir=dist]   (exit 1 on any finding)
@@ -127,6 +127,15 @@ export function checkDist(dir, opts) {
     }
 
     for (const img of root.querySelectorAll('img')) checkImg(img, rel, add);
+
+    // Forms post to a real endpoint and there is no JS validation: `novalidate` would let empty
+    // submissions through even though the fields are marked required.
+    for (const form of root.querySelectorAll('form[novalidate]'))
+      if (form.querySelector('[required]'))
+        add(
+          'form-novalidate',
+          `<form action="${form.getAttribute('action') ?? ''}"> has required fields but novalidate (remove novalidate)`
+        );
 
     if (opts.starter) {
       const stripped = html.replace(CREDIT, '');
