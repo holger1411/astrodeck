@@ -2,7 +2,7 @@
 
 All notable changes to AstroDeck are documented in this file.
 
-## [Unreleased] — Agent-first website builder kit
+## [4.0.0] - 2026-11-06 — Agent-first website builder kit
 
 ### Added
 
@@ -10,7 +10,7 @@ All notable changes to AstroDeck are documented in this file.
 - `AGENTS.md` rewritten as a compact index (golden rules, commands, task → skill, Astro 7 / Tailwind 4 notes). Read natively by Codex, Cursor, GitHub Copilot and Windsurf, by Claude Code via `@AGENTS.md` in `CLAUDE.md`, by Gemini CLI via `.gemini/settings.json`
 - Portable Agent Skills in `.agents/skills/`: `astrodeck-build-site` (intake, brief template, content rules, design system, quality checklist, five site recipes), `astrodeck-new-page`, `astrodeck-new-section`, `astrodeck-theme`, `astrodeck-cleanup`. `.claude/skills/` is a generated mirror (`npm run sync:agents`)
 - `brief/` drop folder for briefing material (texts, PDFs, `DESIGN.md`, logos, images, links)
-- vibe2prod v0.9.1 bundled in `.agents/skills/vibe2prod/` (MIT, license included); `npm run setup:audit` installs its runtime (Lighthouse, axe CLI, Playwright + Chromium)
+- vibe2prod v0.9.2 bundled in `.agents/skills/vibe2prod/` (MIT, license included); `npm run setup:audit` installs its runtime (Lighthouse, axe CLI, Playwright + Chromium)
 - Central site config `src/config/site.ts` and `src/config/site-url.mjs`: name, URL, description, language, title template, logo, navigation, footer, social links, contact, OG image, feature flags
 - `npm run theme`: OKLCH color tokens for light and dark mode from a brand color or a `DESIGN.md`, with a WCAG contrast gate and suggestions
 - `npm run starter:clean` (`--dry-run`, `--yes`, `--keep-blog`): removes the demo in one step, driven by `starter.manifest.json`
@@ -39,6 +39,10 @@ All notable changes to AstroDeck are documented in this file.
 - Found in the 4.0 dogfood runs (`docs/maintainers/dogfood-4.0.md`): `npm test` no longer fails after `npm run theme` or with a template-literal `titleTemplate`; `.vibe2prod/` audit output is ignored by Git, Prettier and ESLint; Contact `tel:` links strip spaces (invalid HTML); the skip link is no longer hidden behind the sticky header when focused; scroll-reveal content is visible without JavaScript; long words in Hero and Features headings no longer overflow on narrow phones; the starter's placeholder values in `src/config/site.ts` carry `TODO(brief)` markers, so a forgotten "Your Site" shows up in the handover check
 - Contact section without a form no longer leaves an empty column; IntegrationGrid opens only external links in a new tab and renders items without `href` as plain cards
 - RSS language is derived from `site.locale` instead of a hardcoded `-us` suffix
+- Footer renders `site.social` and `site.contact` (email, phone) when set, as documented
+- `npm run theme` also checks the primary color as text on the background (WCAG AA 4.5:1) and suggests a darker shade when it fails; `npm run theme` and `npm run icons` accept a `globals.css` with Windows (CRLF) line endings
+- `npm run sync:agents` no longer deletes your own skills in `.claude/skills/`; it only mirrors the skills that exist in `.agents/skills/`
+- Contact and Newsletter forms use native browser validation (no `novalidate`), so required fields cannot be sent empty
 
 ### Breaking changes / Migrating from 3.x
 
@@ -46,7 +50,9 @@ All notable changes to AstroDeck are documented in this file.
 - Section props: Hero and HeroGradient `badge` is an object, LogoCloud requires `logos`, `AIFeature` is replaced by `IntegrationGrid`, Contact renders a form only with a `form` prop, Newsletter requires `action`, ContentBlock takes an optional `image`, Features icons are `IconName` values
 - Removed `.cursorrules`, `.windsurfrules` and `.cursor/rules`: Cursor and Windsurf read `AGENTS.md`
 - Removed the Claude Code slash commands (`/new-page`, `/new-section`, `/theme`, `/audit`, `/launch-check`, `/plenum`), the old Claude skills, the `astrodeck` agent and the six review agents: use the skills in `.agents/skills/` and the optional `astrodeck-reviewer` subagent
-- `.claude/skills/` is generated: edit `.agents/skills/`, then run `npm run sync:agents`
+- `.claude/skills/` is generated: edit `.agents/skills/`, then run `npm run sync:agents`. Your own Claude-only skills can live directly in `.claude/skills/`; the sync leaves folders it does not manage alone
+- `site.social` entries no longer take an `icon` field (it was never rendered); social links render as text links in the footer
+- `npm run theme` now fails on light-mode primaries that are too bright for text on the background (for example `#f97316`) and prints a darker suggestion
 - `npm run check:kpis` is replaced by `npm run verify`; `npm run validate` is now verify without the build
 - The `system/` design docs are replaced by `.agents/skills/astrodeck-build-site/references/design-system.md`
 
