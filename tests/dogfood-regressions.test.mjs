@@ -60,3 +60,23 @@ test('Features can render 2 columns so 4 items leave no empty cell', { skip: KIT
   assert.match(features, /columns\?:\s*2\s*\|\s*3/);
   assert.match(features, /columns === 3 && 'md:grid-cols-3'/);
 });
+
+// Final review I2: site.social and site.contact were documented as footer content but never rendered.
+test(
+  'Footer renders site.social and site.contact when set (and only then)',
+  { skip: KIT_ONLY },
+  () => {
+    const footer = read('src/components/Footer.astro');
+    assert.match(footer, /site\.social/, 'Footer must read site.social');
+    assert.match(footer, /site\.contact/, 'Footer must read site.contact');
+    assert.match(footer, /mailto:\$\{/, 'email renders as a mailto: link');
+    assert.match(footer, /tel:\$\{/, 'phone renders as a tel: link');
+    assert.match(footer, /rel:\s*'noopener noreferrer'/, 'external social links get a safe rel');
+    assert.match(footer, /\.length\s*>\s*0/, 'nothing is rendered for an empty list');
+    assert.match(footer, /aria-label=\{ui\.footer\.social\}/, 'social list has an accessible name');
+    assert.match(footer, /aria-label=\{ui\.contact\.list\}/, 'contact list has an accessible name');
+    // Config, types and starter agree: no icon field that nothing renders.
+    for (const file of ['src/config/site.ts', 'starter/site.ts'])
+      if (existsSync(join(ROOT, file))) assert.doesNotMatch(read(file), /icon:/, file);
+  }
+);

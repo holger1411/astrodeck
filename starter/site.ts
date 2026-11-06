@@ -38,11 +38,9 @@ export interface SiteConfig {
     /** Optional credit block, e.g. { label: 'example.com', href: 'https://example.com' } */
     credit?: { label: string; href: string };
   };
-  social: {
-    label: string;
-    href: string;
-    icon: 'github' | 'x' | 'linkedin' | 'mastodon' | 'bluesky' | 'youtube' | 'instagram';
-  }[];
+  /** Profile links, rendered as text links in the footer (real profiles only). [] hides them. */
+  social: { label: string; href: string }[];
+  /** Shown in the footer (email as mailto:, phone as tel:) and used for the 404 fallback. */
   contact: { email?: string; phone?: string; address?: string };
   /** Optional support link, e.g. an issue tracker, shown on the 404 page */
   support?: { label: string; href: string };

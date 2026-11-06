@@ -85,7 +85,10 @@ const configFields = [
   { field: 'logo', use: 'Wordmark text, inline SVG or image' },
   { field: 'nav, headerCta', use: 'Header navigation and button' },
   { field: 'footer', use: 'Tagline, link groups, copyright, optional credit' },
-  { field: 'social, contact', use: 'Footer profiles and contact data (real data only)' },
+  {
+    field: 'social, contact',
+    use: 'Footer: social profile links, contact email (mailto:), phone (tel:) and address; empty renders nothing (real data only)',
+  },
   { field: 'ogImage', use: 'Default social preview image' },
   { field: 'features', use: 'blog, rss, analytics on or off' },
 ];

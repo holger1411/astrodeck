@@ -23,6 +23,13 @@ interface Props {
 const { variant = 'boxed' } = Astro.props;
 
 const { groups, tagline, copyright, credit } = site.footer;
+const { email, phone, address } = site.contact;
+const hasContact = Boolean(email || phone || address);
+// tel: URIs must not contain spaces; keep digits and a leading +.
+const telHref = phone ? `tel:${phone.replace(/[^\d+]/g, '')}` : undefined;
+const isExternal = (href: string) => /^https?:\/\//i.test(href);
+const linkClass =
+  'inline-block py-1 text-sm text-muted-foreground hover:text-foreground transition-colors';
 
 const containerClass =
   variant === 'fullWidth' ? 'w-full px-4' : 'container max-w-5xl mx-auto px-4 sm:px-6';
@@ -35,6 +42,53 @@ const containerClass =
       <div class="col-span-2 md:col-span-1">
         <Logo />
         {tagline && <p class="mt-4 text-sm text-muted-foreground">{tagline}</p>}
+        {
+          hasContact && (
+            <ul class="mt-4" aria-label={ui.contact.list}>
+              {email && (
+                <li>
+                  <span class="sr-only">{ui.contact.email}: </span>
+                  <a href={`mailto:${email}`} class={linkClass}>
+                    {email}
+                  </a>
+                </li>
+              )}
+              {phone && (
+                <li>
+                  <span class="sr-only">{ui.contact.phone}: </span>
+                  <a href={telHref} class={linkClass}>
+                    {phone}
+                  </a>
+                </li>
+              )}
+              {address && (
+                <li class="py-1 text-sm text-muted-foreground whitespace-pre-line">
+                  <span class="sr-only">{ui.contact.address}: </span>
+                  {address}
+                </li>
+              )}
+            </ul>
+          )
+        }
+        {
+          site.social.length > 0 && (
+            <ul class="mt-4 flex flex-wrap gap-x-4" aria-label={ui.footer.social}>
+              {site.social.map((profile) => (
+                <li>
+                  <a
+                    href={profile.href}
+                    class={linkClass}
+                    {...(isExternal(profile.href)
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
+                  >
+                    {profile.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
       </div>
 
       {

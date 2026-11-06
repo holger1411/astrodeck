@@ -27,6 +27,8 @@ export const ui = {
     creditHeading: 'Creator',
     createdBy: 'Created by',
     createdFor: 'for',
+    /** aria-label of the social links list (site.social) */
+    social: 'Social links',
   },
   notFound: {
     title: 'Page Not Found',
