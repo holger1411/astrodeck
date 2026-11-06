@@ -18,19 +18,20 @@ const logos = [
   { name: 'shadcn/ui', src: '/icons/tech/shadcn.svg' },
 ];
 
-// Agents whose vendor documentation says they read AGENTS.md and Agent Skills
+// Agents tested end to end in the 4.0 dogfood runs (docs/maintainers/dogfood-4.0.md) and agents
+// whose vendor documentation says they read AGENTS.md and Agent Skills
 // (docs/agents/supported-agents.md). Nothing else is listed.
 const agents = [
   {
     name: 'Claude Code',
     href: 'https://code.claude.com/docs/en/overview',
-    subtitle: 'AGENTS.md via CLAUDE.md, skills mirror',
+    subtitle: 'Tested end to end in 4.0',
     iconSrc: '/icons/ai-tools/claude.svg',
   },
   {
     name: 'OpenAI Codex',
     href: 'https://learn.chatgpt.com/docs/agent-configuration/agents-md',
-    subtitle: 'AGENTS.md and skills natively',
+    subtitle: 'Tested end to end in 4.0',
     iconSrc: '/icons/ai-tools/openai.svg',
   },
   {
@@ -119,7 +120,7 @@ const faqs = [
   {
     question: 'Which coding agents does it work with?',
     answer:
-      'Agents that read AGENTS.md and Agent Skills according to their vendor docs: Claude Code (through CLAUDE.md and a generated skills mirror), OpenAI Codex, Cursor, GitHub Copilot, Gemini CLI and Windsurf. The workflow needs nothing tool-specific; Claude Code additionally gets an optional review subagent and a guard hook.',
+      'Claude Code (through CLAUDE.md and a generated skills mirror) and OpenAI Codex were tested end to end: the 4.0 workflow built the eval sites and ended with all checks passing and a READY launch verdict. Cursor, GitHub Copilot, Gemini CLI and Windsurf read AGENTS.md and Agent Skills according to their vendor docs, but were not run for 4.0. The workflow needs nothing tool-specific; Claude Code additionally gets an optional review subagent and a guard hook.',
   },
   {
     question: 'Do I need to know how to code?',
@@ -183,8 +184,9 @@ const faqs = [
       and guard hook on top.
     </p>
     <p slot="footer">
-      Listed: agents whose vendor docs say they read AGENTS.md and Agent Skills. Other agents that
-      read AGENTS.md may work too.
+      Claude Code and Codex: tested end to end in 4.0. The others: listed because their vendor docs
+      say they read AGENTS.md and Agent Skills; not run for 4.0. Other agents that read AGENTS.md
+      may work too.
     </p>
   </IntegrationGrid>
 

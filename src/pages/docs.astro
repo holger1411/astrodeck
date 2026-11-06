@@ -122,13 +122,13 @@ const agentRows = [
     name: 'Claude Code',
     agentsMd: 'via CLAUDE.md (@AGENTS.md import)',
     skills: '.claude/skills/ (mirror)',
-    status: 'documented',
+    status: 'tested end to end',
   },
   {
     name: 'OpenAI Codex',
     agentsMd: 'natively',
     skills: '.agents/skills/',
-    status: 'documented',
+    status: 'tested end to end',
   },
   {
     name: 'Cursor',
@@ -823,8 +823,11 @@ npm run setup:audit              # install it`}</code></pre>
           <p class="text-muted-foreground">
             <code class={ic}>AGENTS.md</code> is the always-loaded index; the skills in <code
               class={ic}>.agents/skills/</code
-            > hold the workflows. "Documented" means the vendor's documentation says the tool reads these
-            files.
+            > hold the workflows. "Tested end to end" means the 4.0 workflow was run with the tool on
+            the eval cases and ended with <code class={ic}>VERIFY PASSED</code> and a vibe2prod READY
+            verdict (Claude Code CLI 2.1.319, Codex CLI 0.155.1; in Codex's sandbox the browser audit
+            cannot run, so it ran outside). "Documented" means the vendor's documentation says the tool
+            reads these files; the workflow was not run with it.
           </p>
         </div>
         <div class={`${card} overflow-x-auto`}>

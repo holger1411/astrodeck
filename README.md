@@ -232,14 +232,18 @@ first deploy, run it again against the live URL.
 
 | Agent | Reads `AGENTS.md` | Reads skills from | Status in 4.0 |
 |-------|-------------------|-------------------|---------------|
-| Claude Code | via `CLAUDE.md` (`@AGENTS.md` import) | `.claude/skills/` (generated mirror) | documented |
-| OpenAI Codex | natively | `.agents/skills/` | documented |
+| Claude Code | via `CLAUDE.md` (`@AGENTS.md` import) | `.claude/skills/` (generated mirror) | tested end to end |
+| OpenAI Codex | natively | `.agents/skills/` | tested end to end |
 | Cursor | natively | `.agents/skills/`, `.claude/skills/` | documented |
 | GitHub Copilot | natively | `.agents/skills/`, `.claude/skills/` | documented |
 | Gemini CLI | via `.gemini/settings.json` | `.agents/skills/` | documented |
 | Windsurf (Devin Local) | natively | `.agents/skills/` | documented |
 
-"Documented" means the vendor's documentation says the tool reads these files. Details and
+"Tested end to end" means a real run of the 4.0 workflow on the eval cases ended with
+`VERIFY PASSED` and a vibe2prod READY verdict (Claude Code CLI 2.1.319 and Codex CLI 0.155.1;
+Codex's sandbox blocks the browser audit, so that step ran outside it;
+`docs/maintainers/dogfood-4.0.md`). "Documented" means the vendor's documentation says the tool
+reads `AGENTS.md` and skills by the open standards; the workflow was not run with it. Details and
 vendor links: `docs/agents/supported-agents.md`. Agents that do not load skills on their own
 still get the workflow, because `AGENTS.md` names every skill file.
 

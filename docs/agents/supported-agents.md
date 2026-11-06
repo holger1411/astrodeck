@@ -7,19 +7,33 @@ in `.agents/skills/` hold the workflows. Claude Code needs two extras, which the
 
 ## Support matrix
 
-"Documented" means the vendor's documentation says the tool reads these files; it is not a claim
-that the AstroDeck workflow was run end to end with that tool. Agents that do not load skills
-on their own still get the workflow, because `AGENTS.md` names every skill file and tells the
-agent to open it.
+Two statuses, kept honest:
+
+- **tested end to end**: the 4.0 workflow was run with this tool on the eval cases in `evals/`
+  (intake, `PROJECT.md`, cleanup, theme, pages, `npm run verify -- --starter`, vibe2prod) and
+  ended with `VERIFY PASSED` and a vibe2prod Local 2Prod READY verdict (for Codex the
+  maintainer ran the audit outside its sandbox, see the note below). Runs, versions and
+  findings: `docs/maintainers/dogfood-4.0.md` (in the AstroDeck repository; `starter:clean`
+  removes it from your copy).
+- **documented**: the vendor's documentation says the tool reads `AGENTS.md` and Agent Skills
+  by the open standards. The AstroDeck workflow was not run with it for 4.0.
+
+Agents that do not load skills on their own still get the workflow, because `AGENTS.md` names
+every skill file and tells the agent to open it.
 
 | Tool | Reads `AGENTS.md` | Reads skills from | Status in 4.0 |
 |------|-------------------|-------------------|---------------|
-| Claude Code | via `CLAUDE.md` (`@AGENTS.md` import) | `.claude/skills/` (generated mirror) | documented |
-| OpenAI Codex (CLI, IDE) | natively | `.agents/skills/` | documented |
+| Claude Code | via `CLAUDE.md` (`@AGENTS.md` import) | `.claude/skills/` (generated mirror) | tested end to end (CLI 2.1.319) |
+| OpenAI Codex (CLI, IDE) | natively | `.agents/skills/` | tested end to end (CLI 0.155.1) |
 | Cursor | natively | `.agents/skills/`, `.claude/skills/`, .cursor/skills/ | documented |
 | GitHub Copilot (coding agent, VS Code agent mode) | natively; `.github/copilot-instructions.md` points to it | .github/skills/, `.claude/skills/`, `.agents/skills/` | documented |
 | Gemini CLI | via `.gemini/settings.json` (`context.fileName: ["AGENTS.md"]`) | .gemini/skills/, `.agents/skills/` | documented |
 | Windsurf (now documented as Devin Local) | natively | `.agents/skills/`, .windsurf/skills/, .devin/skills/ | documented |
+
+Codex note: in the `workspace-write` sandbox Codex could not launch Chromium or keep a local
+server running, so it could not run the vibe2prod browser checks itself. It said so and left the
+audit to the owner; run `npm run setup:audit` and the audit outside the sandbox. Everything else,
+including `npm run verify`, ran inside the sandbox.
 
 Tools not listed may still work if they read `AGENTS.md`; they are not listed because their
 support is not documented or not verified.
