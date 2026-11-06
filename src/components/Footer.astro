@@ -13,6 +13,7 @@
  */
 import Logo from './Logo.astro';
 import { site } from '@/config/site';
+import { ui } from '@/config/ui';
 
 interface Props {
   /** Layout variant - boxed (default) or fullWidth */
@@ -60,10 +61,12 @@ const containerClass =
       {
         credit && (
           <div>
-            <h3 class="font-semibold mb-4">Creator</h3>
-            <p class="text-sm text-muted-foreground">Created by {site.author}</p>
+            <h3 class="font-semibold mb-4">{ui.footer.creditHeading}</h3>
+            <p class="text-sm text-muted-foreground">
+              {ui.footer.createdBy} {site.author}
+            </p>
             <p class="text-sm text-muted-foreground mt-1">
-              for{' '}
+              {ui.footer.createdFor}{' '}
               <a
                 href={credit.href}
                 class="font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1 py-1"

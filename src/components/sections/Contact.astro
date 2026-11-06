@@ -1,4 +1,6 @@
 ---
+import { ui } from '@/config/ui';
+
 interface Props {
   title?: string;
   subtitle?: string;
@@ -7,6 +9,10 @@ interface Props {
   email?: string;
   phone?: string;
   address?: string;
+  /** Link to the address on a map service, e.g. an OpenStreetMap or Google Maps search URL. */
+  mapUrl?: string;
+  /** Opening hours, one row per day range, e.g. { days: 'Mon–Fri', time: '9:00–17:00' }. */
+  hours?: { days: string; time: string }[];
   /** Renders the contact form. Omit to show contact info only (no form). */
   form?: { action: string; method?: 'get' | 'post'; submitLabel?: string };
 }
@@ -18,10 +24,14 @@ const {
   email,
   phone,
   address,
+  mapUrl,
+  hours = [],
   form,
 } = Astro.props;
 
-const hasContactInfo = email || phone || address;
+const hasContactInfo = email || phone || address || hours.length > 0;
+// tel: URIs must not contain spaces ("0511 000000" is invalid HTML); keep digits and a leading +.
+const telHref = phone ? `tel:${phone.replace(/[^\d+]/g, '')}` : undefined;
 ---
 
 <section class="py-16 md:py-24 px-6">
@@ -36,7 +46,7 @@ const hasContactInfo = email || phone || address;
 
         {
           hasContactInfo && (
-            <ul class="mt-8 space-y-5" aria-label="Contact information">
+            <ul class="mt-8 space-y-5" aria-label={ui.contact.list}>
               {email && (
                 <li class="flex items-start gap-3">
                   <span
@@ -61,7 +71,7 @@ const hasContactInfo = email || phone || address;
                   </span>
                   <div>
                     <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">
-                      Email
+                      {ui.contact.email}
                     </p>
                     <a
                       href={`mailto:${email}`}
@@ -96,10 +106,10 @@ const hasContactInfo = email || phone || address;
                   </span>
                   <div>
                     <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">
-                      Phone
+                      {ui.contact.phone}
                     </p>
                     <a
-                      href={`tel:${phone}`}
+                      href={telHref}
                       class="text-sm text-foreground hover:text-primary transition-colors"
                     >
                       {phone}
@@ -132,11 +142,59 @@ const hasContactInfo = email || phone || address;
                   </span>
                   <div>
                     <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">
-                      Address
+                      {ui.contact.address}
                     </p>
                     <address class="text-sm text-foreground not-italic whitespace-pre-line">
                       {address}
                     </address>
+                    {mapUrl && (
+                      <a
+                        href={mapUrl}
+                        class="inline-block py-1 text-sm text-primary hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {ui.contact.map}
+                      </a>
+                    )}
+                  </div>
+                </li>
+              )}
+
+              {hours.length > 0 && (
+                <li class="flex items-start gap-3">
+                  <span
+                    class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border bg-muted"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="text-muted-foreground"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 6v6l4 2" />
+                    </svg>
+                  </span>
+                  <div>
+                    <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">
+                      {ui.contact.hours}
+                    </p>
+                    <dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm text-foreground">
+                      {hours.map((row) => (
+                        <div class="contents">
+                          <dt>{row.days}</dt>
+                          <dd>{row.time}</dd>
+                        </div>
+                      ))}
+                    </dl>
                   </div>
                 </li>
               )}
@@ -154,7 +212,7 @@ const hasContactInfo = email || phone || address;
                 {/* Name */}
                 <div class="space-y-1.5">
                   <label for="contact-name" class="text-sm font-medium leading-none">
-                    Name{' '}
+                    {ui.contact.name}{' '}
                     <span class="text-destructive" aria-hidden="true">
                       *
                     </span>
@@ -165,7 +223,6 @@ const hasContactInfo = email || phone || address;
                     name="name"
                     required
                     autocomplete="name"
-                    placeholder="Jane Smith"
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
@@ -173,7 +230,7 @@ const hasContactInfo = email || phone || address;
                 {/* Email */}
                 <div class="space-y-1.5">
                   <label for="contact-email" class="text-sm font-medium leading-none">
-                    Email{' '}
+                    {ui.contact.email}{' '}
                     <span class="text-destructive" aria-hidden="true">
                       *
                     </span>
@@ -184,7 +241,6 @@ const hasContactInfo = email || phone || address;
                     name="email"
                     required
                     autocomplete="email"
-                    placeholder="jane@example.com"
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
@@ -192,14 +248,13 @@ const hasContactInfo = email || phone || address;
                 {/* Subject */}
                 <div class="space-y-1.5">
                   <label for="contact-subject" class="text-sm font-medium leading-none">
-                    Subject
+                    {ui.contact.subject}
                   </label>
                   <input
                     id="contact-subject"
                     type="text"
                     name="subject"
                     autocomplete="off"
-                    placeholder="How can we help?"
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
@@ -207,7 +262,7 @@ const hasContactInfo = email || phone || address;
                 {/* Message */}
                 <div class="space-y-1.5">
                   <label for="contact-message" class="text-sm font-medium leading-none">
-                    Message{' '}
+                    {ui.contact.message}{' '}
                     <span class="text-destructive" aria-hidden="true">
                       *
                     </span>
@@ -217,7 +272,6 @@ const hasContactInfo = email || phone || address;
                     name="message"
                     required
                     rows="5"
-                    placeholder="Tell us more about your project..."
                     class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-y min-h-[120px]"
                   />
                 </div>
@@ -227,7 +281,7 @@ const hasContactInfo = email || phone || address;
                   <span class="text-destructive" aria-hidden="true">
                     *
                   </span>{' '}
-                  Required fields
+                  {ui.contact.required}
                 </p>
 
                 {/* Submit */}
@@ -235,7 +289,7 @@ const hasContactInfo = email || phone || address;
                   type="submit"
                   class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
                 >
-                  {form.submitLabel ?? 'Send Message'}
+                  {form.submitLabel ?? ui.contact.submit}
                 </button>
               </div>
             </form>

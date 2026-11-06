@@ -37,6 +37,12 @@
           "type": "string",
           "required": false,
           "description": "Optional starter prompt rendered in a copyable code block below the subtitle, with a copy-to-clipboard button. Intended to hand a coding agent a kickoff prompt."
+        },
+        "plain": {
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Hides the decorative contribution-grid background for a quiet, text-led hero (local businesses, non-tech sites)"
         }
       },
       "example": "---\nimport Hero from \"@/components/sections/Hero.astro\";\n---\n\n<Hero\n  badge={{ label: \"Open source, MIT licensed\", href: \"/changelog\" }}\n  title=\"Build your site faster\"\n  subtitle=\"Start from ready-made sections and focus on your content.\"\n  primaryCta={{ label: \"Get started\", href: \"/docs\" }}\n  secondaryCta={{ label: \"Browse sections\", href: \"/sections\" }}\n/>",
@@ -498,8 +504,8 @@
     {
       "name": "Contact",
       "file": "src/components/sections/Contact.astro",
-      "description": "Two-column contact section with info (email, phone, address) on the left and, when the form prop is given, a 4-field form (name, email, subject, message) on the right.",
-      "useWhen": "Contact details with an optional contact form posting to your own backend (omit form for info only).",
+      "description": "Two-column contact section with info (email, phone, address with optional map link, opening hours) on the left and, when the form prop is given, a 4-field form (name, email, subject, message) on the right.",
+      "useWhen": "Contact details and opening hours (local businesses: the contact/visit page), with an optional contact form posting to your own backend (omit form for info only).",
       "props": {
         "title": {
           "type": "string",
@@ -533,10 +539,20 @@
           "required": false,
           "description": "Physical address, supports multiline"
         },
+        "mapUrl": {
+          "type": "string",
+          "required": false,
+          "description": "Link to the address on a map service (e.g. an OpenStreetMap or Google Maps search URL), shown under the address"
+        },
+        "hours": {
+          "type": "{ days: string; time: string }[]",
+          "required": false,
+          "description": "Opening hours, one row per day range, e.g. { days: 'Mon–Fri', time: '9:00–17:00' }. Only hours the user supplied."
+        },
         "form": {
           "type": "{ action: string; method?: 'get' | 'post'; submitLabel?: string }",
           "required": false,
-          "description": "Renders the contact form. Omit to show contact info only (no form is rendered). method defaults to 'post'; submitLabel defaults to 'Send Message'."
+          "description": "Renders the contact form. Omit to show contact info only (no form is rendered). method defaults to 'post'; submitLabel defaults to ui.contact.submit in src/config/ui.ts."
         }
       },
       "example": "---\nimport Contact from \"@/components/sections/Contact.astro\";\n---\n\n<Contact\n  title=\"Get in touch\"\n  subtitle=\"Questions or feedback? Write to us.\"\n  email=\"hello@example.com\"\n  form={{ action: \"https://your-form-backend.example/submit\", method: \"post\", submitLabel: \"Send message\" }}\n/>",

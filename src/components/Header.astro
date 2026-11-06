@@ -14,6 +14,7 @@
 import ThemeToggle from './ThemeToggle.astro';
 import Logo from './Logo.astro';
 import { site } from '@/config/site';
+import { ui } from '@/config/ui';
 
 interface Props {
   /** Layout variant - boxed (default) or fullWidth */
@@ -104,7 +105,7 @@ const containerClass =
         id="mobile-menu-button"
         class="inline-flex items-center justify-center rounded-md p-2 hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
         aria-expanded="false"
-        aria-label="Toggle navigation menu"
+        aria-label={ui.menuToggle}
       >
         <span class="w-6 h-6 relative flex flex-col justify-center items-center">
           <span

@@ -32,9 +32,11 @@ interface Props {
   badge?: { label: string; href?: string };
   /** Optional copy-to-clipboard starter prompt rendered above the CTA buttons */
   prompt?: string;
+  /** Hide the decorative contribution-grid background (quiet, text-led hero, e.g. local businesses). */
+  plain?: boolean;
 }
 
-const { title, subtitle, primaryCta, secondaryCta, badge, prompt } = Astro.props;
+const { title, subtitle, primaryCta, secondaryCta, badge, prompt, plain = false } = Astro.props;
 
 // Optimized grid generation - reduced size and deterministic pattern
 // Using seeded pseudo-random for consistent SSR output
@@ -90,31 +92,33 @@ const svgHeight = gridSize * (squareSize + gap);
 <section
   class="min-h-[70vh] flex items-center py-[10vh] md:py-[12vh] px-6 relative overflow-hidden"
 >
-  {/* GitHub Contribution Grid Background as SVG */}
-  <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none z-0">
-    <svg
-      width={svgWidth}
-      height={svgHeight}
-      viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-      xmlns="http://www.w3.org/2000/svg"
-      class="text-foreground"
-      aria-hidden="true"
-    >
-      {
-        rects.map((rect) => (
-          <rect
-            x={rect.x}
-            y={rect.y}
-            width={squareSize}
-            height={squareSize}
-            rx="2"
-            fill="currentColor"
-            opacity={rect.opacity}
-          />
-        ))
-      }
-    </svg>
-  </div>
+  {/* GitHub Contribution Grid Background as SVG (omitted with `plain`) */}
+  {
+    !plain && (
+      <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none z-0">
+        <svg
+          width={svgWidth}
+          height={svgHeight}
+          viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+          xmlns="http://www.w3.org/2000/svg"
+          class="text-foreground"
+          aria-hidden="true"
+        >
+          {rects.map((rect) => (
+            <rect
+              x={rect.x}
+              y={rect.y}
+              width={squareSize}
+              height={squareSize}
+              rx="2"
+              fill="currentColor"
+              opacity={rect.opacity}
+            />
+          ))}
+        </svg>
+      </div>
+    )
+  }
 
   <div
     class="container max-w-5xl mx-auto flex flex-col items-center gap-6 text-center relative z-10"
