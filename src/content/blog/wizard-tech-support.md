@@ -6,8 +6,6 @@ author: "Magical IT Department"
 tags: ["humor", "technology", "magic"]
 ---
 
-# Wizard Calls Tech Support, Accidentally Turns Agent Into Frog
-
 *"Please hold while I reverse the transfiguration spell"*
 
 Merlin the Elder (age: unknown, possibly 847) called Apple Support yesterday to troubleshoot his new MacBook. The call lasted 4 hours, involved 3 supervisors, and ended with a tech support agent temporarily transformed into an amphibian.

@@ -6,8 +6,6 @@ author: "Archaeological Employment News"
 tags: ["humor", "work", "history"]
 ---
 
-# Ancient Mummy Applies for Museum Job, Gets Rejected for Lack of Experience
-
 *"I AM the exhibit. How is that not relevant experience?"*
 
 Amenhotep III (died 1353 BCE, unemployed since 2025) has been rejected from 47 museum positions despite being, quote, "literally ancient Egyptian history." The primary reason? Insufficient work experience.

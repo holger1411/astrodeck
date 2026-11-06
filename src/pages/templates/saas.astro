@@ -78,7 +78,7 @@ const tiers = [
       'Basic analytics',
       'Public API access',
     ],
-    cta: { href: '/signup', label: 'Get Started Free' },
+    cta: { href: '/login', label: 'Get Started Free' },
   },
   {
     name: 'Pro',
@@ -93,7 +93,7 @@ const tiers = [
       'Custom domains',
       'Team collaboration (5 seats)',
     ],
-    cta: { href: '/signup?plan=pro', label: 'Start Free Trial' },
+    cta: { href: '/login', label: 'Start Free Trial' },
     highlighted: true,
   },
   {
@@ -108,7 +108,7 @@ const tiers = [
       'SSO & SAML',
       'Audit logs & SIEM',
     ],
-    cta: { href: '/contact', label: 'Talk to Sales' },
+    cta: { href: '/templates/contact', label: 'Talk to Sales' },
   },
 ];
 
@@ -167,8 +167,8 @@ const faqs = [
   <Hero
     title="The platform your team will actually love."
     subtitle="<mark>Nebula</mark> brings real-time collaboration, enterprise-grade security, and actionable analytics together in one beautifully simple platform. <mark>14-day free trial</mark>, no credit card required."
-    primaryCta={{ href: '/signup', label: 'Start for Free' }}
-    secondaryCta={{ href: '/demo', label: 'Watch Demo' }}
+    primaryCta={{ href: '/login', label: 'Start for Free' }}
+    secondaryCta={{ href: '/templates/startup', label: 'Watch Demo' }}
   />
 
   <LogoCloud title="Trusted by teams at:" logos={logos} />
@@ -209,7 +209,7 @@ const faqs = [
     <CTA
       title="Ready to transform how your team works?"
       description="Join over 120,000 teams already using Nebula to ship faster, collaborate better, and grow smarter."
-      cta={{ href: '/signup', label: 'Get Started Free' }}
+      cta={{ href: '/login', label: 'Get Started Free' }}
     />
   </div>
 </BaseLayout>

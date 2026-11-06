@@ -4,7 +4,7 @@
  * Rules: dead-path, version-drift, count-drift, site-url-drift.
  * Usage: node scripts/lint-docs.mjs [projectRoot]   (exit 1 on any finding)
  */
-import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { formatFindings } from './lib/findings.mjs';

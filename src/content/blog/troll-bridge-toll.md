@@ -6,8 +6,6 @@ author: "Municipal Development News"
 tags: ["humor", "work", "mythology"]
 ---
 
-# Troll Loses Bridge to City Infrastructure Project, Forced to Learn New Skills
-
 *"I guarded that bridge for 400 years. Then the city council showed up with permits."*
 
 Grunk the Terrible (age 423, occupation: bridge troll) has been displaced from his ancestral home after the city demolished his bridge to build a modern overpass. He's now seeking employment in what he calls "the most terrifying challenge I've ever faced: a job interview."

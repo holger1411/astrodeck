@@ -6,8 +6,6 @@ author: "Workplace Paranormal Report"
 tags: ["humor", "work", "supernatural"]
 ---
 
-# Ghost Fired From Remote Job for 'Being Too Transparent'"
-
 *"They said they valued transparency. They lied." —disgruntled specter*
 
 Harold Casper (deceased 1987, employed 2025) has been let go from his remote software engineering position at TechFlow Solutions after management complained he was "taking the company values too literally."

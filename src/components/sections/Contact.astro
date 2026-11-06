@@ -2,6 +2,8 @@
 interface Props {
   title?: string;
   subtitle?: string;
+  /** Heading tag for the title. Use 'h1' when the section is the page's main heading. */
+  headingLevel?: 'h1' | 'h2';
   email?: string;
   phone?: string;
   address?: string;
@@ -9,7 +11,15 @@ interface Props {
   form?: { action: string; method?: 'get' | 'post'; submitLabel?: string };
 }
 
-const { title = 'Get in Touch', subtitle, email, phone, address, form } = Astro.props;
+const {
+  title = 'Get in Touch',
+  subtitle,
+  headingLevel: Heading = 'h2',
+  email,
+  phone,
+  address,
+  form,
+} = Astro.props;
 
 const hasContactInfo = email || phone || address;
 ---
@@ -19,9 +29,9 @@ const hasContactInfo = email || phone || address;
     <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
       <!-- Left column: info -->
       <div>
-        <h2 class="text-3xl font-bold leading-tight md:text-4xl">
+        <Heading class="text-3xl font-bold leading-tight md:text-4xl">
           {title}
-        </h2>
+        </Heading>
         {subtitle && <p class="mt-4 text-muted-foreground text-lg leading-relaxed">{subtitle}</p>}
 
         {

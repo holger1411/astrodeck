@@ -6,8 +6,6 @@ author: "Mythical Beauty Review"
 tags: ["humor", "business", "mythology"]
 ---
 
-# Medusa Opens Hair Salon, Promises 'Looks That Will Petrify You'
-
 After centuries of unemployment and "severe misrepresentation in the media," Medusa has opened a hair salon in downtown Portland called "Stone Cold Gorgeous."
 
 ## The Concept

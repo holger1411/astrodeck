@@ -6,8 +6,6 @@ author: "TechCritter Weekly"
 tags: ["humor", "business", "mythology"]
 ---
 
-# Unicorn Raises $50M in Series A, Turns Out to Be an Actual Unicorn
-
 In what venture capitalists are calling "the most literal pivot in startup history," a Series A darling valued at $500 million was revealed this week to be an actual, living unicorn who had been attending board meetings via Zoom with a carefully angled camera.
 
 ## The Pitch That Fooled Everyone

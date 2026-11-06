@@ -507,6 +507,12 @@
           "required": false,
           "description": "Supporting text"
         },
+        "headingLevel": {
+          "type": "'h1' | 'h2'",
+          "required": false,
+          "default": "h2",
+          "description": "Heading tag for the title; use h1 when the section is the page's main heading"
+        },
         "email": {
           "type": "string",
           "required": false,
