@@ -6,7 +6,7 @@ import readme from '/README.md?raw';
 /**
  * /llms-full.txt — the complete project documentation as plain text for LLMs.
  * Built from AGENTS.md and README.md at build time, so it never drifts from
- * the files AI assistants and humans actually read.
+ * the files coding agents and humans actually read.
  */
 export const GET: APIRoute = ({ site }) => {
   const origin = (site ?? new URL('https://astrodeck.dev')).origin;
@@ -20,7 +20,7 @@ export const GET: APIRoute = ({ site }) => {
     '',
     '---',
     '',
-    '# Part 1: AGENTS.md (conventions for AI coding assistants)',
+    '# Part 1: AGENTS.md (index for coding agents)',
     '',
     agents.trim(),
     '',

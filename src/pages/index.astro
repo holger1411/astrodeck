@@ -7,6 +7,7 @@ import IntegrationGrid from '@/components/sections/IntegrationGrid.astro';
 import type { IconName } from '@/lib/icons';
 import Stats from '@/components/sections/Stats.astro';
 import FAQ from '@/components/sections/FAQ.astro';
+import { kitStats } from '@/components/demos/kit-stats';
 
 const logos = [
   { name: 'Astro', src: '/icons/tech/astro.svg' },
@@ -14,96 +15,85 @@ const logos = [
   { name: 'React', src: '/icons/tech/react.svg' },
   { name: 'TypeScript', src: '/icons/tech/typescript.svg' },
   { name: 'shadcn/ui', src: '/icons/tech/shadcn.svg' },
-  { name: 'Claude Code', src: '/icons/tech/claude-code.svg' },
 ];
 
-const aiTools = [
+// Agents whose vendor documentation says they read AGENTS.md and Agent Skills
+// (docs/agents/supported-agents.md). Nothing else is listed.
+const agents = [
+  {
+    name: 'Claude Code',
+    href: 'https://code.claude.com/docs/en/overview',
+    subtitle: 'AGENTS.md via CLAUDE.md, skills mirror',
+    iconSrc: '/icons/ai-tools/claude.svg',
+  },
   {
     name: 'OpenAI Codex',
-    href: 'https://openai.com/codex/',
-    subtitle: 'Native support',
+    href: 'https://learn.chatgpt.com/docs/agent-configuration/agents-md',
+    subtitle: 'AGENTS.md and skills natively',
     iconSrc: '/icons/ai-tools/openai.svg',
   },
   {
-    name: 'GitHub Copilot',
-    href: 'https://github.com/features/copilot',
-    subtitle: 'Coding Agent',
-    iconSrc: '/icons/ai-tools/githubcopilot.svg',
-  },
-  {
     name: 'Cursor',
-    href: 'https://cursor.com',
-    subtitle: 'Native support',
+    href: 'https://cursor.com/docs',
+    subtitle: 'AGENTS.md and skills natively',
     iconSrc: '/icons/ai-tools/cursor.svg',
   },
   {
-    name: 'Google Jules',
-    href: 'https://jules.google',
-    subtitle: 'Native support',
-    iconSrc: '/icons/ai-tools/gemini.svg',
+    name: 'GitHub Copilot',
+    href: 'https://docs.github.com/en/copilot',
+    subtitle: 'Coding agent and VS Code agent mode',
+    iconSrc: '/icons/ai-tools/githubcopilot.svg',
   },
   {
     name: 'Gemini CLI',
     href: 'https://github.com/google-gemini/gemini-cli',
-    subtitle: 'Terminal agent',
+    subtitle: 'AGENTS.md via .gemini/settings.json',
     iconSrc: '/icons/ai-tools/gemini.svg',
   },
   {
     name: 'Windsurf',
-    href: 'https://windsurf.com',
-    subtitle: 'Agentic IDE',
+    href: 'https://docs.devin.ai/desktop/cascade/agents-md',
+    subtitle: 'AGENTS.md and skills natively',
     iconSrc: '/icons/ai-tools/windsurf.svg',
-  },
-  {
-    name: 'VS Code',
-    href: 'https://code.visualstudio.com',
-    subtitle: 'Copilot Agent',
-    iconSrc: '/icons/ai-tools/microsoft.svg',
-  },
-  {
-    name: 'Claude Code',
-    href: 'https://claude.ai/code',
-    subtitle: '+ Custom Agent',
-    iconSrc: '/icons/ai-tools/claude.svg',
   },
 ];
 
 const features: { title: string; description: string; icon: IconName }[] = [
   {
-    title: 'For Real Websites',
+    title: 'Start from whatever you have',
     description:
-      'Company sites, blogs, portfolios, landing pages — with working example pages for each. Deliberately not built for dashboards or app-heavy products.',
-    icon: 'globe',
+      'One sentence in the chat, a PDF, Markdown notes or a DESIGN.md in brief/. The agent asks a few targeted questions, states its defaults, and records everything in a structured brief in PROJECT.md.',
+    icon: 'message',
   },
   {
-    title: 'AI Guardrails Built In',
+    title: 'One guided workflow',
     description:
-      'A convention guard hook blocks off-system edits — hardcoded colors, deprecated patterns — before they ever reach your code.',
+      'The astrodeck-build-site skill takes the agent from intake to handover: brief, demo cleanup, site config, theme, pages composed from registry sections and recipes, verify, vibe2prod.',
+    icon: 'rocket',
+  },
+  {
+    title: 'Your brand in one command',
+    description:
+      'npm run theme turns a brand color or a DESIGN.md into OKLCH tokens for light and dark mode, and fails when text contrast misses WCAG.',
+    icon: 'palette',
+  },
+  {
+    title: 'Honest content by design',
+    description:
+      'Sections take their content as props. The rules forbid invented testimonials, customer logos and numbers; gaps go to open questions instead of onto the page.',
     icon: 'shield',
   },
   {
-    title: 'One Design System',
+    title: 'Verified in one command',
     description:
-      'OKLCH color tokens, spacing, and typography defined once. Dark mode included — and your AI assistant cannot break it.',
-    icon: 'chart',
+      'npm run verify runs formatting, ESLint, astro check, design and docs lint, registry and skills checks, tests, the build and checks on the built HTML.',
+    icon: 'check',
   },
   {
-    title: 'Docs for Humans & AI',
+    title: 'Checked by vibe2prod',
     description:
-      'Every task is documented two ways: tell your coding assistant what you want, or follow the manual steps yourself.',
-    icon: 'users',
-  },
-  {
-    title: 'Quality Checks in One Command',
-    description:
-      'npm run verify checks colors, alt texts, meta descriptions, deprecated imports, docs, tests and the build. Lighthouse scores of 99-100 out of the box.',
-    icon: 'lock',
-  },
-  {
-    title: 'Astro Performance',
-    description:
-      'Static HTML with islands architecture: fast loads, clean SEO, sitemap and RSS included — what content sites actually need.',
-    icon: 'zap',
+      'The vibe2prod audit ships with AstroDeck: performance, accessibility, SEO, security and AI-slop checks with a READY / NOT YET / BLOCKED verdict. npm run setup:audit installs its tools.',
+    icon: 'sparkles',
   },
 ];
 
@@ -111,45 +101,45 @@ const faqs = [
   {
     question: 'Is AstroDeck free?',
     answer:
-      'Yes. AstroDeck is MIT-licensed and completely free — for personal and commercial projects, forever.',
+      'Yes. AstroDeck is MIT-licensed and free for personal and commercial projects, including the bundled vibe2prod audit (also MIT).',
   },
   {
     question: 'What kind of websites is it for?',
     answer:
-      'Company and marketing sites, blogs and editorial sites, portfolios, and landing pages. It is deliberately not built for dashboards or app-heavy products.',
+      'Company and service sites, SaaS and product pages, portfolios, personal sites, event pages and blogs. It is deliberately not built for dashboards or app-heavy products.',
   },
   {
-    question: 'Which AI tools does it work with?',
+    question: 'Which coding agents does it work with?',
     answer:
-      'Any tool that supports the AGENTS.md standard: Claude Code, Cursor, GitHub Copilot, OpenAI Codex, Gemini CLI, Windsurf, Zed, Aider, and more. Claude Code gets the deepest integration — a dedicated agent, domain skills, slash commands, and the convention guard hook.',
+      'Agents that read AGENTS.md and Agent Skills according to their vendor docs: Claude Code (through CLAUDE.md and a generated skills mirror), OpenAI Codex, Cursor, GitHub Copilot, Gemini CLI and Windsurf. The workflow needs nothing tool-specific; Claude Code additionally gets an optional review subagent and a guard hook.',
   },
   {
-    question: 'Can I use it without AI?',
+    question: 'Do I need to know how to code?',
     answer:
-      'Absolutely. AstroDeck is a normal, well-documented Astro starter kit. Every task in the docs is shown two ways: with AI and manually.',
+      'No. Describe your site in plain words, answer a few questions and look at the preview; the agent runs the commands. If you do code, AstroDeck is a regular Astro project with typed sections, a site config and scripts you can run yourself.',
   },
   {
-    question: 'Do I need to know Astro?',
+    question: 'What happens to the demo content?',
     answer:
-      'It helps, but it is not required. If you work with an AI assistant, it knows the conventions from AGENTS.md and does the heavy lifting. If you prefer to code yourself, the docs walk you through every task.',
+      'The download contains this demo site. The workflow removes it early with npm run starter:clean (with a dry run first), so your site keeps only a minimal home page, the 404 page and, if you want one, the blog.',
   },
   {
-    question: 'How opinionated is it?',
+    question: 'Does it support multilingual sites?',
     answer:
-      'There is one design-token system (OKLCH colors, spacing, typography) and a set of conventions — that is what keeps AI output consistent. Everything is overridable: your own rules go in PROJECT.md, your own brand goes in globals.css or a DESIGN.md.',
+      'Not in 4.0. The site config has one language. For several languages, use Astro’s built-in i18n routing on top.',
   },
 ];
 ---
 
 <BaseLayout
-  title="Astro Starter Kit for AI-Assisted Websites"
-  description="Open-source Astro starter kit for AI-assisted websites. Build company sites, blogs, and portfolios with Claude Code, Cursor & Co. on guarded design rails."
+  title="Build Your Website with a Coding Agent"
+  description="Free, open-source Astro starter kit for building websites with a coding agent. Download, open it in Claude Code, Codex or Cursor, describe your site, and get a result checked by npm run verify and vibe2prod."
 >
   <Hero
     badge={{ label: 'v4.0 — Open Source & MIT', href: '/changelog' }}
-    title="The starter kit for AI-assisted websites."
-    subtitle="Start from a complete foundation — pages, sections, and a design system — and let <mark>Claude Code, Cursor, or any coding agent</mark> build your <mark>company site, blog, or portfolio</mark>. Conventions via <mark>AGENTS.md</mark>, enforced by <mark>built-in guardrails</mark>, so AI edits never go off-system."
-    prompt="Clone https://github.com/holger1411/astrodeck as the foundation for my new website. Install the dependencies, read AGENTS.md, start the dev server, and give me a short tour of the project."
+    title="Build your website with your coding agent."
+    subtitle="Download AstroDeck, open it in <mark>Claude Code, Codex, Cursor or another coding agent</mark>, and describe your site — in one sentence or with a full brief. The agent follows a <mark>guided workflow</mark> from brief to finished pages, and the result is checked by <mark>npm run verify</mark> and the bundled <mark>vibe2prod</mark> audit."
+    prompt="Clone https://github.com/holger1411/astrodeck into a new folder, run npm install and follow its AGENTS.md. Then build my website for: [your business or project in one sentence]. If I give you a brief or a DESIGN.md, put it in brief/ and use it."
     primaryCta={{
       href: 'https://github.com/holger1411/astrodeck/releases/latest',
       label: 'Download',
@@ -160,52 +150,55 @@ const faqs = [
   <LogoCloud title="Built with:" logos={logos} />
 
   <IntegrationGrid
-    title="Built for AI coding assistants"
-    subtitle="AI-Friendly Development"
-    items={aiTools}
+    title="Works with the agent you already use"
+    subtitle="Agent-first"
+    items={agents}
+    cta={{ href: '/docs#agents', label: 'Supported agents in detail' }}
   >
     <p>
-      AI without a system produces slop — hardcoded colors, broken dark mode, random spacing.
-      AstroDeck gives your coding agent a real operating environment instead: conventions via the{
-        ' '
-      }
-      <a href="https://agents.md" target="_blank" rel="noopener noreferrer">AGENTS.md standard</a>{
-        ' '
-      }
-      (used by 60,000+ open-source projects, stewarded by the Linux Foundation), so every tool in the
-      grid knows your project's patterns before it writes a single line.
+      AstroDeck speaks the open standards: an{' '}
+      <a href="https://agents.md" target="_blank" rel="noopener noreferrer">AGENTS.md</a> index that names
+      the golden rules and the right skill for each task, and portable{' '}
+      <a href="https://agentskills.io" target="_blank" rel="noopener noreferrer">Agent Skills</a> in .agents/skills/
+      for building a site, adding pages and sections, theming and removing the demo.
     </p>
     <p>
-      And the rules are enforced, not just written down: a convention guard hook blocks off-system
-      edits before they reach your code, and one command checks every design convention at once.{
-        ' '
-      }
-      <a href="https://github.com/holger1411/astrodeck#-ai-friendly-development">Claude Code</a>{
-        ' '
-      }
-      gets the deepest integration — a dedicated agent with seven domain skills that warns about security,
-      accessibility, and SEO issues proactively.
+      Nothing in the workflow depends on one vendor. Claude Code reads the same files through a
+      one-line CLAUDE.md import and a generated skills mirror, and gets an optional review subagent
+      and guard hook on top.
     </p>
     <p slot="footer">
-      Plus: Zed, Aider, Factory, Amp, RooCode,{' '}
-      <a href="https://agents.md" target="_blank" rel="noopener noreferrer">and many more</a>.
+      Listed: agents whose vendor docs say they read AGENTS.md and Agent Skills. Other agents that
+      read AGENTS.md may work too.
     </p>
   </IntegrationGrid>
 
   <div class="section-inverted py-8">
     <Stats
       stats={[
-        { value: '16', label: 'Sections', description: 'Hero, pricing, FAQ, team & more' },
-        { value: '11', label: 'UI Components', description: 'shadcn/ui + Radix' },
-        { value: '11', label: 'Example Pages', description: 'SaaS, portfolio, blog & more' },
-        { value: '100', label: 'Lighthouse', description: 'Accessibility, Best Practices & SEO' },
+        {
+          value: String(kitStats.sections),
+          label: 'Sections',
+          description: 'Typed and data-driven',
+        },
+        { value: String(kitStats.ui), label: 'UI Components', description: 'shadcn/ui + Radix' },
+        {
+          value: String(kitStats.skills),
+          label: 'Agent Skills',
+          description: 'Incl. vibe2prod',
+        },
+        {
+          value: String(kitStats.recipes),
+          label: 'Site Recipes',
+          description: 'Sitemaps per site type',
+        },
       ]}
     />
   </div>
 
   <Features
-    title="More than a theme, calmer than an AI builder"
-    subtitle="A complete website foundation — plus the operating layer your AI assistant needs to stay on track."
+    title="From an idea to a verified site"
+    subtitle="A complete Astro foundation plus the workflow, rules and checks your coding agent needs to finish the job."
     features={features}
   />
 
@@ -220,10 +213,12 @@ const faqs = [
   <div class="section-inverted">
     <section class="py-16 md:py-24 px-6">
       <div class="container max-w-3xl mx-auto text-center" data-animate="scale">
-        <h2 class="text-3xl font-bold leading-tight md:text-5xl">Start from a clean foundation.</h2>
+        <h2 class="text-3xl font-bold leading-tight md:text-5xl">
+          Describe your site. Ship it checked.
+        </h2>
         <p class="mt-6 text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-          Download AstroDeck, open it in your coding assistant, and say what you want to build. Free
-          and open source — forever.
+          Download AstroDeck, open it in your coding agent and say what you want to build. Free and
+          open source under the MIT license.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 mt-10 justify-center">
           <a

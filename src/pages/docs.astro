@@ -1,19 +1,246 @@
 ---
 import FullWidthLayout from '@/layouts/FullWidthLayout.astro';
+import CodeBlock from '@/components/demos/CodeBlock.astro';
+import { kitStats, recipes, skills, vibe2prodVersion } from '@/components/demos/kit-stats';
+
+const repo = 'https://github.com/holger1411/astrodeck';
+const ic = 'text-xs font-mono bg-muted px-1.5 py-0.5 rounded';
+const pre = 'bg-muted/50 border border-border rounded-xl p-4 overflow-x-auto';
+const card = 'border rounded-xl p-6 bg-card';
+const link = 'text-primary underline underline-offset-4 hover:no-underline';
 
 const sections = [
   { id: 'getting-started', label: 'Getting Started' },
-  { id: 'building-blocks', label: 'Building Blocks' },
-  { id: 'create-page', label: 'Create a New Page' },
-  { id: 'add-section', label: 'Add a Section' },
-  { id: 'custom-component', label: 'Custom Component' },
-  { id: 'customize-theme', label: 'Theme & Colors' },
-  { id: 'customize-design', label: 'Design Tokens' },
-  { id: 'add-blog-post', label: 'Add a Blog Post' },
-  { id: 'build-deploy', label: 'Build & Deploy' },
-  { id: 'ai-architecture', label: 'AI Architecture' },
-  { id: 'quality-gates', label: 'Quality Gates' },
+  { id: 'workflow', label: 'Build-Site Workflow' },
+  { id: 'brief', label: 'Brief & PROJECT.md' },
+  { id: 'site-config', label: 'Site Config' },
+  { id: 'theme', label: 'Theme & Branding' },
+  { id: 'building-blocks', label: 'Sections & Pages' },
+  { id: 'cleanup', label: 'Demo Cleanup' },
+  { id: 'verify', label: 'Verify' },
+  { id: 'vibe2prod', label: 'vibe2prod Audit' },
+  { id: 'agents', label: 'Supported Agents' },
+  { id: 'mcp', label: 'MCP Servers' },
+  { id: 'deploy', label: 'Build & Deploy' },
+  { id: 'astro-7', label: 'Astro 7 Notes' },
+  { id: 'migrating', label: 'Migrating from 3.x' },
+  { id: 'multilingual', label: 'Multilingual Sites' },
   { id: 'project-structure', label: 'Project Structure' },
+];
+
+const workflow: { title: string; text: string; cmd?: string }[] = [
+  {
+    title: 'Intake',
+    text: 'The agent inventories your messages, PROJECT.md and brief/. Little input: one message with at most five questions, each with a proposed default. A full briefing: it extracts faithfully, notes sources and lists conflicts and gaps instead of inventing.',
+  },
+  {
+    title: 'Start clean',
+    text: 'The astrodeck-cleanup skill removes the demo before anything is written, after showing the plan.',
+    cmd: 'npm run starter:clean -- --dry-run',
+  },
+  {
+    title: 'Brief and site plan',
+    text: `PROJECT.md is filled, a recipe is chosen (${recipes.join(', ')}) and each page gets a section list from the registry.`,
+  },
+  {
+    title: 'Configure',
+    text: 'src/config/site.ts and SITE_URL from the brief; robots.txt, llms.txt and favicons for the real domain and logo.',
+  },
+  {
+    title: 'Theme',
+    text: 'Brand colors, neutral tone and radius as OKLCH tokens with a contrast gate; fonts only on brand input.',
+    cmd: 'npm run theme -- --primary "<hex>" --dry-run',
+  },
+  {
+    title: 'Build pages',
+    text: 'Home first with an early preview, then the rest, composed from sections in the recipe order. Facts come only from the brief.',
+    cmd: 'npm run dev',
+  },
+  {
+    title: 'Verify and audit',
+    text: 'All checks pass, then the vibe2prod audit targets READY, then the manual items of the quality checklist.',
+    cmd: 'npm run verify -- --starter',
+  },
+  {
+    title: 'Handover',
+    text: 'What was built, the defaults it chose, open questions (logo, photos, legal pages, form endpoints, URL), check results and how to deploy.',
+  },
+];
+
+const skillRoutes = [
+  { task: 'A website, or "adapt AstroDeck to my project"', skill: 'astrodeck-build-site' },
+  { task: 'A new page', skill: 'astrodeck-new-page' },
+  { task: 'A section no registry section covers, or a new prop', skill: 'astrodeck-new-section' },
+  { task: 'Colors, fonts, radius, logo, DESIGN.md', skill: 'astrodeck-theme' },
+  { task: 'Remove the demo', skill: 'astrodeck-cleanup' },
+  { task: 'An audit or launch check', skill: 'vibe2prod' },
+];
+
+const configFields = [
+  { field: 'name, description', use: 'Header, footer, meta tags, manifest' },
+  { field: 'url', use: 'SITE_URL: canonical URLs, sitemap, RSS' },
+  { field: 'lang, locale', use: '<html lang>, Open Graph locale, RSS language' },
+  { field: 'titleTemplate', use: 'Page titles, e.g. "%s | Harbor Physio"' },
+  { field: 'author', use: 'Meta author, default blog author' },
+  { field: 'logo', use: 'Wordmark text, inline SVG or image' },
+  { field: 'nav, headerCta', use: 'Header navigation and button' },
+  { field: 'footer', use: 'Tagline, link groups, copyright, optional credit' },
+  { field: 'social, contact', use: 'Footer profiles and contact data (real data only)' },
+  { field: 'ogImage', use: 'Default social preview image' },
+  { field: 'features', use: 'blog, rss, analytics on or off' },
+];
+
+const blocks = [
+  {
+    name: 'Sections',
+    count: kitStats.sections,
+    path: 'src/components/sections/',
+    href: '/sections',
+  },
+  { name: 'UI components', count: kitStats.ui, path: 'src/components/ui/', href: '/components' },
+  { name: 'Layouts', count: kitStats.layouts, path: 'src/layouts/', href: '/pages' },
+];
+
+const verifySteps = [
+  { id: 'format', what: 'Prettier' },
+  { id: 'eslint', what: 'ESLint' },
+  { id: 'astro-check', what: 'Types and templates (astro check)' },
+  { id: 'lint-design', what: 'Design rules: tokens, links, forms, deprecated APIs' },
+  { id: 'lint-docs', what: 'Dead paths, version and count drift in docs, skill front matter' },
+  { id: 'registry', what: 'Registry matches component files, props, page templates and recipes' },
+  { id: 'agents-sync', what: '.claude/skills mirrors .agents/skills' },
+  { id: 'test', what: 'Script tests (node --test)' },
+  { id: 'build', what: 'Production build' },
+  {
+    id: 'dist',
+    what: 'Built HTML: one h1, unique titles, meta descriptions, internal links, alt text',
+  },
+];
+
+const agentRows = [
+  {
+    name: 'Claude Code',
+    agentsMd: 'via CLAUDE.md (@AGENTS.md import)',
+    skills: '.claude/skills/ (mirror)',
+    status: 'documented',
+  },
+  {
+    name: 'OpenAI Codex',
+    agentsMd: 'natively',
+    skills: '.agents/skills/',
+    status: 'documented',
+  },
+  {
+    name: 'Cursor',
+    agentsMd: 'natively',
+    skills: '.agents/skills/',
+    status: 'documented',
+  },
+  {
+    name: 'GitHub Copilot',
+    agentsMd: 'natively (+ .github/copilot-instructions.md pointer)',
+    skills: '.agents/skills/, .claude/skills/',
+    status: 'documented',
+  },
+  {
+    name: 'Gemini CLI',
+    agentsMd: 'via .gemini/settings.json',
+    skills: '.agents/skills/',
+    status: 'documented',
+  },
+  {
+    name: 'Windsurf (Devin Local)',
+    agentsMd: 'natively',
+    skills: '.agents/skills/',
+    status: 'documented',
+  },
+];
+
+const astroNotes = [
+  'Agents start <code>npm run dev</code> in the background and poll <code>/_astro/status</code> until it returns <code>{"ok":true}</code>.',
+  'The compiler is stricter: unclosed or misnested tags fail the build.',
+  "<code>compressHTML</code> defaults to <code>'jsx'</code>: whitespace between elements is removed; write <code>{&quot; &quot;}</code> where a space matters.",
+  'Sätteri is the default Markdown processor; remark/rehype plugins need <code>unified()</code> as <code>markdown.processor</code>.',
+  '<code>src/fetch.ts</code> is reserved for Astro. No <code>@astrojs/db</code>.',
+  '<code>ClientRouter</code>, never <code>ViewTransitions</code>; <code>z</code> from <code>astro/zod</code>.',
+  'Tailwind 4 is configured in CSS (<code>@theme</code> in <code>globals.css</code>); there is no <code>tailwind.config</code>.',
+];
+
+const migrations = [
+  {
+    title: 'Brand, URL and navigation → site config',
+    before: `// hardcoded in Header.astro, Footer.astro, SEO.astro
+const navItems = [{ href: '/', label: 'Home' }, ...];`,
+    after: `// src/config/site.ts
+export const site: SiteConfig = { name, url: SITE_URL,
+  titleTemplate: '%s | Brand', nav: [...], footer: {...} };`,
+  },
+  {
+    title: 'Hero badge',
+    before: `<Hero badge="true" ... />   <!-- fixed version text -->`,
+    after: `<Hero badge={{ label: 'New: online booking', href: '/news' }} ... />`,
+  },
+  {
+    title: 'LogoCloud',
+    before: `<LogoCloud />   <!-- built-in logos -->`,
+    after: `<LogoCloud title="Built with:" logos={[
+  { name: 'Astro', src: '/icons/tech/astro.svg', href: 'https://astro.build' },
+]} />`,
+  },
+  {
+    title: 'AIFeature → IntegrationGrid',
+    before: `<AIFeature />`,
+    after: `<IntegrationGrid title="Works with your tools" items={[
+  { name: 'GitHub', href: 'https://github.com', icon: 'code' },
+]} />`,
+  },
+  {
+    title: 'Contact form',
+    before: `<Contact email="..." />   <!-- always a form, no real endpoint -->`,
+    after: `<Contact email="..."
+  form={{ action: 'https://your-form-backend.example/submit' }} />
+<!-- omit form for contact details only -->`,
+  },
+  {
+    title: 'Newsletter',
+    before: `<Newsletter title="..." />   <!-- no real endpoint -->`,
+    after: `<Newsletter action="https://your-provider.example/subscribe" title="..." />`,
+  },
+  {
+    title: 'ContentBlock image',
+    before: `<ContentBlock title="..." description="..." />
+<!-- always showed an empty image box -->`,
+    after: `<ContentBlock title="..." description="..."
+  image={{ src: photo, alt: 'What the photo shows' }} />
+<!-- without image: one text column -->`,
+  },
+  {
+    title: 'AI files and commands → skills',
+    before: `.cursorrules, .windsurfrules, .cursor/rules
+/new-page, /new-section, /theme, /audit, /launch-check, /plenum
+npm run check:kpis`,
+    after: `AGENTS.md + .agents/skills/ (.claude/skills/ is generated)
+astrodeck-new-page, -new-section, -theme, vibe2prod,
+astrodeck-reviewer (Claude Code)
+npm run verify`,
+  },
+];
+
+const structure = [
+  { path: 'AGENTS.md', what: 'Index for every coding agent: rules, commands, task → skill' },
+  { path: 'PROJECT.md', what: 'Your site brief; overrides AGENTS.md' },
+  { path: 'brief/', what: 'Your input material' },
+  { path: '.agents/skills/', what: 'Skills (source); .claude/skills/ is a generated mirror' },
+  { path: 'src/config/site.ts', what: 'Brand, navigation, footer, SEO defaults, feature flags' },
+  { path: 'src/styles/globals.css', what: 'Fonts and design tokens (@theme + .dark)' },
+  { path: 'src/registry.json', what: 'Catalog of sections, layouts and UI components' },
+  { path: 'src/components/sections/', what: 'Page sections' },
+  { path: 'src/components/ui/', what: 'shadcn/ui React primitives' },
+  { path: 'src/layouts/', what: 'Base, FullWidth, Minimal, Auth, Article layouts' },
+  { path: 'src/pages/', what: 'File-based routes' },
+  { path: 'src/content/blog/', what: 'Blog posts (content collection)' },
+  { path: 'scripts/, tests/', what: 'Verify, theme, cleanup and sync scripts with tests' },
+  { path: 'docs/agents/', what: 'Supported agents and MCP setup' },
 ];
 ---
 
@@ -28,14 +255,14 @@ const sections = [
 
 <FullWidthLayout
   title="Documentation"
-  description="Learn how to use AstroDeck with AI assistants or manually. Step-by-step guides for installation, pages, components, theming, and deployment."
+  description="AstroDeck 4.0 docs: getting started with a coding agent, the build-site workflow, brief, site config, theme, cleanup, verify, vibe2prod, supported agents and migrating from 3.x."
 >
   <!-- Header -->
   <div class="py-16 px-6 md:px-12">
     <h1 class="text-4xl font-bold tracking-tight md:text-6xl mb-4">Documentation</h1>
     <p class="text-lg text-muted-foreground max-w-3xl">
-      AstroDeck is built AI-first. Every task below is shown two ways — tell your AI assistant what
-      you want, or do it manually. Pick the approach that works for you.
+      Open AstroDeck in your coding agent and describe your site; the agent follows the workflow
+      below. Everything it runs, you can run yourself.
     </p>
   </div>
 
@@ -104,1111 +331,707 @@ const sections = [
 
     <!-- Docs Content -->
     <div class="flex-1 min-w-0 space-y-20">
-      <!-- 1. Getting Started -->
+      <!-- Getting Started -->
       <section id="getting-started" class="scroll-mt-32 lg:scroll-mt-20">
         <div class="mb-8">
           <h2 class="text-3xl font-bold mb-2">Getting Started</h2>
           <p class="text-muted-foreground">
-            Download AstroDeck, install dependencies, and start the dev server.
+            Download AstroDeck, open it in your coding agent and describe your site. Requires
+            Node.js <code class={ic}>&gt;=22.23.4</code>.
           </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">With AI</h3>
-            </div>
-            <p class="text-sm text-muted-foreground mb-3">
-              Download and unzip AstroDeck. Open the folder in your AI coding tool (Claude Code,
-              Cursor, Windsurf, etc.) and say:
-            </p>
-            <div class="bg-muted/50 border border-border rounded-xl p-4">
+          <div class={card}>
+            <h3 class="font-semibold mb-3">No coding experience</h3>
+            <ol class="list-decimal pl-5 space-y-2 text-sm text-muted-foreground">
+              <li>
+                Download the ZIP from the{' '}
+                <a
+                  class={link}
+                  href="https://github.com/holger1411/astrodeck/releases/latest"
+                  target="_blank"
+                  rel="noopener noreferrer">latest release</a
+                > and unzip it.
+              </li>
+              <li>
+                Optional: put what you already have into the <code class={ic}>brief/</code> folder (texts,
+                PDFs, a logo, a <code class={ic}>DESIGN.md</code>).
+              </li>
+              <li>
+                Open the folder in your coding agent (Claude Code, Codex, Cursor, GitHub Copilot,
+                Gemini CLI, Windsurf) and say what you want:
+              </li>
+            </ol>
+            <div class="bg-muted/50 border border-border rounded-xl p-4 mt-4">
               <p class="text-sm italic">
-                "Please install all dependencies and start the dev server."
+                "Build my website for a physiotherapy practice in Hamburg with online booking."
               </p>
             </div>
-          </div>
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-muted-foreground"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">Manual</h3>
-            </div>
-            <p class="text-sm text-muted-foreground mb-3">
-              Unzip the download, open a terminal in the project folder, and run:
-            </p>
-            <pre
-              class="bg-muted/50 border border-border rounded-xl p-4 overflow-x-auto"><code class="text-sm font-mono">npm install
-npm run dev</code></pre>
             <p class="text-sm text-muted-foreground mt-3">
-              Then open <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >http://localhost:4321</code
-              > in your browser.
+              The agent installs everything, asks a few questions in one message (each with a
+              proposed default), shows a preview at <code class={ic}>http://localhost:4321</code>
+              and iterates with you. You do not need to run any command yourself.
+            </p>
+          </div>
+          <div class={card}>
+            <h3 class="font-semibold mb-3">Developers</h3>
+            <pre
+              class={pre}><code class="text-sm font-mono">{`npx degit holger1411/astrodeck my-site
+cd my-site
+npm install
+npm run dev`}</code></pre>
+            <p class="text-sm text-muted-foreground mt-3">
+              <code class={ic}>git clone</code> or the release ZIP work the same way. Then let your agent
+              run the workflow, or work by hand: set <code class={ic}>src/config/site.ts</code>, run <code
+                class={ic}>npm run theme</code
+              >, compose pages from sections and finish with <code class={ic}>npm run verify</code>.
+            </p>
+            <p class="text-sm text-muted-foreground mt-3">
+              Avoid <code class={ic}>npm create astro -- --template holger1411/astrodeck</code>:
+              create-astro can write its own <code class={ic}>AGENTS.md</code> over the kit's.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- 2. Building Blocks -->
-      <section id="building-blocks" class="scroll-mt-32 lg:scroll-mt-20">
+      <!-- Build-site workflow -->
+      <section id="workflow" class="scroll-mt-32 lg:scroll-mt-20">
         <div class="mb-8">
-          <h2 class="text-3xl font-bold mb-2">Building Blocks</h2>
+          <h2 class="text-3xl font-bold mb-2">The Build-Site Workflow</h2>
           <p class="text-muted-foreground">
-            AstroDeck uses a three-tier architecture. Everything you build with falls into one of
-            these tiers.
+            "Build my website" routes the agent to the <code class={ic}>astrodeck-build-site</code> skill
+            (<code class={ic}>.agents/skills/astrodeck-build-site/SKILL.md</code>). It works through
+            eight steps and names the command and reference for each.
           </p>
         </div>
-
-        <!-- Three-tier overview table -->
-        <div class="border rounded-xl p-6 bg-card overflow-x-auto mb-8">
+        <ol class="space-y-4">
+          {
+            workflow.map((step, i) => (
+              <li class={`${card} flex gap-4`}>
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-semibold">
+                  {i + 1}
+                </span>
+                <div>
+                  <h3 class="font-semibold">{step.title}</h3>
+                  <p class="text-sm text-muted-foreground mt-1">{step.text}</p>
+                  {step.cmd && (
+                    <p class="mt-2">
+                      <code class={ic}>{step.cmd}</code>
+                    </p>
+                  )}
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <div class={`${card} mt-8 overflow-x-auto`}>
+          <h3 class="font-semibold mb-3">Task → skill</h3>
           <table class="w-full text-sm">
             <thead>
               <tr class="border-b text-left">
-                <th class="pb-2 pr-4 font-medium text-muted-foreground">Tier</th>
-                <th class="pb-2 pr-4 font-medium text-muted-foreground">What</th>
+                <th class="pb-2 pr-4 font-medium text-muted-foreground">The user wants ...</th>
+                <th class="pb-2 font-medium text-muted-foreground">Skill</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+              {
+                skillRoutes.map((r) => (
+                  <tr>
+                    <td class="py-2 pr-4">{r.task}</td>
+                    <td class="py-2 font-mono text-xs">{r.skill}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+          <p class="text-sm text-muted-foreground mt-3">
+            Skills live in <code class={ic}>.agents/skills/</code> ({kitStats.skills} skills: {
+              skills.join(', ')
+            }). <code class={ic}>AGENTS.md</code> names every one, so agents that do not load skills on
+            their own still find them.
+          </p>
+        </div>
+      </section>
+
+      <!-- Brief -->
+      <section id="brief" class="scroll-mt-32 lg:scroll-mt-20">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">Brief Folder &amp; PROJECT.md</h2>
+          <p class="text-muted-foreground">
+            Your input can be one sentence or a full briefing. More material means fewer questions.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class={card}>
+            <h3 class="font-semibold mb-3"><code class={ic}>brief/</code> — your material</h3>
+            <ul class="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+              <li>Texts: about, services, company profile PDF, an old flyer</li>
+              <li>Page content: opening hours, prices, FAQs, quotes you may use</li>
+              <li>
+                Design: a <code class={ic}>DESIGN.md</code> with color tokens, brand guidelines, logo
+                files (SVG preferred)
+              </li>
+              <li>Images you own, and a links list (current site, profiles, sites you like)</li>
+            </ul>
+            <p class="text-sm text-muted-foreground mt-3">
+              Files in <code class={ic}>brief/</code> are inputs, not part of the website. No passwords
+              or keys: in a public repository this folder is public too.
+            </p>
+          </div>
+          <div class={card}>
+            <h3 class="font-semibold mb-3"><code class={ic}>PROJECT.md</code> — the brief</h3>
+            <p class="text-sm text-muted-foreground mb-3">
+              The agent writes a structured brief and keeps it up to date. It overrides the defaults
+              in <code class={ic}>AGENTS.md</code>, so later sessions and other agents continue from
+              it. Headings:
+            </p>
+            <p class="text-sm">
+              Goal &amp; audience · Offer · Sitemap · Tone &amp; language · Brand · Content sources
+              · Must-haves / no-gos · Open questions · Decisions &amp; defaults
+            </p>
+            <p class="text-sm text-muted-foreground mt-3">
+              Only real facts go in. Missing facts become open questions and stay off the site.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Site config -->
+      <section id="site-config" class="scroll-mt-32 lg:scroll-mt-20">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">Site Config</h2>
+          <p class="text-muted-foreground">
+            Brand, navigation, footer, SEO defaults and feature flags live in one typed file: <code
+              class={ic}>src/config/site.ts</code
+            >. The production URL lives in <code class={ic}>src/config/site-url.mjs</code>
+            (<code class={ic}>SITE_URL</code>), shared with <code class={ic}>astro.config.mjs</code
+            >.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class={`${card} overflow-x-auto`}>
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b text-left">
+                  <th class="pb-2 pr-4 font-medium text-muted-foreground">Field</th>
+                  <th class="pb-2 font-medium text-muted-foreground">Used for</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-border">
+                {
+                  configFields.map((f) => (
+                    <tr>
+                      <td class="py-2 pr-4 font-mono text-xs whitespace-nowrap">{f.field}</td>
+                      <td class="py-2 text-muted-foreground">{f.use}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+          <div class={card}>
+            <pre
+              class={pre}><code class="text-sm font-mono">{`export const site: SiteConfig = {
+  name: 'Harbor Physio',
+  url: SITE_URL,
+  description: 'Physiotherapy in Hamburg-Altona',
+  lang: 'en',
+  locale: 'en_US',
+  titleTemplate: '%s | Harbor Physio',
+  nav: [
+    { href: '/', label: 'Home' },
+    { href: '/services', label: 'Services' },
+  ],
+  // footer, social, contact, ogImage, features ...
+};`}</code></pre>
+            <p class="text-sm text-muted-foreground mt-3">
+              Pages pass plain titles (<code class={ic}>title="Services"</code>); the layout adds
+              the brand through <code class={ic}>titleTemplate</code>. Components never repeat the
+              brand name.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Theme -->
+      <section id="theme" class="scroll-mt-32 lg:scroll-mt-20">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">Theme &amp; Branding</h2>
+          <p class="text-muted-foreground">
+            <code class={ic}>npm run theme</code> writes OKLCH color tokens for light and dark mode into
+            <code class={ic}>src/styles/globals.css</code> and checks WCAG contrast of the key text pairs.
+            It fails when a pair is too weak and suggests the nearest passing value.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class={card}>
+            <h3 class="font-semibold mb-3">With your agent</h3>
+            <div class="bg-muted/50 border border-border rounded-xl p-4">
+              <p class="text-sm italic">"Use our brand color #0f766e and rounder corners."</p>
+            </div>
+            <div class="bg-muted/50 border border-border rounded-xl p-4 mt-3">
+              <p class="text-sm italic">"Apply brief/DESIGN.md."</p>
+            </div>
+            <p class="text-sm text-muted-foreground mt-3">
+              The <code class={ic}>astrodeck-theme</code> skill collects values (also from a logo or a
+              design-system link), runs a dry run, reads the contrast report and applies it. Fonts change
+              only on brand input.
+            </p>
+          </div>
+          <div class={card}>
+            <h3 class="font-semibold mb-3">By hand</h3>
+            <pre
+              class={pre}><code class="text-sm font-mono">{`npm run theme -- --primary "#0f766e" --dry-run
+npm run theme -- --primary "#0f766e" --accent "#f59e0b" \\
+  --neutral slate --radius 0.75rem
+npm run theme -- --from brief/DESIGN.md`}</code></pre>
+            <p class="text-sm text-muted-foreground mt-3">
+              <code class={ic}>--neutral</code>: zinc, slate, stone, neutral or gray. The token
+              regions in <code class={ic}>globals.css</code> are written by the script; do not edit them
+              by hand. There is no <code class={ic}>tailwind.config</code>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sections & pages -->
+      <section id="building-blocks" class="scroll-mt-32 lg:scroll-mt-20">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">Sections &amp; Pages</h2>
+          <p class="text-muted-foreground">
+            Pages are composed from registry sections with props. Content is data, so a section
+            never has to be copied to change its text.
+          </p>
+        </div>
+        <div class={`${card} overflow-x-auto mb-6`}>
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b text-left">
+                <th class="pb-2 pr-4 font-medium text-muted-foreground">Building block</th>
                 <th class="pb-2 pr-4 font-medium text-muted-foreground">Count</th>
                 <th class="pb-2 font-medium text-muted-foreground">Location</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-border">
-              <tr
-                ><td class="py-3 pr-4 font-semibold">Components</td><td
-                  class="py-3 pr-4 text-muted-foreground"
-                  >Small UI primitives (Button, Dialog, Tabs...)</td
-                ><td class="py-3 pr-4">11</td><td class="py-3 font-mono text-xs"
-                  >src/components/ui/</td
-                ></tr
-              >
-              <tr
-                ><td class="py-3 pr-4 font-semibold">Sections</td><td
-                  class="py-3 pr-4 text-muted-foreground"
-                  >Full page sections (Hero, Pricing, FAQ...)</td
-                ><td class="py-3 pr-4">16</td><td class="py-3 font-mono text-xs"
-                  >src/components/sections/</td
-                ></tr
-              >
-              <tr
-                ><td class="py-3 pr-4 font-semibold">Pages</td><td
-                  class="py-3 pr-4 text-muted-foreground"
-                  >Complete page templates (SaaS, Portfolio...)</td
-                ><td class="py-3 pr-4">11</td><td class="py-3 font-mono text-xs">src/pages/</td></tr
-              >
+              {
+                blocks.map((b) => (
+                  <tr>
+                    <td class="py-2 pr-4">
+                      <a class={link} href={b.href}>
+                        {b.name}
+                      </a>
+                    </td>
+                    <td class="py-2 pr-4">{b.count}</td>
+                    <td class="py-2 font-mono text-xs">{b.path}</td>
+                  </tr>
+                ))
+              }
             </tbody>
           </table>
-        </div>
-
-        <!-- Three code examples -->
-        <div class="space-y-6">
-          <div class="border rounded-xl p-6 bg-card">
-            <h3 class="font-semibold mb-1">Tier 1: Component</h3>
-            <p class="text-sm text-muted-foreground mb-3">
-              Small, reusable React UI primitives from shadcn/ui + Radix UI. Use with <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">client:load</code
-              > for interactivity.
-            </p>
-            <pre
-              class="bg-muted/50 border border-border rounded-xl p-4 overflow-x-auto"><code class="text-sm font-mono">---
-import {'{'} Button {'}'} from "@/components/ui/button";
----
-&lt;Button client:load variant="outline" size="lg"&gt;Click me&lt;/Button&gt;</code></pre>
-          </div>
-
-          <div class="border rounded-xl p-6 bg-card">
-            <h3 class="font-semibold mb-1">Tier 2: Section</h3>
-            <p class="text-sm text-muted-foreground mb-3">
-              Full-width page blocks that combine layout, typography, and content. Drop them into
-              any page and pass content as props.
-            </p>
-            <pre
-              class="bg-muted/50 border border-border rounded-xl p-4 overflow-x-auto"><code class="text-sm font-mono">---
-import FAQ from "@/components/sections/FAQ.astro";
----
-&lt;FAQ
-  title="Frequently Asked Questions"
-  faqs={'{'}[
-    {'{'} question: "Is it free?", answer: "Yes, MIT licensed." {'}'}
-  ]{'}'}
-/&gt;</code></pre>
-          </div>
-
-          <div class="border rounded-xl p-6 bg-card">
-            <h3 class="font-semibold mb-1">Tier 3: Page</h3>
-            <p class="text-sm text-muted-foreground mb-3">
-              Complete pages that assemble multiple sections with a layout. Copy a template and
-              customize the props.
-            </p>
-            <pre
-              class="bg-muted/50 border border-border rounded-xl p-4 overflow-x-auto"><code class="text-sm font-mono">---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import Hero from "@/components/sections/Hero.astro";
-import Features from "@/components/sections/Features.astro";
-import CTA from "@/components/sections/CTA.astro";
----
-&lt;BaseLayout title="My Page"&gt;
-  &lt;Hero title="Welcome" subtitle="..." /&gt;
-  &lt;Features title="Features" features={'{'}[...]{'}'}  /&gt;
-  &lt;CTA title="Get Started" description="..."
-    cta={'{'}{'{'} href: "/signup", label: "Sign Up" {'}'}{'}'}  /&gt;
-&lt;/BaseLayout&gt;</code></pre>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3. Create a New Page -->
-      <section id="create-page" class="scroll-mt-32 lg:scroll-mt-20">
-        <div class="mb-8">
-          <h2 class="text-3xl font-bold mb-2">Create a New Page</h2>
-          <p class="text-muted-foreground">
-            AstroDeck uses file-based routing. Every <code
-              class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">.astro</code
-            > file in <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-              >src/pages/</code
-            > becomes a route.
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">With AI</h3>
-            </div>
-            <div class="bg-muted/50 border border-border rounded-xl p-4">
-              <p class="text-sm italic">
-                "Create a new About page with a hero section and a short introduction text about our
-                team."
-              </p>
-            </div>
-            <p class="text-sm text-muted-foreground mt-3">
-              Your AI assistant will create <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">src/pages/about.astro</code
-              > with the correct layout, SEO meta tags, and content structure.
-            </p>
-          </div>
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-muted-foreground"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">Manual</h3>
-            </div>
-            <p class="text-sm text-muted-foreground mb-3">
-              Create <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >src/pages/about.astro</code
-              >:
-            </p>
-            <pre
-              class="bg-muted/50 border border-border rounded-xl p-4 overflow-x-auto"><code class="text-sm font-mono">---
-import BaseLayout from "@/layouts/BaseLayout.astro";
----
-
-&lt;BaseLayout
-  title="About Us"
-  description="Learn about our team"
-&gt;
-  &lt;div class="py-16"&gt;
-    &lt;h1 class="text-4xl font-bold mb-6"&gt;
-      About Us
-    &lt;/h1&gt;
-    &lt;p class="text-muted-foreground"&gt;
-      Your content here.
-    &lt;/p&gt;
-  &lt;/div&gt;
-&lt;/BaseLayout&gt;</code></pre>
-            <p class="text-sm text-muted-foreground mt-3">
-              Visit <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">/about</code> to see
-              your new page.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3. Add a Section Component -->
-      <section id="add-section" class="scroll-mt-32 lg:scroll-mt-20">
-        <div class="mb-8">
-          <h2 class="text-3xl font-bold mb-2">Add a Section Component</h2>
-          <p class="text-muted-foreground">
-            AstroDeck ships with 16 pre-built sections (including 3 Hero variants, FAQ, Stats, Team,
-            Comparison, Contact, and Newsletter). Import them into any page and pass your content as
-            props.
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">With AI</h3>
-            </div>
-            <div class="bg-muted/50 border border-border rounded-xl p-4">
-              <p class="text-sm italic">
-                "Add a pricing section with 3 tiers — Free, Pro at $19/month, and Enterprise at
-                $49/month — to the homepage."
-              </p>
-            </div>
-            <p class="text-sm text-muted-foreground mt-3">
-              The AI will import the Pricing component, configure the tiers array, and place it on
-              your page.
-            </p>
-          </div>
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-muted-foreground"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">Manual</h3>
-            </div>
-            <p class="text-sm text-muted-foreground mb-3">
-              Import the component and pass your data as props:
-            </p>
-            <pre
-              class="bg-muted/50 border border-border rounded-xl p-4 overflow-x-auto"><code class="text-sm font-mono">---
-import Pricing from
-  "@/components/sections/Pricing.astro";
-
-const tiers = [
-  {'{'}
-    name: "Free",
-    price: "$0",
-    period: "/month",
-    description: "For personal projects",
-    features: ["1 project", "Support"],
-    cta: {'{'} href: "/signup", label: "Start" {'}'},
-  {'}'},
-  // ... more tiers
-];
----
-
-&lt;Pricing title="Pricing" tiers={'{'}tiers{'}'} /&gt;</code></pre>
-            <p class="text-sm text-muted-foreground mt-3">
-              See all available sections at <a href="/sections" class="text-primary hover:underline"
-                >/sections</a
-              >.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- 4. Create a Custom Component -->
-      <section id="custom-component" class="scroll-mt-32 lg:scroll-mt-20">
-        <div class="mb-8">
-          <h2 class="text-3xl font-bold mb-2">Create a Custom Component</h2>
-          <p class="text-muted-foreground">
-            Build your own section components following AstroDeck's patterns and conventions.
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">With AI</h3>
-            </div>
-            <div class="bg-muted/50 border border-border rounded-xl p-4">
-              <p class="text-sm italic">
-                "Create a new FAQ accordion section component following the existing project
-                patterns. It should accept a title and an array of questions with answers."
-              </p>
-            </div>
-            <p class="text-sm text-muted-foreground mt-3">
-              The AI reads AGENTS.md to understand conventions and creates a component with
-              TypeScript props, proper imports, and consistent styling.
-            </p>
-          </div>
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-muted-foreground"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">Manual</h3>
-            </div>
-            <p class="text-sm text-muted-foreground mb-3">
-              Create <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >src/components/sections/FAQ.astro</code
-              >:
-            </p>
-            <pre
-              class="bg-muted/50 border border-border rounded-xl p-4 overflow-x-auto"><code class="text-sm font-mono">---
-interface Props {'{'}
-  title: string;
-  items: {'{'}
-    question: string;
-    answer: string;
-  {'}'}[];
-{'}'}
-
-const {'{'} title, items {'}'} = Astro.props;
----
-
-&lt;section class="py-12 px-6"&gt;
-  &lt;h2 class="text-3xl font-bold mb-8"&gt;
-    {'{'}title{'}'}
-  &lt;/h2&gt;
-  &lt;div class="space-y-4"&gt;
-    {'{'}items.map((item) =&gt; (
-      &lt;details class="border rounded-lg p-4"&gt;
-        &lt;summary class="font-medium
-          cursor-pointer"&gt;
-          {'{'}item.question{'}'}
-        &lt;/summary&gt;
-        &lt;p class="mt-2
-          text-muted-foreground"&gt;
-          {'{'}item.answer{'}'}
-        &lt;/p&gt;
-      &lt;/details&gt;
-    )){'}'}
-  &lt;/div&gt;
-&lt;/section&gt;</code></pre>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5. Customize Theme & Colors -->
-      <section id="customize-theme" class="scroll-mt-32 lg:scroll-mt-20">
-        <div class="mb-8">
-          <h2 class="text-3xl font-bold mb-2">Customize Theme & Colors</h2>
-          <p class="text-muted-foreground">
-            AstroDeck uses OKLCH colors and CSS custom properties. All design tokens live in <code
-              class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">src/styles/globals.css</code
+          <p class="text-sm text-muted-foreground mt-3">
+            <code class={ic}>src/registry.json</code> lists every section, layout and UI component with
+            props, a "use when" hint and a usage example; <code class={ic}
+              >npm run check:registry</code
+            > keeps it in sync with the code. Icons come from <code class={ic}>IconName</code> in <code
+              class={ic}>src/lib/icons.ts</code
             >.
           </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">With AI</h3>
-            </div>
-            <div class="bg-muted/50 border border-border rounded-xl p-4">
-              <p class="text-sm italic">
-                "Change the primary color to electric blue and update dark mode to match. Keep good
-                contrast ratios."
-              </p>
-            </div>
-            <p class="text-sm text-muted-foreground mt-3">
-              The AI updates both light and dark mode tokens in globals.css and ensures
-              WCAG-compliant contrast.
-            </p>
-          </div>
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-muted-foreground"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">Manual</h3>
-            </div>
-            <p class="text-sm text-muted-foreground mb-3">
-              Edit <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >src/styles/globals.css</code
-              >:
-            </p>
+          <div class={card}>
+            <h3 class="font-semibold mb-3">A page</h3>
             <pre
-              class="bg-muted/50 border border-border rounded-xl p-4 overflow-x-auto"><code class="text-sm font-mono">@theme {'{'}
-  --color-primary:
-    oklch(55% 0.25 260);
-  --color-primary-foreground:
-    oklch(98% 0 0);
-{'}'}
-
-.dark {'{'}
-  --color-primary:
-    oklch(70% 0.2 260);
-  --color-primary-foreground:
-    oklch(10% 0 0);
-{'}'}</code></pre>
+              class={pre}><code class="text-sm font-mono">{`---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import FAQ from '@/components/sections/FAQ.astro';
+---
+<BaseLayout title="Services" description="...">
+  <Hero title="..." subtitle="..."
+    primaryCta={{ href: '/contact', label: 'Book a visit' }} />
+  <FAQ title="Questions" faqs={[{ question: '...', answer: '...' }]} />
+</BaseLayout>`}</code></pre>
+          </div>
+          <div class={card}>
+            <h3 class="font-semibold mb-3">With your agent</h3>
+            <div class="bg-muted/50 border border-border rounded-xl p-4">
+              <p class="text-sm italic">"Add a pricing page with our three packages."</p>
+            </div>
             <p class="text-sm text-muted-foreground mt-3">
-              OKLCH format: <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >oklch(lightness% chroma hue)</code
-              >
+              <code class={ic}>astrodeck-new-page</code> picks the layout and sections, sets title and
+              description, links the page in <code class={ic}>site.nav</code> and verifies. Only when
+              no section fits does <code class={ic}>astrodeck-new-section</code> add a prop or a new registered
+              section. Sections that need real data (testimonials, stats, team, logos, pricing) are used
+              only when you supply that data.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- 6. Design Tokens -->
-      <section id="customize-design" class="scroll-mt-32 lg:scroll-mt-20">
+      <!-- Cleanup -->
+      <section id="cleanup" class="scroll-mt-32 lg:scroll-mt-20">
         <div class="mb-8">
-          <h2 class="text-3xl font-bold mb-2">Design Tokens</h2>
+          <h2 class="text-3xl font-bold mb-2">Demo Cleanup</h2>
           <p class="text-muted-foreground">
-            AstroDeck's entire design system is controlled through CSS custom properties in <code
-              class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">src/styles/globals.css</code
-            >. Change fonts, colors, border radius, and more.
+            The download is this demo site. <code class={ic}>npm run starter:clean</code> removes it in
+            one step; the build-site workflow does this right after intake.
           </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">With AI</h3>
-            </div>
-            <div class="bg-muted/50 border border-border rounded-xl p-4">
-              <p class="text-sm italic">
-                "Switch the font to Inter, set the border radius to 1rem, and use a warm color
-                palette with an orange primary color."
-              </p>
-            </div>
+          <div class={card}>
+            <pre
+              class={pre}><code class="text-sm font-mono">{`npm run starter:clean -- --dry-run   # show the plan
+npm run starter:clean -- --yes       # remove the demo
+npm run starter:clean -- --yes --keep-blog`}</code></pre>
             <p class="text-sm text-muted-foreground mt-3">
-              The AI updates the <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >@font-face</code
-              > declarations, <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >--radius</code
-              >, and all color tokens at once — in both light and dark mode.
+              It is one-shot and destructive: it runs only while the <code class={ic}>starter/</code
+              >
+              folder exists and refuses afterwards. Without <code class={ic}>--yes</code> it asks for
+              confirmation.
             </p>
           </div>
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-muted-foreground"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">Manual</h3>
-            </div>
-            <p class="text-sm text-muted-foreground mb-3">
-              All tokens live in <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >src/styles/globals.css</code
-              >:
+          <div class={card}>
+            <ul class="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+              <li>
+                <strong class="text-foreground">Removed:</strong> docs and showcase pages, changelog,
+                demo templates, login and privacy samples, demo blog posts, screenshots, evals and maintainer
+                docs.
+              </li>
+              <li>
+                <strong class="text-foreground">Replaced</strong> with starter versions: <code
+                  class={ic}>PROJECT.md</code
+                >, <code class={ic}>site.ts</code>, <code class={ic}>site-url.mjs</code>, the home
+                page, <code class={ic}>robots.txt</code>, <code class={ic}>llms.txt</code>.
+              </li>
+              <li>
+                <strong class="text-foreground">Kept:</strong> a minimal home page, the 404 page, all
+                sections, layouts, scripts and skills; with <code class={ic}>--keep-blog</code> the blog
+                system with one draft post.
+              </li>
+            </ul>
+            <p class="text-sm text-muted-foreground mt-3">
+              Afterwards, <code class={ic}>npm run verify -- --starter</code> also fails on demo leftovers.
             </p>
-            <pre
-              class="bg-muted/50 border border-border rounded-xl p-4 overflow-x-auto"><code class="text-sm font-mono">/* Fonts — replace woff2 files in
-   public/fonts/ and update here */
-@font-face {'{'}
-  font-family: 'Geist';
-  src: url('/fonts/Geist-Variable.woff2')
-    format('woff2');
-  font-weight: 100 900;
-  font-display: swap;
-{'}'}
-
-/* Design tokens in @theme block */
-@theme {'{'}
-  --color-background: oklch(100% 0 0);
-  --color-primary: oklch(11.2% ...);
-  --color-secondary: oklch(96.1% ...);
-  --color-muted: oklch(96.1% ...);
-  --color-border: oklch(91.4% ...);
-  --color-destructive: oklch(60.2% ...);
-  --radius: 0.5rem;
-{'}'}
-
-/* Dark mode overrides */
-.dark {'{'}
-  --color-background: oklch(1.5% 0 0);
-  --color-primary: oklch(98% 0 0);
-  /* ... all tokens overridden */
-{'}'}</code></pre>
           </div>
         </div>
-        <!-- Token reference table -->
-        <div class="mt-8 border rounded-xl p-6 bg-card overflow-x-auto">
-          <h3 class="font-semibold mb-4">Token Reference</h3>
-          <table class="w-full text-sm">
+      </section>
+
+      <!-- Verify -->
+      <section id="verify" class="scroll-mt-32 lg:scroll-mt-20">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">Verify</h2>
+          <p class="text-muted-foreground">
+            <code class={ic}>npm run verify</code> runs every check in one go, offline and deterministic,
+            and ends with <code class={ic}>VERIFY PASSED</code> or a short list of what failed. If a step
+            cannot run, it says so instead of passing.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class={`${card} overflow-x-auto`}>
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b text-left">
+                  <th class="pb-2 pr-4 font-medium text-muted-foreground">Step</th>
+                  <th class="pb-2 font-medium text-muted-foreground">Checks</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-border">
+                {
+                  verifySteps.map((s) => (
+                    <tr>
+                      <td class="py-2 pr-4 font-mono text-xs whitespace-nowrap">{s.id}</td>
+                      <td class="py-2 text-muted-foreground">{s.what}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+          <div class={card}>
+            <pre
+              class={pre}><code class="text-sm font-mono">{`npm run verify                # everything
+npm run verify -- --starter   # + demo leftovers
+npm run validate              # without build (fast)
+npm run lint:design           # single checks
+npm run lint:docs
+npm run check:registry`}</code></pre>
+            <p class="text-sm text-muted-foreground mt-3">
+              The design rules behind <code class={ic}>lint:design</code> (semantic color tokens only,
+              every link and form pointing somewhere real, no <code class={ic}>ViewTransitions</code
+              >, ...) are shared with the optional Claude Code hook.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- vibe2prod -->
+      <section id="vibe2prod" class="scroll-mt-32 lg:scroll-mt-20">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">vibe2prod Audit</h2>
+          <p class="text-muted-foreground">
+            The <a
+              class={link}
+              href="https://github.com/holger1411/vibe2prod"
+              target="_blank"
+              rel="noopener noreferrer">vibe2prod</a
+            > skill{vibe2prodVersion && ` (${vibe2prodVersion})`} ships in <code class={ic}
+              >.agents/skills/vibe2prod/</code
+            > (MIT, license included). It audits performance, accessibility, SEO, HTML, security, assets,
+            robustness, AI-slop artifacts and responsiveness and returns a READY / NOT YET / BLOCKED verdict
+            with a 0–100 score.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class={card}>
+            <h3 class="font-semibold mb-3">Run it</h3>
+            <div class="bg-muted/50 border border-border rounded-xl p-4">
+              <p class="text-sm italic">"Run the vibe2prod audit on this project."</p>
+            </div>
+            <p class="text-sm text-muted-foreground mt-3">
+              Without a URL it builds the project and audits a local production server (local
+              project mode). After your first deploy, run it again against the live URL. The
+              build-site workflow runs it in step 7; agents apply technical fixes and propose
+              content changes.
+            </p>
+          </div>
+          <div class={card}>
+            <h3 class="font-semibold mb-3">Install its tools once</h3>
+            <pre
+              class={pre}><code class="text-sm font-mono">{`npm run setup:audit -- --check   # what is missing
+npm run setup:audit              # install it`}</code></pre>
+            <p class="text-sm text-muted-foreground mt-3">
+              Installs Lighthouse, the axe CLI, Playwright with Chromium and axe for Playwright
+              (needs network). vibe2prod gives no verdict without its tools; it reports exactly
+              which checks were skipped.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Supported agents -->
+      <section id="agents" class="scroll-mt-32 lg:scroll-mt-20">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">Supported Agents</h2>
+          <p class="text-muted-foreground">
+            <code class={ic}>AGENTS.md</code> is the always-loaded index; the skills in <code
+              class={ic}>.agents/skills/</code
+            > hold the workflows. "Documented" means the vendor's documentation says the tool reads these
+            files.
+          </p>
+        </div>
+        <div class={`${card} overflow-x-auto`}>
+          <table class="w-full text-sm min-w-[640px]">
             <thead>
               <tr class="border-b text-left">
-                <th class="pb-2 pr-4 font-medium text-muted-foreground">Token</th>
-                <th class="pb-2 pr-4 font-medium text-muted-foreground">Used for</th>
-                <th class="pb-2 font-medium text-muted-foreground">Tailwind class</th>
+                <th class="pb-2 pr-4 font-medium text-muted-foreground">Agent</th>
+                <th class="pb-2 pr-4 font-medium text-muted-foreground">Reads AGENTS.md</th>
+                <th class="pb-2 pr-4 font-medium text-muted-foreground">Reads skills from</th>
+                <th class="pb-2 font-medium text-muted-foreground">Status in 4.0</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-border">
-              <tr
-                ><td class="py-2 pr-4 font-mono text-xs">--color-background</td><td
-                  class="py-2 pr-4 text-muted-foreground">Page background</td
-                ><td class="py-2 font-mono text-xs">bg-background</td></tr
-              >
-              <tr
-                ><td class="py-2 pr-4 font-mono text-xs">--color-foreground</td><td
-                  class="py-2 pr-4 text-muted-foreground">Main text</td
-                ><td class="py-2 font-mono text-xs">text-foreground</td></tr
-              >
-              <tr
-                ><td class="py-2 pr-4 font-mono text-xs">--color-primary</td><td
-                  class="py-2 pr-4 text-muted-foreground">Buttons, links, accents</td
-                ><td class="py-2 font-mono text-xs">bg-primary, text-primary</td></tr
-              >
-              <tr
-                ><td class="py-2 pr-4 font-mono text-xs">--color-card</td><td
-                  class="py-2 pr-4 text-muted-foreground">Card backgrounds</td
-                ><td class="py-2 font-mono text-xs">bg-card</td></tr
-              >
-              <tr
-                ><td class="py-2 pr-4 font-mono text-xs">--color-muted</td><td
-                  class="py-2 pr-4 text-muted-foreground">Subtle backgrounds</td
-                ><td class="py-2 font-mono text-xs">bg-muted</td></tr
-              >
-              <tr
-                ><td class="py-2 pr-4 font-mono text-xs">--color-muted-foreground</td><td
-                  class="py-2 pr-4 text-muted-foreground">Secondary text, descriptions</td
-                ><td class="py-2 font-mono text-xs">text-muted-foreground</td></tr
-              >
-              <tr
-                ><td class="py-2 pr-4 font-mono text-xs">--color-border</td><td
-                  class="py-2 pr-4 text-muted-foreground">All borders</td
-                ><td class="py-2 font-mono text-xs">border-border</td></tr
-              >
-              <tr
-                ><td class="py-2 pr-4 font-mono text-xs">--color-destructive</td><td
-                  class="py-2 pr-4 text-muted-foreground">Error states, delete</td
-                ><td class="py-2 font-mono text-xs">bg-destructive</td></tr
-              >
-              <tr
-                ><td class="py-2 pr-4 font-mono text-xs">--radius</td><td
-                  class="py-2 pr-4 text-muted-foreground">Global border radius</td
-                ><td class="py-2 font-mono text-xs">rounded-md (uses --radius)</td></tr
-              >
+              {
+                agentRows.map((a) => (
+                  <tr>
+                    <td class="py-2 pr-4 font-semibold">{a.name}</td>
+                    <td class="py-2 pr-4 text-muted-foreground">{a.agentsMd}</td>
+                    <td class="py-2 pr-4 font-mono text-xs">{a.skills}</td>
+                    <td class="py-2">{a.status}</td>
+                  </tr>
+                ))
+              }
             </tbody>
           </table>
+          <p class="text-sm text-muted-foreground mt-3">
+            Claude Code only, optional: a read-only review subagent (<code class={ic}
+              >astrodeck-reviewer</code
+            >) and a hook that blocks <code class={ic}>tailwind.config.*</code>, <code class={ic}
+              >ViewTransitions</code
+            > and <code class={ic}>z</code> from <code class={ic}>astro:content</code>. The workflow
+            never needs them. <code class={ic}>.claude/skills/</code> is generated from <code
+              class={ic}>.agents/skills/</code
+            > by <code class={ic}>npm run sync:agents</code>; edit the source. Details: <a
+              class={link}
+              href={`${repo}/blob/main/docs/agents/supported-agents.md`}
+              target="_blank"
+              rel="noopener noreferrer">docs/agents/supported-agents.md</a
+            >.
+          </p>
         </div>
       </section>
 
-      <!-- 7. Add a Blog Post -->
-      <section id="add-blog-post" class="scroll-mt-32 lg:scroll-mt-20">
+      <!-- MCP -->
+      <section id="mcp" class="scroll-mt-32 lg:scroll-mt-20">
         <div class="mb-8">
-          <h2 class="text-3xl font-bold mb-2">Add a Blog Post</h2>
+          <h2 class="text-3xl font-bold mb-2">MCP Servers</h2>
           <p class="text-muted-foreground">
-            Blog posts use Astro Content Collections. Create a Markdown file with frontmatter and it
-            appears automatically.
+            Optional. <code class={ic}>.mcp.json</code> declares two servers for Claude Code; other tools
+            use their own config files with the same values.
           </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">With AI</h3>
-            </div>
-            <div class="bg-muted/50 border border-border rounded-xl p-4">
-              <p class="text-sm italic">
-                "Create a new blog post about our product launch, published today, with tags 'news'
-                and 'launch'. Make it SEO-friendly."
-              </p>
-            </div>
-            <p class="text-sm text-muted-foreground mt-3">
-              The AI creates the Markdown file with proper frontmatter schema and optimized content.
-            </p>
-          </div>
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-muted-foreground"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">Manual</h3>
-            </div>
-            <p class="text-sm text-muted-foreground mb-3">
-              Create <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >src/content/blog/product-launch.md</code
-              >:
-            </p>
-            <pre
-              class="bg-muted/50 border border-border rounded-xl p-4 overflow-x-auto"><code class="text-sm font-mono">---
-title: "Announcing Our Launch"
-description: "We're live! Here's
-  what we've built and why."
-pubDate: 2026-03-15
-author: "Your Name"
-tags: ["news", "launch"]
----
-
-# Announcing Our Launch
-
-Write your content in Markdown.
-Supports **bold**, *italic*,
-[links](https://example.com),
-images, and code blocks.</code></pre>
-            <p class="text-sm text-muted-foreground mt-3">
-              The post appears at <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >/blog/product-launch</code
-              >.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- 7. Build & Deploy -->
-      <section id="build-deploy" class="scroll-mt-32 lg:scroll-mt-20">
-        <div class="mb-8">
-          <h2 class="text-3xl font-bold mb-2">Build & Deploy</h2>
-          <p class="text-muted-foreground">
-            Build a production-optimized version of your site and deploy it to any static hosting
-            provider.
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">With AI</h3>
-            </div>
-            <div class="bg-muted/50 border border-border rounded-xl p-4">
-              <p class="text-sm italic">
-                "Build the project for production and check if there are any errors or warnings."
-              </p>
-            </div>
-            <p class="text-sm text-muted-foreground mt-3">
-              The AI runs the build, reports issues, and can help fix them. For deployment:
-            </p>
-            <div class="bg-muted/50 border border-border rounded-xl p-4 mt-3">
-              <p class="text-sm italic">"Deploy this project to Vercel."</p>
-            </div>
-          </div>
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-muted-foreground"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">Manual</h3>
-            </div>
-            <p class="text-sm text-muted-foreground mb-3">Build and preview locally:</p>
-            <pre
-              class="bg-muted/50 border border-border rounded-xl p-4 overflow-x-auto"><code class="text-sm font-mono">npm run build
-npm run preview</code></pre>
-            <p class="text-sm text-muted-foreground mt-3">
-              Deploy the <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">dist/</code> folder
-              to any static host:
-            </p>
-            <ul class="mt-2 space-y-1 text-sm text-muted-foreground">
-              <li><strong>Vercel:</strong> Push to GitHub, import in dashboard</li>
-              <li><strong>Netlify:</strong> Connect repo, auto-detects Astro</li>
+          <div class={card}>
+            <ul class="space-y-3 text-sm text-muted-foreground">
               <li>
-                <strong>Cloudflare:</strong>
-                <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                  >npx wrangler pages deploy dist</code
-                >
+                <strong class="text-foreground">astro-docs</strong> — current Astro documentation over
+                HTTP: <code class={ic}>https://mcp.docs.astro.build/mcp</code>
+              </li>
+              <li>
+                <strong class="text-foreground">shadcn</strong> — shadcn/ui component search and install:
+                <code class={ic}>npx shadcn@latest mcp</code>
               </li>
             </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- AI Architecture -->
-      <section id="ai-architecture" class="scroll-mt-32 lg:scroll-mt-20">
-        <div class="mb-8">
-          <h2 class="text-3xl font-bold mb-2">AI Architecture</h2>
-          <p class="text-muted-foreground">
-            AstroDeck includes a hybrid AI system with a documented design system, a pre-handover
-            checklist, and multi-agent reviews.
-          </p>
-        </div>
-        <div class="space-y-6">
-          <div class="border rounded-xl p-6 bg-card">
-            <h3 class="font-semibold mb-1">Design Rules</h3>
-            <p class="text-sm text-muted-foreground mb-3">
-              <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >.agents/skills/astrodeck-build-site/references/design-system.md</code
-              >
-            </p>
-            <p class="text-sm text-muted-foreground mb-3">
-              Colors, typography, spacing, radius, motion, imagery and accessibility are documented
-              once, aligned with what the code implements. Machine-checkable rules are enforced by
-              <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >npm run lint:design</code
+            <p class="text-sm text-muted-foreground mt-3">
+              Setup for Codex, Cursor and VS Code: <a
+                class={link}
+                href={`${repo}/blob/main/docs/agents/mcp-setup.md`}
+                target="_blank"
+                rel="noopener noreferrer">docs/agents/mcp-setup.md</a
               >.
             </p>
-            <p class="text-sm text-muted-foreground">
-              Read this before making design decisions. Available to all tools.
-            </p>
           </div>
-
-          <div class="border rounded-xl p-6 bg-card">
-            <h3 class="font-semibold mb-1">
-              Bring Your Own Design with <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">DESIGN.md</code
-              >
-            </h3>
-            <p class="text-sm text-muted-foreground mb-3">
-              Optional — drop a <a
-                href="https://github.com/google-labs-code/design.md"
-                class="underline hover:text-foreground"
-                rel="noopener"
-                >Google Stitch <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                  >DESIGN.md</code
-                ></a
-              > file at the project root and tell your coding agent: <em
-                >"Apply the design from DESIGN.md."</em
-              >
-            </p>
-            <p class="text-sm text-muted-foreground mb-3">
-              <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">DESIGN.md</code> is an open,
-              AI-friendly format that bundles a brand's color palette, typography, spacing, and component
-              styles into a single Markdown file with YAML frontmatter — readable by Claude Code, Cursor,
-              Copilot, Windsurf, and Stitch alike.
-            </p>
-            <p class="text-sm text-muted-foreground">
-              The agent translates the YAML tokens into the <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">@theme</code
-              > block in <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >globals.css</code
-              > (hex → OKLCH automatically) and updates the design-system prose to match. One-off translation,
-              no sync infrastructure. <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >AGENTS.md</code
-              > includes a short note so any agent knows what to do.
-            </p>
-          </div>
-
-          <div class="border rounded-xl p-6 bg-card">
-            <h3 class="font-semibold mb-1">Pre-Handover Checklist</h3>
-            <p class="text-sm text-muted-foreground mb-3">
-              <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >.agents/skills/astrodeck-build-site/references/quality-checklist.md</code
-              >
-            </p>
-            <p class="text-sm text-muted-foreground mb-3">
-              A tool-independent checklist. Each item names how it is checked: a step of <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">npm run verify</code
-              >, the vibe2prod audit, or a manual check.
-            </p>
-            <ul class="space-y-1 text-sm text-muted-foreground">
-              <li><strong>Content</strong> — truthful copy, no placeholders or demo leftovers</li>
-              <li><strong>Accessibility</strong> — alt text, keyboard, contrast, labels</li>
-              <li><strong>Responsive</strong> — 375 / 768 / 1024 / 1280 px</li>
-              <li><strong>Dark mode</strong> — token-only colors, both themes readable</li>
-              <li><strong>Performance</strong> — images, scripts, Lighthouse</li>
-              <li><strong>SEO</strong> — titles, descriptions, canonical, Open Graph</li>
-            </ul>
-          </div>
-
-          <div class="border rounded-xl p-6 bg-card">
-            <h3 class="font-semibold mb-1">Multi-Agent Review</h3>
-            <p class="text-sm text-muted-foreground mb-3">
-              Claude Code: <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
-                >/plenum</code
-              > — Scope-based parallel review
-            </p>
-            <p class="text-sm text-muted-foreground mb-3">
-              Spawns domain-specific review agents (Design, UX, Accessibility, Performance, SEO,
-              Code) based on what changed. Consolidates findings, surfaces conflicts, produces a
-              prioritized report. Nothing is auto-implemented.
-            </p>
-            <p class="text-sm text-muted-foreground">
-              Not using Claude Code? Work through the pre-handover checklist and run <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">npm run verify</code
-              >.
+          <div class={card}>
+            <pre
+              class={pre}><code class="text-sm font-mono">{`codex mcp add astro-docs --url https://mcp.docs.astro.build/mcp
+codex mcp add shadcn -- npx shadcn@latest mcp`}</code></pre>
+            <p class="text-sm text-muted-foreground mt-3">
+              Cursor reads <code class={ic}>.cursor/mcp.json</code>; VS Code uses a top-level <code
+                class={ic}>servers</code
+              > key instead of <code class={ic}>mcpServers</code>.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- Quality Gates -->
-      <section id="quality-gates" class="scroll-mt-32 lg:scroll-mt-20">
+      <!-- Build & deploy -->
+      <section id="deploy" class="scroll-mt-32 lg:scroll-mt-20">
         <div class="mb-8">
-          <h2 class="text-3xl font-bold mb-2">Quality Gates</h2>
+          <h2 class="text-3xl font-bold mb-2">Build &amp; Deploy</h2>
           <p class="text-muted-foreground">
-            AstroDeck uses skill chains to ensure every task meets quality standards before
-            completion.
+            AstroDeck builds static files that run on any static host.
           </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">With AI</h3>
-            </div>
-            <div class="bg-muted/50 border border-border rounded-xl p-4">
-              <p class="text-sm italic">
-                "Run a pre-launch review on my project. Check everything — design, accessibility,
-                performance, SEO, and code quality."
-              </p>
-            </div>
+          <div class={card}>
+            <pre
+              class={pre}><code class="text-sm font-mono">{`npm run build     # static site in dist/
+npm run preview   # serve the build locally`}</code></pre>
             <p class="text-sm text-muted-foreground mt-3">
-              In Claude Code, this triggers <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">/plenum</code
-              > which spawns parallel review agents. In other tools, use the pre-handover checklist and
-              <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">npm run verify</code>.
+              Set <code class={ic}>SITE_URL</code> in <code class={ic}>src/config/site-url.mjs</code
+              >
+              first: canonical URLs, sitemap and RSS use it.
             </p>
           </div>
-          <div class="border rounded-xl p-6 bg-card">
-            <div class="flex items-center gap-2 mb-4">
-              <svg
-                class="h-4 w-4 text-muted-foreground"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
-                ></path>
-              </svg>
-              <h3 class="font-semibold text-sm">Manual</h3>
-            </div>
-            <p class="text-sm text-muted-foreground mb-3">
-              Each task type follows a skill chain — a sequence of domain checks run in order:
-            </p>
-            <div class="border rounded-xl overflow-x-auto">
-              <table class="w-full text-sm">
-                <thead>
-                  <tr class="border-b text-left">
-                    <th class="py-2 px-4 font-medium text-muted-foreground">Task</th>
-                    <th class="py-2 px-4 font-medium text-muted-foreground">Skill Chain</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-border">
-                  <tr
-                    ><td class="py-2 px-4 font-semibold">New Section</td><td
-                      class="py-2 px-4 font-mono text-xs"
-                      >ui-design → tailwind → accessibility → qa</td
-                    ></tr
-                  >
-                  <tr
-                    ><td class="py-2 px-4 font-semibold">New Page</td><td
-                      class="py-2 px-4 font-mono text-xs"
-                      >astro → ui-design → content-seo → accessibility → qa</td
-                    ></tr
-                  >
-                  <tr
-                    ><td class="py-2 px-4 font-semibold">Theme Change</td><td
-                      class="py-2 px-4 font-mono text-xs">tailwind → ui-design → accessibility</td
-                    ></tr
-                  >
-                  <tr
-                    ><td class="py-2 px-4 font-semibold">Blog Content</td><td
-                      class="py-2 px-4 font-mono text-xs">content-seo → accessibility</td
-                    ></tr
-                  >
-                </tbody>
-              </table>
-            </div>
-            <p class="text-sm text-muted-foreground mt-3">
-              Each skill in the chain must be consulted in order. The last skill (usually <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">qa</code
-              >) validates the final result.
-            </p>
+          <div class={card}>
+            <ul class="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+              <li>
+                Vercel, Netlify, Cloudflare Pages, GitHub Pages or your own server: deploy <code
+                  class={ic}>dist/</code
+                >.
+              </li>
+              <li>
+                <code class={ic}>vercel.json</code> adds security headers on Vercel; on other hosts configure
+                equivalent headers.
+              </li>
+              <li>
+                <code class={ic}>features.analytics</code> loads Vercel Web Analytics; keep it <code
+                  class={ic}>false</code
+                > elsewhere.
+              </li>
+              <li>After the first deploy, run vibe2prod against the live URL.</li>
+            </ul>
           </div>
         </div>
       </section>
 
-      <!-- 8. Project Structure -->
+      <!-- Astro 7 notes -->
+      <section id="astro-7" class="scroll-mt-32 lg:scroll-mt-20">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">Astro 7 Notes</h2>
+          <p class="text-muted-foreground">
+            The details agents most often get wrong from older training data. The full list is in <code
+              class={ic}>AGENTS.md</code
+            >.
+          </p>
+        </div>
+        <div class={card}>
+          <ul class="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+            {astroNotes.map((n) => <li set:html={n} />)}
+          </ul>
+        </div>
+      </section>
+
+      <!-- Migrating -->
+      <section id="migrating" class="scroll-mt-32 lg:scroll-mt-20">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">Migrating from 3.x</h2>
+          <p class="text-muted-foreground">
+            4.0 changes section props, adds the site config and replaces the per-tool AI files with
+            skills. The full list is in the <a class={link} href="/changelog">changelog</a>.
+          </p>
+        </div>
+        <div class="space-y-4">
+          {
+            migrations.map((m) => (
+              <div class={card}>
+                <h3 class="font-semibold mb-3">{m.title}</h3>
+                <div class="grid grid-cols-1 gap-4">
+                  <div>
+                    <p class="text-xs font-medium text-muted-foreground mb-1">3.x</p>
+                    <CodeBlock class={pre} codeClass="text-sm font-mono" code={m.before} />
+                  </div>
+                  <div>
+                    <p class="text-xs font-medium text-muted-foreground mb-1">4.0</p>
+                    <CodeBlock class={pre} codeClass="text-sm font-mono" code={m.after} />
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Multilingual -->
+      <section id="multilingual" class="scroll-mt-32 lg:scroll-mt-20">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold mb-2">Multilingual Sites</h2>
+          <p class="text-muted-foreground">Not part of 4.0.</p>
+        </div>
+        <div class={card}>
+          <p class="text-sm text-muted-foreground">
+            The site config has one language (<code class={ic}>lang</code>, <code class={ic}
+              >locale</code
+            >). For several languages, add Astro's <a
+              class={link}
+              href="https://docs.astro.build/en/guides/internationalization/"
+              target="_blank"
+              rel="noopener noreferrer">i18n routing</a
+            > on top. Built-in multilingual support is a candidate for a later release.
+          </p>
+        </div>
+      </section>
+
+      <!-- Project structure -->
       <section id="project-structure" class="scroll-mt-32 lg:scroll-mt-20">
         <div class="mb-8">
           <h2 class="text-3xl font-bold mb-2">Project Structure</h2>
-          <p class="text-muted-foreground">
-            A quick reference of key directories and what they contain.
-          </p>
+          <p class="text-muted-foreground">Where things live.</p>
         </div>
-        <div class="border rounded-xl p-6 bg-card overflow-x-auto">
-          <pre
-            class="text-sm font-mono leading-relaxed"><code>astrodeck/
-├── src/
-│   ├── components/
-│   │   ├── sections/      16 pre-built page sections (3 Hero variants + 13 more)
-│   │   └── ui/            11 shadcn/ui components (Button, Card, Dialog, Accordion...)
-│   ├── layouts/           Page templates (Base, FullWidth, Auth, Minimal, Article)
-│   ├── pages/             File-based routing — each .astro file = one route
-│   ├── content/blog/      Markdown blog posts with Content Collections
-│   ├── styles/globals.css Design tokens, OKLCH colors, Tailwind config
-│   ├── registry.json      Machine-readable component catalog
-│   └── lib/utils.ts       Utility functions
-├── public/                Static assets (fonts, images, favicon)
-├── AGENTS.md              AI assistant instructions (AGENTS.md standard)
-├── PROJECT.md             Your project-specific AI overrides
-├── .cursor/rules          Cursor AI rules
-├── .github/copilot-instructions.md  GitHub Copilot instructions
-├── .windsurfrules         Windsurf AI rules
-├── astro.config.mjs       Astro + Vite + integrations config
-└── package.json           Dependencies and npm scripts</code></pre>
+        <div class={`${card} overflow-x-auto`}>
+          <table class="w-full text-sm">
+            <tbody class="divide-y divide-border">
+              {
+                structure.map((s) => (
+                  <tr>
+                    <td class="py-2 pr-4 font-mono text-xs whitespace-nowrap align-top">
+                      {s.path}
+                    </td>
+                    <td class="py-2 text-muted-foreground">{s.what}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
         </div>
       </section>
     </div>
@@ -1217,7 +1040,7 @@ npm run preview</code></pre>
   <!-- Footer CTA -->
   <div class="py-16 px-6 md:px-12 text-center">
     <p class="text-muted-foreground mb-4">
-      Want to dive deeper? Check out the source code and full README on GitHub.
+      Source code, README, issues and releases are on GitHub.
     </p>
     <a
       href="https://github.com/holger1411/astrodeck"

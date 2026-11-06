@@ -4,6 +4,7 @@
  * Snippets come from src/registry.json, so they always match the component's real props.
  */
 import registry from '@/registry.json';
+import CodeBlock from './CodeBlock.astro';
 
 interface Props {
   /** Registry section names, e.g. ['CTA'] */
@@ -41,9 +42,7 @@ const entries = names.map((name) => {
           </button>
         </div>
         <div class="code-block" id={`code-${entry.name}`}>
-          <pre>
-            <code>{entry.example}</code>
-          </pre>
+          <CodeBlock code={entry.example} />
         </div>
       </div>
     ))
@@ -62,13 +61,13 @@ const entries = names.map((name) => {
   .code-block.show {
     display: block;
   }
-  .code-block pre {
+  .code-block :global(pre) {
     padding: 1rem;
     overflow-x: auto;
     font-size: 0.75rem;
     line-height: 1.5;
   }
-  .code-block code {
+  .code-block :global(code) {
     font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
   }
 </style>
