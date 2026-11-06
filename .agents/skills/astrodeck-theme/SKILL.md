@@ -40,7 +40,9 @@ npm run theme -- --primary "#0f766e" --accent "#f59e0b" --neutral stone --radius
 
 - Every run rebuilds the whole palette from its inputs: **always pass all brand values
   together**. A flag you leave out falls back to the AstroDeck default.
-- The script checks WCAG AA (4.5:1) for the key pairs in light and dark mode. If a pair fails
+- The script checks WCAG AA (4.5:1) for the key pairs in light and dark mode, including
+  `--primary` used as text (`text-primary`) on the page background and on muted sections.
+  Bright brands such as orange, green or sky blue usually fail that check in light mode. If a pair fails
   it writes nothing and prints a nearby passing value: adjust the input, or, if the brand color
   must stay exact, use it as `--accent` and pick a darker `--primary` for text-bearing buttons.
   Tell the user about the adjustment.

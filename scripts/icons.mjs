@@ -74,6 +74,12 @@ export async function main(argv, root) {
   }
   const svg = readFileSync(faviconPath, 'utf8');
   const { light } = readTokens(readFileSync(join(root, GLOBALS), 'utf8'));
+  if (!light.primary || !light['primary-foreground']) {
+    console.error(
+      `error: no theme tokens found in ${GLOBALS} (expected the astrodeck-theme:light region with --color-primary). Restore the markers or run \`npm run theme\`.`
+    );
+    return 1;
+  }
   const bg = toHex(light.primary);
   const fg = toHex(light['primary-foreground']);
 

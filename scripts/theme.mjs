@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { pathToFileURL } from 'node:url';
 import {
@@ -13,7 +13,7 @@ import {
 
 /**
  * @typedef {Record<string, string>} Tokens token name (without `--color-`; `radius` is `--radius`) -> value
- * @typedef {{ mode: 'light' | 'dark'; fg: string; bg: string; ratio: number; pass: boolean; suggestion?: string }} ContrastRow
+ * @typedef {{ mode: 'light' | 'dark'; fg: string; bg: string; ratio: number; pass: boolean; suggestion?: string; adjust?: 'fg' | 'bg' }} ContrastRow
  * @typedef {{ primary: string; accent?: string; neutral?: 'zinc' | 'slate' | 'stone' | 'neutral' | 'gray'; radius?: string }} ThemeInput
  * @typedef {{ light: Tokens; dark: Tokens; inverted: { light: Tokens; dark: Tokens }; report: ContrastRow[] }} Theme
  */
@@ -182,13 +182,41 @@ const STEPS = {
   },
 };
 
+/**
+ * Pairs that must reach 4.5:1. `text` pairs are a brand color used as text (`text-primary` on the
+ * page and on muted sections); for those a failure is fixed by moving the brand color, not the
+ * background.
+ */
 const PAIRS = [
-  ['foreground', 'background'],
-  ['primary-foreground', 'primary'],
-  ['muted-foreground', 'background'],
-  ['secondary-foreground', 'secondary'],
-  ['accent-foreground', 'accent'],
+  { fg: 'foreground', bg: 'background' },
+  { fg: 'primary-foreground', bg: 'primary' },
+  { fg: 'muted-foreground', bg: 'background' },
+  { fg: 'secondary-foreground', bg: 'secondary' },
+  { fg: 'accent-foreground', bg: 'accent' },
+  { fg: 'primary', bg: 'background', text: true },
+  { fg: 'primary', bg: 'muted/30', text: true },
 ];
+
+/**
+ * Resolve a token name to a color. `name/NN` is that token at NN% over `background`, mixed in
+ * oklab like Tailwind's `bg-muted/30` (the sections that use `text-primary` on muted use 30%).
+ * @param {Tokens} set
+ * @param {string} name
+ */
+function resolveToken(set, name) {
+  const m = name.match(/^([\w-]+)\/(\d+)$/);
+  if (!m) return set[name];
+  const lab = (color) => {
+    const { l, c, h } = parseColor(color);
+    return [l, c * Math.cos((h * Math.PI) / 180), c * Math.sin((h * Math.PI) / 180)];
+  };
+  const [top, base] = [lab(set[m[1]]), lab(set.background)];
+  const w = Number(m[2]) / 100;
+  const [l, a, b] = top.map((v, i) => base[i] * (1 - w) + v * w);
+  return formatOklch(
+    fitToGamut({ l, c: Math.hypot(a, b), h: ((Math.atan2(b, a) * 180) / Math.PI + 360) % 360 })
+  );
+}
 
 /** @param {string} family */
 function neutralSet(family, surface) {
@@ -240,6 +268,22 @@ function suggestAdjusted(bg) {
 }
 
 /**
+ * Shift lightness of the text color `fg` away from `bg` until it passes 4.5.
+ * @returns {string | undefined} hex
+ */
+function suggestAdjustedText(fg, bg) {
+  const c = parseColor(fg);
+  const dir = parseColor(bg).l > c.l ? -1 : 1;
+  for (let step = 0.005; step <= 0.9; step += 0.005) {
+    const l = c.l + dir * step;
+    if (l < 0 || l > 1) break;
+    const candidate = formatOklch(fitToGamut({ ...c, l }));
+    if (contrast(candidate, bg) >= MIN_CONTRAST) return toHex(candidate);
+  }
+  return undefined;
+}
+
+/**
  * Check the required fg/bg pairs in light and dark.
  * @param {{ light: Tokens; dark: Tokens }} tokens
  * @returns {ContrastRow[]}
@@ -251,12 +295,17 @@ export function checkPairs({ light, dark }) {
     ['light', light],
     ['dark', dark],
   ]) {
-    for (const [fg, bg] of PAIRS) {
-      const ratio = contrast(set[fg], set[bg]);
+    for (const { fg, bg, text } of PAIRS) {
+      const ratio = contrast(set[fg], resolveToken(set, bg));
       const pass = ratio >= MIN_CONTRAST;
       /** @type {ContrastRow} */
       const row = { mode, fg, bg, ratio, pass };
-      if (!pass) row.suggestion = suggestAdjusted(set[bg]);
+      if (!pass) {
+        row.adjust = text ? 'fg' : 'bg';
+        row.suggestion = text
+          ? suggestAdjustedText(set[fg], resolveToken(set, bg))
+          : suggestAdjusted(set[bg]);
+      }
       rows.push(row);
     }
   }
@@ -317,8 +366,9 @@ export function buildTheme(input) {
 const declaration = (name, value) =>
   name === 'radius' ? `--radius: ${value};` : `--color-${name}: ${value};`;
 
+// Accepts LF and CRLF files; applyTheme writes back the file's own line ending.
 const REGION =
-  /^([ \t]*)\/\* astrodeck-theme:(\w+):start \*\/\n[\s\S]*?\n[ \t]*\/\* astrodeck-theme:\2:end \*\//gm;
+  /^([ \t]*)\/\* astrodeck-theme:(\w+):start \*\/\r?\n[\s\S]*?\r?\n[ \t]*\/\* astrodeck-theme:\2:end \*\//gm;
 
 /**
  * Replace the marker regions of globals.css with the theme's tokens. Idempotent;
@@ -329,6 +379,7 @@ const REGION =
  * @returns {string}
  */
 export function applyTheme(css, theme) {
+  const eol = css.includes('\r\n') ? '\r\n' : '\n';
   const counts = { light: 0, dark: 0, inverted: 0 };
   const inverted = [theme.inverted.light, theme.inverted.dark];
   const out = css.replace(REGION, (_m, indent, name) => {
@@ -341,8 +392,8 @@ export function applyTheme(css, theme) {
       if (k === 'radius') lines.push('');
       lines.push(k === 'radius' ? `${indent}--radius: ${v};` : `${indent}${declaration(k, v)}`);
     }
-    const body = lines.join('\n');
-    return `${indent}/* astrodeck-theme:${name}:start */\n${body}\n${indent}/* astrodeck-theme:${name}:end */`;
+    const body = lines.join(eol);
+    return `${indent}/* astrodeck-theme:${name}:start */${eol}${body}${eol}${indent}/* astrodeck-theme:${name}:end */`;
   });
   if (counts.light !== 1 || counts.dark !== 1 || counts.inverted !== 2)
     throw new Error(
@@ -435,13 +486,23 @@ export function diffTheme(css, theme) {
   return lines;
 }
 
+/** @param {ContrastRow} r */
+function hint(r) {
+  if (r.adjust === 'fg')
+    return (
+      (r.suggestion ? `  (try --${r.fg} ${r.suggestion}, ` : '  (') +
+      `or keep this color for --accent and buttons only; it is used as text)`
+    );
+  return r.suggestion ? `  (try ${r.bg} ${r.suggestion})` : '';
+}
+
 /** @param {ContrastRow[]} report */
 export function formatReport(report) {
   return report
     .map(
       (r) =>
         `${r.pass ? 'PASS' : 'FAIL'}  ${r.mode.padEnd(5)} ${r.fg} on ${r.bg}: ${r.ratio.toFixed(2)}:1` +
-        (r.pass ? '' : r.suggestion ? `  (try ${r.bg} ${r.suggestion})` : '')
+        (r.pass ? '' : hint(r))
     )
     .join('\n');
 }
@@ -467,22 +528,30 @@ export function main(argv, root) {
   /** @type {Partial<ThemeInput>} */
   let input = {};
   if (values.from) {
-    const parsed = parseDesignMd(readFileSync(join(root, values.from), 'utf8'));
+    let parsed;
+    try {
+      parsed = parseDesignMd(readFileSync(resolve(root, values.from), 'utf8'));
+    } catch (err) {
+      console.error(`error: cannot use --from ${values.from}: ${err.message}`);
+      return 1;
+    }
     for (const w of parsed.warnings) console.warn(`warning: ${w}`);
     input = parsed.input;
   }
   for (const k of ['primary', 'accent', 'neutral', 'radius']) if (values[k]) input[k] = values[k];
 
   const file = join(root, GLOBALS);
-  const css = readFileSync(file, 'utf8');
+  let css;
   let theme;
+  let next;
   try {
+    css = readFileSync(file, 'utf8');
     theme = buildTheme({ primary: DEFAULT_PRIMARY, ...input });
+    next = applyTheme(css, theme);
   } catch (err) {
     console.error(`error: ${err.message}`);
     return 1;
   }
-  const next = applyTheme(css, theme);
   const diff = diffTheme(css, theme);
   const failing = theme.report.filter((r) => !r.pass);
 

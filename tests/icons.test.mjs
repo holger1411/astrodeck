@@ -94,3 +94,35 @@ test('missing favicon.svg is an error, nothing written', async () => {
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test('CRLF globals.css: brand color is still read', async () => {
+  const root = project();
+  try {
+    writeFileSync(
+      join(root, 'src/styles/globals.css'),
+      CSS.replace(
+        /(astrodeck-theme:light:start[\s\S]*?--color-primary:)[^;]+;/,
+        '$1 #2f7d5b;'
+      ).replace(/\r?\n/g, '\r\n')
+    );
+    assert.equal(await quiet(() => main([], root)), 0);
+    const { data } = await sharp(join(root, 'public/og.png'))
+      .extract({ left: 10, top: 10, width: 1, height: 1 })
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    assert.deepEqual([...data.subarray(0, 3)], [0x2f, 0x7d, 0x5b]);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('globals.css without theme tokens is a clear error, nothing written', async () => {
+  const root = project();
+  try {
+    writeFileSync(join(root, 'src/styles/globals.css'), '@theme {}\n');
+    assert.equal(await quiet(() => main([], root)), 1);
+    assert.ok(!existsSync(join(root, 'public/og.png')));
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

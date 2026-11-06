@@ -30,10 +30,16 @@ test('pickForeground(#FFD600) is dark and passes', () => {
   assert.ok(contrast(fg, '#FFD600') >= 4.5);
 });
 
-test('buildTheme({ primary: #FFD600 }) passes every pair in light and dark', () => {
+test('buildTheme({ primary: #FFD600 }): dark passes, light fails only as text on light surfaces', () => {
   const { report } = buildTheme({ primary: '#FFD600' });
-  assert.equal(report.length, 10);
-  assert.ok(allPass(report));
+  assert.equal(report.length, 14);
+  assert.ok(report.filter((r) => r.mode === 'dark').every((r) => r.pass));
+  const failing = report.filter((r) => !r.pass);
+  assert.deepEqual(
+    failing.map((r) => `${r.mode} ${r.fg} on ${r.bg}`),
+    ['light primary on background', 'light primary on muted/30']
+  );
+  assert.ok(failing.every((r) => /^#[0-9a-f]{6}$/.test(r.suggestion)));
 });
 
 test('mid-tone brands (#e11d48, #747474) pass via pure white/black fallback', () => {
@@ -205,6 +211,115 @@ test('CLI: --from reads DESIGN.md and flags override it', () => {
     const t = readTokens(readFileSync(join(root, 'src/styles/globals.css'), 'utf8'));
     assert.equal(t.light.radius, '2px');
     assert.ok(Math.abs(parseColor(t.light.primary).h - parseColor('#7c3aed').h) < 1);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('primary used as text is checked on background and muted/30, in light and dark', () => {
+  const { report } = buildTheme({ primary: DEFAULT_PRIMARY });
+  for (const mode of ['light', 'dark'])
+    for (const bg of ['background', 'muted/30'])
+      assert.ok(
+        report.some((r) => r.mode === mode && r.fg === 'primary' && r.bg === bg),
+        `${mode}: primary on ${bg}`
+      );
+  assert.ok(allPass(report), 'the shipped palette stays accessible');
+});
+
+test('common brand colors that fail as text on white are no longer reported as PASS', () => {
+  for (const primary of ['#f97316', '#22c55e', '#0ea5e9']) {
+    const { report } = buildTheme({ primary });
+    const row = report.find(
+      (r) => r.mode === 'light' && r.fg === 'primary' && r.bg === 'background'
+    );
+    assert.equal(row.pass, false, `${primary} must fail primary on background`);
+    assert.ok(row.ratio < 4.5, primary);
+    assert.match(row.suggestion, /^#[0-9a-f]{6}$/, `${primary} gets a darker suggestion`);
+    assert.ok(contrast(row.suggestion, '#ffffff') >= 4.5, `${primary} suggestion passes on white`);
+    assert.ok(
+      report.filter((r) => r.mode === 'dark').every((r) => r.pass),
+      `${primary} dark mode stays valid`
+    );
+  }
+});
+
+test('CLI: a brand that fails as text exits 1, names the pair and writes nothing', () => {
+  const root = fixtureRoot();
+  try {
+    const file = join(root, 'src/styles/globals.css');
+    const out = [];
+    const { log, error } = console;
+    console.log = (m) => out.push(String(m));
+    console.error = (m) => out.push(String(m));
+    let code;
+    try {
+      code = main(['--primary', '#f97316'], root);
+    } finally {
+      Object.assign(console, { log, error });
+    }
+    assert.equal(code, 1);
+    assert.match(out.join('\n'), /FAIL\s+light\s+primary on background/);
+    assert.match(out.join('\n'), /--accent/);
+    assert.equal(readFileSync(file, 'utf8'), CSS);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+const toCrlf = (s) => s.replace(/\r?\n/g, '\r\n');
+
+test('CRLF globals.css: applyTheme and readTokens work and keep CRLF line endings', () => {
+  const crlf = toCrlf(CSS);
+  const theme = buildTheme({ primary: '#0066ff', radius: '0.75rem' });
+  const once = applyTheme(crlf, theme);
+  assert.ok(!/(^|[^\r])\n/.test(once), 'no bare LF in the output');
+  assert.equal(applyTheme(once, theme), once, 'idempotent');
+  assert.equal(readTokens(once).light.radius, '0.75rem');
+  assert.equal(readTokens(once).light.primary, theme.light.primary);
+  assert.equal(once.replace(/\r\n/g, '\n'), applyTheme(CSS, theme), 'same content as LF');
+});
+
+test('LF globals.css stays LF', () => {
+  const once = applyTheme(CSS, buildTheme({ primary: '#0066ff' }));
+  assert.ok(!once.includes('\r'));
+});
+
+test('CLI: CRLF globals.css is themed and written back with CRLF', () => {
+  const root = fixtureRoot();
+  try {
+    const file = join(root, 'src/styles/globals.css');
+    writeFileSync(file, toCrlf(CSS));
+    assert.equal(
+      quiet(() => main(['--primary', '#0066ff'], root)),
+      0
+    );
+    const written = readFileSync(file, 'utf8');
+    assert.ok(!/(^|[^\r])\n/.test(written), 'no bare LF');
+    assert.ok(readTokens(written).light.primary !== readTokens(CSS).light.primary);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('CLI: missing markers is a clear error, not a stack trace; --from takes absolute paths', () => {
+  const root = fixtureRoot();
+  try {
+    writeFileSync(join(root, 'src/styles/globals.css'), '@theme {}\n');
+    assert.equal(
+      quiet(() => main(['--primary', '#0066ff'], root)),
+      1
+    );
+    writeFileSync(join(root, 'src/styles/globals.css'), CSS);
+    writeFileSync(join(root, 'DESIGN.md'), '---\ncolors:\n  primary: "#7c3aed"\n---\n');
+    assert.equal(
+      quiet(() => main(['--from', join(root, 'DESIGN.md')], root)),
+      0
+    );
+    assert.equal(
+      quiet(() => main(['--from', 'nope.md'], root)),
+      1
+    );
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

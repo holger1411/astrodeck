@@ -147,7 +147,8 @@ npm run icons                                           # PNG icons + og.png fro
 ```
 
 The script writes the color tokens in `src/styles/globals.css` for light and dark mode and fails
-when a key text pair misses WCAG contrast, with a suggestion. Tailwind 4 is configured in CSS;
+when a key text pair (including the primary color used as text on the page background) misses
+WCAG contrast, with a suggestion. Tailwind 4 is configured in CSS;
 there is no `tailwind.config`.
 
 ## Sections, layouts and components
