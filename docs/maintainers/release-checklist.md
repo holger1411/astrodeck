@@ -44,4 +44,4 @@ The manifest is `starter.manifest.json`, the replacement files live in `starter/
 
 ## TODO before release
 
-- [ ] Verify any performance claim (e.g. Lighthouse 100) against the Task 17 measurement before release; remove or soften claims the measurement does not back.
+- [x] Verify any performance claim (e.g. Lighthouse 100) against the Task 17 measurement before release; remove or soften claims the measurement does not back. Done in Task 17 (see `dogfood-4.0.md`, "Quality gates (Task 17)"): the only claims found were two sample sentences on `/content`, now rewritten; no numeric performance claim ships in README, docs or the home page.

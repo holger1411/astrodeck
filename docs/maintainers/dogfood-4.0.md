@@ -232,3 +232,154 @@ the maintainer runs used the `@axe-core/playwright` fallback the skill describes
   was not part of these runs.
 - vibe2prod false positives R3 (local) and AI1 (descriptive "placeholder") are to be fixed upstream.
 - Stack: TypeScript is two majors behind (5.9.3 vs 7.0.2), reported by vibe2prod's Stack category.
+
+## Quality gates (Task 17)
+
+Date: 2026-11-06. Skill: bundled vibe2prod v0.9.2, Lighthouse 13.4.1 (mobile emulation, simulated
+throttling), W3C Nu, axe through `@axe-core/playwright` (the axe CLI cannot send the preview cookie
+and needs a matching chromedriver), the bundled `responsive.mjs`, `secret-scan.mjs` and
+`gates.mjs`. The Cat 6/7/8 DOM checks ran through the maintainer driver used for the dogfood runs
+(not committed). Stack Freshness was computed live against npm, the Node release schedule and
+OSV.dev (675 lockfile entries).
+
+| Run | Target | Mode | Verdict | Readiness | Failed gates |
+| --- | ------ | ---- | ------- | --------- | ------------ |
+| 1 | Demo, `0e6942d`, `astro preview` | Local (23 gates) | READY 100% (23/23) | 88 | none |
+| 2 | Demo after `2b82229` | Local (23 gates) | READY 100% (23/23) | 90 | none |
+| 3 | Clean starter, unbriefed | Local (23 gates) | Light Green 91.3% (21/23) | 90 | S3, AI2 |
+| 4 | Clean starter, domain and social image set | Local (23 gates) | READY 100% (23/23) | 91 | none |
+| 5 | Vercel preview of `2b82229` | Remote (27 gates) | READY 96.3% (26/27) | 89 | H1 (see below) |
+
+### Step 1: demo
+
+Run 1 had no failed gate. The Readiness findings that were real kit defects were fixed in
+`2b82229`: the Gemini CLI card text `.gemini/settings.json` was clipped at 320 px (cards are
+`overflow-hidden`; the subtitle now wraps long tokens); the footer credit link spilled out of its
+column on phones (the column now spans the row on mobile); `LogoCloud` and `Stats` produced a
+`<section>` without a heading (W3C warning; they render a plain `div` without a title and the
+LogoCloud title is an `h2`); an HTML comment in `SEO.astro` contained `--`; the home CTA used
+`transition-all`; FAQ answers and Features descriptions were 14 px on phones (now 16 px, Features
+keeps 14 px from `sm`); both "Download" links had the same generic name ("Download AstroDeck").
+The Nebula wording difference between the saas and startup demos was not touched.
+
+Remaining Readiness deductions on the demo, none a gate, none changed:
+
+- Security headers in Local mode (`hsts`, `csp`, `x-frame-options`, `x-content-type-options`,
+  `referrer-policy`, `permissions-policy`): `astro preview` sends none. On the deployed preview
+  all except CSP are present (Step 3). CSP is not set: Astro inlines the theme script and styles,
+  so a useful policy needs hashes or `unsafe-inline`; left to the site owner.
+- `compression`: `astro preview` never compresses (the Vercel preview sends `br`).
+- `tap-target-aaa` (41.7% of targets reach 44 px at 320 px), `safe-area-inset` (sticky header
+  without `env(safe-area-inset-*)`), `centered-text`, `noscript` (the page works without
+  JavaScript since `8cda658`, so there is no `<noscript>` block), `transition-all` (only in the
+  `ui/` tabs and accordion and on other demo pages, not on the home page).
+- Stack: TypeScript 5.9.3 against 7.0.2 (two majors, HIGH, 0.3 points; a major migration is not an
+  audit fix) and one dev-only `minimatch` advisory (LOW).
+- Findings I judged to be vibe2prod false positives (not worked around, not edited upstream):
+  - `text-zoom` (HIGH on the demo home): the check sets `html { font-size: 32px }` at 1280 px
+    width. Tailwind breakpoints are `rem` media queries, and a style change on `<html>` does not
+    change what `rem` media queries resolve to, so the desktop layout (`md:flex` header) is kept
+    at 2x text and overflows. Real browser zoom or a larger default font size scales the media
+    queries too (the layout switches to the mobile one, which passes Resp1 at 320 px). The check
+    does not model what it names for sites with `rem` breakpoints.
+  - `reading-order` (21 inversions on the home page): the heuristic compares DOM order with a
+    top-then-left sort. The side-by-side "Works with the agent you already use" block (text column
+    left, card grid right, each starting a few pixels apart) and the footer link columns trip it.
+    Neither is a DOM/visual mismatch. The Stats `dt`/`dd` pair does use CSS `order` (label first
+    in the DOM, number shown above); the `dl` requires `dt` before `dd`, so it stays.
+
+### Step 2: starter (temp copy of `2b82229`, `npm ci`, `npm run starter:clean -- --yes`)
+
+`npm run verify -- --starter` passed (`VERIFY PASSED`). The cleaned starter ships
+`https://example.com` as `SITE_URL`, no `ogImage`, and `TODO(brief)` markers.
+
+- Unbriefed: Light Green 91.3%, failed S3 (no `og:image`) and AI2 (`https://example.com/` canonical
+  and `og:url`), plus `hallucinated-meta` in the Readiness score (placeholder production URL).
+  Both are correct findings, not false positives: a starter that does not know the owner's domain
+  and has no brand image cannot honestly pass them, and the kit must not invent either (global
+  constraint on fabricated content, and hiding the placeholder with `noindex` was a dogfood
+  mistake, G2). The `TODO(brief)` text itself did not trigger AI1 ("Your Site" and the sample
+  description are not in the Cat 8.1 list).
+- The `build-site` workflow sets both values (domain, `npm run icons` plus `ogImage`). Applying
+  exactly those two steps to the copy (`SITE_URL` to a reserved `.example` domain, `npm run icons`,
+  `ogImage: '/og.png'`) gives READY 100% (23/23), Readiness 91. The dogfood reruns reached READY
+  95.8% on full agent builds. Verdict: READY is achievable, and it is gated by the two values that
+  only the owner can supply.
+- The temp copy and its preview server were deleted.
+
+### Step 3: Vercel preview of `release/4.0`
+
+Deployment `dpl_A4a477SxbJM6edqq3TrgL4c1HQ8A` (project `astrodeck`, commit `2b82229`, state
+READY), protected by Vercel Authentication. Access: `get_access_to_vercel_url` (a share link;
+the `_vercel_jwt` cookie it sets was sent on every curl, Lighthouse and Playwright request).
+Nothing was promoted and no project setting was changed.
+
+Remote 2Prod (27 gates): READY 96.3% (26/27), Readiness 89 (Stack Freshness skipped, its 2 points
+redistributed). All three header gates pass: `strict-transport-security`, `x-content-type-options:
+nosniff`, `referrer-policy` come from `vercel.json`; R3 passes (`content-encoding: br`), V2 passes.
+`vercel.json` needed no change. Missing: CSP (Readiness only, see above).
+
+- H1 failed, and it is a hosting artifact, not a kit defect: Vercel appends
+  `<script async … src="https://vercel.live/_next-live/feedback/feedback.js">` after `</html>` on
+  authenticated preview responses, and the Nu validator reports `Stray start tag "script"`. With
+  that one tag removed from the fetched body, Nu reports 0 HTML errors (only the known
+  `interpolate-size` CSS vocabulary message). The kit's source and `dist/` contain no `vercel.live` reference. The
+  gate stays failed in the record: avoiding the injection would mean changing project settings
+  (toolbar or protection bypass), which this task must not do. It does not change the band.
+- Lighthouse `seo` is 0.61 on the preview only: `is-crawlable` fails on Vercel's
+  `x-robots-tag: noindex` for previews, and `robots-txt` fails because Lighthouse fetched
+  `/robots.txt` without the cookie and parsed the login page. The same audit scores 1.00 locally.
+- The canonical and `og:url` point at `astrodeck.dev` while the page is served from the preview
+  host; that is the configured `SITE_URL` and correct for a preview of the production site.
+  (The driver reports it as a `hallucinated-meta` Readiness finding; not a gate.)
+
+### Step 4: Lighthouse (median of 3, vibe2prod method)
+
+| Target | Performance runs | Median | LCP median | CLS | TBT | Accessibility | SEO |
+| ------ | ---------------- | ------ | ---------- | --- | --- | ------------- | --- |
+| Demo home before fixes (local) | 99, 99, 100 | 99 | 1955 ms | 0 | 0 ms | 100 | 100 |
+| Demo home after fixes (local) | 100, 100, 100 | 100 | 1880 ms | 0 | 0 ms | 100 | 100 |
+| Clean starter, briefed (local) | 100, 100, 100 | 100 | 1655 ms | 0 | 0 ms | 100 | 100 |
+| Vercel preview of the demo home | 99, 99, 100 | 99 | 1801 ms | 0 | 0 ms | 100 | 61 (preview artifacts) |
+
+Lab data on one machine: Lighthouse 13.4.1, mobile profile, simulated Slow 4G and 4x CPU slowdown,
+root URL only. The only render-blocking/dependency insights that scored below 0.9 were
+`render-blocking-insight` and `network-dependency-tree-insight`. The preview home page transferred 166 kB (fonts 117 kB, CSS 15 kB, HTML 15 kB, scripts
+8.5 kB including Vercel Analytics and the preview toolbar, images 10 kB). React is only loaded on
+`/login` and `/components`.
+
+Claims checked: README, `AGENTS.md`, `PROJECT.md`, `docs.astro`, the home page and the templates
+contain no numeric performance claim ("tests speed" on the home page describes what vibe2prod
+checks; the quality checklist's "Lighthouse at 90 or above" is a target for built sites, met here).
+Two sample sentences on `/content` overclaimed ("Fast performance with Astro's island
+architecture", "blazing-fast performance ... the perfect starting point") and were rewritten to
+statements the measurement supports (static pages, JavaScript only where a component needs it).
+Older CHANGELOG entries about Lighthouse 100 describe 3.x releases and were left as history.
+
+### Step 5: always-loaded agent context, 3.5.1 against 4.0
+
+Same method as `baseline-3.5.md` (`wc -l`, `wc -c`; about 4 bytes per token).
+
+| Always loaded (CLAUDE.md, AGENTS.md, PROJECT.md) | 3.5.1 lines | 3.5.1 bytes | 4.0 lines | 4.0 bytes | Change |
+| ------------------------------------------------ | ----------: | ----------: | --------: | --------: | ------ |
+| CLAUDE.md | 19 | 914 | 9 | 541 | -41% bytes |
+| AGENTS.md | 830 | 30,447 | 149 | 10,155 | -82% lines, -67% bytes |
+| PROJECT.md (demo copy; starter copy 69 / 1,473) | 32 | 856 | 72 | 1,674 | +96% bytes |
+| **Entry path** | **881** | **32,217** | **230** | **12,370** | **-74% lines, -62% bytes (about 8.1k to 3.1k tokens)** |
+| plus `astrodeck-build-site/SKILL.md` (building a site) | | | 160 / 390 total | 10,220 / 22,590 total | -30% bytes against the 3.5.1 entry path alone |
+| plus frontmatter of the 6 skills (name and description, always listed) | | | | 3,494 | entry path plus skill list: 15,864 bytes |
+
+PROJECT.md grew because it is now a structured brief template with a comment block that explains
+it, and the starter version drops the demo-only comment (69 lines, 1,473 bytes).
+
+On demand (not loaded at the start): the five AstroDeck skills with their references are 82,201
+bytes (the build-site references alone 51,808, loaded one at a time by step); the reviewer
+subagent is 2,909 bytes; vibe2prod, only for a launch audit, is 131,247 bytes of Markdown (1,499
+lines, `SKILL.md` 51,538 plus 14 references). The 3.5.1 `.claude/` layer was 68,961 bytes of
+markdown (7 agents, 6 commands, 7 skills); the 4.0 `.claude/` mirror is generated from
+`.agents/skills/`, so an agent reads one copy.
+
+Convention files: 6 in 3.5.1 (three hand-maintained divergent copies, one symlink) against 4
+in 4.0 and none duplicated: `AGENTS.md` (canonical), `CLAUDE.md` (import plus a short Claude-only note),
+`.github/copilot-instructions.md` (15 lines, 727 bytes, pointer) and `.gemini/settings.json`
+(53 bytes, points at `AGENTS.md`). No symlinks in the repository.
