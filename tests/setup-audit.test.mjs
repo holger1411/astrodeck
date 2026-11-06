@@ -32,7 +32,10 @@ test('findOnPath resolves an executable on PATH and returns null otherwise', () 
     writeFileSync(file, '');
     chmodSync(file, 0o755);
     const env = { PATH: dir, PATHEXT: '.CMD' };
-    assert.equal(findOnPath('fake-tool', env), file);
+    // Windows resolves the extension as spelled in PATHEXT (.CMD) and the FS is case-insensitive.
+    const found = findOnPath('fake-tool', env);
+    const norm = (f) => (process.platform === 'win32' ? f?.toLowerCase() : f);
+    assert.equal(norm(found), norm(file));
     assert.equal(findOnPath('nope-tool', env), null);
   } finally {
     rmSync(dir, { recursive: true, force: true });
