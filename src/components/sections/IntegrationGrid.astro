@@ -135,7 +135,9 @@ const hasFooter = Astro.slots.has('footer');
                   <h3 class="text-xl font-semibold mb-1 group-hover:text-primary transition-colors">
                     {item.name}
                   </h3>
-                  {item.subtitle && <p class="text-sm text-muted-foreground">{item.subtitle}</p>}
+                  {item.subtitle && (
+                    <p class="text-sm text-muted-foreground break-words">{item.subtitle}</p>
+                  )}
                 </Card>
               );
             })
