@@ -16,6 +16,46 @@ const CASES = [
   [
     'raw-palette-color',
     'src/components/A.astro',
+    '<div class="border-t-red-500">',
+    '<div class="border-t-border">',
+  ],
+  [
+    'raw-palette-color',
+    'src/components/A.astro',
+    '<div class="divide-x-red-500">',
+    '<div class="divide-border">',
+  ],
+  [
+    'raw-palette-color',
+    'src/components/A.astro',
+    '<div class="ring-offset-blue-500">',
+    '<div class="ring-offset-background">',
+  ],
+  [
+    'raw-palette-color',
+    'src/components/A.astro',
+    '<input class="placeholder-red-500">',
+    '<input class="placeholder-muted-foreground">',
+  ],
+  [
+    'raw-palette-color',
+    'src/components/A.astro',
+    '<div class="inset-ring-red-500">',
+    '<div class="inset-ring-border">',
+  ],
+  [
+    'bw-literal',
+    'src/components/A.astro',
+    '<div class="border-t-white">',
+    '<div class="border-t-border">',
+  ],
+  ['dead-href', 'src/pages/a.astro', '<a href={"#"}>x</a>', '<a href={url}>x</a>'],
+  ['dead-href', 'src/pages/a.astro', "<a href={'#'}>x</a>", null],
+  ['dead-action', 'src/pages/a.astro', '<form action={"#"}>', '<form action={url}>'],
+  ['dead-action', 'src/pages/a.astro', "<form action={'#'}>", null],
+  [
+    'raw-palette-color',
+    'src/components/A.astro',
     '<div class="bg-blue-500">',
     '<div class="bg-primary">',
   ],
@@ -96,7 +136,10 @@ for (const [id, path, bad, good] of CASES) {
 test('every rule id has a case and valid shape', () => {
   for (const r of RULES) {
     assert.ok(['error', 'warn'].includes(r.severity), r.id);
-    assert.ok(CASES.some((c) => c[0] === r.id) || false, r.id);
+    assert.ok(
+      CASES.some((c) => c[0] === r.id),
+      r.id
+    );
   }
 });
 
