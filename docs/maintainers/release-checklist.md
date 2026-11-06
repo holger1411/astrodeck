@@ -40,7 +40,7 @@ Repeat the second block with `npm run starter:clean -- --yes --keep-blog` on a f
 posts with one draft post, `--yes` skips the confirmation (without it and without a TTY the command exits 2).
 The manifest is `starter.manifest.json`, the replacement files live in `starter/`.
 
-`starter:clean` is a one-shot, destructive operation. After the first run it refuses to do anything (`starter/` is gone), so it cannot delete files you created later.
+`starter:clean` is a one-shot, destructive operation. After the first run a second run does nothing and prints "Already cleaned" (`starter/` is gone), so it cannot delete files you created later.
 
 ## TODO before release
 

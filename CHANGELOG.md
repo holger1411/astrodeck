@@ -32,13 +32,13 @@ All notable changes to AstroDeck are documented in this file.
 ### Fixed
 
 - Missing or duplicate h1 on several demo pages, dead demo links and decorative icons with alt text (found by the built-HTML check)
-- Contact section without a form no longer leaves an empty column; IntegrationGrid opens only external links in a new tab
+- Contact section without a form no longer leaves an empty column; IntegrationGrid opens only external links in a new tab and renders items without `href` as plain cards
 - RSS language is derived from `site.locale` instead of a hardcoded `-us` suffix
 
 ### Breaking changes / Migrating from 3.x
 
 - Brand, URL, navigation and footer moved from Header, Footer and SEO components into `src/config/site.ts` and `src/config/site-url.mjs`. Pages pass plain titles; the layout applies `titleTemplate`
-- Section props: Hero `badge` is an object, LogoCloud requires `logos`, `AIFeature` is replaced by `IntegrationGrid`, Contact renders a form only with a `form` prop, Newsletter requires `action`, ContentBlock takes an optional `image`, Features icons are `IconName` values
+- Section props: Hero and HeroGradient `badge` is an object, LogoCloud requires `logos`, `AIFeature` is replaced by `IntegrationGrid`, Contact renders a form only with a `form` prop, Newsletter requires `action`, ContentBlock takes an optional `image`, Features icons are `IconName` values
 - Removed `.cursorrules`, `.windsurfrules` and `.cursor/rules`: Cursor and Windsurf read `AGENTS.md`
 - Removed the Claude Code slash commands (`/new-page`, `/new-section`, `/theme`, `/audit`, `/launch-check`, `/plenum`), the old Claude skills, the `astrodeck` agent and the six review agents: use the skills in `.agents/skills/` and the optional `astrodeck-reviewer` subagent
 - `.claude/skills/` is generated: edit `.agents/skills/`, then run `npm run sync:agents`
@@ -64,18 +64,20 @@ export const site: SiteConfig = {
 };
 ```
 
-#### Hero badge
+#### Hero and HeroGradient badge
 
 Before (3.x):
 
 ```astro
 <Hero badge="true" ... />
+<HeroGradient badge="New in v2" ... />
 ```
 
 After (4.0):
 
 ```astro
 <Hero badge={{ label: 'New: online booking', href: '/news' }} ... />
+<HeroGradient badge={{ label: 'New in v2', href: '/changelog' }} ... />
 ```
 
 #### LogoCloud
@@ -158,7 +160,7 @@ After (4.0):
 
 Before (3.x):
 
-```astro
+```text
 /new-page, /new-section, /theme
 /audit, /launch-check, /plenum
 npm run check:kpis
@@ -166,7 +168,7 @@ npm run check:kpis
 
 After (4.0):
 
-```astro
+```text
 astrodeck-new-page, astrodeck-new-section, astrodeck-theme
 vibe2prod, astrodeck-reviewer (Claude Code)
 npm run verify

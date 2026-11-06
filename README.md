@@ -194,7 +194,8 @@ npm run starter:clean -- --yes --keep-blog
 It keeps a minimal home page, the 404 page, all sections, layouts, scripts and skills (and, with
 `--keep-blog`, the blog with one draft post). It replaces `PROJECT.md`, `src/config/site.ts`,
 `src/config/site-url.mjs`, the home page, `robots.txt` and `llms.txt` with starter versions.
-The cleanup is one-shot: once the `starter/` folder is gone it refuses to run again.
+The cleanup is one-shot: once the `starter/` folder is gone, a second run does nothing (it prints
+"Already cleaned"), so it never deletes files you created later.
 
 ## Verify and vibe2prod
 
@@ -294,9 +295,9 @@ first; canonical URLs, sitemap and RSS use it.
 4.0 is a breaking release. In short:
 
 - Brand, URL, navigation and footer moved into `src/config/site.ts` and `src/config/site-url.mjs`.
-- Sections take their content as props: Hero `badge` is an object, LogoCloud takes `logos`,
-  `AIFeature` became `IntegrationGrid`, Contact renders a form only with a `form` prop,
-  Newsletter needs an `action`, ContentBlock has an optional `image`.
+- Sections take their content as props: Hero and HeroGradient `badge` is an object, LogoCloud
+  takes `logos`, `AIFeature` became `IntegrationGrid`, Contact renders a form only with a `form`
+  prop, Newsletter needs an `action`, ContentBlock has an optional `image`.
 - Per-tool rule files (`.cursorrules`, `.windsurfrules`, `.cursor/rules`) and the Claude slash
   commands, skills and review agents were replaced by `AGENTS.md` and the skills in
   `.agents/skills/`.

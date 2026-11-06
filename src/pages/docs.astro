@@ -176,9 +176,11 @@ export const site: SiteConfig = { name, url: SITE_URL,
   titleTemplate: '%s | Brand', nav: [...], footer: {...} };`,
   },
   {
-    title: 'Hero badge',
-    before: `<Hero badge="true" ... />   <!-- fixed version text -->`,
-    after: `<Hero badge={{ label: 'New: online booking', href: '/news' }} ... />`,
+    title: 'Hero and HeroGradient badge',
+    before: `<Hero badge="true" ... />   <!-- fixed version text -->
+<HeroGradient badge="New in v2" ... />`,
+    after: `<Hero badge={{ label: 'New: online booking', href: '/news' }} ... />
+<HeroGradient badge={{ label: 'New in v2', href: '/changelog' }} ... />`,
   },
   {
     title: 'LogoCloud',
@@ -255,7 +257,7 @@ const structure = [
 
 <FullWidthLayout
   title="Documentation"
-  description="AstroDeck 4.0 docs: getting started with a coding agent, the build-site workflow, brief, site config, theme, cleanup, verify, vibe2prod, supported agents and migrating from 3.x."
+  description="AstroDeck 4.0 docs: build-site workflow, brief, site config, theme, cleanup, verify, vibe2prod, supported agents and migrating from 3.x."
 >
   <!-- Header -->
   <div class="py-16 px-6 md:px-12">
@@ -690,8 +692,9 @@ npm run starter:clean -- --yes --keep-blog`}</code></pre>
             <p class="text-sm text-muted-foreground mt-3">
               It is one-shot and destructive: it runs only while the <code class={ic}>starter/</code
               >{' '}
-              folder exists and refuses afterwards. Without <code class={ic}>--yes</code> it asks for
-              confirmation.
+              folder exists; a second run does nothing (it prints "Already cleaned"). Without <code
+                class={ic}>--yes</code
+              > it asks for confirmation.
             </p>
           </div>
           <div class={card}>
