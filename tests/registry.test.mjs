@@ -96,6 +96,68 @@ test('checkRegistry reports missing-file, unregistered, props-mismatch, template
   }
 });
 
+test('checkRegistry validates recipe references and recipe section names', () => {
+  const root = mkdtempSync(join(tmpdir(), 'registry-recipe-'));
+  try {
+    write(
+      root,
+      'src/components/sections/Hero.astro',
+      '---\ninterface Props { title: string }\n---\n'
+    );
+    write(root, 'src/layouts/BaseLayout.astro', '---\ninterface Props { title: string }\n---\n');
+    write(
+      root,
+      'src/pages/p.astro',
+      "---\nimport BaseLayout from '@/layouts/BaseLayout.astro';\nimport Hero from '@/components/sections/Hero.astro';\n---\n"
+    );
+    const recipes = '.agents/skills/astrodeck-build-site/references/recipes';
+    write(
+      root,
+      `${recipes}/good.md`,
+      '# Good\n\n- Section: Hero - intro\n- Page header - not a section\n'
+    );
+    write(root, `${recipes}/bad.md`, '# Bad\n\n- Section: Hero\n- Section: Nonexistent - typo\n');
+    const registry = (recipe) =>
+      JSON.stringify({
+        sections: [
+          entry('Hero', 'src/components/sections/Hero.astro', {
+            title: { type: 'string', required: true, description: 'x' },
+          }),
+        ],
+        ui: [],
+        layouts: [
+          entry('BaseLayout', 'src/layouts/BaseLayout.astro', {
+            title: { type: 'string', required: true, description: 'x' },
+          }),
+        ],
+        pageTemplates: [
+          {
+            name: 'P',
+            file: 'src/pages/p.astro',
+            layout: 'BaseLayout',
+            sections: ['Hero'],
+            recipe,
+          },
+        ],
+      });
+    write(root, 'src/registry.json', registry('good'));
+    const findings = checkRegistry(root);
+    assert.deepEqual(
+      findings.map((f) => f.rule),
+      ['recipe-section']
+    );
+    assert.match(findings[0].message, /Nonexistent/);
+    assert.match(findings[0].file, /bad\.md$/);
+
+    write(root, 'src/registry.json', registry('missing'));
+    const missing = checkRegistry(root).filter((f) => f.message.includes('"missing"'));
+    assert.equal(missing.length, 1);
+    assert.equal(missing[0].rule, 'recipe-section');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test('real repo registry is consistent with the code', () => {
   assert.deepEqual(checkRegistry(REPO), []);
 });

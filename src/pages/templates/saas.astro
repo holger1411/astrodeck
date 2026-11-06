@@ -11,13 +11,13 @@ import CTA from '@/components/sections/CTA.astro';
 import type { IconName } from '@/lib/icons';
 
 const logos = [
-  { name: 'Astro', src: '/icons/tech/astro.svg' },
-  { name: 'Tailwind', src: '/icons/tech/tailwind.svg' },
-  { name: 'React', src: '/icons/tech/react.svg' },
-  { name: 'TypeScript', src: '/icons/tech/typescript.svg' },
-  { name: 'shadcn/ui', src: '/icons/tech/shadcn.svg' },
-  { name: 'Claude Code', src: '/icons/tech/claude-code.svg' },
-];
+  { name: 'Northwind Labs', icon: 'zap' },
+  { name: 'Lumen Works', icon: 'globe' },
+  { name: 'Fernhill', icon: 'users' },
+  { name: 'Quartz & Co', icon: 'shield' },
+  { name: 'Brightwave', icon: 'chart' },
+  { name: 'Oakline', icon: 'lock' },
+] satisfies { name: string; icon: IconName }[];
 
 const features: { title: string; description: string; icon: IconName }[] = [
   {
@@ -145,7 +145,7 @@ const faqs = [
   {
     question: 'Can I migrate my existing data into Nebula?',
     answer:
-      'Yes. We provide a guided import wizard that supports CSV, JSON, and direct integrations with Notion, Airtable, and Linear. Our onboarding team assists Enterprise customers with custom migrations at no extra cost.',
+      'Yes. We provide a guided import wizard that supports CSV and JSON, plus imports from the popular tools your team already uses. Our onboarding team assists Enterprise customers with custom migrations at no extra cost.',
   },
   {
     question: 'Is Nebula GDPR compliant?',
@@ -171,7 +171,9 @@ const faqs = [
     secondaryCta={{ href: '/templates/startup', label: 'Watch Demo' }}
   />
 
-  <LogoCloud title="Trusted by teams at:" logos={logos} />
+  <div data-demo>
+    <LogoCloud title="Trusted by teams at:" logos={logos} />
+  </div>
 
   <div class="section-muted">
     <Features
@@ -181,7 +183,7 @@ const faqs = [
     />
   </div>
 
-  <div class="section-inverted">
+  <div class="section-inverted" data-demo>
     <Stats
       title="Trusted by teams worldwide"
       subtitle="Numbers that reflect the trust our customers place in us every day."
@@ -195,7 +197,7 @@ const faqs = [
     tiers={tiers}
   />
 
-  <div class="section-muted">
+  <div class="section-muted" data-demo>
     <Testimonials title="Loved by engineering and product teams" testimonials={testimonials} />
   </div>
 

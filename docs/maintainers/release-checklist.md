@@ -41,3 +41,7 @@ posts with one draft post, `--yes` skips the confirmation (without it and withou
 The manifest is `starter.manifest.json`, the replacement files live in `starter/`.
 
 `starter:clean` is a one-shot, destructive operation. After the first run it refuses to do anything (`starter/` is gone), so it cannot delete files you created later.
+
+## TODO before release
+
+- [ ] Verify any performance claim (e.g. Lighthouse 100) against the Task 17 measurement before release; remove or soften claims the measurement does not back.

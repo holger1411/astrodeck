@@ -16,6 +16,7 @@ export default defineConfig(
       '.astro/**',
       'tests/fixtures/**',
       'brief/**',
+      'evals/cases/*/brief/**',
       '.agents/skills/vibe2prod/**',
       '.claude/skills/vibe2prod/**',
     ],

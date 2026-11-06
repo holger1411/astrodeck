@@ -15,6 +15,8 @@ const DIRS = [
 // Props are compared for .astro files only. UI components are .tsx with Radix passthrough props.
 const COMPARE_PROPS = new Set(['sections', 'layouts']);
 
+const RECIPES_DIR = '.agents/skills/astrodeck-build-site/references/recipes';
+
 const posix = (p) => p.split('\\').join('/');
 const squash = (t) => String(t).replace(/\s+/g, ' ').trim();
 
@@ -69,7 +71,35 @@ export function checkRegistry(root) {
   }
 
   checkPageTemplates(root, registry, add);
+  checkRecipes(root, registry, add);
   return findings;
+}
+
+function checkRecipes(root, registry, add) {
+  const dir = join(root, RECIPES_DIR);
+  const recipeFiles = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.md')) : [];
+  const recipeNames = new Set(recipeFiles.map((f) => basename(f, '.md')));
+  const sectionNames = new Set((registry.sections ?? []).map((s) => s.name));
+
+  for (const t of registry.pageTemplates ?? []) {
+    if (t.recipe && !recipeNames.has(t.recipe)) {
+      add(
+        'recipe-section',
+        `pageTemplates.${t.name}: recipe "${t.recipe}" has no file ${RECIPES_DIR}/${t.recipe}.md`
+      );
+    }
+  }
+
+  for (const f of recipeFiles) {
+    const file = `${RECIPES_DIR}/${f}`;
+    const lines = readFileSync(join(dir, f), 'utf8').split(/\r?\n/);
+    lines.forEach((line, i) => {
+      const m = line.match(/^- Section:\s*([A-Za-z0-9_]+)/);
+      if (m && !sectionNames.has(m[1])) {
+        add('recipe-section', `line ${i + 1}: section "${m[1]}" is not in registry.sections`, file);
+      }
+    });
+  }
 }
 
 function compareProps(label, entry, filePath, add) {

@@ -51,8 +51,8 @@ const features: { title: string; description: string; icon: IconName }[] = [
 
 const comparisonColumns = [
   { name: 'Nebula', highlighted: true },
-  { name: 'Vercel' },
-  { name: 'Railway' },
+  { name: 'Alpine Cloud' },
+  { name: 'Harbor' },
 ];
 
 const comparisonFeatures = [
@@ -160,13 +160,15 @@ const faqs = [
     />
   </div>
 
-  <Stats
-    title="Built by developers, adopted by teams"
-    subtitle="Early traction from our public beta."
-    stats={stats}
-  />
+  <div data-demo>
+    <Stats
+      title="Built by developers, adopted by teams"
+      subtitle="Early traction from our public beta."
+      stats={stats}
+    />
+  </div>
 
-  <div class="section-muted">
+  <div class="section-muted" data-demo>
     <Testimonials title="What early adopters are saying" testimonials={testimonials} />
   </div>
 

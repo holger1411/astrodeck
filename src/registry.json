@@ -1082,7 +1082,7 @@
         "FAQ",
         "CTA"
       ],
-      "recipe": "Product landing page with pricing. Live at /templates/saas.",
+      "recipe": "saas",
       "screenshot": "/screenshots/saas.png"
     },
     {
@@ -1099,7 +1099,7 @@
         "FAQ",
         "CTA"
       ],
-      "recipe": "Landing page with a gradient hero and a comparison table. Live at /templates/startup.",
+      "recipe": "saas",
       "screenshot": "/screenshots/startup.png"
     },
     {
@@ -1116,7 +1116,7 @@
         "Newsletter",
         "CTA"
       ],
-      "recipe": "Personal or studio portfolio. Live at /templates/portfolio.",
+      "recipe": "agency-portfolio",
       "screenshot": "/screenshots/portfolio.png"
     },
     {
@@ -1124,7 +1124,6 @@
       "file": "src/pages/templates/contact.astro",
       "layout": "BaseLayout",
       "sections": ["Contact", "FAQ"],
-      "recipe": "Contact details plus form and FAQ. Live at /templates/contact.",
       "screenshot": "/screenshots/contact.png"
     },
     {
@@ -1132,7 +1131,6 @@
       "file": "src/pages/login.astro",
       "layout": "AuthLayout",
       "sections": [],
-      "recipe": "Login page using AuthLayout and the LoginForm React component. Live at /login.",
       "screenshot": "/screenshots/login.png"
     },
     {
@@ -1140,7 +1138,6 @@
       "file": "src/pages/blog/[...slug].astro",
       "layout": "BaseLayout",
       "sections": [],
-      "recipe": "Article route rendering content collection entries from src/content/blog/. Live at /blog.",
       "screenshot": "/screenshots/blog.png"
     }
   ]
