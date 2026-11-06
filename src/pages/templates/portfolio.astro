@@ -9,6 +9,15 @@ import Testimonials from '@/components/sections/Testimonials.astro';
 import Newsletter from '@/components/sections/Newsletter.astro';
 import CTA from '@/components/sections/CTA.astro';
 
+const logos = [
+  { name: 'Astro', src: '/icons/tech/astro.svg' },
+  { name: 'Tailwind', src: '/icons/tech/tailwind.svg' },
+  { name: 'React', src: '/icons/tech/react.svg' },
+  { name: 'TypeScript', src: '/icons/tech/typescript.svg' },
+  { name: 'shadcn/ui', src: '/icons/tech/shadcn.svg' },
+  { name: 'Claude Code', src: '/icons/tech/claude-code.svg' },
+];
+
 const stats = [
   { value: '240+', label: 'Projects Completed', description: 'Across web, mobile & brand' },
   { value: '98%', label: 'Happy Clients', description: 'Based on post-project surveys' },
@@ -83,7 +92,7 @@ const testimonials = [
     secondaryCta={{ href: '/work', label: 'View Our Work' }}
   />
 
-  <LogoCloud title="Trusted by leading brands:" />
+  <LogoCloud title="Trusted by leading brands:" logos={logos} />
 
   <div class="section-inverted">
     <Stats stats={stats} />
@@ -127,6 +136,8 @@ const testimonials = [
 
   <div class="section-inverted">
     <Newsletter
+      action="/thanks"
+      method="get"
       title="Get Our Newsletter"
       description="Monthly insights on design, product strategy, and the business of building digital products. No fluff, no filler."
       placeholder="your@email.com"

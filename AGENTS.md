@@ -482,7 +482,7 @@ Use these CSS classes on `<section>` elements to alternate visual rhythm:
 | `CTA.astro` | Call-to-action section |
 | `ContentBlock.astro` | Flexible content block |
 | `LogoCloud.astro` | Brand logo showcase |
-| `AIFeature.astro` | AI feature highlight |
+| `IntegrationGrid.astro` | Tools/integrations grid (props: title, items, cta) |
 | `FAQ.astro` | CSS-only accordion with Schema.org LD+JSON |
 | `Stats.astro` | Metrics grid with semantic dl/dd/dt |
 | `Team.astro` | Team member cards with social links |

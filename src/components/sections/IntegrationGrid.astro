@@ -1,0 +1,141 @@
+---
+/**
+ * IntegrationGrid Section Component
+ *
+ * Two-column section: heading, rich-text slot and optional CTA on the left,
+ * a bordered grid of linked items (tools, integrations, partners) on the right.
+ * Items show an image (`iconSrc`) or a built-in icon (`icon`).
+ *
+ * @example
+ * ```astro
+ * <IntegrationGrid
+ *   title="Works with your tools"
+ *   subtitle="Integrations"
+ *   items={[
+ *     { name: 'GitHub', href: 'https://github.com', subtitle: 'Source control', icon: 'code' },
+ *   ]}
+ *   cta={{ href: '/docs', label: 'See all integrations' }}
+ * >
+ *   <p>Longer description shown under the title (optional slot).</p>
+ *   <p slot="footer">Optional small print under the grid.</p>
+ * </IntegrationGrid>
+ * ```
+ *
+ * @customization
+ * - Image icons should be single-colour SVGs; they are inverted in dark mode
+ * - Add built-in icons in `src/lib/icons.ts`
+ */
+import { icons, type IconName } from '@/lib/icons';
+
+interface Item {
+  name: string;
+  href: string;
+  subtitle?: string;
+  icon?: IconName;
+  /** Image URL (single-colour SVG recommended); wins over `icon` */
+  iconSrc?: string;
+}
+
+interface Props {
+  title: string;
+  /** Small pill above the title */
+  subtitle?: string;
+  items: Item[];
+  cta?: { href: string; label: string };
+}
+
+const { title, subtitle, items, cta } = Astro.props;
+const hasSlot = Astro.slots.has('default');
+const hasFooter = Astro.slots.has('footer');
+---
+
+<section class="py-24 px-6 bg-muted/30">
+  <div class="container max-w-5xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="space-y-6">
+        {
+          subtitle && (
+            <div class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full">
+              {subtitle}
+            </div>
+          )
+        }
+        <h2 class="text-3xl md:text-5xl font-bold leading-tight">{title}</h2>
+        {
+          hasSlot && (
+            <div class="space-y-6 text-muted-foreground leading-relaxed [&_a]:text-primary [&_a]:underline [&_a]:font-medium [&_a:hover]:no-underline">
+              <slot />
+            </div>
+          )
+        }
+        {
+          cta && (
+            <a
+              href={cta.href}
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-6"
+            >
+              {cta.label}
+            </a>
+          )
+        }
+      </div>
+
+      <div class="space-y-4">
+        <div class="grid grid-cols-2 gap-px bg-border overflow-hidden rounded-xl border shadow-lg">
+          {
+            items.map((item) => (
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group relative overflow-hidden bg-card px-6 py-6 hover:bg-muted/50 transition-colors"
+              >
+                {item.iconSrc ? (
+                  <div class="mb-3 h-8 w-8">
+                    <img
+                      src={item.iconSrc}
+                      alt=""
+                      width="32"
+                      height="32"
+                      class="h-8 w-8 dark:invert"
+                      loading="lazy"
+                    />
+                  </div>
+                ) : (
+                  item.icon && (
+                    <div class="mb-3 h-8 w-8">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-8 w-8"
+                        aria-hidden="true"
+                      >
+                        <path d={icons[item.icon]} />
+                      </svg>
+                    </div>
+                  )
+                )}
+                <h3 class="text-xl font-semibold mb-1 group-hover:text-primary transition-colors">
+                  {item.name}
+                </h3>
+                {item.subtitle && <p class="text-sm text-muted-foreground">{item.subtitle}</p>}
+              </a>
+            ))
+          }
+        </div>
+        {
+          hasFooter && (
+            <div class="text-sm text-muted-foreground [&_a]:text-primary [&_a]:underline [&_a:hover]:no-underline">
+              <slot name="footer" />
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

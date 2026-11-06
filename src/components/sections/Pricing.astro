@@ -10,10 +10,12 @@
  * <Pricing
  *   title="Simple Pricing"
  *   subtitle="Choose the plan that's right for you"
+ *   note="Prices exclude VAT."
  *   tiers={[
  *     {
  *       name: "Free",
  *       price: "$0",
+ *       period: "/month",
  *       description: "For hobby projects",
  *       features: ["5 projects", "Basic support"],
  *       cta: { href: "/signup", label: "Get Started" }
@@ -21,6 +23,7 @@
  *     {
  *       name: "Pro",
  *       price: "$29",
+ *       period: "/month",
  *       description: "For professionals",
  *       features: ["Unlimited projects", "Priority support"],
  *       cta: { href: "/signup", label: "Subscribe" },
@@ -31,13 +34,16 @@
  * ```
  *
  * @customization
- * - Change tier layout by modifying grid-cols (line 34)
+ * - Change tier layout by modifying grid-cols
  * - Adjust card spacing and padding
- * - Customize highlighted tier border/background (line 40)
+ * - Customize highlighted tier border/background
  */
 interface PricingTier {
   name: string;
+  /** Include the currency in the string, e.g. "$29" or "€19". */
   price: string;
+  /** Billing period shown after the price, e.g. "/month". Omit for one-off or custom prices. */
+  period?: string;
   description: string;
   features: string[];
   cta: { href: string; label: string };
@@ -48,9 +54,11 @@ interface Props {
   title: string;
   subtitle?: string;
   tiers: PricingTier[];
+  /** Optional small print below the tiers, e.g. "Prices exclude VAT." */
+  note?: string;
 }
 
-const { title, subtitle, tiers } = Astro.props;
+const { title, subtitle, tiers, note } = Astro.props;
 ---
 
 <section class="py-20 px-6" aria-labelledby="pricing-heading">
@@ -84,7 +92,7 @@ const { title, subtitle, tiers } = Astro.props;
             </div>
             <div class="mb-6">
               <span class="text-4xl font-bold">{tier.price}</span>
-              {tier.price !== 'Custom' && <span class="text-muted-foreground">/month</span>}
+              {tier.period && <span class="text-muted-foreground">{tier.period}</span>}
             </div>
             <ul class="mb-6 flex-1 space-y-2">
               {tier.features.map((feature) => (
@@ -121,5 +129,6 @@ const { title, subtitle, tiers } = Astro.props;
         ))
       }
     </div>
+    {note && <p class="mt-8 text-center text-sm text-muted-foreground">{note}</p>}
   </div>
 </section>

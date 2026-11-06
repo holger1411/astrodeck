@@ -8,8 +8,9 @@ import Stats from '@/components/sections/Stats.astro';
 import Testimonials from '@/components/sections/Testimonials.astro';
 import FAQ from '@/components/sections/FAQ.astro';
 import CTA from '@/components/sections/CTA.astro';
+import type { IconName } from '@/lib/icons';
 
-const features = [
+const features: { title: string; description: string; icon: IconName }[] = [
   {
     title: 'One-Command Deploy',
     description:

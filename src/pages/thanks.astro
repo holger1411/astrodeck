@@ -1,0 +1,32 @@
+---
+/**
+ * Form target for the demo pages (Contact and Newsletter use `action="/thanks"`).
+ * Demo-only page: delete it when you connect a real form backend.
+ */
+import MinimalLayout from '@/layouts/MinimalLayout.astro';
+---
+
+<MinimalLayout
+  title="Form received (demo)"
+  description="Demo target page for the AstroDeck example forms."
+  noindex={true}
+>
+  <div data-demo class="flex flex-col items-center justify-center min-h-screen px-4 text-center">
+    <div class="space-y-6 max-w-lg">
+      <h1 class="text-4xl font-bold tracking-tight">This form is a demo</h1>
+      <p class="text-muted-foreground">
+        The example forms in AstroDeck send visitors here instead of to a real inbox. Nothing you
+        typed was stored or sent anywhere.
+      </p>
+      <p class="text-muted-foreground">
+        To receive submissions, connect a form backend: point the section's <code
+          class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm">form.action</code
+        > (Contact) or <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm">action</code> (Newsletter)
+        at your provider's endpoint, then delete this page.
+      </p>
+      <a href="/" class="inline-block text-primary underline underline-offset-4 hover:no-underline"
+        >Back to home</a
+      >
+    </div>
+  </div>
+</MinimalLayout>

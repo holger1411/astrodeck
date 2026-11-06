@@ -22,25 +22,21 @@ import Hero from "@/components/sections/Hero.astro";
 ---
 
 <Hero 
-  badge="NEW"
-  badgeText="Introducing our latest feature"
+  badge={{ label: "New: introducing our latest feature", href: "/changelog" }}
   title="Build amazing products faster"
   subtitle="Start with our pre-built components and focus on what matters. Ship faster, iterate quicker."
-  primaryCta={{ text: "Get Started", href: "/signup" }}
-  secondaryCta={{ text: "Learn More", href: "/docs" }}
-  centered
+  primaryCta={{ label: "Get Started", href: "/signup" }}
+  secondaryCta={{ label: "Learn More", href: "/docs" }}
 />`,
   heroLeftAligned: `---
-import Hero from "@/components/sections/Hero.astro";
+import HeroSplit from "@/components/sections/HeroSplit.astro";
 ---
 
-<Hero 
-  tagline="🚀 Launch Week"
+<HeroSplit
   title="Ship your SaaS in days, not months"
   subtitle="Everything you need to build a modern landing page. TypeScript, Tailwind, and shadcn/ui included."
-  primaryCta={{ text: "Start Building", href: "/get-started" }}
-  secondaryCta={{ text: "View Demo", href: "/demo" }}
-  image={{ src: "/images/hero.png", alt: "Product screenshot" }}
+  primaryCta={{ label: "Start Building", href: "/get-started" }}
+  secondaryCta={{ label: "View Demo", href: "/demo" }}
 />`,
   heroMinimal: `---
 import Hero from "@/components/sections/Hero.astro";
@@ -98,30 +94,31 @@ import Pricing from "@/components/sections/Pricing.astro";
 ---
 
 <Pricing 
+  note="Open source under the MIT license."
   title="Free forever. Open source."
   subtitle="All features included. No hidden costs."
-  plans={[
+  tiers={[
     {
       name: "Landing Page",
       description: "Everything you need for a stunning landing page.",
       price: "Free",
       features: ["Hero & CTA sections", "Logo cloud", "Feature showcase", "Responsive design", "Dark mode support"],
-      cta: { text: "View on GitHub", href: "https://github.com" }
+      cta: { label: "View on GitHub", href: "https://github.com" }
     },
     {
       name: "Full SaaS",
       description: "Complete boilerplate for your SaaS product.",
       price: "Free",
-      featured: true,
+      highlighted: true,
       features: ["All landing page features", "Authentication layouts", "Pricing sections", "Privacy & legal pages", "TypeScript & shadcn/ui", "Production-ready"],
-      cta: { text: "Get Started", href: "/get-started" }
+      cta: { label: "Get Started", href: "/get-started" }
     },
     {
       name: "Open Source",
       description: "MIT licensed and open for contributions.",
       price: "Free",
       features: ["Full source code access", "Regular updates", "Community support", "No vendor lock-in", "Commercial use allowed"],
-      cta: { text: "Star on GitHub", href: "https://github.com" }
+      cta: { label: "Star on GitHub", href: "https://github.com" }
     }
   ]}
 />`,
@@ -130,31 +127,30 @@ import Pricing from "@/components/sections/Pricing.astro";
 ---
 
 <Pricing 
-  plans={[
+  tiers={[
     {
       name: "Starter",
       description: "For small projects",
       price: "$9",
       period: "/month",
       features: ["5 Projects", "Basic Support", "1 GB Storage"],
-      cta: { text: "Get Started", href: "/signup" }
+      cta: { label: "Get Started", href: "/signup" }
     },
     {
       name: "Pro",
       description: "For growing teams",
       price: "$29",
       period: "/month",
-      featured: true,
-      badge: "Popular",
+      highlighted: true,
       features: ["Unlimited Projects", "Priority Support", "100 GB Storage"],
-      cta: { text: "Get Started", href: "/signup" }
+      cta: { label: "Get Started", href: "/signup" }
     },
     {
       name: "Enterprise",
       description: "For large organizations",
       price: "Custom",
       features: ["Everything in Pro", "24/7 Support", "Unlimited Storage"],
-      cta: { text: "Contact Sales", href: "/contact" }
+      cta: { label: "Contact Sales", href: "/contact" }
     }
   ]}
 />`,
@@ -167,7 +163,7 @@ import Pricing from "@/components/sections/Pricing.astro";
   subtitle="Simple, transparent pricing"
   variant="comparison"
   features={["Projects", "Storage", "Support"]}
-  plans={[
+  tiers={[
     { name: "Free", values: ["3", "1 GB", "Community"] },
     { name: "Pro", values: ["Unlimited", "100 GB", "Email"] },
     { name: "Enterprise", values: ["Unlimited", "Unlimited", "24/7"] }
@@ -181,19 +177,19 @@ import Pricing from "@/components/sections/Pricing.astro";
   title="Flexible pricing"
   subtitle="Save 20% with annual billing"
   variant="toggle"
-  plans={[
+  tiers={[
     {
       name: "Basic",
       monthlyPrice: "$19",
       yearlyPrice: "$15",
-      cta: { text: "Choose Plan", href: "/signup" }
+      cta: { label: "Choose Plan", href: "/signup" }
     },
     {
       name: "Professional",
       monthlyPrice: "$49",
       yearlyPrice: "$39",
-      featured: true,
-      cta: { text: "Choose Plan", href: "/signup" }
+      highlighted: true,
+      cta: { label: "Choose Plan", href: "/signup" }
     }
   ]}
 />`,
@@ -425,6 +421,7 @@ import Contact from "@/components/sections/Contact.astro";
   email="hello@astrodeck.dev"
   phone="+1 (555) 000-1234"
   address="123 Developer Lane\nSan Francisco, CA 94107\nUnited States"
+  form={{ action: "https://your-form-backend.example/submit", method: "post", submitLabel: "Send Message" }}
 />`,
 };
 ---
@@ -589,12 +586,12 @@ import Contact from "@/components/sections/Contact.astro";
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 mt-4">
                       <a
-                        href="#"
+                        href="/docs"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-8"
                         >Get Started</a
                       >
                       <a
-                        href="#"
+                        href="/docs"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-12 px-8"
                         >Learn More</a
                       >
@@ -635,12 +632,12 @@ import Contact from "@/components/sections/Contact.astro";
                     </p>
                     <div class="flex gap-4">
                       <a
-                        href="#"
+                        href="/docs"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
                         >Start Building</a
                       >
                       <a
-                        href="#"
+                        href="/docs"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium border h-11 px-8"
                         >View Demo</a
                       >
@@ -728,7 +725,7 @@ import Contact from "@/components/sections/Contact.astro";
                     Join thousands of developers already using AstroDeck to build amazing products.
                   </p>
                   <a
-                    href="#"
+                    href="/docs"
                     class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
                     >Start Free Trial</a
                   >
@@ -802,12 +799,12 @@ import Contact from "@/components/sections/Contact.astro";
                     </div>
                     <div class="space-y-4">
                       <a
-                        href="#"
+                        href="/docs"
                         class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 leading-[44px]"
                         >Get Started Free</a
                       >
                       <a
-                        href="#"
+                        href="/docs"
                         class="block w-full text-center rounded-md text-sm font-medium border h-11 leading-[44px]"
                         >View Documentation</a
                       >
@@ -840,12 +837,12 @@ import Contact from "@/components/sections/Contact.astro";
                     </div>
                     <div class="flex gap-3">
                       <a
-                        href="#"
+                        href="/docs"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-background text-foreground hover:bg-background/90 h-10 px-6"
                         >Download Now</a
                       >
                       <a
-                        href="#"
+                        href="/docs"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-background/20 hover:bg-background/10 h-10 px-6"
                         >GitHub</a
                       >
@@ -935,7 +932,7 @@ import Contact from "@/components/sections/Contact.astro";
                       </li>
                     </ul>
                     <a
-                      href="#"
+                      href="/docs"
                       class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                       >View on GitHub</a
                     >
@@ -995,7 +992,7 @@ import Contact from "@/components/sections/Contact.astro";
                       </li>
                     </ul>
                     <a
-                      href="#"
+                      href="/docs"
                       class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10"
                       >Get Started</a
                     >
@@ -1050,7 +1047,7 @@ import Contact from "@/components/sections/Contact.astro";
                       </li>
                     </ul>
                     <a
-                      href="#"
+                      href="/docs"
                       class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                       >Star on GitHub</a
                     >
@@ -1117,7 +1114,7 @@ import Contact from "@/components/sections/Contact.astro";
                       </li>
                     </ul>
                     <a
-                      href="#"
+                      href="/docs"
                       class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                       >Get Started</a
                     >
@@ -1169,7 +1166,7 @@ import Contact from "@/components/sections/Contact.astro";
                       </li>
                     </ul>
                     <a
-                      href="#"
+                      href="/docs"
                       class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10"
                       >Get Started</a
                     >
@@ -1212,7 +1209,7 @@ import Contact from "@/components/sections/Contact.astro";
                       </li>
                     </ul>
                     <a
-                      href="#"
+                      href="/docs"
                       class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                       >Contact Sales</a
                     >
@@ -1315,7 +1312,7 @@ import Contact from "@/components/sections/Contact.astro";
                         >
                       </div>
                       <a
-                        href="#"
+                        href="/docs"
                         class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                         >Choose Plan</a
                       >
@@ -1328,7 +1325,7 @@ import Contact from "@/components/sections/Contact.astro";
                         >
                       </div>
                       <a
-                        href="#"
+                        href="/docs"
                         class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10"
                         >Choose Plan</a
                       >
@@ -1923,7 +1920,7 @@ import Contact from "@/components/sections/Contact.astro";
                       class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center"
                     >
                       <a
-                        href="#"
+                        href="/docs"
                         aria-label="Alex Rivera on GitHub"
                         class="text-muted-foreground hover:text-foreground transition-colors"
                       >
@@ -1939,7 +1936,7 @@ import Contact from "@/components/sections/Contact.astro";
                         >
                       </a>
                       <a
-                        href="#"
+                        href="/docs"
                         aria-label="Alex Rivera on X (Twitter)"
                         class="text-muted-foreground hover:text-foreground transition-colors"
                       >
@@ -1973,7 +1970,7 @@ import Contact from "@/components/sections/Contact.astro";
                       class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center"
                     >
                       <a
-                        href="#"
+                        href="/docs"
                         aria-label="Sam Chen on GitHub"
                         class="text-muted-foreground hover:text-foreground transition-colors"
                       >
@@ -1989,7 +1986,7 @@ import Contact from "@/components/sections/Contact.astro";
                         >
                       </a>
                       <a
-                        href="#"
+                        href="/docs"
                         aria-label="Sam Chen on LinkedIn"
                         class="text-muted-foreground hover:text-foreground transition-colors"
                       >
@@ -2023,7 +2020,7 @@ import Contact from "@/components/sections/Contact.astro";
                       class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center"
                     >
                       <a
-                        href="#"
+                        href="/docs"
                         aria-label="Jordan Lee on X (Twitter)"
                         class="text-muted-foreground hover:text-foreground transition-colors"
                       >
@@ -2039,7 +2036,7 @@ import Contact from "@/components/sections/Contact.astro";
                         >
                       </a>
                       <a
-                        href="#"
+                        href="/docs"
                         aria-label="Jordan Lee on LinkedIn"
                         class="text-muted-foreground hover:text-foreground transition-colors"
                       >
@@ -2466,7 +2463,7 @@ import Contact from "@/components/sections/Contact.astro";
                     </ul>
                   </div>
                   <div class="rounded-lg border bg-card p-6 md:p-8">
-                    <form action="#" method="POST" novalidate>
+                    <form action="/thanks" method="get" novalidate>
                       <div class="space-y-5">
                         <div class="space-y-1.5">
                           <label for="demo-contact-name" class="text-sm font-medium leading-none"

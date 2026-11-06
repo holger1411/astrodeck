@@ -5,9 +5,11 @@ interface Props {
   email?: string;
   phone?: string;
   address?: string;
+  /** Renders the contact form. Omit to show contact info only (no form). */
+  form?: { action: string; method?: 'get' | 'post'; submitLabel?: string };
 }
 
-const { title = 'Get in Touch', subtitle, email, phone, address } = Astro.props;
+const { title = 'Get in Touch', subtitle, email, phone, address, form } = Astro.props;
 
 const hasContactInfo = email || phone || address;
 ---
@@ -134,86 +136,102 @@ const hasContactInfo = email || phone || address;
       </div>
 
       <!-- Right column: form -->
-      <div class="rounded-lg border bg-card p-6 md:p-8">
-        <form action="#" method="POST" novalidate>
-          <div class="space-y-5">
-            <!-- Name -->
-            <div class="space-y-1.5">
-              <label for="contact-name" class="text-sm font-medium leading-none">
-                Name <span class="text-destructive" aria-hidden="true">*</span>
-              </label>
-              <input
-                id="contact-name"
-                type="text"
-                name="name"
-                required
-                autocomplete="name"
-                placeholder="Jane Smith"
-                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              />
-            </div>
+      {
+        form && (
+          <div class="rounded-lg border bg-card p-6 md:p-8">
+            <form action={form.action} method={form.method ?? 'post'} novalidate>
+              <div class="space-y-5">
+                {/* Name */}
+                <div class="space-y-1.5">
+                  <label for="contact-name" class="text-sm font-medium leading-none">
+                    Name{' '}
+                    <span class="text-destructive" aria-hidden="true">
+                      *
+                    </span>
+                  </label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    name="name"
+                    required
+                    autocomplete="name"
+                    placeholder="Jane Smith"
+                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  />
+                </div>
 
-            <!-- Email -->
-            <div class="space-y-1.5">
-              <label for="contact-email" class="text-sm font-medium leading-none">
-                Email <span class="text-destructive" aria-hidden="true">*</span>
-              </label>
-              <input
-                id="contact-email"
-                type="email"
-                name="email"
-                required
-                autocomplete="email"
-                placeholder="jane@example.com"
-                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              />
-            </div>
+                {/* Email */}
+                <div class="space-y-1.5">
+                  <label for="contact-email" class="text-sm font-medium leading-none">
+                    Email{' '}
+                    <span class="text-destructive" aria-hidden="true">
+                      *
+                    </span>
+                  </label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    name="email"
+                    required
+                    autocomplete="email"
+                    placeholder="jane@example.com"
+                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  />
+                </div>
 
-            <!-- Subject -->
-            <div class="space-y-1.5">
-              <label for="contact-subject" class="text-sm font-medium leading-none">
-                Subject
-              </label>
-              <input
-                id="contact-subject"
-                type="text"
-                name="subject"
-                autocomplete="off"
-                placeholder="How can we help?"
-                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              />
-            </div>
+                {/* Subject */}
+                <div class="space-y-1.5">
+                  <label for="contact-subject" class="text-sm font-medium leading-none">
+                    Subject
+                  </label>
+                  <input
+                    id="contact-subject"
+                    type="text"
+                    name="subject"
+                    autocomplete="off"
+                    placeholder="How can we help?"
+                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  />
+                </div>
 
-            <!-- Message -->
-            <div class="space-y-1.5">
-              <label for="contact-message" class="text-sm font-medium leading-none">
-                Message <span class="text-destructive" aria-hidden="true">*</span>
-              </label>
-              <textarea
-                id="contact-message"
-                name="message"
-                required
-                rows="5"
-                placeholder="Tell us more about your project..."
-                class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-y min-h-[120px]"
-              ></textarea>
-            </div>
+                {/* Message */}
+                <div class="space-y-1.5">
+                  <label for="contact-message" class="text-sm font-medium leading-none">
+                    Message{' '}
+                    <span class="text-destructive" aria-hidden="true">
+                      *
+                    </span>
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    required
+                    rows="5"
+                    placeholder="Tell us more about your project..."
+                    class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-y min-h-[120px]"
+                  />
+                </div>
 
-            <!-- Required field note -->
-            <p class="text-xs text-muted-foreground">
-              <span class="text-destructive" aria-hidden="true">*</span> Required fields
-            </p>
+                {/* Required field note */}
+                <p class="text-xs text-muted-foreground">
+                  <span class="text-destructive" aria-hidden="true">
+                    *
+                  </span>{' '}
+                  Required fields
+                </p>
 
-            <!-- Submit -->
-            <button
-              type="submit"
-              class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
-            >
-              Send Message
-            </button>
+                {/* Submit */}
+                <button
+                  type="submit"
+                  class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
+                >
+                  {form.submitLabel ?? 'Send Message'}
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
+        )
+      }
     </div>
   </div>
 </section>

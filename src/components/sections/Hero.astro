@@ -10,7 +10,7 @@
  * <Hero
  *   title="Build amazing products faster"
  *   subtitle="Pre-built components for Astro.js"
- *   badge="v1.0"
+ *   badge={{ label: "v1.0 — Open Source", href: "/changelog" }}
  *   primaryCta={{ href: "/sections", label: "Browse Components" }}
  *   secondaryCta={{ href: "https://github.com/holger1411/astrodeck", label: "GitHub" }}
  * />
@@ -28,7 +28,8 @@ interface Props {
   subtitle: string;
   primaryCta?: { href: string; label: string };
   secondaryCta?: { href: string; label: string };
-  badge?: string;
+  /** Small pill above the title. Omit to hide it. Rendered as a link when `href` is set. */
+  badge?: { label: string; href?: string };
   /** Optional copy-to-clipboard starter prompt rendered above the CTA buttons */
   prompt?: string;
 }
@@ -118,17 +119,19 @@ const svgHeight = gridSize * (squareSize + gap);
     data-animate="fade"
   >
     {
-      badge && (
-        <a
-          href="/changelog"
-          class="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium hover:bg-muted transition-colors"
-        >
-          <span class="bg-foreground text-background px-2 py-0.5 rounded-md font-semibold text-xs">
-            v3.5.1
+      badge &&
+        (badge.href ? (
+          <a
+            href={badge.href}
+            class="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium hover:bg-muted transition-colors"
+          >
+            {badge.label}
+          </a>
+        ) : (
+          <span class="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium">
+            {badge.label}
           </span>
-          <span>Open Source & MIT Licensed</span>
-        </a>
-      )
+        ))
     }
     <h1
       class="text-5xl font-bold leading-tight tracking-tight md:text-7xl lg:text-8xl lg:leading-[1.1] max-w-5xl"

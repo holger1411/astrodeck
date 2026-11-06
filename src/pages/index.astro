@@ -3,11 +3,72 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/sections/Hero.astro';
 import LogoCloud from '@/components/sections/LogoCloud.astro';
 import Features from '@/components/sections/Features.astro';
-import AIFeature from '@/components/sections/AIFeature.astro';
+import IntegrationGrid from '@/components/sections/IntegrationGrid.astro';
+import type { IconName } from '@/lib/icons';
 import Stats from '@/components/sections/Stats.astro';
 import FAQ from '@/components/sections/FAQ.astro';
 
-const features = [
+const logos = [
+  { name: 'Astro', src: '/icons/tech/astro.svg' },
+  { name: 'Tailwind', src: '/icons/tech/tailwind.svg' },
+  { name: 'React', src: '/icons/tech/react.svg' },
+  { name: 'TypeScript', src: '/icons/tech/typescript.svg' },
+  { name: 'shadcn/ui', src: '/icons/tech/shadcn.svg' },
+  { name: 'Claude Code', src: '/icons/tech/claude-code.svg' },
+];
+
+const aiTools = [
+  {
+    name: 'OpenAI Codex',
+    href: 'https://openai.com/codex/',
+    subtitle: 'Native support',
+    iconSrc: '/icons/ai-tools/openai.svg',
+  },
+  {
+    name: 'GitHub Copilot',
+    href: 'https://github.com/features/copilot',
+    subtitle: 'Coding Agent',
+    iconSrc: '/icons/ai-tools/githubcopilot.svg',
+  },
+  {
+    name: 'Cursor',
+    href: 'https://cursor.com',
+    subtitle: 'Native support',
+    iconSrc: '/icons/ai-tools/cursor.svg',
+  },
+  {
+    name: 'Google Jules',
+    href: 'https://jules.google',
+    subtitle: 'Native support',
+    iconSrc: '/icons/ai-tools/gemini.svg',
+  },
+  {
+    name: 'Gemini CLI',
+    href: 'https://github.com/google-gemini/gemini-cli',
+    subtitle: 'Terminal agent',
+    iconSrc: '/icons/ai-tools/gemini.svg',
+  },
+  {
+    name: 'Windsurf',
+    href: 'https://windsurf.com',
+    subtitle: 'Agentic IDE',
+    iconSrc: '/icons/ai-tools/windsurf.svg',
+  },
+  {
+    name: 'VS Code',
+    href: 'https://code.visualstudio.com',
+    subtitle: 'Copilot Agent',
+    iconSrc: '/icons/ai-tools/microsoft.svg',
+  },
+  {
+    name: 'Claude Code',
+    href: 'https://claude.ai/code',
+    subtitle: '+ Custom Agent',
+    iconSrc: '/icons/ai-tools/claude.svg',
+  },
+];
+
+const features: { title: string; description: string; icon: IconName }[] = [
   {
     title: 'For Real Websites',
     description:
@@ -85,7 +146,7 @@ const faqs = [
   description="Open-source Astro starter kit for AI-assisted websites. Build company sites, blogs, and portfolios with Claude Code, Cursor & Co. on guarded design rails."
 >
   <Hero
-    badge="true"
+    badge={{ label: 'v4.0 — Open Source & MIT', href: '/changelog' }}
     title="The starter kit for AI-assisted websites."
     subtitle="Start from a complete foundation — pages, sections, and a design system — and let <mark>Claude Code, Cursor, or any coding agent</mark> build your <mark>company site, blog, or portfolio</mark>. Conventions via <mark>AGENTS.md</mark>, enforced by <mark>built-in guardrails</mark>, so AI edits never go off-system."
     prompt="Clone https://github.com/holger1411/astrodeck as the foundation for my new website. Install the dependencies, read AGENTS.md, start the dev server, and give me a short tour of the project."
@@ -96,9 +157,40 @@ const faqs = [
     secondaryCta={{ href: 'https://github.com/holger1411/astrodeck', label: 'GitHub' }}
   />
 
-  <LogoCloud />
+  <LogoCloud title="Built with:" logos={logos} />
 
-  <AIFeature />
+  <IntegrationGrid
+    title="Built for AI coding assistants"
+    subtitle="AI-Friendly Development"
+    items={aiTools}
+  >
+    <p>
+      AI without a system produces slop — hardcoded colors, broken dark mode, random spacing.
+      AstroDeck gives your coding agent a real operating environment instead: conventions via the{
+        ' '
+      }
+      <a href="https://agents.md" target="_blank" rel="noopener noreferrer">AGENTS.md standard</a>{
+        ' '
+      }
+      (used by 60,000+ open-source projects, stewarded by the Linux Foundation), so every tool in the
+      grid knows your project's patterns before it writes a single line.
+    </p>
+    <p>
+      And the rules are enforced, not just written down: a convention guard hook blocks off-system
+      edits before they reach your code, and one command checks every design convention at once.{
+        ' '
+      }
+      <a href="https://github.com/holger1411/astrodeck#-ai-friendly-development">Claude Code</a>{
+        ' '
+      }
+      gets the deepest integration — a dedicated agent with seven domain skills that warns about security,
+      accessibility, and SEO issues proactively.
+    </p>
+    <p slot="footer">
+      Plus: Zed, Aider, Factory, Amp, RooCode,{' '}
+      <a href="https://agents.md" target="_blank" rel="noopener noreferrer">and many more</a>.
+    </p>
+  </IntegrationGrid>
 
   <div class="section-inverted py-8">
     <Stats

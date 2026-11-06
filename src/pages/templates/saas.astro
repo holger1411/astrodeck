@@ -8,8 +8,18 @@ import Pricing from '@/components/sections/Pricing.astro';
 import Testimonials from '@/components/sections/Testimonials.astro';
 import FAQ from '@/components/sections/FAQ.astro';
 import CTA from '@/components/sections/CTA.astro';
+import type { IconName } from '@/lib/icons';
 
-const features = [
+const logos = [
+  { name: 'Astro', src: '/icons/tech/astro.svg' },
+  { name: 'Tailwind', src: '/icons/tech/tailwind.svg' },
+  { name: 'React', src: '/icons/tech/react.svg' },
+  { name: 'TypeScript', src: '/icons/tech/typescript.svg' },
+  { name: 'shadcn/ui', src: '/icons/tech/shadcn.svg' },
+  { name: 'Claude Code', src: '/icons/tech/claude-code.svg' },
+];
+
+const features: { title: string; description: string; icon: IconName }[] = [
   {
     title: 'Real-Time Collaboration',
     description:
@@ -59,6 +69,7 @@ const tiers = [
   {
     name: 'Free',
     price: '$0',
+    period: '/month',
     description: 'Perfect for individuals and small side projects.',
     features: [
       'Up to 3 projects',
@@ -72,6 +83,7 @@ const tiers = [
   {
     name: 'Pro',
     price: '$29',
+    period: '/month',
     description: 'For professionals and growing teams who need more power.',
     features: [
       'Unlimited projects',
@@ -153,14 +165,13 @@ const faqs = [
   description="Nebula is the all-in-one SaaS platform for modern teams. Real-time collaboration, enterprise security, and powerful analytics — all in one place. Start free."
 >
   <Hero
-    badge="true"
     title="The platform your team will actually love."
     subtitle="<mark>Nebula</mark> brings real-time collaboration, enterprise-grade security, and actionable analytics together in one beautifully simple platform. <mark>14-day free trial</mark>, no credit card required."
     primaryCta={{ href: '/signup', label: 'Start for Free' }}
     secondaryCta={{ href: '/demo', label: 'Watch Demo' }}
   />
 
-  <LogoCloud title="Trusted by teams at:" />
+  <LogoCloud title="Trusted by teams at:" logos={logos} />
 
   <div class="section-muted">
     <Features

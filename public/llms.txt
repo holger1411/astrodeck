@@ -12,7 +12,7 @@ AstroDeck is a normal, well-documented Astro 7 + Tailwind CSS 4 + shadcn/ui proj
 
 ## Building blocks
 
-- [Sections](https://astrodeck.dev/sections): 16 page sections (Hero, HeroGradient, HeroSplit, Features, Pricing, FAQ, Testimonials, Team, Stats, CTA, Contact, Newsletter, LogoCloud, Comparison, ContentBlock, AIFeature)
+- [Sections](https://astrodeck.dev/sections): 16 page sections (Hero, HeroGradient, HeroSplit, Features, Pricing, FAQ, Testimonials, Team, Stats, CTA, Contact, Newsletter, LogoCloud, Comparison, ContentBlock, IntegrationGrid)
 - [Components](https://astrodeck.dev/components): 11 shadcn/ui React components (Button, Card, Badge, Input, Label, Accordion, Dialog, DropdownMenu, Select, Tabs, Tooltip)
 - [Pages](https://astrodeck.dev/pages): Example pages and templates (SaaS, startup, portfolio, contact, blog, login, 404)
 - [Component registry](https://github.com/holger1411/astrodeck/blob/main/src/registry.json): Machine-readable catalog of every section, component, and layout with props

@@ -240,7 +240,7 @@ astrodeck/
 │   │   │   ├── Hero.astro / HeroSplit.astro / HeroGradient.astro
 │   │   │   ├── Features.astro, Pricing.astro, Testimonials.astro
 │   │   │   ├── CTA.astro, ContentBlock.astro, LogoCloud.astro
-│   │   │   ├── AIFeature.astro, FAQ.astro, Stats.astro
+│   │   │   ├── IntegrationGrid.astro, FAQ.astro, Stats.astro
 │   │   │   ├── Team.astro, Comparison.astro
 │   │   │   ├── Newsletter.astro, Contact.astro
 │   │   ├── ui/             # shadcn/ui components (11 components)
@@ -523,7 +523,7 @@ Full-width page sections that combine layout, typography, and content into compl
 - **CTA.astro** - Call-to-action section
 - **ContentBlock.astro** - Flexible content block
 - **LogoCloud.astro** - Brand logo showcase
-- **AIFeature.astro** - AI feature highlight
+- **IntegrationGrid.astro** - Tools/integrations grid with text and CTA
 - **FAQ.astro** - CSS-only accordion with Schema.org LD+JSON for SEO
 - **Stats.astro** - Metrics grid with semantic `dl`/`dd`/`dt` markup
 - **Team.astro** - Team member cards with social links
