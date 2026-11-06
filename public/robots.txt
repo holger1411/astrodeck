@@ -1,8 +1,8 @@
 # robots.txt for AstroDeck
-# https://astrodeck.dev
+# https://www.astrodeck.dev
 
 User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://astrodeck.dev/sitemap-index.xml
+Sitemap: https://www.astrodeck.dev/sitemap-index.xml

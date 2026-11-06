@@ -9,7 +9,7 @@ import readme from '/README.md?raw';
  * the files coding agents and humans actually read.
  */
 export const GET: APIRoute = ({ site }) => {
-  const origin = (site ?? new URL('https://astrodeck.dev')).origin;
+  const origin = (site ?? new URL('https://www.astrodeck.dev')).origin;
 
   const body = [
     '# AstroDeck — full documentation for LLMs',

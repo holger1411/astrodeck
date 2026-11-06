@@ -6,15 +6,15 @@ AstroDeck is an Astro 7 + Tailwind CSS 4 + React 19 + shadcn/ui project. Agents 
 
 ## Docs
 
-- [Documentation](https://astrodeck.dev/docs): Getting started, build-site workflow, brief, site config, theme, sections and pages, demo cleanup, verify, vibe2prod, supported agents, MCP, deploy, Astro 7 notes, migrating from 3.x
-- [Full documentation for LLMs](https://astrodeck.dev/llms-full.txt): AGENTS.md plus the README in one plain-text file
-- [Changelog](https://astrodeck.dev/changelog): Release history
+- [Documentation](https://www.astrodeck.dev/docs): Getting started, build-site workflow, brief, site config, theme, sections and pages, demo cleanup, verify, vibe2prod, supported agents, MCP, deploy, Astro 7 notes, migrating from 3.x
+- [Full documentation for LLMs](https://www.astrodeck.dev/llms-full.txt): AGENTS.md plus the README in one plain-text file
+- [Changelog](https://www.astrodeck.dev/changelog): Release history
 
 ## Building blocks
 
-- [Sections](https://astrodeck.dev/sections): Page sections (Hero, HeroGradient, HeroSplit, Features, Pricing, Testimonials, CTA, ContentBlock, LogoCloud, IntegrationGrid, FAQ, Stats, Team, Comparison, Newsletter, Contact) with registry usage snippets
-- [Components](https://astrodeck.dev/components): shadcn/ui React components (Button, Card, Badge, Input, Label, Accordion, Dialog, DropdownMenu, Select, Tabs, Tooltip)
-- [Pages](https://astrodeck.dev/pages): Demo pages (SaaS, startup, portfolio, contact, blog, docs, login, sections, changelog, content)
+- [Sections](https://www.astrodeck.dev/sections): Page sections (Hero, HeroGradient, HeroSplit, Features, Pricing, Testimonials, CTA, ContentBlock, LogoCloud, IntegrationGrid, FAQ, Stats, Team, Comparison, Newsletter, Contact) with registry usage snippets
+- [Components](https://www.astrodeck.dev/components): shadcn/ui React components (Button, Card, Badge, Input, Label, Accordion, Dialog, DropdownMenu, Select, Tabs, Tooltip)
+- [Pages](https://www.astrodeck.dev/pages): Demo pages (SaaS, startup, portfolio, contact, blog, docs, login, sections, changelog, content)
 - [Component registry](https://github.com/holger1411/astrodeck/blob/main/src/registry.json): Machine-readable catalog of every section, layout and UI component with props, use-when hints and examples
 
 ## Source
@@ -26,5 +26,5 @@ AstroDeck is an Astro 7 + Tailwind CSS 4 + React 19 + shadcn/ui project. Agents 
 
 ## Optional
 
-- [Blog](https://astrodeck.dev/blog): Demo blog content showcasing content collections, pagination, tags and RSS
-- [RSS feed](https://astrodeck.dev/rss.xml): Blog feed with full article content
+- [Blog](https://www.astrodeck.dev/blog): Demo blog content showcasing content collections, pagination, tags and RSS
+- [RSS feed](https://www.astrodeck.dev/rss.xml): Blog feed with full article content

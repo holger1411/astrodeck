@@ -15,6 +15,24 @@ const inline = (text: string) =>
 
 const releases = [
   {
+    version: '4.0.1',
+    date: '2026-11-06',
+    tag: 'patch',
+    title: 'Accessibility and canonical URL fixes',
+    groups: [
+      {
+        heading: 'Fixed',
+        items: [
+          'Demo site canonical, Open Graph, sitemap and `robots.txt` URLs use `https://www.astrodeck.dev`, the host the site is served on (the apex domain redirects)',
+          'Comparison section: the yes/no icons are announced as images (`role="img"`), and the scrollable table can be reached with the keyboard',
+          'Code blocks on the docs and components pages and scrollable demo regions can be reached with the keyboard',
+          'Changelog page: the breaking-changes heading meets the contrast minimum; 404 page: the contact link is underlined, not marked by color alone',
+          'Changelog page lists the four 4.0.0 "Added" entries that were only in `CHANGELOG.md`; a test now keeps both changelogs in sync',
+        ],
+      },
+    ],
+  },
+  {
     version: '4.0.0',
     date: '2026-11-06',
     tag: 'major',
@@ -37,6 +55,10 @@ const releases = [
           '`.mcp.json` with the Astro Docs MCP and shadcn MCP servers; setup for Codex, Cursor and VS Code in `docs/agents/mcp-setup.md`; supported agents in `docs/agents/supported-agents.md`',
           'Eval cases in `evals/` (one-sentence brief, Markdown brief, `DESIGN.md`) for rerunning the workflow with any agent',
           'Optional Claude Code review subagent `astrodeck-reviewer`',
+          '`npm run icons`: renders the PNG icons and a social image (`public/og.png`, brand color + logo mark) from `public/favicon.svg`',
+          '`src/config/ui.ts`: built-in interface text (skip link, menu and theme buttons, contact labels and form, 404 page) in one place, so non-English sites need no component edits',
+          'Contact section: `hours` (opening hours) and `mapUrl` props; Hero: `plain` prop without the decorative grid; Features: `columns` prop (2 or 3)',
+          'Built-HTML checks: `link-scheme` (spaces in `tel:`/`mailto:` links) and `meta-length` (home title 30–60 characters, descriptions 50–160, as in vibe2prod)',
         ],
       },
       {
@@ -586,13 +608,15 @@ const tagStyles: Record<string, { bg: string; text: string; label: string }> = {
               {/* Breaking changes */}
               {release.breaking && release.breaking.length > 0 && (
                 <div class="mb-4 rounded-lg border border-destructive/30 bg-destructive/5 p-4">
-                  <p class="text-sm font-semibold text-destructive mb-2">
+                  <p class="text-sm font-semibold text-foreground mb-2">
                     {release.breakingTitle ?? 'Breaking Changes'}
                   </p>
                   <ul class="space-y-1">
                     {release.breaking.map((item) => (
                       <li class="text-sm text-muted-foreground flex items-start gap-2">
-                        <span class="text-destructive mt-0.5 shrink-0">!</span>
+                        <span class="text-foreground mt-0.5 shrink-0" aria-hidden="true">
+                          !
+                        </span>
                         <span set:html={inline(item)} />
                       </li>
                     ))}
@@ -659,7 +683,7 @@ const tagStyles: Record<string, { bg: string; text: string; label: string }> = {
 
               {/* Highlights */}
               <ul class="space-y-2">
-                {release.highlights.map((item) => (
+                {(release.highlights ?? []).map((item) => (
                   <li class="text-muted-foreground flex items-start gap-2">
                     <svg
                       class="h-5 w-5 text-primary shrink-0 mt-0.5"

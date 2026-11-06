@@ -85,7 +85,7 @@ import { ui } from '@/config/ui';
             {ui.notFound.help}{' '}
             <a
               href={site.support?.href ?? `mailto:${site.contact.email}`}
-              class="text-primary hover:underline"
+              class="text-primary underline underline-offset-4 hover:no-underline"
             >
               {site.support?.label ?? ui.notFound.contactUs}
             </a>

@@ -927,7 +927,7 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                   <h3 class="text-2xl font-bold mb-2">Choose your plan</h3>
                   <p class="text-muted-foreground">Simple, transparent pricing</p>
                 </div>
-                <div class="border rounded-lg overflow-x-auto">
+                <div class="border rounded-lg overflow-x-auto" tabindex="0">
                   <table class="w-full">
                     <thead class="bg-muted/50">
                       <tr>
@@ -1135,7 +1135,7 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                 <h3 class="font-semibold">Horizontal Scroll</h3>
               </div>
               <div class="border-t pt-6">
-                <div class="flex gap-6 overflow-x-auto pb-4">
+                <div class="flex gap-6 overflow-x-auto pb-4" tabindex="0">
                   <div class="min-w-[300px] rounded-lg border bg-card p-6 space-y-4">
                     <p class="text-sm">"Game changer for our team!"</p>
                     <div class="flex items-center gap-2">
@@ -1671,7 +1671,7 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                     See why teams choose Nebula over the alternatives
                   </p>
                 </div>
-                <div class="overflow-x-auto rounded-xl border shadow-lg">
+                <div class="overflow-x-auto rounded-xl border shadow-lg" tabindex="0">
                   <table class="w-full min-w-[540px] border-collapse text-sm">
                     <thead>
                       <tr class="border-b border-border">
@@ -1709,7 +1709,10 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                       <tr class="border-b border-border bg-card">
                         <td class="sticky left-0 z-10 p-4 font-medium bg-card">Open source</td>
                         <td class="p-4 text-center bg-primary/8"
-                          ><span class="inline-flex items-center justify-center" aria-label="Yes"
+                          ><span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="Yes"
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -1724,7 +1727,10 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                           ></td
                         >
                         <td class="p-4 text-center"
-                          ><span class="inline-flex items-center justify-center" aria-label="No"
+                          ><span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="No"
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -1739,7 +1745,10 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                           ></td
                         >
                         <td class="p-4 text-center"
-                          ><span class="inline-flex items-center justify-center" aria-label="No"
+                          ><span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="No"
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -1759,7 +1768,10 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                           >TypeScript support</td
                         >
                         <td class="p-4 text-center bg-primary/8"
-                          ><span class="inline-flex items-center justify-center" aria-label="Yes"
+                          ><span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="Yes"
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -1774,7 +1786,10 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                           ></td
                         >
                         <td class="p-4 text-center"
-                          ><span class="inline-flex items-center justify-center" aria-label="Yes"
+                          ><span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="Yes"
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -1789,7 +1804,10 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                           ></td
                         >
                         <td class="p-4 text-center"
-                          ><span class="inline-flex items-center justify-center" aria-label="No"
+                          ><span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="No"
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -1807,7 +1825,10 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                       <tr class="border-b border-border bg-card">
                         <td class="sticky left-0 z-10 p-4 font-medium bg-card">Dark mode</td>
                         <td class="p-4 text-center bg-primary/8"
-                          ><span class="inline-flex items-center justify-center" aria-label="Yes"
+                          ><span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="Yes"
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -1822,7 +1843,10 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                           ></td
                         >
                         <td class="p-4 text-center"
-                          ><span class="inline-flex items-center justify-center" aria-label="Yes"
+                          ><span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="Yes"
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -1837,7 +1861,10 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                           ></td
                         >
                         <td class="p-4 text-center"
-                          ><span class="inline-flex items-center justify-center" aria-label="No"
+                          ><span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="No"
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -1857,7 +1884,10 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                           >Tailwind CSS v4</td
                         >
                         <td class="p-4 text-center bg-primary/8"
-                          ><span class="inline-flex items-center justify-center" aria-label="Yes"
+                          ><span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="Yes"
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -1872,7 +1902,10 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                           ></td
                         >
                         <td class="p-4 text-center"
-                          ><span class="inline-flex items-center justify-center" aria-label="No"
+                          ><span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="No"
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -1887,7 +1920,10 @@ if (missing.length) throw new Error(`sections.astro: no group for ${missing.join
                           ></td
                         >
                         <td class="p-4 text-center"
-                          ><span class="inline-flex items-center justify-center" aria-label="No"
+                          ><span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="No"
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"

@@ -383,6 +383,7 @@ const structure = [
           <div class={card}>
             <h3 class="font-semibold mb-3">Developers</h3>
             <pre
+              tabindex="0"
               class={pre}><code class="text-sm font-mono">{`npx degit holger1411/astrodeck my-site
 cd my-site
 npm install
@@ -538,6 +539,7 @@ npm run dev`}</code></pre>
           </div>
           <div class={card}>
             <pre
+              tabindex="0"
               class={pre}><code class="text-sm font-mono">{`export const site: SiteConfig = {
   name: 'Harbor Physio',
   url: SITE_URL,
@@ -590,6 +592,7 @@ npm run dev`}</code></pre>
           <div class={card}>
             <h3 class="font-semibold mb-3">By hand</h3>
             <pre
+              tabindex="0"
               class={pre}><code class="text-sm font-mono">{`npm run theme -- --primary "#0f766e" --dry-run
 npm run theme -- --primary "#0f766e" --accent "#f59e0b" \\
   --neutral slate --radius 0.75rem
@@ -651,6 +654,7 @@ npm run icons   # PNG icons + public/og.png from favicon.svg`}</code></pre>
           <div class={card}>
             <h3 class="font-semibold mb-3">A page</h3>
             <pre
+              tabindex="0"
               class={pre}><code class="text-sm font-mono">{`---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/sections/Hero.astro';
@@ -690,6 +694,7 @@ import FAQ from '@/components/sections/FAQ.astro';
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class={card}>
             <pre
+              tabindex="0"
               class={pre}><code class="text-sm font-mono">{`npm run starter:clean -- --dry-run   # show the plan
 npm run starter:clean -- --yes       # remove the demo
 npm run starter:clean -- --yes --keep-blog`}</code></pre>
@@ -760,6 +765,7 @@ npm run starter:clean -- --yes --keep-blog`}</code></pre>
           </div>
           <div class={card}>
             <pre
+              tabindex="0"
               class={pre}><code class="text-sm font-mono">{`npm run verify                # everything
 npm run verify -- --starter   # + demo leftovers
 npm run validate              # without build (fast)
@@ -808,6 +814,7 @@ npm run check:registry`}</code></pre>
           <div class={card}>
             <h3 class="font-semibold mb-3">Install its tools once</h3>
             <pre
+              tabindex="0"
               class={pre}><code class="text-sm font-mono">{`npm run setup:audit -- --check   # what is missing
 npm run setup:audit              # install it`}</code></pre>
             <p class="text-sm text-muted-foreground mt-3">
@@ -906,6 +913,7 @@ npm run setup:audit              # install it`}</code></pre>
           </div>
           <div class={card}>
             <pre
+              tabindex="0"
               class={pre}><code class="text-sm font-mono">{`codex mcp add astro-docs --url https://mcp.docs.astro.build/mcp
 codex mcp add shadcn -- npx shadcn@latest mcp`}</code></pre>
             <p class="text-sm text-muted-foreground mt-3">
@@ -928,6 +936,7 @@ codex mcp add shadcn -- npx shadcn@latest mcp`}</code></pre>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class={card}>
             <pre
+              tabindex="0"
               class={pre}><code class="text-sm font-mono">{`npm run build     # static site in dist/
 npm run preview   # serve the build locally`}</code></pre>
             <p class="text-sm text-muted-foreground mt-3">

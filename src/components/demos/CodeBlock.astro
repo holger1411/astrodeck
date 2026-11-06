@@ -14,4 +14,8 @@ const escape = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 ---
 
-<pre class={className} set:html={`<code class="${codeClass}">${escape(code)}</code>`} />
+<pre
+  tabindex="0"
+  class={className}
+  set:html={`<code class="${codeClass}">${escape(code)}</code>`}
+/>

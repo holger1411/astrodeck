@@ -69,7 +69,7 @@ const { title = 'How We Compare', subtitle, columns, features } = Astro.props;
     </div>
 
     {/* Scroll wrapper — enables horizontal scroll on small screens */}
-    <div class="overflow-x-auto rounded-xl border shadow-lg">
+    <div class="overflow-x-auto rounded-xl border shadow-lg" tabindex="0">
       <table class="w-full min-w-[540px] border-collapse text-sm">
         {/* Column headers */}
         <thead>
@@ -138,7 +138,11 @@ const { title = 'How We Compare', subtitle, columns, features } = Astro.props;
                       {typeof value === 'boolean' ? (
                         value ? (
                           /* Checkmark */
-                          <span class="inline-flex items-center justify-center" aria-label="Yes">
+                          <span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="Yes"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -155,7 +159,11 @@ const { title = 'How We Compare', subtitle, columns, features } = Astro.props;
                           </span>
                         ) : (
                           /* Dash */
-                          <span class="inline-flex items-center justify-center" aria-label="No">
+                          <span
+                            class="inline-flex items-center justify-center"
+                            role="img"
+                            aria-label="No"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
