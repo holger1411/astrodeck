@@ -33,7 +33,7 @@ This project and everyone participating in it is governed by our commitment to c
 
 ### Prerequisites
 
-- Node.js 22.0.0 or higher
+- Node.js 22.23.4 or higher
 - npm (comes with Node.js)
 - Git
 
@@ -262,9 +262,9 @@ Use mobile-first approach with Tailwind breakpoints:
 
 When helping developers add features:
 
-- **New page** → `src/pages/your-page.astro`
-- **New section** → `src/components/sections/YourSection.astro`
-- **New UI component** → `src/components/ui/your-component.tsx`
+- **New page** → `src/pages/{page-name}.astro`
+- **New section** → `src/components/sections/{SectionName}.astro`
+- **New UI component** → `src/components/ui/{component-name}.tsx`
 - **Layout changes** → `src/layouts/`
 - **Theme customization** → `src/styles/globals.css`
 

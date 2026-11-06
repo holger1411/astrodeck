@@ -631,7 +631,7 @@ If you're not using Claude Code, run the self-audit prompts in `system/prompts/`
 
 ### Create a New Page
 
-1. Create `src/pages/your-page.astro`
+1. Create `src/pages/{page-name}.astro`
 2. Import appropriate layout
 3. Add sections as needed
 4. File name = URL route (`about.astro` → `/about`)
@@ -642,7 +642,7 @@ If you're not using Claude Code, run the self-audit prompts in `system/prompts/`
 
 ### Create a New Section
 
-1. Create `src/components/sections/YourSection.astro`
+1. Create `src/components/sections/{SectionName}.astro`
 2. Follow the section template pattern above
 3. Use semantic HTML and responsive Tailwind classes
 4. Support light and dark mode via CSS variables
@@ -687,7 +687,7 @@ When a user forks or clones AstroDeck to build their own website, "AstroDeck" br
 | 6 | `public/robots.txt` | Comment + Sitemap URL | `astrodeck.dev` → user's domain |
 | 7 | `src/components/Header.astro` | Logo text / brand name | `'AstroDeck'` → user's name |
 | 8 | `src/components/Footer.astro` | Brand name + links | `'AstroDeck'` → user's name |
-| 9 | `public/site.webmanifest` | `name` and `short_name` | `'AstroDeck'` → user's name |
+| 9 | `src/pages/site.webmanifest.ts` | `name` and `short_name` | `'AstroDeck'` → user's name |
 | 10 | `package.json` | `name` field | `'astrodeck'` → user's project name |
 
 **Verification — run after all changes:**
@@ -699,7 +699,7 @@ Zero product-name hits = done. Hits in CHANGELOG.md and AGENTS.md are fine (hist
 **Also replace:**
 - `public/favicon.svg` and PNG favicons with the user's own
 - `public/cover.png` (OG image) with the user's own
-- `public/logo.svg` / `public/logo-white.svg` with the user's logos
+- logo files (`logo.svg`, `logo-white.svg`) in `public/` with the user's logos
 
 **Why this matters:** Without this rebranding, all generated meta tags (canonical, og:url, og:site_name, twitter:url), the sitemap XML, and robots.txt will reference astrodeck.dev. Search engines will see the wrong canonical domain, social sharing previews will show "AstroDeck" instead of the user's brand, and the sitemap will point crawlers to the wrong URLs.
 

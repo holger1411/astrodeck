@@ -203,7 +203,7 @@ Colors live in `src/styles/globals.css` as OKLCH CSS variables inside the `@them
 
 ---
 
-## Astro 6+ — Important API Changes
+## Astro 7+ — Important API Changes
 
 These patterns from older Astro versions are now wrong:
 
@@ -224,7 +224,7 @@ import { z } from 'astro:schema';
 import { z } from 'astro/zod';
 ```
 
-Requires Node.js 22+.
+Requires Node.js 22.23+.
 
 ---
 

@@ -50,7 +50,7 @@ Shortcut: `npm run validate` runs check:kpis, lint, format:check and check in se
 #### Branding
 - [ ] Logo replaced (no longer AstroDeck default)
 - [ ] Favicon set (`public/favicon.svg`)
-- [ ] OG image created (`public/og-image.png`, 1200x630px)
+- [ ] OG image created (`og-image.png` in `public/`, 1200x630px)
 - [ ] Site title and description in `astro.config.mjs`
 
 #### Legal

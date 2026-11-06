@@ -301,7 +301,7 @@ Astro uses file-based routing. Create a new file in `src/pages/` to add a new ro
 
 **Example: Creating an About page**
 
-Create `src/pages/about.astro`:
+Create `about.astro` in `src/pages/`:
 
 ```astro
 ---
@@ -774,7 +774,7 @@ export default defineConfig({
 });
 ```
 
-3. Create `.github/workflows/deploy.yml`:
+3. Create `deploy.yml` in `.github/workflows/`:
 
 ```yaml
 name: Deploy to GitHub Pages

@@ -7,7 +7,7 @@ description: Use when creating or modifying .astro/.tsx files, configuring astro
 
 ## Domain
 
-Astro 6+ patterns, Islands Architecture, Content Collections, routing, build
+Astro 7+ patterns, Islands Architecture, Content Collections, routing, build
 
 ## KPIs
 
@@ -174,7 +174,7 @@ import Hero from '../../components/sections/Hero.astro';
 
 These rules always apply — even under time pressure, even when "it works anyway":
 
-- **No `ViewTransitions`.** Always `ClientRouter`. "But the docs say ViewTransitions" — those docs are outdated; Astro 6 uses ClientRouter.
+- **No `ViewTransitions`.** Always `ClientRouter`. "But the docs say ViewTransitions" — those docs are outdated; Astro 7 uses ClientRouter.
 - **No `z` from `astro:content` or `astro:schema`.** Always `import { z } from 'astro/zod'`. Other imports compile but break Content Collections.
 - **No commit with TypeScript errors.** "It's just a type error, it still works" — type errors in .astro files become runtime bugs.
 - **Always the `@/` import alias.** Relative imports (`../../`) work, but every file move breaks them. `@/` is refactoring-safe.
