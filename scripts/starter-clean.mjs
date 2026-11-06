@@ -91,20 +91,43 @@ function pruneRegistry(root) {
   writeFileSync(path, JSON.stringify(reg, null, 2) + '\n');
 }
 
-/** Best-effort: restore the repo's Prettier formatting of the registry (prettier may be absent). */
-async function formatRegistry(root) {
-  const path = join(root, 'src/registry.json');
-  if (!existsSync(path)) return;
+/**
+ * Best-effort: format the files starter:clean wrote with the project's Prettier config, so a
+ * cleaned project passes `prettier --check` (prettier may be absent; files stay valid unformatted).
+ * Files Prettier ignores or cannot parse are left as written.
+ * @param {string} root project root
+ * @param {string[]} files paths relative to root
+ */
+export async function formatWritten(root, files) {
+  let prettier;
   try {
-    const prettier = await import('prettier');
-    const config = (await prettier.resolveConfig(path)) ?? {};
-    writeFileSync(
-      path,
-      await prettier.format(readFileSync(path, 'utf8'), { ...config, filepath: path })
-    );
+    prettier = await import('prettier');
   } catch {
-    // plain JSON is still valid
+    return;
   }
+  const ignorePath = join(root, '.prettierignore');
+  for (const rel of new Set(files)) {
+    const path = join(root, rel);
+    if (!existsSync(path)) continue;
+    try {
+      const info = await prettier.getFileInfo(path, {
+        ignorePath: existsSync(ignorePath) ? ignorePath : undefined,
+        resolveConfig: true,
+      });
+      if (info.ignored || !info.inferredParser) continue;
+      const config = (await prettier.resolveConfig(path)) ?? {};
+      const text = readFileSync(path, 'utf8');
+      const out = await prettier.format(text, { ...config, filepath: path });
+      if (out !== text) writeFileSync(path, out);
+    } catch {
+      // keep the file as written
+    }
+  }
+}
+
+/** Every file applyClean writes, relative to root. */
+export function writtenFiles(plan) {
+  return [...plan.replace.map((r) => r.to), 'src/registry.json'];
 }
 
 /**
@@ -179,7 +202,7 @@ async function main() {
     }
   }
   applyClean(root, plan);
-  await formatRegistry(root);
+  await formatWritten(root, writtenFiles(plan));
   console.log('Done. Run `npm run build` to verify the clean starter.');
 }
 

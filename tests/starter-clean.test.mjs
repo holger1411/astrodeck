@@ -159,3 +159,34 @@ test('CLI: --yes applies, a second --yes run is a guarded no-op', () => {
   assert.match(again.stdout, /Already cleaned/);
   assert.equal(read('src/pages/docs.astro'), 'mine');
 });
+
+test('CLI: files written by --yes are Prettier-clean with the project config', async () => {
+  const prettier = await import('prettier');
+  writeFileSync(
+    join(root, '.prettierrc'),
+    JSON.stringify({ singleQuote: true, trailingComma: 'es5', printWidth: 100 })
+  );
+  writeFileSync(
+    join(root, 'starter/site.ts'),
+    [
+      'export const site = {',
+      '  nav: [',
+      "    { href: '/', label: 'Home' },",
+      '    // starter:blog-nav',
+      '  ],',
+      '  features: { blog: false, rss: false },',
+      '};',
+      '',
+    ].join('\n')
+  );
+  assert.equal(cli('--yes').status, 0);
+  for (const rel of ['src/config/site.ts', 'src/registry.json']) {
+    const path = join(root, rel);
+    const config = (await prettier.resolveConfig(path)) ?? {};
+    assert.ok(
+      await prettier.check(read(rel), { ...config, filepath: path }),
+      `${rel} is not Prettier-formatted`
+    );
+  }
+  assert.match(read('src/config/site.ts'), /nav: \[\{ href: '\/', label: 'Home' \}\],/);
+});
