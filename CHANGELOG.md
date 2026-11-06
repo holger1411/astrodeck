@@ -2,6 +2,16 @@
 
 All notable changes to AstroDeck are documented in this file.
 
+## [4.0.1] - 2026-11-06 — Accessibility and canonical URL fixes
+
+### Fixed
+
+- Demo site canonical, Open Graph, sitemap and `robots.txt` URLs use `https://www.astrodeck.dev`, the host the site is served on (the apex domain redirects)
+- Comparison section: the yes/no icons are announced as images (`role="img"`), and the scrollable table can be reached with the keyboard
+- Code blocks on the docs and components pages and scrollable demo regions can be reached with the keyboard
+- Changelog page: the breaking-changes heading meets the contrast minimum; 404 page: the contact link is underlined, not marked by color alone
+- Changelog page lists the four 4.0.0 "Added" entries that were only in `CHANGELOG.md`; a test now keeps both changelogs in sync
+
 ## [4.0.0] - 2026-11-06 — Agent-first website builder kit
 
 ### Added

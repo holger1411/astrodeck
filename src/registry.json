@@ -1,6 +1,6 @@
 {
-  "$schema": "https://astrodeck.dev/registry-schema.json",
-  "version": "4.0.0",
+  "$schema": "https://www.astrodeck.dev/registry-schema.json",
+  "version": "4.0.1",
   "sections": [
     {
       "name": "Hero",
