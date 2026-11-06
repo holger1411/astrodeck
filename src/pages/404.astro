@@ -86,11 +86,14 @@ import { site } from '@/config/site';
 
       <!-- Help text -->
       {
-        site.contact.email && (
+        (site.support || site.contact.email) && (
           <p class="text-sm text-muted-foreground pt-4">
             If you believe this is an error, please{' '}
-            <a href={`mailto:${site.contact.email}`} class="text-primary hover:underline">
-              contact us
+            <a
+              href={site.support?.href ?? `mailto:${site.contact.email}`}
+              class="text-primary hover:underline"
+            >
+              {site.support?.label ?? 'contact us'}
             </a>
             .
           </p>

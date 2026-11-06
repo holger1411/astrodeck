@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { cpSync, mkdtempSync, rmSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { mkdirSync } from 'node:fs';
 import { planClean, applyClean, loadManifest } from '../scripts/starter-clean.mjs';
 
 const FIXTURE = join(import.meta.dirname, 'fixtures', 'starter-tree');
@@ -92,4 +94,68 @@ test('the real manifest only lists safe relative paths and existing replacement 
   if (existsSync(join(REPO, 'starter')))
     for (const r of [...m.replace, ...m.replaceIfBlog])
       assert.ok(existsSync(join(REPO, r.from)), `${r.from} is missing`);
+});
+
+test('re-running on an already cleaned project plans nothing and keeps user files', () => {
+  applyClean(root, planClean(root, { keepBlog: false }));
+  mkdirSync(join(root, 'src/content/blog'), { recursive: true });
+  writeFileSync(join(root, 'src/pages/privacy.astro'), 'mine');
+  writeFileSync(join(root, 'src/pages/docs.astro'), 'mine');
+  writeFileSync(join(root, 'src/content/blog/my-post.md'), 'mine');
+  for (const keepBlog of [false, true]) {
+    const plan = planClean(root, { keepBlog });
+    assert.equal(plan.alreadyCleaned, true);
+    assert.deepEqual(plan.remove, []);
+    assert.deepEqual(plan.replace, []);
+  }
+  for (const f of [
+    'src/pages/privacy.astro',
+    'src/pages/docs.astro',
+    'src/content/blog/my-post.md',
+  ])
+    assert.equal(read(f), 'mine');
+});
+
+test('keepBlog with a starter site.ts lacking the markers throws before deleting anything', () => {
+  writeFileSync(join(root, 'starter/site.ts'), 'export const site = {};\n');
+  assert.throws(() => applyClean(root, planClean(root, { keepBlog: true })), /keep-blog/);
+  assert.ok(has('src/pages/docs.astro'));
+  assert.ok(has('starter'));
+});
+
+const cli = (...args) =>
+  spawnSync(process.execPath, [join(REPO, 'scripts/starter-clean.mjs'), '--root', root, ...args], {
+    encoding: 'utf8',
+    input: '',
+  });
+
+test('CLI: non-TTY without --yes exits 2 and deletes nothing', () => {
+  const r = cli();
+  assert.equal(r.status, 2);
+  assert.ok(has('src/pages/docs.astro'));
+  assert.ok(has('starter'));
+});
+
+test('CLI: --dry-run writes nothing', () => {
+  const r = cli('--dry-run');
+  assert.equal(r.status, 0);
+  assert.match(r.stdout, /src\/pages\/docs\.astro/);
+  assert.ok(has('src/pages/docs.astro'));
+  assert.equal(read('src/pages/index.astro').trim(), 'demo home');
+});
+
+test('CLI: unknown flag exits 1', () => {
+  assert.equal(cli('--bogus').status, 1);
+  assert.ok(has('src/pages/docs.astro'));
+});
+
+test('CLI: --yes applies, a second --yes run is a guarded no-op', () => {
+  assert.equal(cli('--yes').status, 0);
+  assert.ok(!has('src/pages/docs.astro'));
+  assert.equal(read('src/pages/index.astro').trim(), 'starter home');
+  writeFileSync(join(root, 'src/pages/docs.astro'), 'mine');
+  const again = cli('--yes');
+  assert.equal(again.status, 0);
+  assert.match(again.stdout, /Already cleaned/);
+  assert.equal(read('src/pages/docs.astro'), 'mine');
 });

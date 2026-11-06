@@ -40,6 +40,8 @@ export interface SiteConfig {
     icon: 'github' | 'x' | 'linkedin' | 'mastodon' | 'bluesky' | 'youtube' | 'instagram';
   }[];
   contact: { email?: string; phone?: string; address?: string };
+  /** Optional support link, e.g. an issue tracker, shown on the 404 page */
+  support?: { label: string; href: string };
   /** Path under /public */
   ogImage: string;
   features: { blog: boolean; rss: boolean; analytics: boolean };
@@ -97,6 +99,7 @@ export const site: SiteConfig = {
   },
   social: [{ label: 'GitHub', href: 'https://github.com/holger1411/astrodeck', icon: 'github' }],
   contact: {},
+  support: { label: 'report it on GitHub', href: 'https://github.com/holger1411/astrodeck/issues' },
   ogImage: '/cover.png',
   features: { blog: true, rss: true, analytics: true },
   blogIntro:

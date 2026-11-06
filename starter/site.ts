@@ -40,6 +40,8 @@ export interface SiteConfig {
     icon: 'github' | 'x' | 'linkedin' | 'mastodon' | 'bluesky' | 'youtube' | 'instagram';
   }[];
   contact: { email?: string; phone?: string; address?: string };
+  /** Optional support link, e.g. an issue tracker, shown on the 404 page */
+  support?: { label: string; href: string };
   /** Path under /public. Leave empty to omit og:image and twitter:image. */
   ogImage: string;
   features: { blog: boolean; rss: boolean; analytics: boolean };

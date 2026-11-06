@@ -8,6 +8,7 @@
  * Usage: npm run starter:clean -- [--dry-run] [--keep-blog] [--yes]
  *   --dry-run    print the plan and exit 0
  *   --keep-blog  keep the blog system (pages, tags, RSS), replace demo posts with one draft post
+ *   --root <dir> run against another project directory (default: this repository)
  *   --yes        apply without asking; without it a TTY is asked "Proceed? (y/N)",
  *                a non-TTY prints the plan and exits 2
  */
@@ -34,7 +35,7 @@ export function loadManifest(root) {
 function inside(root, rel) {
   const abs = resolve(root, rel);
   const r = relative(resolve(root), abs);
-  if (!r || r.startsWith('..') || isAbsolute(r) || r.split(sep).includes('..'))
+  if (!r || r === '..' || r.startsWith('..' + sep) || isAbsolute(r))
     throw new Error(`manifest path escapes the project root: ${rel}`);
   return abs;
 }
@@ -42,11 +43,14 @@ function inside(root, rel) {
 /**
  * @param {string} root project root
  * @param {{ keepBlog?: boolean }} opts
- * @returns {{ keepBlog: boolean, remove: string[], replace: { from: string, to: string }[] }}
+ * @returns {{ keepBlog: boolean, alreadyCleaned: boolean, remove: string[], replace: { from: string, to: string }[] }}
  *   only paths that exist now; `starter/` is always removed last
  */
 export function planClean(root, { keepBlog = false } = {}) {
   const m = loadManifest(root);
+  // No starter/ means the project was already cleaned (and may hold user files at manifest paths)
+  if (!existsSync(join(root, 'starter')))
+    return { keepBlog, alreadyCleaned: true, remove: [], replace: [] };
   const wanted = [...m.remove, ...(keepBlog ? [] : m.removeUnlessBlog)];
   const remove = wanted.filter((p) => existsSync(inside(root, p)));
   const idx = remove.findIndex((p) => p.replace(/\/+$/, '') === 'starter');
@@ -55,13 +59,18 @@ export function planClean(root, { keepBlog = false } = {}) {
     inside(root, r.to);
     return existsSync(inside(root, r.from));
   });
-  return { keepBlog, remove, replace };
+  return { keepBlog, alreadyCleaned: false, remove, replace };
 }
 
 /** Apply the --keep-blog choice to a replacement file that carries the markers. */
-function tune(text, keepBlog) {
+function tune(text, keepBlog, from) {
+  const hasNav = BLOG_NAV_MARKER.test(text);
+  if (keepBlog && hasNav && !/blog: false, rss: false/.test(text))
+    throw new Error(`${from}: "blog: false, rss: false" not found, cannot apply --keep-blog`);
+  if (keepBlog && /site\.ts$/.test(from) && !hasNav)
+    throw new Error(`${from}: "// starter:blog-nav" marker not found, cannot apply --keep-blog`);
   let out = text;
-  if (BLOG_NAV_MARKER.test(out))
+  if (hasNav)
     out = out.replace(BLOG_NAV_MARKER, keepBlog ? "    { href: '/blog', label: 'Blog' },\n" : '');
   if (keepBlog) out = out.replace(/blog: false, rss: false/, 'blog: true, rss: true');
   return out;
@@ -103,13 +112,19 @@ async function formatRegistry(root) {
  * @param {ReturnType<typeof planClean>} plan
  */
 export function applyClean(root, plan) {
-  for (const { from, to } of plan.replace) {
+  // Prepare everything first so a bad starter file fails before anything is deleted
+  const writes = plan.replace.map(({ from, to }) => {
     const src = inside(root, from);
     const dest = inside(root, to);
+    const text = /\.(ts|mjs|astro|md|txt|json)$/.test(from)
+      ? tune(readFileSync(src, 'utf8'), plan.keepBlog, from)
+      : null;
+    return { src, dest, text };
+  });
+  for (const { src, dest, text } of writes) {
     mkdirSync(dirname(dest), { recursive: true });
-    if (/\.(ts|mjs|astro|md|txt|json)$/.test(from)) {
-      writeFileSync(dest, tune(readFileSync(src, 'utf8'), plan.keepBlog));
-    } else copyFileSync(src, dest);
+    if (text !== null) writeFileSync(dest, text);
+    else copyFileSync(src, dest);
   }
   for (const p of plan.remove) rmSync(inside(root, p), { recursive: true, force: true });
   pruneRegistry(root);
@@ -125,14 +140,25 @@ function printPlan(plan) {
 
 async function main() {
   const args = process.argv.slice(2);
+  const rootIdx = args.indexOf('--root');
+  const rootArg = rootIdx !== -1 ? args[rootIdx + 1] : undefined;
+  if (rootIdx !== -1 && !rootArg) {
+    console.error('--root needs a directory');
+    process.exit(1);
+  }
+  if (rootIdx !== -1) args.splice(rootIdx, 2);
   const known = new Set(['--dry-run', '--keep-blog', '--yes']);
   const bad = args.filter((a) => !known.has(a));
   if (bad.length) {
     console.error(`Unknown option(s): ${bad.join(' ')}`);
     process.exit(1);
   }
-  const root = resolve(import.meta.dirname, '..');
+  const root = rootArg ? resolve(rootArg) : resolve(import.meta.dirname, '..');
   const plan = planClean(root, { keepBlog: args.includes('--keep-blog') });
+  if (plan.alreadyCleaned) {
+    console.log('Already cleaned - nothing to do (starter/ not found).');
+    return;
+  }
   printPlan(plan);
   if (!plan.remove.length && !plan.replace.length) {
     console.log('Nothing to do - the demo is already cleaned.');
