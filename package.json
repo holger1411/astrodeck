@@ -1,7 +1,7 @@
 {
   "name": "astrodeck",
   "type": "module",
-  "version": "3.5.1",
+  "version": "4.0.0",
   "engines": {
     "node": ">=22.23.4"
   },
@@ -16,8 +16,19 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check:kpis": "node .claude/scripts/check-kpis.mjs",
-    "validate": "npm run check:kpis && npm run lint && npm run format:check && npm run check"
+    "lint:docs": "node scripts/lint-docs.mjs",
+    "check:dist": "node scripts/check-dist.mjs",
+    "lint:design": "node scripts/lint-design.mjs",
+    "theme": "node scripts/theme.mjs",
+    "icons": "node scripts/icons.mjs",
+    "check:registry": "node scripts/check-registry.mjs",
+    "starter:clean": "node scripts/starter-clean.mjs",
+    "sync:agents": "node scripts/sync-agents.mjs",
+    "sync:vibe2prod": "node scripts/sync-vibe2prod.mjs",
+    "setup:audit": "node scripts/setup-audit.mjs",
+    "test": "node --test \"tests/**/*.test.mjs\"",
+    "verify": "node scripts/verify.mjs",
+    "validate": "node scripts/verify.mjs --skip-build"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.6",
@@ -50,9 +61,11 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@types/sanitize-html": "^2.16.1",
+    "culori": "^4.0.2",
     "eslint": "^9.39.2",
     "eslint-plugin-astro": "^1.5.0",
     "globals": "^17.6.0",
+    "node-html-parser": "^9.0.7",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
     "tailwindcss": "^4.3.4",

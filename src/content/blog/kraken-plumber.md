@@ -6,8 +6,6 @@ author: "Maritime Trades Journal"
 tags: ["humor", "work", "mythology"]
 ---
 
-# Kraken Becomes City's Most Requested Plumber, 8 Arms 'A Game Changer'
-
 A giant kraken formerly known for terrorizing 18th-century merchant vessels has pivoted to a career in residential plumbing, and business is booming.
 
 ## Eight Arms, Zero Wait Time

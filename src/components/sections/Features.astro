@@ -3,7 +3,7 @@
  * Features Section Component
  *
  * Displays a grid of feature cards with icons, titles, and descriptions.
- * Supports multiple icon types (zap, shield, chart, users, globe, lock).
+ * `icon` must be an `IconName` from `src/lib/icons.ts` (zap, shield, chart, users, globe, lock, ...).
  *
  * @example
  * ```astro
@@ -26,37 +26,30 @@
  * ```
  *
  * @customization
- * - Add new icons to iconPaths object (line 16)
- * - Change grid columns by modifying grid class (line 40)
+ * - Add new icons to `src/lib/icons.ts` (the IconName type updates automatically)
+ * - `columns={2}` for 2 or 4 items, so no grid cell stays empty (default 3 from md up)
  * - Adjust spacing with py-* and gap-* classes
  */
+import { icons, type IconName } from '@/lib/icons';
+
 interface Feature {
   title: string;
   description: string;
-  icon: string;
+  icon: IconName;
 }
 
 interface Props {
   title: string;
   subtitle?: string;
   features: Feature[];
+  /** Columns from the md breakpoint: 3 (default) or 2, e.g. for 4 items */
+  columns?: 2 | 3;
 }
 
-const { title, subtitle, features } = Astro.props;
-
-const iconPaths: Record<string, string> = {
-  zap: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
-  shield: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
-  chart: 'M18 20V10M12 20V4M6 20v-6',
-  users:
-    'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
-  globe:
-    'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z',
-  lock: 'M19 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2zM7 11V7a5 5 0 0 1 10 0v4',
-};
+const { title, subtitle, features, columns = 3 } = Astro.props;
 ---
 
-<section class="py-20 px-6">
+<section class="py-16 md:py-24 px-6">
   <div class="container max-w-5xl mx-auto">
     <div class="flex flex-col items-center space-y-4 text-center" data-animate>
       <h2 class="text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">
@@ -71,12 +64,15 @@ const iconPaths: Record<string, string> = {
       }
     </div>
     <div
-      class="grid gap-px sm:grid-cols-2 md:grid-cols-3 mt-12 bg-border overflow-hidden rounded-xl border shadow-lg"
+      class:list={[
+        'grid gap-px sm:grid-cols-2 mt-12 bg-border overflow-hidden rounded-xl border shadow-lg',
+        columns === 3 && 'md:grid-cols-3',
+      ]}
     >
       {
         features.map((feature, index) => (
           <div
-            class="relative overflow-hidden bg-card px-10 py-12"
+            class="relative overflow-hidden bg-card px-6 py-12 sm:px-10"
             data-animate
             data-delay={String(Math.min(index + 1, 5))}
           >
@@ -91,11 +87,11 @@ const iconPaths: Record<string, string> = {
                 stroke-linejoin="round"
                 class="h-5 w-5"
               >
-                <path d={iconPaths[feature.icon] || iconPaths.zap} />
+                <path d={icons[feature.icon]} />
               </svg>
             </div>
-            <h3 class="text-xl font-semibold mb-2">{feature.title}</h3>
-            <p class="text-sm text-muted-foreground">{feature.description}</p>
+            <h3 class="text-xl font-semibold mb-2 hyphens-auto break-words">{feature.title}</h3>
+            <p class="text-base sm:text-sm text-muted-foreground">{feature.description}</p>
           </div>
         ))
       }

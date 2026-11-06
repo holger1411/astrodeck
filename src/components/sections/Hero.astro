@@ -10,7 +10,7 @@
  * <Hero
  *   title="Build amazing products faster"
  *   subtitle="Pre-built components for Astro.js"
- *   badge="v1.0"
+ *   badge={{ label: "v1.0 — Open Source", href: "/changelog" }}
  *   primaryCta={{ href: "/sections", label: "Browse Components" }}
  *   secondaryCta={{ href: "https://github.com/holger1411/astrodeck", label: "GitHub" }}
  * />
@@ -28,12 +28,15 @@ interface Props {
   subtitle: string;
   primaryCta?: { href: string; label: string };
   secondaryCta?: { href: string; label: string };
-  badge?: string;
+  /** Small pill above the title. Omit to hide it. Rendered as a link when `href` is set. */
+  badge?: { label: string; href?: string };
   /** Optional copy-to-clipboard starter prompt rendered above the CTA buttons */
   prompt?: string;
+  /** Hide the decorative contribution-grid background (quiet, text-led hero, e.g. local businesses). */
+  plain?: boolean;
 }
 
-const { title, subtitle, primaryCta, secondaryCta, badge, prompt } = Astro.props;
+const { title, subtitle, primaryCta, secondaryCta, badge, prompt, plain = false } = Astro.props;
 
 // Optimized grid generation - reduced size and deterministic pattern
 // Using seeded pseudo-random for consistent SSR output
@@ -86,52 +89,58 @@ const svgWidth = gridSize * (squareSize + gap);
 const svgHeight = gridSize * (squareSize + gap);
 ---
 
-<section class="min-h-[70vh] flex items-center py-[10vh] md:py-[12vh] relative overflow-hidden">
-  {/* GitHub Contribution Grid Background as SVG */}
-  <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none z-0">
-    <svg
-      width={svgWidth}
-      height={svgHeight}
-      viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-      xmlns="http://www.w3.org/2000/svg"
-      class="text-foreground"
-      aria-hidden="true"
-    >
-      {
-        rects.map((rect) => (
-          <rect
-            x={rect.x}
-            y={rect.y}
-            width={squareSize}
-            height={squareSize}
-            rx="2"
-            fill="currentColor"
-            opacity={rect.opacity}
-          />
-        ))
-      }
-    </svg>
-  </div>
+<section
+  class="min-h-[70vh] flex items-center py-[10vh] md:py-[12vh] px-6 relative overflow-hidden"
+>
+  {/* GitHub Contribution Grid Background as SVG (omitted with `plain`) */}
+  {
+    !plain && (
+      <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none z-0">
+        <svg
+          width={svgWidth}
+          height={svgHeight}
+          viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+          xmlns="http://www.w3.org/2000/svg"
+          class="text-foreground"
+          aria-hidden="true"
+        >
+          {rects.map((rect) => (
+            <rect
+              x={rect.x}
+              y={rect.y}
+              width={squareSize}
+              height={squareSize}
+              rx="2"
+              fill="currentColor"
+              opacity={rect.opacity}
+            />
+          ))}
+        </svg>
+      </div>
+    )
+  }
 
   <div
     class="container max-w-5xl mx-auto flex flex-col items-center gap-6 text-center relative z-10"
     data-animate="fade"
   >
     {
-      badge && (
-        <a
-          href="/changelog"
-          class="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium hover:bg-muted transition-colors"
-        >
-          <span class="bg-foreground text-background px-2 py-0.5 rounded-md font-semibold text-xs">
-            v3.5.1
+      badge &&
+        (badge.href ? (
+          <a
+            href={badge.href}
+            class="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium hover:bg-muted transition-colors"
+          >
+            {badge.label}
+          </a>
+        ) : (
+          <span class="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium">
+            {badge.label}
           </span>
-          <span>Open Source & MIT Licensed</span>
-        </a>
-      )
+        ))
     }
     <h1
-      class="text-5xl font-bold leading-tight tracking-tight md:text-7xl lg:text-8xl lg:leading-[1.1] max-w-5xl"
+      class="text-4xl font-bold leading-tight tracking-tight hyphens-auto md:hyphens-manual break-words sm:text-5xl md:text-7xl lg:text-8xl lg:leading-[1.1] max-w-5xl"
     >
       {title}
     </h1>
@@ -177,10 +186,10 @@ const svgHeight = gridSize * (squareSize + gap);
         primaryCta && (
           <a
             href={primaryCta.href}
-            class="group relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-semibold ring-offset-background transition-[background-color,transform,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 h-12 px-12 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 overflow-hidden"
+            class="group relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-semibold ring-offset-background transition-[background-color,transform,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 h-12 px-6 sm:px-12 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 overflow-hidden"
           >
             {/* Shine effect overlay */}
-            <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+            <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-primary-foreground/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
 
             {/* Button text */}
             <span class="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-0.5">
@@ -193,7 +202,7 @@ const svgHeight = gridSize * (squareSize + gap);
         secondaryCta && (
           <a
             href={secondaryCta.href}
-            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-12 px-8"
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-12 px-6 sm:px-8"
           >
             {secondaryCta.label}
           </a>

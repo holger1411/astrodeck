@@ -6,8 +6,6 @@ author: "Corporate Undead Weekly"
 tags: ["humor", "work", "horror"]
 ---
 
-# Zombie Gets Promoted to Middle Management, Nobody Notices the Difference
-
 *"I fit right in," he groans, gesturing vaguely at spreadsheet*
 
 Derek Thompson (deceased 2023, employed 2024) has been promoted to Senior Project Manager at TechCorp Solutions. His colleagues describe him as "dedicated," "always hungry for results," and "a little slow on emails."

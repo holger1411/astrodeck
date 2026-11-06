@@ -8,8 +8,9 @@ import Stats from '@/components/sections/Stats.astro';
 import Testimonials from '@/components/sections/Testimonials.astro';
 import FAQ from '@/components/sections/FAQ.astro';
 import CTA from '@/components/sections/CTA.astro';
+import type { IconName } from '@/lib/icons';
 
-const features = [
+const features: { title: string; description: string; icon: IconName }[] = [
   {
     title: 'One-Command Deploy',
     description:
@@ -50,8 +51,8 @@ const features = [
 
 const comparisonColumns = [
   { name: 'Nebula', highlighted: true },
-  { name: 'Vercel' },
-  { name: 'Railway' },
+  { name: 'Alpine Cloud' },
+  { name: 'Harbor' },
 ];
 
 const comparisonFeatures = [
@@ -120,14 +121,14 @@ const faqs = [
 
 <BaseLayout
   title="Nebula — Deploy Without the Drama"
-  description="Nebula is the developer deployment platform that eliminates CI/CD complexity. One-command deploys, zero-config pipelines, and multi-region by default. Free to start."
+  description="Nebula is the deployment platform that removes CI/CD complexity: one-command deploys, zero-config pipelines, multi-region by default."
 >
   <HeroGradient
-    badge="Open Source"
+    badge={{ label: 'Early access' }}
     title="Deploy without the drama."
     subtitle="<mark>Nebula</mark> replaces your patchwork of deployment scripts, CI configs, and cloud consoles with a single platform. Ship to production in seconds — not sprints."
-    primaryCta={{ href: '/signup', label: 'Start Building Free' }}
-    secondaryCta={{ href: 'https://github.com/nebula/nebula', label: 'Star on GitHub' }}
+    primaryCta={{ href: '/templates/contact', label: 'Request early access' }}
+    secondaryCta={{ href: '#comparison', label: 'See how it compares' }}
   />
 
   <div class="section-muted">
@@ -138,12 +139,14 @@ const faqs = [
     />
   </div>
 
-  <Comparison
-    title="How we stack up"
-    subtitle="We compared ourselves honestly to the most popular alternatives so you don't have to."
-    columns={comparisonColumns}
-    features={comparisonFeatures}
-  />
+  <div id="comparison">
+    <Comparison
+      title="How we stack up"
+      subtitle="We compared ourselves honestly to the most popular alternatives so you don't have to."
+      columns={comparisonColumns}
+      features={comparisonFeatures}
+    />
+  </div>
 
   <div class="section-inverted">
     <ContentBlock
@@ -159,13 +162,15 @@ const faqs = [
     />
   </div>
 
-  <Stats
-    title="Built by developers, adopted by teams"
-    subtitle="Early traction from our public beta."
-    stats={stats}
-  />
+  <div data-demo>
+    <Stats
+      title="Built by developers, adopted by teams"
+      subtitle="Early traction from our public beta."
+      stats={stats}
+    />
+  </div>
 
-  <div class="section-muted">
+  <div class="section-muted" data-demo>
     <Testimonials title="What early adopters are saying" testimonials={testimonials} />
   </div>
 
@@ -178,8 +183,8 @@ const faqs = [
   <div class="section-inverted">
     <CTA
       title="Ship your next project with Nebula."
-      description="Join 85,000+ developers who have already ditched their deployment scripts. The free tier is genuinely generous — no credit card needed."
-      cta={{ href: '/signup', label: 'Get Started Free' }}
+      description="Tell us what you deploy today and we will help you move it over. The free tier needs no credit card."
+      cta={{ href: '/templates/contact', label: 'Request early access' }}
     />
   </div>
 </BaseLayout>

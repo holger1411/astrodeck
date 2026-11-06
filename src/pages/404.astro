@@ -8,13 +8,11 @@
 import MinimalLayout from '@/layouts/MinimalLayout.astro';
 import Logo from '@/components/Logo.astro';
 import { Button } from '@/components/ui/button';
+import { site } from '@/config/site';
+import { ui } from '@/config/ui';
 ---
 
-<MinimalLayout
-  title="Page Not Found"
-  description="The page you're looking for doesn't exist or has been moved."
-  noindex={true}
->
+<MinimalLayout title={ui.notFound.title} description={ui.notFound.description} noindex={true}>
   <div class="flex flex-col items-center justify-center min-h-screen px-4 text-center">
     <div class="space-y-8 max-w-md">
       <!-- Logo -->
@@ -31,11 +29,8 @@ import { Button } from '@/components/ui/button';
 
       <!-- Error message -->
       <div class="space-y-3">
-        <h2 class="text-2xl font-semibold text-foreground">Page not found</h2>
-        <p class="text-muted-foreground">
-          Sorry, we couldn't find the page you're looking for. It might have been moved, deleted, or
-          never existed.
-        </p>
+        <h2 class="text-2xl font-semibold text-foreground">{ui.notFound.heading}</h2>
+        <p class="text-muted-foreground">{ui.notFound.text}</p>
       </div>
 
       <!-- Action buttons -->
@@ -56,36 +51,48 @@ import { Button } from '@/components/ui/button';
               <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
-            Back to Home
+            {ui.notFound.home}
           </a>
         </Button>
-        <Button variant="outline" asChild>
-          <a href="/blog">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-4 w-4 mr-2"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
-            </svg>
-            Read Blog
-          </a>
-        </Button>
+        {
+          site.features.blog && (
+            <Button variant="outline" asChild>
+              <a href="/blog">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 mr-2"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                </svg>
+                {ui.notFound.blog}
+              </a>
+            </Button>
+          )
+        }
       </div>
 
       <!-- Help text -->
-      <p class="text-sm text-muted-foreground pt-4">
-        If you believe this is an error, please <a
-          href="https://github.com/holger1411/astrodeck/issues"
-          class="text-primary hover:underline">report it on GitHub</a
-        >.
-      </p>
+      {
+        (site.support || site.contact.email) && (
+          <p class="text-sm text-muted-foreground pt-4">
+            {ui.notFound.help}{' '}
+            <a
+              href={site.support?.href ?? `mailto:${site.contact.email}`}
+              class="text-primary hover:underline"
+            >
+              {site.support?.label ?? ui.notFound.contactUs}
+            </a>
+            .
+          </p>
+        )
+      }
     </div>
   </div>
 </MinimalLayout>

@@ -1,5 +1,5 @@
 ---
-
+import { ui } from '@/config/ui';
 ---
 
 <button
@@ -7,7 +7,7 @@
   type="button"
   role="switch"
   aria-checked="false"
-  aria-label="Dark mode"
+  aria-label={ui.themeToggle}
 >
   <svg
     class="sun-icon h-5 w-5"

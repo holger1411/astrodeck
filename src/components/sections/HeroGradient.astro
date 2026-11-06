@@ -12,7 +12,7 @@
  * <HeroGradient
  *   title="Ship faster, look better"
  *   subtitle="Pre-built Astro components for ambitious teams."
- *   badge="New in v2"
+ *   badge={{ label: "New in v2", href: "/changelog" }}
  *   primaryCta={{ href: "/sections", label: "Browse Components" }}
  *   secondaryCta={{ href: "https://github.com/holger1411/astrodeck", label: "GitHub" }}
  * />
@@ -29,14 +29,15 @@ interface Props {
   subtitle: string;
   primaryCta?: { href: string; label: string };
   secondaryCta?: { href: string; label: string };
-  badge?: string;
+  /** Pill above the headline; a link when `href` is set */
+  badge?: { label: string; href?: string };
 }
 
 const { title, subtitle, primaryCta, secondaryCta, badge } = Astro.props;
 ---
 
 <section
-  class="hero-gradient-section min-h-[70vh] flex items-center py-16 md:py-24 relative overflow-hidden"
+  class="hero-gradient-section min-h-[70vh] flex items-center py-16 md:py-24 px-6 relative overflow-hidden"
 >
   {/* Gradient orb layer — sits behind all content */}
   <div class="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
@@ -56,17 +57,19 @@ const { title, subtitle, primaryCta, secondaryCta, badge } = Astro.props;
     data-animate="fade"
   >
     {
-      badge && (
-        <a
-          href="/changelog"
-          class="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium hover:bg-muted transition-colors"
-        >
-          <span class="bg-foreground text-background px-2 py-0.5 rounded-md font-semibold text-xs">
-            New
+      badge &&
+        (badge.href ? (
+          <a
+            href={badge.href}
+            class="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium hover:bg-muted transition-colors"
+          >
+            {badge.label}
+          </a>
+        ) : (
+          <span class="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium">
+            {badge.label}
           </span>
-          <span>{badge}</span>
-        </a>
-      )
+        ))
     }
 
     <h1
@@ -85,7 +88,7 @@ const { title, subtitle, primaryCta, secondaryCta, badge } = Astro.props;
             class="group relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-semibold ring-offset-background transition-[background-color,transform,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 h-12 px-12 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 overflow-hidden"
           >
             {/* Shine effect overlay */}
-            <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+            <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-primary-foreground/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
             {/* Button text */}
             <span class="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-0.5">
               {primaryCta.label}

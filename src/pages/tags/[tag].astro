@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '@/lib/blog';
 
 export async function getStaticPaths() {
-  const allPosts = await getCollection('blog');
+  const allPosts = await getPublishedPosts();
 
   // Get all unique tags
   const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
@@ -34,8 +34,11 @@ function formatDate(date: Date) {
 }
 ---
 
-<BaseLayout title={`Posts tagged "${tag}"`} description={`All blog posts tagged with ${tag}`}>
-  <div class="container max-w-4xl mx-auto py-16">
+<BaseLayout
+  title={`Posts tagged "${tag}"`}
+  description={`All blog posts tagged "${tag}", newest first. Browse the articles on this topic.`}
+>
+  <div class="container max-w-4xl mx-auto py-16 px-6">
     <div class="mb-16">
       <a
         href="/tags"

@@ -1,0 +1,17 @@
+---
+/**
+ * Demo-only: a <pre><code> block without stray whitespace. The markup is set via set:html so
+ * formatters cannot add line breaks inside <pre>, which would show up as blank lines.
+ */
+interface Props {
+  code: string;
+  class?: string;
+  codeClass?: string;
+}
+
+const { code, class: className, codeClass = '' } = Astro.props;
+const escape = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+---
+
+<pre class={className} set:html={`<code class="${codeClass}">${escape(code)}</code>`} />

@@ -1,20 +1,29 @@
 #!/usr/bin/env node
 /**
- * AstroDeck convention guard (PreToolUse + PostToolUse hook for Write/Edit).
+ * AstroDeck convention guard (PreToolUse + PostToolUse hook for Write/Edit/MultiEdit).
  *
- * PreToolUse  — hard-blocks changes that violate non-negotiable AstroDeck rules
- *               (deprecated Astro 6 patterns, tailwind.config.* creation).
- * PostToolUse — soft warnings for design-system drift (hardcoded colors,
- *               inline styles, relative imports). The edit goes through, but
- *               the assistant gets feedback and can self-correct.
+ * The rules live in scripts/lib/rules.mjs and are shared with `npm run lint:design`.
  *
- * Exit codes follow the Claude Code hook contract:
- *   0 = OK, 2 = block / feed stderr back to the assistant.
+ * PreToolUse  - hard-blocks non-negotiable violations (tailwind.config.*,
+ *               ViewTransitions, z from astro:content) before the edit happens.
+ * PostToolUse - reports every other finding (palette colors, inline styles, ...)
+ *               after the edit; the assistant can then self-correct.
+ *
+ * Exit codes follow the Claude Code hook contract: 0 = OK, 2 = block / feed
+ * stderr back to the assistant.
  */
+import { existsSync, readFileSync } from 'node:fs';
+import { isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+const BLOCKING = new Set(['tailwind-config', 'view-transitions', 'zod-from-content']);
+
+// Project root: CLAUDE_PROJECT_DIR, else two levels up from .claude/hooks (works in ZIP copies).
+const root = resolve(process.env.CLAUDE_PROJECT_DIR || join(import.meta.dirname, '..', '..'));
 
 const chunks = [];
 process.stdin.on('data', (c) => chunks.push(c));
-process.stdin.on('end', () => {
+process.stdin.on('end', async () => {
   let payload;
   try {
     payload = JSON.parse(Buffer.concat(chunks).toString('utf8'));
@@ -22,101 +31,62 @@ process.stdin.on('end', () => {
     process.exit(0); // never break the session on malformed input
   }
 
-  const event = payload.hook_event_name || '';
-  const input = payload.tool_input || {};
-  const filePath = input.file_path || '';
+  try {
+    const { lintText } = await import(
+      pathToFileURL(join(root, 'scripts', 'lib', 'rules.mjs')).href
+    );
+    const { formatFindings } = await import(
+      pathToFileURL(join(root, 'scripts', 'lib', 'findings.mjs')).href
+    );
 
-  // Collect every piece of text this tool call writes
-  const texts = [];
-  if (typeof input.content === 'string') texts.push(input.content);
-  if (typeof input.new_string === 'string') texts.push(input.new_string);
-  if (Array.isArray(input.edits)) {
-    for (const e of input.edits) {
-      if (typeof e?.new_string === 'string') texts.push(e.new_string);
+    const event = payload.hook_event_name || '';
+    const input = payload.tool_input || {};
+    const filePath = input.file_path || '';
+    if (!filePath) process.exit(0);
+
+    const abs = isAbsolute(filePath) ? filePath : resolve(root, filePath);
+    const rel = relative(root, abs).split(sep).join('/');
+    // Files outside the project are not ours to police.
+    const path = rel.startsWith('..') ? filePath.split(sep).join('/') : rel;
+
+    // Every piece of text this tool call writes
+    const texts = [];
+    if (typeof input.content === 'string') texts.push(input.content);
+    if (typeof input.new_string === 'string') texts.push(input.new_string);
+    if (Array.isArray(input.edits)) {
+      for (const e of input.edits) if (typeof e?.new_string === 'string') texts.push(e.new_string);
     }
-  }
-  const text = texts.join('\n');
+    let text = texts.join('\n');
 
-  const inSrc = /\/src\//.test(filePath) || filePath.startsWith('src/');
-  const isAstro = filePath.endsWith('.astro');
-  const isTsx = filePath.endsWith('.tsx');
-  const isGlobalsCss = /src\/styles\/globals\.css$/.test(filePath);
-  const isContent = /src\/content\//.test(filePath);
-
-  const block = (msg) => {
-    process.stderr.write(msg + '\n');
-    process.exit(2);
-  };
-
-  if (event === 'PreToolUse') {
-    if (/tailwind\.config\.(js|cjs|mjs|ts)$/.test(filePath)) {
-      block(
-        'BLOCKED: AstroDeck uses Tailwind CSS v4 — there must be no tailwind.config.* file. ' +
-          'Configuration lives in src/styles/globals.css via the @theme directive.'
-      );
-    }
-    if (
-      inSrc &&
-      /import\s*\{[^}]*ViewTransitions[^}]*\}\s*from\s*['"]astro:transitions['"]/.test(text)
-    ) {
-      block(
-        'BLOCKED: ViewTransitions is deprecated in Astro 6. ' +
-          "Use: import { ClientRouter } from 'astro:transitions';"
-      );
-    }
-    if (
-      inSrc &&
-      /import\s*\{[^}]*\bz\b[^}]*\}\s*from\s*['"]astro:(content|schema)['"]/.test(text)
-    ) {
-      block(
-        "BLOCKED: importing z from 'astro:content' or 'astro:schema' breaks Content Collections in Astro 6. " +
-          "Use: import { z } from 'astro/zod';"
-      );
-    }
-    process.exit(0);
-  }
-
-  if (event === 'PostToolUse') {
-    const warnings = [];
-
-    if (inSrc && !isContent && (isAstro || isTsx)) {
-      const colorRe =
-        /\b(?:bg|text|border|ring|fill|stroke)-(?:red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|slate|gray|zinc|neutral|stone)-\d{2,3}\b/g;
-      const colors = text.match(colorRe);
-      if (colors) {
-        warnings.push(
-          `Hardcoded Tailwind color(s) ${[...new Set(colors)].join(', ')} — use semantic tokens instead ` +
-            '(bg-primary, text-muted-foreground, ...). Hardcoded colors break theming and dark mode.'
-        );
+    if (event === 'PostToolUse' && existsSync(abs)) {
+      try {
+        text = readFileSync(abs, 'utf8'); // full file after the write
+      } catch {
+        /* fall back to the written text */
       }
     }
-    if (inSrc && isAstro && /style="/.test(text)) {
-      warnings.push(
-        'Inline style attribute detected — use Tailwind utilities instead (design-system rule: 0 inline styles).'
-      );
-    }
-    if (inSrc && /from\s+['"]\.\.\//.test(text)) {
-      warnings.push(
-        "Relative parent import ('../') detected — use the '@/' alias (refactoring-safe, AstroDeck convention)."
-      );
-    }
-    if (isGlobalsCss && /(hsl\(|rgb\(|#[0-9a-fA-F]{3,8}\b)/.test(text)) {
-      warnings.push(
-        'Non-OKLCH color value in globals.css — all design tokens must use oklch(L% C H).'
-      );
+
+    const findings = lintText(path, text);
+
+    if (event === 'PreToolUse') {
+      const blocked = findings.filter((f) => BLOCKING.has(f.rule));
+      if (blocked.length) {
+        process.stderr.write(`BLOCKED:\n${formatFindings(blocked)}\n`);
+        process.exit(2);
+      }
+      process.exit(0);
     }
 
-    if (warnings.length > 0) {
-      block(
-        'AstroDeck convention warning for ' +
-          (filePath || 'this change') +
-          ':\n- ' +
-          warnings.join('\n- ') +
-          '\nPlease fix this now unless the user explicitly asked for an exception.'
+    if (event === 'PostToolUse' && findings.length) {
+      process.stderr.write(
+        `AstroDeck convention findings for ${path}:\n${formatFindings(findings)}\n` +
+          'Please fix this now unless the user explicitly asked for an exception.\n'
       );
+      process.exit(2);
     }
-    process.exit(0);
+  } catch (err) {
+    process.stderr.write(`guard-conventions: hook disabled (${err?.message ?? err})\n`);
+    process.exit(0); // never break the session on hook errors
   }
-
   process.exit(0);
 });

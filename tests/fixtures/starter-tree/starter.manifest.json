@@ -1,0 +1,10 @@
+{
+  "remove": ["src/pages/docs.astro", "src/content/blog/demo.md", "public/cover.png", "starter/"],
+  "removeUnlessBlog": ["src/pages/blog/", "src/pages/rss.xml.ts"],
+  "replace": [
+    { "from": "starter/index.astro", "to": "src/pages/index.astro" },
+    { "from": "starter/site.ts", "to": "src/config/site.ts" }
+  ],
+  "replaceIfBlog": [{ "from": "starter/welcome.md", "to": "src/content/blog/welcome.md" }],
+  "demoMarker": "data-demo"
+}

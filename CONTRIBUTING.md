@@ -1,541 +1,112 @@
 # Contributing to AstroDeck
 
-Thank you for your interest in contributing to AstroDeck! We're excited to have you join our community.
+Thank you for helping to improve AstroDeck. Bug reports, documentation fixes, new sections,
+better skills and eval results from your coding agent are all welcome.
 
-## Table of Contents
+Please be respectful and constructive in all interactions.
 
-- [Code of Conduct](#code-of-conduct)
-- [How Can I Contribute?](#how-can-i-contribute)
-- [Development Setup](#development-setup)
-- [Coding Guidelines](#coding-guidelines)
-- [For AI Assistants](#for-ai-assistants)
-- [Submitting Changes](#submitting-changes)
-- [Reporting Bugs](#reporting-bugs)
-- [Suggesting Features](#suggesting-features)
+## Setup
 
-## Code of Conduct
+Requires Node.js >= 22.23.4, npm and Git.
 
-This project and everyone participating in it is governed by our commitment to creating a welcoming and inclusive environment. Please be respectful and constructive in all interactions.
-
-## How Can I Contribute?
-
-### Ways to Contribute
-
-- 🐛 **Report bugs** - Help us identify issues
-- 💡 **Suggest features** - Share ideas for improvements
-- 📝 **Improve documentation** - Help others understand the project
-- 🎨 **Add components** - Create new section components
-- 🔧 **Fix issues** - Submit pull requests
-- ⭐ **Star the repo** - Show your support
-- 🐦 **Share** - Spread the word
-
-## Development Setup
-
-### Prerequisites
-
-- Node.js 22.0.0 or higher
-- npm (comes with Node.js)
-- Git
-
-### Getting Started
-
-1. **Fork the repository**
-   ```bash
-   # Click "Fork" on GitHub, then clone your fork
-   git clone https://github.com/YOUR_USERNAME/astrodeck.git
-   cd astrodeck
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Start development server**
-   ```bash
-   npm run dev
-   ```
-   Open http://localhost:4321 in your browser
-
-4. **Create a branch**
-   ```bash
-   git checkout -b feature/your-feature-name
-   # or
-   git checkout -b fix/bug-description
-   ```
-
-### Project Structure
-
-```
-src/
-├── components/
-│   ├── sections/      # Page sections (Hero, CTA, etc.)
-│   ├── ui/            # shadcn/ui components
-│   └── *.astro        # Shared components
-├── layouts/           # Page templates
-├── pages/             # Routes (file-based routing)
-├── styles/            # Global styles
-└── lib/               # Utilities
+```bash
+git clone https://github.com/YOUR_USERNAME/astrodeck.git   # your fork
+cd astrodeck
+npm install
+npm run dev                                                 # http://localhost:4321
+git checkout -b fix/short-description
 ```
 
-## Coding Guidelines
+This repository is two things at once: the **astrodeck.dev demo and docs site** (deployed from
+`main`) and the **starter** users download. Demo-only files are listed in
+`starter.manifest.json`; `npm run starter:clean` removes them in a user's copy. Keep both states
+working.
 
-### General Principles
+## Conventions
 
-- **Keep it simple** - Don't over-engineer solutions
-- **Follow existing patterns** - Consistency is key
-- **Mobile-first** - Always design for mobile, then scale up
-- **Accessible** - Use semantic HTML and ARIA labels
-- **TypeScript** - Add types for all props and functions
+The rules for code, design and content live in one place: `AGENTS.md` (golden rules, commands,
+Astro 7 / Tailwind 4 gotchas) and the references of the build-site skill:
 
-### File Naming Conventions
+- Design system (tokens, typography, spacing, radius, motion):
+  `.agents/skills/astrodeck-build-site/references/design-system.md`
+- Content rules (honest copy, links, alt text, metadata):
+  `.agents/skills/astrodeck-build-site/references/content-rules.md`
+- Quality checklist: `.agents/skills/astrodeck-build-site/references/quality-checklist.md`
 
-- **Components**: PascalCase (e.g., `Hero.astro`, `ThemeToggle.astro`)
-- **Pages**: kebab-case (e.g., `index.astro`, `about-us.astro`)
-- **Utilities**: camelCase (e.g., `utils.ts`)
+They apply to human contributors as well. In short: semantic color tokens only, sections take
+their content as props, every link and form goes somewhere real, no invented testimonials,
+logos or numbers, one `h1` per page, light and dark mode, mobile first.
 
-### Import Guidelines
+### Sections and the registry
 
-✅ **Always use the `@/` alias:**
-```astro
-import Hero from "@/components/sections/Hero.astro";
-import { Button } from "@/components/ui/button";
+- New or changed section: follow `.agents/skills/astrodeck-new-section/SKILL.md`, then update
+  `src/registry.json` (props, `useWhen`, `example`). `npm run check:registry` compares it with the
+  component.
+- Icons come from `src/lib/icons.ts`; add new ones there.
+
+### Skills and agent files
+
+- Edit skills only in `.agents/skills/`, then run `npm run sync:agents`. `.claude/skills/` is a
+  generated mirror; `npm run verify` fails on drift.
+- Keep `AGENTS.md` a compact index (at most 250 lines): golden rules and task → skill routes.
+  Details belong in a skill's `references/`.
+- Skill front matter: only `name`, `description`, `license`, `compatibility`, `metadata`,
+  `allowed-tools`; folder name equals `name`; body under 500 lines (`npm run lint:docs` checks).
+- `.agents/skills/vibe2prod/` is vendored from upstream; never edit it by hand
+  (`npm run sync:vibe2prod -- --tag vX.Y.Z` updates it).
+- No symlinks anywhere: they do not survive ZIP extraction on Windows.
+- How the layers fit together: `docs/maintainers/agent-layer.md`.
+
+### Scripts
+
+Scripts are ES modules in `scripts/` (shared helpers in `scripts/lib/`) with tests in `tests/`
+(`node --test`). They use `node:path` APIs, work on Windows, and need no network access, except
+`sync-vibe2prod.mjs` and `setup-audit.mjs`.
+
+`npm test` also runs inside every user's project (it is part of `npm run verify`), so tests must
+hold for any site built from the kit: never assert on the user's palette, copy or config values.
+Checks that only make sense for the kit itself run when `ASTRODECK_KIT_CHECKS=1` is set (CI does
+this); for example, `tests/fixtures/default-globals.css` must match `src/styles/globals.css`, so
+update the fixture when you change the shipped default palette.
+
+## Before you open a pull request
+
+```bash
+npm run verify
 ```
 
-❌ **Don't use relative imports:**
-```astro
-import Hero from "../components/sections/Hero.astro"; // Wrong!
-```
+It must end with `VERIFY PASSED`. Fix the cause of a failure; do not add ignore markers or
+delete rules or tests to get green. Also check your change in the browser at mobile and desktop
+widths, in light and dark mode.
 
-### Styling Rules
+If you changed the build-site workflow or a skill, rerun at least one case from `evals/` with a
+coding agent and mention the result in the pull request.
 
-✅ **DO:**
-- Use Tailwind utility classes exclusively
-- Use CSS variables for colors (supports theming)
-- Make components responsive with breakpoints
-- Test in both light and dark mode
+Maintainers: the release steps, including the check of the cleaned starter, are in
+`docs/maintainers/release-checklist.md`.
 
-❌ **DON'T:**
-- Use inline styles (`style="..."`)
-- Create component-specific CSS files
-- Hardcode colors (`bg-blue-500`)
-- Use CSS-in-JS libraries
+## Pull requests
 
-**Example - Correct styling:**
-```astro
-<section class="py-20 px-6 bg-background">
-  <h1 class="text-4xl md:text-6xl font-bold text-foreground">
-    Title
-  </h1>
-  <p class="text-muted-foreground">Description</p>
-</section>
-```
+- Commit messages follow [Conventional Commits](https://www.conventionalcommits.org):
+  `feat: ...`, `fix: ...`, `docs: ...`, `refactor: ...`, `test: ...`, `chore: ...`.
+- One topic per pull request. Describe what changed, why, how you tested it, and add
+  screenshots for visual changes. Link related issues (`Closes #42`).
+- Update `README.md`, the docs page (`src/pages/docs.astro`) and `CHANGELOG.md` when behaviour
+  or commands change. Every claim must be backed by the code.
 
-### TypeScript Guidelines
+## Reporting bugs
 
-Always add type annotations for component props:
+Search the [issues](https://github.com/holger1411/astrodeck/issues) first. A good report has:
+steps to reproduce, expected and actual behaviour, screenshots if visual, and your environment
+(OS, browser, Node version, AstroDeck version, coding agent and model if the bug is in the agent
+workflow).
 
-```astro
----
-interface Props {
-  title: string;
-  description?: string;
-  variant?: 'default' | 'centered';
-}
+## Suggesting features
 
-const {
-  title,
-  description = "",
-  variant = 'default'
-} = Astro.props;
----
-```
-
-### Component Structure
-
-Follow this pattern for section components:
-
-```astro
----
-// 1. Imports
-import { Button } from "@/components/ui/button";
-
-// 2. Props interface
-interface Props {
-  title?: string;
-}
-
-// 3. Props with defaults
-const { title = "Default" } = Astro.props;
----
-
-<!-- 4. Semantic HTML -->
-<section class="py-20 px-6">
-  <!-- 5. Container -->
-  <div class="max-w-7xl mx-auto">
-    <!-- 6. Content -->
-    <h2>{title}</h2>
-  </div>
-</section>
-```
-
-### Responsive Design
-
-Use mobile-first approach with Tailwind breakpoints:
-
-```astro
-<!-- ✅ Correct: Mobile-first -->
-<h1 class="text-3xl md:text-5xl lg:text-6xl">
-
-<!-- ❌ Wrong: Desktop-first -->
-<h1 class="text-6xl lg:text-3xl">
-```
-
-**Breakpoints:**
-- `sm:` 640px - Small tablets
-- `md:` 768px - Tablets
-- `lg:` 1024px - Laptops
-- `xl:` 1280px - Desktops
-- `2xl:` 1536px - Large screens
-
-### Accessibility Guidelines
-
-- Use semantic HTML elements (`<section>`, `<article>`, `<nav>`, etc.)
-- Add `alt` attributes to all images
-- Ensure proper heading hierarchy (h1 → h2 → h3)
-- Use ARIA labels for icon buttons
-- Test keyboard navigation
-- Maintain color contrast ratios
-
-**Example:**
-```astro
-<!-- ✅ Good accessibility -->
-<button aria-label="Close menu" class="...">
-  <svg aria-hidden="true">...</svg>
-</button>
-
-<!-- ❌ Poor accessibility -->
-<div onclick="closeMenu()">
-  <svg>...</svg>
-</div>
-```
-
-## For AI Assistants
-
-**👋 If you're an AI coding assistant (Claude, ChatGPT, Cursor, Copilot, etc.) helping a developer contribute to AstroDeck, please read this section carefully.**
-
-### Quick Context for AI
-
-**Project Type:** Component library for Astro.js
-**Stack:** Astro v7.x (latest) + Tailwind CSS v4.x (latest) + shadcn/ui + TypeScript (latest)
-**Purpose:** Pre-built sections for landing pages
-
-**CRITICAL:**
-- Always use the latest versions of Astro and Tailwind CSS v4
-- This project uses **@tailwindcss/vite** plugin (NOT @astrojs/tailwind)
-- Theme configuration is in CSS using `@theme` directive
-- Colors use OKLCH format (NOT HSL)
-- No `tailwind.config.mjs` file (v4 uses CSS-based configuration)
-
-### Key Rules When Generating Code
-
-1. **✅ ALWAYS:**
-   - Use `@/` import alias for src/ directory
-   - Use Tailwind utility classes only (no inline styles)
-   - Use CSS variables for colors (`bg-primary`, not `bg-blue-500`)
-   - Add TypeScript types for props
-   - Make components responsive (mobile-first)
-   - Test in both light and dark mode
-   - Follow existing component patterns
-   - Use semantic HTML
-
-2. **❌ NEVER:**
-   - Create inline styles or separate CSS files
-   - Hardcode colors (breaks dark mode)
-   - Use relative imports (`../components`)
-   - Create .tsx files for static content (use .astro)
-   - Skip TypeScript types
-   - Ignore responsive design
-   - Use `any` type
-
-### File Locations Guide
-
-When helping developers add features:
-
-- **New page** → `src/pages/your-page.astro`
-- **New section** → `src/components/sections/YourSection.astro`
-- **New UI component** → `src/components/ui/your-component.tsx`
-- **Layout changes** → `src/layouts/`
-- **Theme customization** → `src/styles/globals.css`
-
-### Component Generation Template
-
-When creating new sections, use this template:
-
-```astro
----
-interface Props {
-  title?: string;
-  description?: string;
-}
-
-const {
-  title = "Default Title",
-  description = "Default description"
-} = Astro.props;
----
-
-<section class="py-20 px-6">
-  <div class="max-w-7xl mx-auto">
-    <h2 class="text-4xl font-bold mb-4">{title}</h2>
-    {description && (
-      <p class="text-muted-foreground">{description}</p>
-    )}
-  </div>
-</section>
-```
-
-### Common Patterns
-
-**Page creation:**
-```astro
----
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import Hero from "@/components/sections/Hero.astro";
----
-
-<BaseLayout title="Page Title" description="SEO description">
-  <Hero />
-</BaseLayout>
-```
-
-**Using shadcn/ui components:**
-```astro
----
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
----
-
-<div>
-  <Card>
-    <h3>Card Title</h3>
-    <Button>Click me</Button>
-  </Card>
-</div>
-```
-
-### Layout Selection
-
-Help developers choose the right layout:
-
-- **BaseLayout** - Most pages (centered, max-w-5xl)
-- **FullWidthLayout** - Showcase pages (full viewport width)
-- **AuthLayout** - Login/signup (no header/footer)
-
-### Debugging Checklist
-
-Before suggesting a fix, check:
-
-- [ ] Imports use `@/` alias?
-- [ ] Colors use CSS variables?
-- [ ] Component responsive on mobile?
-- [ ] TypeScript types defined?
-- [ ] Works in dark mode?
-- [ ] Using correct layout?
-- [ ] Following existing patterns?
-
-### Additional Resources for AI
-
-- **AI Guide**: See [`AI.md`](./AI.md) for comprehensive AI assistant documentation
-- **Code Rules**: See [`.cursorrules`](./.cursorrules) for detailed coding conventions
-- **Examples**: Browse `/sections` page in development server for component examples
-
-## Submitting Changes
-
-### Pull Request Process
-
-1. **Ensure your code works**
-   ```bash
-   # Test in dev mode
-   npm run dev
-
-   # Build successfully
-   npm run build
-
-   # Preview build
-   npm run preview
-   ```
-
-2. **Test thoroughly**
-   - [ ] Component displays correctly
-   - [ ] Responsive on mobile, tablet, desktop
-   - [ ] Works in light mode
-   - [ ] Works in dark mode
-   - [ ] No TypeScript errors
-   - [ ] No console errors
-
-3. **Commit with clear messages**
-   ```bash
-   git add .
-   git commit -m "Add: Newsletter section component"
-   # or
-   git commit -m "Fix: Hero component responsive layout"
-   ```
-
-4. **Push to your fork**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-
-5. **Create Pull Request**
-   - Go to the original repository
-   - Click "New Pull Request"
-   - Select your fork and branch
-   - Fill in the PR template
-   - Link related issues
-
-### Pull Request Guidelines
-
-**Title Format:**
-- `Add: New feature description`
-- `Fix: Bug description`
-- `Update: What was updated`
-- `Docs: Documentation changes`
-
-**Description Should Include:**
-- What changes were made
-- Why the changes were needed
-- Screenshots (for UI changes)
-- How to test the changes
-- Related issue numbers
-
-**Example PR Description:**
-```markdown
-## Changes
-Added a new Newsletter section component with email input and subscribe button.
-
-## Why
-Requested in issue #42. Many users need newsletter signup sections.
-
-## Screenshots
-[Include screenshot]
-
-## Testing
-1. Visit http://localhost:4321/sections
-2. Scroll to Newsletter section
-3. Verify responsive layout
-4. Test dark mode toggle
-
-Closes #42
-```
-
-## Reporting Bugs
-
-### Before Submitting a Bug Report
-
-- Check if the issue already exists in [Issues](https://github.com/holger1411/astrodeck/issues)
-- Ensure it's actually a bug (not a configuration issue)
-- Collect information about the bug
-
-### How to Submit a Bug Report
-
-1. Go to [Issues](https://github.com/holger1411/astrodeck/issues)
-2. Click "New Issue"
-3. Choose "Bug Report" template
-4. Fill in all sections:
-
-```markdown
-## Description
-Brief description of the bug
-
-## Steps to Reproduce
-1. Go to '...'
-2. Click on '...'
-3. See error
-
-## Expected Behavior
-What should happen
-
-## Actual Behavior
-What actually happens
-
-## Screenshots
-If applicable
-
-## Environment
-- OS: [e.g., macOS 14.1]
-- Browser: [e.g., Chrome 120]
-- Node version: [e.g., 22.0.0]
-- AstroDeck version: [e.g., 1.0.0]
-
-## Additional Context
-Any other relevant information
-```
-
-## Suggesting Features
-
-### Before Suggesting a Feature
-
-- Check if the feature already exists
-- Check if it's already requested in [Issues](https://github.com/holger1411/astrodeck/issues)
-- Consider if it fits AstroDeck's scope (component library for landing pages)
-
-### How to Suggest a Feature
-
-1. Go to [Issues](https://github.com/holger1411/astrodeck/issues)
-2. Click "New Issue"
-3. Choose "Feature Request" template
-4. Fill in details:
-
-```markdown
-## Feature Description
-Clear description of the feature
-
-## Use Case
-Why is this feature needed? What problem does it solve?
-
-## Proposed Solution
-How should it work?
-
-## Alternatives Considered
-Other ways to achieve the same goal
-
-## Additional Context
-Mockups, examples, related features
-```
-
-## Community
-
-### Getting Help
-
-- **Documentation**: Start with [README.md](./README.md)
-- **AI Guide**: Check [AI.md](./AI.md) for development help
-- **Issues**: Search existing issues
-- **Discussions**: Use GitHub Discussions for questions
-
-### Recognition
-
-Contributors will be:
-- Listed in the GitHub contributors page
-- Mentioned in release notes (for significant contributions)
-- Appreciated in our community
+Open an [issue](https://github.com/holger1411/astrodeck/issues/new) with the use case, the
+proposed solution and alternatives you considered. AstroDeck focuses on content and marketing
+websites built with a coding agent; dashboards, app backends and CMS features are out of scope.
 
 ## License
 
-By contributing to AstroDeck, you agree that your contributions will be licensed under the MIT License.
-
----
-
-## Quick Links
-
-- 📝 [AI Developer Guide](./AI.md) - For AI assistants
-- 📋 [Code Rules](./.cursorrules) - Detailed coding conventions
-- 🐛 [Report Bug](https://github.com/holger1411/astrodeck/issues/new)
-- 💡 [Request Feature](https://github.com/holger1411/astrodeck/issues/new)
-- ⭐ [Star the Repo](https://github.com/holger1411/astrodeck)
-
----
-
-**Thank you for contributing to AstroDeck! 🚀**
-
-Every contribution, no matter how small, helps make AstroDeck better for everyone.
+By contributing, you agree that your contributions are licensed under the [MIT License](LICENSE).

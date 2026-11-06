@@ -1,5 +1,8 @@
 ---
 interface Props {
+  /** Form endpoint (your newsletter provider or backend). Required. */
+  action: string;
+  method?: 'get' | 'post';
   title?: string;
   description?: string;
   placeholder?: string;
@@ -7,6 +10,8 @@ interface Props {
 }
 
 const {
+  action,
+  method = 'post',
   title = 'Stay in the Loop',
   description,
   placeholder = 'Enter your email',
@@ -14,18 +19,17 @@ const {
 } = Astro.props;
 ---
 
-<section class="py-16 md:py-24 bg-muted/30">
-  <div class="container max-w-5xl mx-auto px-6">
+<section class="py-16 md:py-24 px-6 bg-muted/30">
+  <div class="container max-w-5xl mx-auto">
     <div class="rounded-lg border bg-card text-card-foreground p-8 md:p-12 text-center">
       <h2 class="text-3xl font-bold leading-[1.1] sm:text-3xl md:text-4xl">
         {title}
       </h2>
       {description && <p class="mt-4 text-muted-foreground max-w-[520px] mx-auto">{description}</p>}
       <form
-        action="#"
-        method="POST"
+        action={action}
+        method={method}
         class="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-        novalidate
       >
         <label for="newsletter-email" class="sr-only">Email address</label>
         <input

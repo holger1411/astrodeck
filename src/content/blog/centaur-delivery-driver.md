@@ -6,8 +6,6 @@ author: "Gig Economy Gazette"
 tags: ["humor", "work", "mythology"]
 ---
 
-# Centaur Dominates Food Delivery Apps, Claims 'No Bike Needed'
-
 A centaur named Cheiron has become the top-rated delivery driver across three major food delivery platforms, completing an unprecedented 47 deliveries per hour during peak lunch rush.
 
 ## The Numbers Don't Lie

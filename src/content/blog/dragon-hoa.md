@@ -6,8 +6,6 @@ author: "Suburban Dragons Weekly"
 tags: ["humor", "housing", "mythology"]
 ---
 
-# Dragon Receives 47 HOA Violations, Burns Down Mailbox in Response
-
 *"I have fought armies. I have razed kingdoms. But nothing prepared me for Deborah and her fence height regulations."*
 
 Smaug Jr. (age 847, first-time homebuyer) thought suburban living would be peaceful after centuries of cave dwelling. Three months into homeownership, he's learned that his Homeowners Association is scarier than any dragonslayer.

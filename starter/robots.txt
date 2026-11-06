@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Replace example.com with your production URL (same value as SITE_URL in src/config/site-url.mjs)
+Sitemap: https://example.com/sitemap-index.xml

@@ -19,6 +19,8 @@
  * />
  * ```
  */
+import { site } from '@/config/site';
+
 interface Props {
   title: string;
   description: string;
@@ -32,19 +34,19 @@ interface Props {
 const {
   title,
   description,
-  image = '/cover.png',
+  image = site.ogImage,
   type = 'website',
   publishedTime,
-  author = 'AstroDeck',
+  author = site.author,
   noindex = false,
 } = Astro.props;
 
 // Fallback for dev server when Astro.site might be undefined
 const siteUrl = Astro.site ?? new URL('http://localhost:4321');
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
-const socialImageURL = new URL(image, siteUrl);
+const socialImageURL = image ? new URL(image, siteUrl) : undefined;
 
-const siteName = 'AstroDeck';
+const siteName = site.name;
 
 // JSON-LD: BlogPosting for articles, WebSite for everything else
 const structuredData =
@@ -54,7 +56,7 @@ const structuredData =
         '@type': 'BlogPosting',
         headline: title,
         description,
-        image: socialImageURL.toString(),
+        ...(socialImageURL && { image: socialImageURL.toString() }),
         url: canonicalURL.toString(),
         ...(publishedTime && { datePublished: publishedTime.toISOString() }),
         author: { '@type': 'Person', name: author },
@@ -74,7 +76,7 @@ const structuredData =
 <meta name="description" content={description} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-<!-- Browser UI theming (light + dark, matching --color-background tokens) -->
+<!-- Browser UI theming (light and dark, matching the background color tokens) -->
 <meta name="color-scheme" content="light dark" />
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#030303" />
@@ -90,12 +92,18 @@ const structuredData =
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={socialImageURL} />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content={title} />
+{
+  socialImageURL && (
+    <>
+      <meta property="og:image" content={socialImageURL} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={title} />
+    </>
+  )
+}
 <meta property="og:site_name" content={siteName} />
-<meta property="og:locale" content="en_US" />
+<meta property="og:locale" content={site.locale} />
 
 {
   type === 'article' && publishedTime && (
@@ -107,13 +115,28 @@ const structuredData =
 }
 
 <!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:card" content={socialImageURL ? 'summary_large_image' : 'summary'} />
 <meta name="twitter:url" content={canonicalURL} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={socialImageURL} />
-<meta name="twitter:image:alt" content={title} />
+{
+  socialImageURL && (
+    <>
+      <meta name="twitter:image" content={socialImageURL} />
+      <meta name="twitter:image:alt" content={title} />
+    </>
+  )
+}
 
 <!-- Sitemap & RSS -->
 <link rel="sitemap" href="/sitemap-index.xml" />
-<link rel="alternate" type="application/rss+xml" title="AstroDeck Blog RSS Feed" href="/rss.xml" />
+{
+  site.features.blog && site.features.rss && (
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${site.name} Blog RSS Feed`}
+      href="/rss.xml"
+    />
+  )
+}

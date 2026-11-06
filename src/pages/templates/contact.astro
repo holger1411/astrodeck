@@ -12,12 +12,12 @@ const faqs = [
   {
     question: 'How do I report a security vulnerability?',
     answer:
-      'We take security seriously. Please disclose vulnerabilities responsibly by emailing security@nebula.dev. We will acknowledge your report within 24 hours and aim to resolve confirmed issues within 72 hours. We maintain a public bug bounty program — details are available on our security page.',
+      'We take security seriously. Please disclose vulnerabilities responsibly by emailing security@nebula.example. We will acknowledge your report within 24 hours and aim to resolve confirmed issues within 72 hours. We maintain a public bug bounty program — details are available on our security page.',
   },
   {
     question: 'Can I request a live product demo?',
     answer:
-      'Absolutely. Use the contact form above or email sales@nebula.dev to schedule a 30-minute demo with a solutions engineer. We tailor every demo to your specific use case and tech stack — no generic slide decks.',
+      'Absolutely. Use the contact form above or email sales@nebula.example to schedule a 30-minute demo with a solutions engineer. We tailor every demo to your specific use case and tech stack — no generic slide decks.',
   },
 ];
 ---
@@ -29,9 +29,11 @@ const faqs = [
   <div class="section-inverted">
     <Contact
       title="Get in touch"
+      headingLevel="h1"
       subtitle="Whether you have a question about pricing, need a demo, or want to report a bug — the right person at Nebula is ready to help."
-      email="hello@nebula.dev"
+      email="hello@nebula.example"
       phone="+1 (415) 555-0182"
+      form={{ action: '/thanks', method: 'get' }}
       address={'Nebula Technologies Inc.\n340 Pine Street, Suite 800\nSan Francisco, CA 94104'}
     />
   </div>

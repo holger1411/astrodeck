@@ -12,6 +12,8 @@
  * ```
  */
 import Logo from './Logo.astro';
+import { site } from '@/config/site';
+import { ui } from '@/config/ui';
 
 interface Props {
   /** Layout variant - boxed (default) or fullWidth */
@@ -20,19 +22,14 @@ interface Props {
 
 const { variant = 'boxed' } = Astro.props;
 
-const footerLinks = {
-  astrodeck: [
-    { href: '/', label: 'Home' },
-    { href: '/docs', label: 'Docs' },
-    { href: '/sections', label: 'Sections' },
-    { href: '/changelog', label: 'Changelog' },
-  ],
-  pages: [
-    { href: '/blog', label: 'Blog' },
-    { href: '/content', label: 'Content' },
-    { href: '/login', label: 'Login' },
-  ],
-};
+const { groups, tagline, copyright, credit } = site.footer;
+const { email, phone, address } = site.contact;
+const hasContact = Boolean(email || phone || address);
+// tel: URIs must not contain spaces; keep digits and a leading +.
+const telHref = phone ? `tel:${phone.replace(/[^\d+]/g, '')}` : undefined;
+const isExternal = (href: string) => /^https?:\/\//i.test(href);
+const linkClass =
+  'inline-block py-1 text-sm text-muted-foreground hover:text-foreground transition-colors';
 
 const containerClass =
   variant === 'fullWidth' ? 'w-full px-4' : 'container max-w-5xl mx-auto px-4 sm:px-6';
@@ -44,83 +41,117 @@ const containerClass =
       <!-- Brand -->
       <div class="col-span-2 md:col-span-1">
         <Logo />
-        <p class="mt-4 text-sm text-muted-foreground">
-          Open-source Astro.js starter kit with ready-to-use components. Start building faster.
-        </p>
+        {tagline && <p class="mt-4 text-sm text-muted-foreground">{tagline}</p>}
+        {
+          hasContact && (
+            <ul class="mt-4" aria-label={ui.contact.list}>
+              {email && (
+                <li>
+                  <span class="sr-only">{ui.contact.email}: </span>
+                  <a href={`mailto:${email}`} class={linkClass}>
+                    {email}
+                  </a>
+                </li>
+              )}
+              {phone && (
+                <li>
+                  <span class="sr-only">{ui.contact.phone}: </span>
+                  <a href={telHref} class={linkClass}>
+                    {phone}
+                  </a>
+                </li>
+              )}
+              {address && (
+                <li class="py-1 text-sm text-muted-foreground whitespace-pre-line">
+                  <span class="sr-only">{ui.contact.address}: </span>
+                  {address}
+                </li>
+              )}
+            </ul>
+          )
+        }
+        {
+          site.social.length > 0 && (
+            <ul class="mt-4 flex flex-wrap gap-x-4" aria-label={ui.footer.social}>
+              {site.social.map((profile) => (
+                <li>
+                  <a
+                    href={profile.href}
+                    class={linkClass}
+                    {...(isExternal(profile.href)
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
+                  >
+                    {profile.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
       </div>
 
-      <!-- AstroDeck -->
-      <div>
-        <h3 class="font-semibold mb-4">AstroDeck</h3>
-        <ul class="space-y-0">
-          {
-            footerLinks.astrodeck.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class="inline-block py-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+      {
+        groups.map((group) => (
+          <div>
+            <h3 class="font-semibold mb-4">{group.title}</h3>
+            <ul class="space-y-0">
+              {group.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="inline-block py-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+
+      <!-- Creator (only when site.footer.credit is set) -->
+      {
+        credit && (
+          <div class="col-span-2 md:col-span-1">
+            <h3 class="font-semibold mb-4">{ui.footer.creditHeading}</h3>
+            <p class="text-sm text-muted-foreground">
+              {ui.footer.createdBy} {site.author}
+            </p>
+            <p class="text-sm text-muted-foreground mt-1">
+              {ui.footer.createdFor}{' '}
+              <a
+                href={credit.href}
+                class="font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1 py-1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {credit.label}
+                <svg
+                  class="h-3 w-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
-      <!-- Pages -->
-      <div>
-        <h3 class="font-semibold mb-4">Pages</h3>
-        <ul class="space-y-0">
-          {
-            footerLinks.pages.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class="inline-block py-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
-      <!-- Creator -->
-      <div>
-        <h3 class="font-semibold mb-4">Creator</h3>
-        <p class="text-sm text-muted-foreground">Created by Holger Könemann</p>
-        <p class="text-sm text-muted-foreground mt-1">
-          for <a
-            href="https://templatedeck.com"
-            class="font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1 py-1"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            templatedeck.com
-            <svg
-              class="h-3 w-3"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-              ></path>
-            </svg>
-          </a>
-        </p>
-      </div>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  />
+                </svg>
+              </a>
+            </p>
+          </div>
+        )
+      }
     </div>
 
     <!-- Copyright -->
     <div class="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-      <p>&copy; {new Date().getFullYear()} AstroDeck. MIT License. Open Source.</p>
+      <p>&copy; {new Date().getFullYear()} {copyright}</p>
     </div>
   </div>
 </footer>

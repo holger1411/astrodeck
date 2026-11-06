@@ -2,8 +2,10 @@
 /**
  * Logo Component
  *
- * AstroDeck brand logo with card deck icon and wordmark.
- * Used consistently across Header, Footer, and Auth layouts.
+ * Site logo from `site.logo` in src/config/site.ts: an inline SVG mark (`svg`, uses
+ * currentColor so it follows dark mode) or an image file (`src`), plus the wordmark (`text`).
+ * Without `svg` and `src` it renders the wordmark only.
+ * Used consistently across Header, Footer, 404 and Auth layouts.
  *
  * @example
  * ```astro
@@ -12,8 +14,10 @@
  * <Logo size="lg" />
  * ```
  */
+import { site } from '@/config/site';
+
 interface Props {
-  /** Show the "AstroDeck" text next to the icon */
+  /** Show the wordmark (site.logo.text) next to the mark */
   showText?: boolean;
   /** Size variant */
   size?: 'sm' | 'md' | 'lg';
@@ -22,11 +26,12 @@ interface Props {
 }
 
 const { showText = true, size = 'md', class: className = '' } = Astro.props;
+const { logo, name } = site;
 
 const sizeClasses = {
-  sm: 'h-5 w-5',
-  md: 'h-6 w-6',
-  lg: 'h-8 w-8',
+  sm: 'h-5',
+  md: 'h-6',
+  lg: 'h-8',
 };
 
 const textSizeClasses = {
@@ -34,27 +39,32 @@ const textSizeClasses = {
   md: 'text-base',
   lg: 'text-lg',
 };
+
+const label = logo.alt ?? name;
+const withText = showText && logo.text.trim() !== '';
 ---
 
-<a href="/" class:list={['flex items-center space-x-2', className]}>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 32 32"
-    fill="currentColor"
-    class={sizeClasses[size]}
-    aria-hidden="true"
-  >
-    <!-- Main card/deck -->
-    <rect x="6" y="8" width="14" height="18" rx="2" fill="currentColor" opacity="0.9"></rect>
-    <!-- Second card (layered) -->
-    <rect x="9" y="6" width="14" height="18" rx="2" fill="currentColor" opacity="0.7"></rect>
-    <!-- Third card (layered) -->
-    <rect x="12" y="4" width="14" height="18" rx="2" fill="currentColor" opacity="0.5"></rect>
-    <!-- Star on front card -->
-    <path
-      d="M19 12 L20 15 L23 15 L20.5 17 L21.5 20 L19 18 L16.5 20 L17.5 17 L15 15 L18 15 Z"
-      fill="currentColor"
-      opacity="0.3"></path>
-  </svg>
-  {showText && <span class:list={['font-bold', textSizeClasses[size]]}>AstroDeck</span>}
+<a
+  href="/"
+  class:list={['flex items-center gap-2', className]}
+  aria-label={withText ? undefined : label}
+>
+  {
+    logo.svg ? (
+      <span
+        class:list={['inline-flex aspect-square [&>svg]:h-full [&>svg]:w-full', sizeClasses[size]]}
+        aria-hidden="true"
+        set:html={logo.svg}
+      />
+    ) : (
+      logo.src && (
+        <img
+          src={logo.src}
+          alt={withText ? '' : label}
+          class:list={['w-auto', sizeClasses[size]]}
+        />
+      )
+    )
+  }
+  {withText && <span class:list={['font-bold', textSizeClasses[size]]}>{logo.text}</span>}
 </a>

@@ -6,8 +6,6 @@ author: "Supernatural Singles Weekly"
 tags: ["humor", "dating", "horror"]
 ---
 
-# Frankenstein's Monster Joins Dating App, Profile Says 'No Drama'
-
 *Swipe right for existential conversations and potentially being chased by villagers*
 
 Adam Frankenstein (created 1818, single since forever) has reluctantly joined Tinder after 200 years of isolation. His experience so far: "Modern dating is somehow worse than being assembled from corpse parts."

@@ -1,460 +1,61 @@
 ---
 import FullWidthLayout from '@/layouts/FullWidthLayout.astro';
+import RegistryUsage from '@/components/demos/RegistryUsage.astro';
+import Features from '@/components/sections/Features.astro';
+import ContentBlock from '@/components/sections/ContentBlock.astro';
+import LogoCloud from '@/components/sections/LogoCloud.astro';
+import IntegrationGrid from '@/components/sections/IntegrationGrid.astro';
+import registry from '@/registry.json';
 
+// Sidebar entries; the count is the number of registry components shown in each group.
 const sections = [
-  { id: 'heroes', label: 'Heroes', count: 3 },
-  { id: 'ctas', label: 'CTAs', count: 3 },
-  { id: 'pricing', label: 'Pricing', count: 4 },
-  { id: 'testimonials', label: 'Testimonials', count: 3 },
-  { id: 'newsletters', label: 'Newsletters', count: 3 },
-  { id: 'faq', label: 'FAQ', count: 1 },
-  { id: 'stats', label: 'Stats', count: 1 },
-  { id: 'team', label: 'Team', count: 1 },
-  { id: 'comparison', label: 'Comparison', count: 1 },
-  { id: 'contact', label: 'Contact', count: 1 },
+  { id: 'heroes', label: 'Heroes' },
+  { id: 'features', label: 'Features' },
+  { id: 'content', label: 'Content' },
+  { id: 'logos', label: 'Logo Clouds' },
+  { id: 'integrations', label: 'Integrations' },
+  { id: 'ctas', label: 'CTAs' },
+  { id: 'pricing', label: 'Pricing' },
+  { id: 'testimonials', label: 'Testimonials' },
+  { id: 'newsletters', label: 'Newsletters' },
+  { id: 'faq', label: 'FAQ' },
+  { id: 'stats', label: 'Stats' },
+  { id: 'team', label: 'Team' },
+  { id: 'comparison', label: 'Comparison' },
+  { id: 'contact', label: 'Contact' },
 ];
 
-// Code snippets for each section
-const codeSnippets = {
-  // Heroes
-  heroCentered: `---
-import Hero from "@/components/sections/Hero.astro";
----
-
-<Hero 
-  badge="NEW"
-  badgeText="Introducing our latest feature"
-  title="Build amazing products faster"
-  subtitle="Start with our pre-built components and focus on what matters. Ship faster, iterate quicker."
-  primaryCta={{ text: "Get Started", href: "/signup" }}
-  secondaryCta={{ text: "Learn More", href: "/docs" }}
-  centered
-/>`,
-  heroLeftAligned: `---
-import Hero from "@/components/sections/Hero.astro";
----
-
-<Hero 
-  tagline="🚀 Launch Week"
-  title="Ship your SaaS in days, not months"
-  subtitle="Everything you need to build a modern landing page. TypeScript, Tailwind, and shadcn/ui included."
-  primaryCta={{ text: "Start Building", href: "/get-started" }}
-  secondaryCta={{ text: "View Demo", href: "/demo" }}
-  image={{ src: "/images/hero.png", alt: "Product screenshot" }}
-/>`,
-  heroMinimal: `---
-import Hero from "@/components/sections/Hero.astro";
----
-
-<Hero 
-  title="The complete toolkit for modern development"
-  subtitle="Join thousands of developers building with AstroDeck"
-  centered
-  stats={[
-    { value: "50K+", label: "Downloads" },
-    { value: "1.2K+", label: "GitHub Stars" },
-    { value: "99%", label: "Satisfaction" }
-  ]}
-/>`,
-  // CTAs
-  ctaSimple: `---
-import CTA from "@/components/sections/CTA.astro";
----
-
-<CTA 
-  title="Ready to get started?"
-  subtitle="Join thousands of developers already using AstroDeck to build amazing products."
-  primaryCta={{ text: "Start Free Trial", href: "/trial" }}
-/>`,
-  ctaSplit: `---
-import CTA from "@/components/sections/CTA.astro";
----
-
-<CTA 
-  title="Build faster with our components"
-  features={[
-    "Pre-built components",
-    "Full TypeScript support",
-    "Dark mode ready"
-  ]}
-  primaryCta={{ text: "Get Started Free", href: "/signup" }}
-  secondaryCta={{ text: "View Documentation", href: "/docs" }}
-  variant="split"
-/>`,
-  ctaBanner: `---
-import CTA from "@/components/sections/CTA.astro";
----
-
-<CTA 
-  title="Try AstroDeck today"
-  subtitle="Start building your next project with our components"
-  primaryCta={{ text: "Download Now", href: "/download" }}
-  secondaryCta={{ text: "GitHub", href: "https://github.com" }}
-  variant="banner"
-/>`,
-  // Pricing
-  pricingOpenSource: `---
-import Pricing from "@/components/sections/Pricing.astro";
----
-
-<Pricing 
-  title="Free forever. Open source."
-  subtitle="All features included. No hidden costs."
-  plans={[
-    {
-      name: "Landing Page",
-      description: "Everything you need for a stunning landing page.",
-      price: "Free",
-      features: ["Hero & CTA sections", "Logo cloud", "Feature showcase", "Responsive design", "Dark mode support"],
-      cta: { text: "View on GitHub", href: "https://github.com" }
-    },
-    {
-      name: "Full SaaS",
-      description: "Complete boilerplate for your SaaS product.",
-      price: "Free",
-      featured: true,
-      features: ["All landing page features", "Authentication layouts", "Pricing sections", "Privacy & legal pages", "TypeScript & shadcn/ui", "Production-ready"],
-      cta: { text: "Get Started", href: "/get-started" }
-    },
-    {
-      name: "Open Source",
-      description: "MIT licensed and open for contributions.",
-      price: "Free",
-      features: ["Full source code access", "Regular updates", "Community support", "No vendor lock-in", "Commercial use allowed"],
-      cta: { text: "Star on GitHub", href: "https://github.com" }
-    }
-  ]}
-/>`,
-  pricingThreeColumn: `---
-import Pricing from "@/components/sections/Pricing.astro";
----
-
-<Pricing 
-  plans={[
-    {
-      name: "Starter",
-      description: "For small projects",
-      price: "$9",
-      period: "/month",
-      features: ["5 Projects", "Basic Support", "1 GB Storage"],
-      cta: { text: "Get Started", href: "/signup" }
-    },
-    {
-      name: "Pro",
-      description: "For growing teams",
-      price: "$29",
-      period: "/month",
-      featured: true,
-      badge: "Popular",
-      features: ["Unlimited Projects", "Priority Support", "100 GB Storage"],
-      cta: { text: "Get Started", href: "/signup" }
-    },
-    {
-      name: "Enterprise",
-      description: "For large organizations",
-      price: "Custom",
-      features: ["Everything in Pro", "24/7 Support", "Unlimited Storage"],
-      cta: { text: "Contact Sales", href: "/contact" }
-    }
-  ]}
-/>`,
-  pricingComparison: `---
-import Pricing from "@/components/sections/Pricing.astro";
----
-
-<Pricing 
-  title="Choose your plan"
-  subtitle="Simple, transparent pricing"
-  variant="comparison"
-  features={["Projects", "Storage", "Support"]}
-  plans={[
-    { name: "Free", values: ["3", "1 GB", "Community"] },
-    { name: "Pro", values: ["Unlimited", "100 GB", "Email"] },
-    { name: "Enterprise", values: ["Unlimited", "Unlimited", "24/7"] }
-  ]}
-/>`,
-  pricingToggle: `---
-import Pricing from "@/components/sections/Pricing.astro";
----
-
-<Pricing 
-  title="Flexible pricing"
-  subtitle="Save 20% with annual billing"
-  variant="toggle"
-  plans={[
-    {
-      name: "Basic",
-      monthlyPrice: "$19",
-      yearlyPrice: "$15",
-      cta: { text: "Choose Plan", href: "/signup" }
-    },
-    {
-      name: "Professional",
-      monthlyPrice: "$49",
-      yearlyPrice: "$39",
-      featured: true,
-      cta: { text: "Choose Plan", href: "/signup" }
-    }
-  ]}
-/>`,
-  // Testimonials
-  testimonialsGrid: `---
-import Testimonials from "@/components/sections/Testimonials.astro";
----
-
-<Testimonials 
-  items={[
-    {
-      quote: "AstroDeck saved us weeks of development time. The components are beautiful and easy to customize.",
-      author: "Sarah Chen",
-      role: "CEO, TechCorp",
-      avatar: "/images/avatar-1.jpg"
-    },
-    {
-      quote: "Best Astro boilerplate I've used. Clean code, great documentation, and excellent support.",
-      author: "Marcus Johnson",
-      role: "Developer"
-    },
-    {
-      quote: "The perfect starting point for any SaaS project. Highly recommended for anyone using Astro.",
-      author: "Emily Rodriguez",
-      role: "Product Manager"
-    }
-  ]}
-/>`,
-  testimonialsFeatured: `---
-import Testimonials from "@/components/sections/Testimonials.astro";
----
-
-<Testimonials 
-  variant="featured"
-  quote="AstroDeck has completely transformed how we build landing pages. The quality of the components and attention to detail is exceptional. Our development time has been cut in half."
-  author="Alex Kim"
-  role="CTO, StartupCo"
-  avatar="/images/avatar.jpg"
-/>`,
-  testimonialsScroll: `---
-import Testimonials from "@/components/sections/Testimonials.astro";
----
-
-<Testimonials 
-  variant="scroll"
-  items={[
-    { quote: "Game changer for our team!", author: "Jane Doe", role: "Designer" },
-    { quote: "Excellent components and documentation.", author: "Tom Peters", role: "Engineer" },
-    { quote: "Best boilerplate for Astro projects.", author: "Lisa Wang", role: "Founder" },
-    { quote: "Saved us months of development.", author: "Ryan Brown", role: "Developer" }
-  ]}
-/>`,
-  // Newsletters
-  newsletterInline: `---
-// Add to your page
----
-
-<section class="py-16">
-  <div class="max-w-2xl mx-auto px-6 text-center">
-    <h3 class="text-xl font-bold mb-2">Subscribe to our newsletter</h3>
-    <p class="text-sm text-muted-foreground mb-6">Get the latest updates delivered to your inbox.</p>
-    <form class="flex gap-2">
-      <input
-        type="email"
-        placeholder="Enter your email"
-        class="flex-1 h-10 rounded-md border px-3 text-sm"
-        required
-      />
-      <button type="submit" class="px-6 h-10 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90">
-        Subscribe
-      </button>
-    </form>
-    <p class="text-xs text-muted-foreground mt-4">We respect your privacy. Unsubscribe at any time.</p>
-  </div>
-</section>`,
-  newsletterSplit: `---
-// Add to your page
----
-
-<section class="py-16">
-  <div class="max-w-4xl mx-auto px-6">
-    <div class="rounded-lg border overflow-hidden grid md:grid-cols-2">
-      <div class="bg-primary/10 p-12 flex items-center justify-center">
-        <div class="text-center">
-          <div class="text-6xl mb-4">📧</div>
-          <p class="font-semibold">Stay Updated</p>
-        </div>
-      </div>
-      <div class="p-12 flex flex-col justify-center">
-        <h3 class="text-2xl font-bold mb-2">Join our newsletter</h3>
-        <p class="text-muted-foreground mb-6">Weekly insights on building better products.</p>
-        <form class="space-y-3">
-          <input type="email" placeholder="Your email address" class="w-full h-10 rounded-md border px-3 text-sm" required />
-          <button type="submit" class="w-full h-10 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90">
-            Get Started
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>`,
-  newsletterBar: `---
-// Add to your page (e.g., before footer)
----
-
-<section class="border-t bg-muted/30 py-6">
-  <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-    <div>
-      <h4 class="font-semibold mb-1">Get product updates</h4>
-      <p class="text-sm text-muted-foreground">Join 10,000+ subscribers</p>
-    </div>
-    <form class="flex gap-2 w-full md:w-auto">
-      <input type="email" placeholder="you@example.com" class="flex-1 md:w-64 h-9 rounded-md border px-3 text-sm" required />
-      <button type="submit" class="px-4 h-9 bg-foreground text-background rounded-md text-sm font-medium hover:bg-foreground/90 whitespace-nowrap">
-        Sign Up
-      </button>
-    </form>
-  </div>
-</section>`,
-  // FAQ
-  faqDefault: `---
-import FAQ from "@/components/sections/FAQ.astro";
----
-
-<FAQ
-  title="Frequently Asked Questions"
-  subtitle="Everything you need to know about AstroDeck"
-  faqs={[
-    {
-      question: "What is AstroDeck?",
-      answer: "AstroDeck is an open-source component library and starter kit for building Astro.js websites. It provides pre-built, production-ready sections for landing pages and SaaS websites — fully typed with TypeScript and styled with Tailwind CSS v4."
-    },
-    {
-      question: "Is AstroDeck free to use?",
-      answer: "Yes, AstroDeck is completely free and open-source under the MIT license. You can use it for personal and commercial projects without any cost or attribution requirement."
-    },
-    {
-      question: "Does AstroDeck support dark mode?",
-      answer: "Absolutely. Every component is built with CSS variables and Tailwind CSS, so dark mode works out of the box. Just toggle the class on the html element and all sections adapt automatically."
-    },
-    {
-      question: "Can I use AstroDeck with an existing Astro project?",
-      answer: "Yes. You can copy individual components into any Astro project. Make sure you have Tailwind CSS v4 configured via the @tailwindcss/vite plugin and the same CSS custom properties defined in your globals.css."
-    }
-  ]}
-/>`,
-  // Stats
-  statsDefault: `---
-import Stats from "@/components/sections/Stats.astro";
----
-
-<Stats
-  title="Trusted by developers worldwide"
-  subtitle="Numbers that speak for themselves"
-  stats={[
-    { value: "50K+", label: "Downloads", description: "Across 80+ countries" },
-    { value: "1.2K+", label: "GitHub Stars", description: "And growing every week" },
-    { value: "30+", label: "Components", description: "Ready to copy and paste" },
-    { value: "99.9%", label: "Uptime", description: "Battle-tested infrastructure" }
-  ]}
-/>`,
-  // Team
-  teamDefault: `---
-import Team from "@/components/sections/Team.astro";
----
-
-<Team
-  title="Meet Our Team"
-  subtitle="The people building AstroDeck"
-  members={[
-    {
-      name: "Alex Rivera",
-      role: "Co-Founder & CEO",
-      bio: "Passionate about developer experience and open source.",
-      social: {
-        github: "https://github.com",
-        twitter: "https://twitter.com"
-      }
-    },
-    {
-      name: "Sam Chen",
-      role: "Lead Engineer",
-      bio: "TypeScript enthusiast and Astro core contributor.",
-      social: {
-        github: "https://github.com",
-        linkedin: "https://linkedin.com"
-      }
-    },
-    {
-      name: "Jordan Lee",
-      role: "Design Lead",
-      bio: "Crafting accessible interfaces with Tailwind and shadcn/ui.",
-      social: {
-        twitter: "https://twitter.com",
-        linkedin: "https://linkedin.com"
-      }
-    }
-  ]}
-/>`,
-  // Comparison
-  comparisonDefault: `---
-import Comparison from "@/components/sections/Comparison.astro";
----
-
-<Comparison
-  title="How We Compare"
-  subtitle="See why teams choose AstroDeck over the alternatives"
-  columns={[
-    { name: "AstroDeck", highlighted: true },
-    { name: "Competitor A" },
-    { name: "Competitor B" }
-  ]}
-  features={[
-    { name: "Open source", values: [true, false, false] },
-    { name: "TypeScript support", values: [true, true, false] },
-    { name: "Dark mode", values: [true, true, false] },
-    { name: "Tailwind CSS v4", values: [true, false, false] },
-    { name: "Updates per year", values: ["Unlimited", "12", "4"] }
-  ]}
-/>`,
-  // Contact
-  contactDefault: `---
-import Contact from "@/components/sections/Contact.astro";
----
-
-<Contact
-  title="Get in Touch"
-  subtitle="Have a question or want to contribute? We would love to hear from you."
-  email="hello@astrodeck.dev"
-  phone="+1 (555) 000-1234"
-  address="123 Developer Lane\nSan Francisco, CA 94107\nUnited States"
-/>`,
+// Registry components per showcase group; RegistryUsage renders their usage from src/registry.json.
+const groupComponents: Record<string, string[]> = {
+  heroes: ['Hero', 'HeroSplit', 'HeroGradient'],
+  features: ['Features'],
+  content: ['ContentBlock'],
+  logos: ['LogoCloud'],
+  integrations: ['IntegrationGrid'],
+  ctas: ['CTA'],
+  pricing: ['Pricing'],
+  testimonials: ['Testimonials'],
+  newsletters: ['Newsletter'],
+  faq: ['FAQ'],
+  stats: ['Stats'],
+  team: ['Team'],
+  comparison: ['Comparison'],
+  contact: ['Contact'],
 };
+
+// Every registry section must appear in a group (fails the build otherwise).
+const grouped = Object.values(groupComponents).flat();
+const missing = registry.sections.map((s) => s.name).filter((n) => !grouped.includes(n));
+if (missing.length) throw new Error(`sections.astro: no group for ${missing.join(', ')}`);
 ---
 
 <FullWidthLayout
   title="Sections"
-  description="Explore reusable components and sections for your Astro.js project"
+  description="AstroDeck section library: registry usage snippets for every section and layout ideas built with the same design tokens."
 >
   <style>
     html {
       scroll-behavior: smooth;
-    }
-    .code-block {
-      display: none;
-      margin-top: 1rem;
-      background: hsl(var(--muted));
-      border-radius: 0.5rem;
-      overflow: hidden;
-    }
-    .code-block.show {
-      display: block;
-    }
-    .code-block pre {
-      padding: 1rem;
-      overflow-x: auto;
-      font-size: 0.75rem;
-      line-height: 1.5;
-    }
-    .code-block code {
-      font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
     }
     .nav-link:not(.bg-foreground):hover {
       background-color: var(--color-muted);
@@ -468,8 +69,9 @@ import Contact from "@/components/sections/Contact.astro";
     <div class="py-16 px-6 md:px-12">
       <h1 class="text-4xl font-bold tracking-tight md:text-5xl mb-4">Section Library</h1>
       <p class="text-lg text-muted-foreground max-w-3xl">
-        Copy-paste ready components for your landing page. Each section is fully customizable and
-        built with TypeScript, Tailwind CSS, and shadcn/ui.
+        Sections for your pages, each with the usage snippet from the registry. Your coding agent
+        composes pages from them with props. Names, quotes and numbers in the previews are fictional
+        sample content.
       </p>
     </div>
 
@@ -508,7 +110,9 @@ import Contact from "@/components/sections/Contact.astro";
               class="nav-link flex items-center justify-between px-3 py-2 text-sm rounded-md transition-colors"
             >
               <span>{section.label}</span>
-              <span class="text-xs text-muted-foreground">({section.count})</span>
+              <span class="text-xs text-muted-foreground">
+                ({groupComponents[section.id].length})
+              </span>
             </a>
           ))
         }
@@ -532,7 +136,9 @@ import Contact from "@/components/sections/Contact.astro";
                   class="nav-link flex items-center justify-between px-3 py-2 text-sm rounded-md transition-colors"
                 >
                   <span>{section.label}</span>
-                  <span class="text-xs text-muted-foreground">({section.count})</span>
+                  <span class="text-xs text-muted-foreground">
+                    ({groupComponents[section.id].length})
+                  </span>
                 </a>
               ))
             }
@@ -541,7 +147,7 @@ import Contact from "@/components/sections/Contact.astro";
       </aside>
 
       <!-- Sections Content -->
-      <main class="flex-1 min-w-0 space-y-16">
+      <div class="flex-1 min-w-0 space-y-16">
         <!-- Heroes -->
         <section id="heroes" class="scroll-mt-20">
           <div class="mb-8">
@@ -551,20 +157,13 @@ import Contact from "@/components/sections/Contact.astro";
             </p>
           </div>
 
+          <RegistryUsage names={groupComponents.heroes} />
+
           <div class="space-y-12">
             <!-- Hero 1: Centered with Badge -->
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Centered with Badge</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="heroCentered"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-heroCentered">
-                <pre><code>{codeSnippets.heroCentered}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="min-h-[400px] flex items-center">
@@ -578,23 +177,23 @@ import Contact from "@/components/sections/Contact.astro";
                       >
                       <span>Introducing our latest feature</span>
                     </div>
-                    <h1
+                    <h3
                       class="text-4xl font-bold leading-tight tracking-tight md:text-6xl max-w-3xl"
                     >
                       Build amazing products faster
-                    </h1>
+                    </h3>
                     <p class="max-w-[600px] text-lg text-muted-foreground">
                       Start with our pre-built components and focus on what matters. Ship faster,
                       iterate quicker.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 mt-4">
                       <a
-                        href="#"
+                        href="/docs"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-8"
                         >Get Started</a
                       >
                       <a
-                        href="#"
+                        href="/docs"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-12 px-8"
                         >Learn More</a
                       >
@@ -608,15 +207,6 @@ import Contact from "@/components/sections/Contact.astro";
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Left Aligned with Visual</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="heroLeftAligned"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-heroLeftAligned">
-                <pre><code>{codeSnippets.heroLeftAligned}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="min-h-[400px] grid lg:grid-cols-2 gap-12 items-center">
@@ -624,31 +214,37 @@ import Contact from "@/components/sections/Contact.astro";
                     <div
                       class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full"
                     >
-                      🚀 Launch Week
+                      Now in beta
                     </div>
-                    <h1 class="text-4xl font-bold leading-tight tracking-tight md:text-5xl">
+                    <h3 class="text-4xl font-bold leading-tight tracking-tight md:text-5xl">
                       Ship your SaaS in days, not months
-                    </h1>
+                    </h3>
                     <p class="text-lg text-muted-foreground">
                       Everything you need to build a modern landing page. TypeScript, Tailwind, and
                       shadcn/ui included.
                     </p>
                     <div class="flex gap-4">
                       <a
-                        href="#"
+                        href="/docs"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
                         >Start Building</a
                       >
                       <a
-                        href="#"
+                        href="/templates/saas"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium border h-11 px-8"
                         >View Demo</a
                       >
                     </div>
                   </div>
-                  <div class="bg-muted rounded-lg aspect-square flex items-center justify-center">
-                    <p class="text-muted-foreground">Image Placeholder</p>
-                  </div>
+                  <img
+                    src="/screenshots/saas.png"
+                    alt="Nebula SaaS demo hero: headline 'The platform your team will actually love.', See pricing and Talk to sales buttons, and a product mock-up on the right"
+                    width="1280"
+                    height="720"
+                    loading="lazy"
+                    decoding="async"
+                    class="w-full rounded-lg border shadow-lg"
+                  />
                 </div>
               </div>
             </div>
@@ -657,25 +253,16 @@ import Contact from "@/components/sections/Contact.astro";
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Minimal with Stats</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="heroMinimal"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-heroMinimal">
-                <pre><code>{codeSnippets.heroMinimal}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="min-h-[400px] flex items-center">
                   <div class="w-full space-y-8">
                     <div class="max-w-3xl mx-auto text-center space-y-6">
-                      <h1 class="text-5xl font-bold leading-tight tracking-tight md:text-6xl">
+                      <h3 class="text-5xl font-bold leading-tight tracking-tight md:text-6xl">
                         The complete toolkit for modern development
-                      </h1>
+                      </h3>
                       <p class="text-xl text-muted-foreground">
-                        Join thousands of developers building with AstroDeck
+                        Sample numbers for Nebula, a fictional product
                       </p>
                     </div>
                     <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto pt-8">
@@ -699,6 +286,156 @@ import Contact from "@/components/sections/Contact.astro";
           </div>
         </section>
 
+        <!-- Features -->
+        <section id="features" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Feature Grids</h2>
+            <p class="text-muted-foreground">
+              Three to nine benefits, each with an icon, a title and a short description.
+            </p>
+          </div>
+
+          <RegistryUsage names={groupComponents.features} live />
+
+          <div class="space-y-12">
+            <div class="border rounded-lg bg-card overflow-hidden">
+              <div class="flex items-center justify-between p-8 pb-4">
+                <h3 class="font-semibold">Icon Grid</h3>
+              </div>
+              <div class="border-t">
+                <Features
+                  title="Why teams pick Nebula"
+                  subtitle="Everything in one place, nothing to stitch together"
+                  features={[
+                    {
+                      icon: 'users',
+                      title: 'Real-time collaboration',
+                      description: 'Edit together and see changes as they happen.',
+                    },
+                    {
+                      icon: 'lock',
+                      title: 'Secure by default',
+                      description: 'Single sign-on and roles for every workspace.',
+                    },
+                    {
+                      icon: 'chart',
+                      title: 'Clear analytics',
+                      description: 'See what your team ships each week.',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Content Blocks -->
+        <section id="content" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Content Blocks</h2>
+            <p class="text-muted-foreground">
+              A text block with an optional bullet list. With the image prop (a real photo or
+              screenshot) it becomes two columns, as in the usage snippet.
+            </p>
+          </div>
+
+          <RegistryUsage names={groupComponents.content} live />
+
+          <div class="space-y-12">
+            <div class="border rounded-lg bg-card overflow-hidden">
+              <div class="flex items-center justify-between p-8 pb-4">
+                <h3 class="font-semibold">Text Only</h3>
+              </div>
+              <div class="border-t">
+                <ContentBlock
+                  tagline="How it works"
+                  title="One workspace for the whole team"
+                  description="Nebula keeps plans, files and decisions in one place, so nobody has to ask where the latest version is."
+                  features={[
+                    'Shared boards for every project',
+                    'Comments next to the work',
+                    'Weekly summary by email',
+                  ]}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Logo Clouds -->
+        <section id="logos" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Logo Clouds</h2>
+            <p class="text-muted-foreground">
+              One row of logos with a leading label: your stack, or customers who agreed to be
+              shown.
+            </p>
+          </div>
+
+          <RegistryUsage names={groupComponents.logos} live />
+
+          <div class="space-y-12">
+            <div class="border rounded-lg bg-card overflow-hidden">
+              <div class="flex items-center justify-between p-8 pb-4">
+                <h3 class="font-semibold">Single Row</h3>
+              </div>
+              <div class="border-t">
+                <LogoCloud
+                  title="Built with:"
+                  logos={[
+                    { name: 'Astro', src: '/icons/tech/astro.svg', href: 'https://astro.build' },
+                    {
+                      name: 'Tailwind CSS',
+                      src: '/icons/tech/tailwind.svg',
+                      href: 'https://tailwindcss.com',
+                    },
+                    {
+                      name: 'TypeScript',
+                      src: '/icons/tech/typescript.svg',
+                      href: 'https://www.typescriptlang.org',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Integrations -->
+        <section id="integrations" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Integration Grids</h2>
+            <p class="text-muted-foreground">
+              Tools, integrations or partners as a grid of cards next to a short intro. Cards link
+              out only when they have an href.
+            </p>
+          </div>
+
+          <RegistryUsage names={groupComponents.integrations} live />
+
+          <div class="space-y-12">
+            <div class="border rounded-lg bg-card overflow-hidden">
+              <div class="flex items-center justify-between p-8 pb-4">
+                <h3 class="font-semibold">Two-Column Grid</h3>
+              </div>
+              <div class="border-t">
+                <IntegrationGrid
+                  subtitle="Integrations"
+                  title="Works with the tools you already use"
+                  items={[
+                    { name: 'CSV import', subtitle: 'Bring existing data', icon: 'code' },
+                    { name: 'JSON export', subtitle: 'Take your data anywhere', icon: 'code' },
+                    { name: 'Webhooks', subtitle: 'Trigger your own workflows', icon: 'zap' },
+                    { name: 'REST API', subtitle: 'Build on top of Nebula', icon: 'globe' },
+                  ]}
+                >
+                  <p>Move data in and out of Nebula without waiting for us.</p>
+                </IntegrationGrid>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- CTAs -->
         <section id="ctas" class="scroll-mt-20">
           <div class="mb-8">
@@ -706,31 +443,24 @@ import Contact from "@/components/sections/Contact.astro";
             <p class="text-muted-foreground">Convert visitors with compelling CTAs.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.ctas} />
+
           <div class="space-y-12">
             <!-- CTA 1: Simple Centered -->
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Simple Centered</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="ctaSimple"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-ctaSimple">
-                <pre><code>{codeSnippets.ctaSimple}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="rounded-lg border bg-muted/50 p-12 text-center">
                   <h2 class="text-3xl font-bold mb-4">Ready to get started?</h2>
                   <p class="text-muted-foreground max-w-[600px] mx-auto mb-6">
-                    Join thousands of developers already using AstroDeck to build amazing products.
+                    Start with ready-made sections and focus on your content.
                   </p>
                   <a
-                    href="#"
+                    href="/docs"
                     class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
-                    >Start Free Trial</a
+                    >Get Started</a
                   >
                 </div>
               </div>
@@ -740,15 +470,6 @@ import Contact from "@/components/sections/Contact.astro";
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Split with Features</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="ctaSplit"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-ctaSplit">
-                <pre><code>{codeSnippets.ctaSplit}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="rounded-lg border bg-gradient-to-br from-primary/10 to-primary/5 p-12">
@@ -802,12 +523,12 @@ import Contact from "@/components/sections/Contact.astro";
                     </div>
                     <div class="space-y-4">
                       <a
-                        href="#"
+                        href="/docs"
                         class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 leading-[44px]"
-                        >Get Started Free</a
+                        >Get Started</a
                       >
                       <a
-                        href="#"
+                        href="/docs"
                         class="block w-full text-center rounded-md text-sm font-medium border h-11 leading-[44px]"
                         >View Documentation</a
                       >
@@ -821,33 +542,24 @@ import Contact from "@/components/sections/Contact.astro";
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Banner Style</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="ctaBanner"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-ctaBanner">
-                <pre><code>{codeSnippets.ctaBanner}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="rounded-lg bg-foreground text-background p-8">
                   <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div>
-                      <h3 class="text-2xl font-bold mb-2">Try AstroDeck today</h3>
-                      <p class="opacity-90">Start building your next project with our components</p>
+                      <h3 class="text-2xl font-bold mb-2">Try Nebula today</h3>
+                      <p class="opacity-90">14 days free, no credit card required.</p>
                     </div>
                     <div class="flex gap-3">
                       <a
-                        href="#"
+                        href="/templates/saas#pricing-heading"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-background text-foreground hover:bg-background/90 h-10 px-6"
-                        >Download Now</a
+                        >See pricing</a
                       >
                       <a
-                        href="#"
+                        href="/templates/contact"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-background/20 hover:bg-background/10 h-10 px-6"
-                        >GitHub</a
+                        >Talk to sales</a
                       >
                     </div>
                   </div>
@@ -864,20 +576,13 @@ import Contact from "@/components/sections/Contact.astro";
             <p class="text-muted-foreground">Clear pricing that converts.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.pricing} />
+
           <div class="space-y-12">
             <!-- Pricing 0: Open Source -->
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
-                <h3 class="font-semibold">AstroDeck Open Source</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="pricingOpenSource"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-pricingOpenSource">
-                <pre><code>{codeSnippets.pricingOpenSource}</code></pre>
+                <h3 class="font-semibold">Open Source Tiers</h3>
               </div>
               <div class="border-t pt-6">
                 <div class="text-center mb-8">
@@ -935,7 +640,7 @@ import Contact from "@/components/sections/Contact.astro";
                       </li>
                     </ul>
                     <a
-                      href="#"
+                      href="https://github.com/holger1411/astrodeck"
                       class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                       >View on GitHub</a
                     >
@@ -995,7 +700,7 @@ import Contact from "@/components/sections/Contact.astro";
                       </li>
                     </ul>
                     <a
-                      href="#"
+                      href="/docs"
                       class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10"
                       >Get Started</a
                     >
@@ -1050,7 +755,7 @@ import Contact from "@/components/sections/Contact.astro";
                       </li>
                     </ul>
                     <a
-                      href="#"
+                      href="https://github.com/holger1411/astrodeck"
                       class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                       >Star on GitHub</a
                     >
@@ -1063,15 +768,6 @@ import Contact from "@/components/sections/Contact.astro";
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Three Column Layout</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="pricingThreeColumn"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-pricingThreeColumn">
-                <pre><code>{codeSnippets.pricingThreeColumn}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="grid md:grid-cols-3 gap-6">
@@ -1117,7 +813,7 @@ import Contact from "@/components/sections/Contact.astro";
                       </li>
                     </ul>
                     <a
-                      href="#"
+                      href="/docs"
                       class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                       >Get Started</a
                     >
@@ -1169,7 +865,7 @@ import Contact from "@/components/sections/Contact.astro";
                       </li>
                     </ul>
                     <a
-                      href="#"
+                      href="/docs"
                       class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10"
                       >Get Started</a
                     >
@@ -1212,7 +908,7 @@ import Contact from "@/components/sections/Contact.astro";
                       </li>
                     </ul>
                     <a
-                      href="#"
+                      href="/templates/contact"
                       class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                       >Contact Sales</a
                     >
@@ -1225,22 +921,13 @@ import Contact from "@/components/sections/Contact.astro";
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Comparison Table</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="pricingComparison"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-pricingComparison">
-                <pre><code>{codeSnippets.pricingComparison}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="text-center mb-8">
                   <h3 class="text-2xl font-bold mb-2">Choose your plan</h3>
                   <p class="text-muted-foreground">Simple, transparent pricing</p>
                 </div>
-                <div class="border rounded-lg overflow-hidden">
+                <div class="border rounded-lg overflow-x-auto">
                   <table class="w-full">
                     <thead class="bg-muted/50">
                       <tr>
@@ -1282,15 +969,6 @@ import Contact from "@/components/sections/Contact.astro";
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Monthly/Yearly Toggle</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="pricingToggle"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-pricingToggle">
-                <pre><code>{codeSnippets.pricingToggle}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="text-center space-y-6">
@@ -1315,7 +993,7 @@ import Contact from "@/components/sections/Contact.astro";
                         >
                       </div>
                       <a
-                        href="#"
+                        href="#pricing"
                         class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                         >Choose Plan</a
                       >
@@ -1328,7 +1006,7 @@ import Contact from "@/components/sections/Contact.astro";
                         >
                       </div>
                       <a
-                        href="#"
+                        href="#pricing"
                         class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10"
                         >Choose Plan</a
                       >
@@ -1347,27 +1025,20 @@ import Contact from "@/components/sections/Contact.astro";
             <p class="text-muted-foreground">Build trust with social proof.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.testimonials} />
+
           <div class="space-y-12">
             <!-- Testimonial 1: Grid -->
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Grid Layout</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="testimonialsGrid"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-testimonialsGrid">
-                <pre><code>{codeSnippets.testimonialsGrid}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="grid md:grid-cols-3 gap-6">
                   <div class="rounded-lg border bg-card p-6 space-y-4">
                     <p class="text-sm leading-relaxed">
-                      "AstroDeck saved us weeks of development time. The components are beautiful
-                      and easy to customize."
+                      "Nebula saved us weeks of development time. The components are beautiful and
+                      easy to customize."
                     </p>
                     <div class="flex items-center gap-3">
                       <div class="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
@@ -1426,15 +1097,6 @@ import Contact from "@/components/sections/Contact.astro";
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Featured Single</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="testimonialsFeatured"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-testimonialsFeatured">
-                <pre><code>{codeSnippets.testimonialsFeatured}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="rounded-lg bg-muted/50 p-12 text-center max-w-3xl mx-auto">
@@ -1447,9 +1109,9 @@ import Contact from "@/components/sections/Contact.astro";
                     ></path></svg
                   >
                   <p class="text-lg leading-relaxed mb-6">
-                    AstroDeck has completely transformed how we build landing pages. The quality of
-                    the components and attention to detail is exceptional. Our development time has
-                    been cut in half.
+                    Nebula has completely transformed how we build landing pages. The quality of the
+                    components and attention to detail is exceptional. Our development time has been
+                    cut in half.
                   </p>
                   <div class="flex items-center justify-center gap-4">
                     <div
@@ -1471,15 +1133,6 @@ import Contact from "@/components/sections/Contact.astro";
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Horizontal Scroll</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="testimonialsScroll"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-testimonialsScroll">
-                <pre><code>{codeSnippets.testimonialsScroll}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="flex gap-6 overflow-x-auto pb-4">
@@ -1541,20 +1194,13 @@ import Contact from "@/components/sections/Contact.astro";
             <p class="text-muted-foreground">Capture leads and grow your audience.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.newsletters} />
+
           <div class="space-y-12">
             <!-- Newsletter 1: Inline -->
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Simple Inline</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="newsletterInline"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-newsletterInline">
-                <pre><code>{codeSnippets.newsletterInline}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="rounded-lg border bg-muted/50 p-8 max-w-2xl mx-auto">
@@ -1568,7 +1214,7 @@ import Contact from "@/components/sections/Contact.astro";
                     <input
                       type="email"
                       placeholder="Enter your email"
-                      class="flex-1 h-10 rounded-md border px-3 text-sm"
+                      class="flex-1 min-w-0 h-10 rounded-md border px-3 text-sm"
                     />
                     <button
                       class="px-6 h-10 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90"
@@ -1586,15 +1232,6 @@ import Contact from "@/components/sections/Contact.astro";
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Split with Visual</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="newsletterSplit"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-newsletterSplit">
-                <pre><code>{codeSnippets.newsletterSplit}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="rounded-lg border overflow-hidden grid md:grid-cols-2">
@@ -1629,15 +1266,6 @@ import Contact from "@/components/sections/Contact.astro";
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Bottom Bar</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="newsletterBar"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-newsletterBar">
-                <pre><code>{codeSnippets.newsletterBar}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="border-t bg-muted/30 p-6">
@@ -1675,19 +1303,12 @@ import Contact from "@/components/sections/Contact.astro";
             </p>
           </div>
 
+          <RegistryUsage names={groupComponents.faq} />
+
           <div class="space-y-12">
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Default Accordion</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="faqDefault"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-faqDefault">
-                <pre><code>{codeSnippets.faqDefault}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="max-w-3xl mx-auto">
@@ -1721,10 +1342,9 @@ import Contact from "@/components/sections/Contact.astro";
                         >
                       </summary>
                       <p class="pb-5 text-sm text-muted-foreground leading-relaxed">
-                        AstroDeck is an open-source component library and starter kit for building
-                        Astro.js websites. It provides pre-built, production-ready sections for
-                        landing pages and SaaS websites — fully typed with TypeScript and styled
-                        with Tailwind CSS v4.
+                        AstroDeck is a free, open-source starter kit for building websites with a
+                        coding agent. It ships typed, data-driven sections, a central site config, a
+                        theme script, checks and agent skills, styled with Tailwind CSS v4.
                       </p>
                     </details>
                     <details class="group" name="faq-demo">
@@ -1831,47 +1451,46 @@ import Contact from "@/components/sections/Contact.astro";
             <p class="text-muted-foreground">Highlight key metrics that build credibility.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.stats} />
+
           <div class="space-y-12">
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Four-Column Grid</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="statsDefault"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-statsDefault">
-                <pre><code>{codeSnippets.statsDefault}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="text-center mb-10">
-                  <h2 class="text-3xl font-bold mb-3">Trusted by developers worldwide</h2>
+                  <h2 class="text-3xl font-bold mb-3">Nebula in numbers</h2>
                   <p class="text-muted-foreground">Numbers that speak for themselves</p>
                 </div>
                 <dl
                   class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border border-y"
                 >
                   <div class="flex flex-col items-center text-center px-6 py-8">
-                    <dd class="text-4xl font-bold tracking-tight">50K+</dd>
-                    <dt class="mt-2 text-sm font-semibold">Downloads</dt>
-                    <p class="mt-1 text-sm text-muted-foreground">Across 80+ countries</p>
+                    <dt class="order-2 mt-2 text-sm font-semibold">Teams</dt>
+                    <dd class="order-1 text-4xl font-bold tracking-tight">12K+</dd>
+                    <dd class="order-3 mt-1 text-sm text-muted-foreground">Across 80+ countries</dd>
                   </div>
                   <div class="flex flex-col items-center text-center px-6 py-8">
-                    <dd class="text-4xl font-bold tracking-tight">1.2K+</dd>
-                    <dt class="mt-2 text-sm font-semibold">GitHub Stars</dt>
-                    <p class="mt-1 text-sm text-muted-foreground">And growing every week</p>
+                    <dt class="order-2 mt-2 text-sm font-semibold">Projects created</dt>
+                    <dd class="order-1 text-4xl font-bold tracking-tight">2M+</dd>
+                    <dd class="order-3 mt-1 text-sm text-muted-foreground">
+                      And growing every week
+                    </dd>
                   </div>
                   <div class="flex flex-col items-center text-center px-6 py-8">
-                    <dd class="text-4xl font-bold tracking-tight">30+</dd>
-                    <dt class="mt-2 text-sm font-semibold">Components</dt>
-                    <p class="mt-1 text-sm text-muted-foreground">Ready to copy and paste</p>
+                    <dt class="order-2 mt-2 text-sm font-semibold">Integrations</dt>
+                    <dd class="order-1 text-4xl font-bold tracking-tight">40+</dd>
+                    <dd class="order-3 mt-1 text-sm text-muted-foreground">
+                      With the tools you already use
+                    </dd>
                   </div>
                   <div class="flex flex-col items-center text-center px-6 py-8">
-                    <dd class="text-4xl font-bold tracking-tight">99.9%</dd>
-                    <dt class="mt-2 text-sm font-semibold">Uptime</dt>
-                    <p class="mt-1 text-sm text-muted-foreground">Battle-tested infrastructure</p>
+                    <dt class="order-2 mt-2 text-sm font-semibold">Uptime</dt>
+                    <dd class="order-1 text-4xl font-bold tracking-tight">99.9%</dd>
+                    <dd class="order-3 mt-1 text-sm text-muted-foreground">
+                      Battle-tested infrastructure
+                    </dd>
                   </div>
                 </dl>
               </div>
@@ -1886,24 +1505,17 @@ import Contact from "@/components/sections/Contact.astro";
             <p class="text-muted-foreground">Introduce the people behind your product.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.team} />
+
           <div class="space-y-12">
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Card Grid with Initials</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="teamDefault"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-teamDefault">
-                <pre><code>{codeSnippets.teamDefault}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="text-center mb-10">
                   <h2 class="text-3xl font-bold mb-3">Meet Our Team</h2>
-                  <p class="text-muted-foreground">The people building AstroDeck</p>
+                  <p class="text-muted-foreground">The people building Nebula</p>
                 </div>
                 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   <div
@@ -1922,11 +1534,7 @@ import Contact from "@/components/sections/Contact.astro";
                     <div
                       class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center"
                     >
-                      <a
-                        href="#"
-                        aria-label="Alex Rivera on GitHub"
-                        class="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      <span class="text-muted-foreground" aria-hidden="true">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -1937,12 +1545,8 @@ import Contact from "@/components/sections/Contact.astro";
                             d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"
                           ></path></svg
                         >
-                      </a>
-                      <a
-                        href="#"
-                        aria-label="Alex Rivera on X (Twitter)"
-                        class="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      </span>
+                      <span class="text-muted-foreground" aria-hidden="true">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -1953,7 +1557,7 @@ import Contact from "@/components/sections/Contact.astro";
                             d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"
                           ></path></svg
                         >
-                      </a>
+                      </span>
                     </div>
                   </div>
                   <div
@@ -1972,11 +1576,7 @@ import Contact from "@/components/sections/Contact.astro";
                     <div
                       class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center"
                     >
-                      <a
-                        href="#"
-                        aria-label="Sam Chen on GitHub"
-                        class="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      <span class="text-muted-foreground" aria-hidden="true">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -1987,12 +1587,8 @@ import Contact from "@/components/sections/Contact.astro";
                             d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"
                           ></path></svg
                         >
-                      </a>
-                      <a
-                        href="#"
-                        aria-label="Sam Chen on LinkedIn"
-                        class="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      </span>
+                      <span class="text-muted-foreground" aria-hidden="true">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -2003,7 +1599,7 @@ import Contact from "@/components/sections/Contact.astro";
                             d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
                           ></path></svg
                         >
-                      </a>
+                      </span>
                     </div>
                   </div>
                   <div
@@ -2022,11 +1618,7 @@ import Contact from "@/components/sections/Contact.astro";
                     <div
                       class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center"
                     >
-                      <a
-                        href="#"
-                        aria-label="Jordan Lee on X (Twitter)"
-                        class="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      <span class="text-muted-foreground" aria-hidden="true">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -2037,12 +1629,8 @@ import Contact from "@/components/sections/Contact.astro";
                             d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"
                           ></path></svg
                         >
-                      </a>
-                      <a
-                        href="#"
-                        aria-label="Jordan Lee on LinkedIn"
-                        class="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      </span>
+                      <span class="text-muted-foreground" aria-hidden="true">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -2053,7 +1641,7 @@ import Contact from "@/components/sections/Contact.astro";
                             d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
                           ></path></svg
                         >
-                      </a>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -2069,25 +1657,18 @@ import Contact from "@/components/sections/Contact.astro";
             <p class="text-muted-foreground">Show how you stack up against the competition.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.comparison} />
+
           <div class="space-y-12">
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Feature Comparison Table</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="comparisonDefault"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-comparisonDefault">
-                <pre><code>{codeSnippets.comparisonDefault}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="text-center mb-10">
                   <h2 class="text-3xl font-bold mb-3">How We Compare</h2>
                   <p class="text-muted-foreground">
-                    See why teams choose AstroDeck over the alternatives
+                    See why teams choose Nebula over the alternatives
                   </p>
                 </div>
                 <div class="overflow-x-auto rounded-xl border shadow-lg">
@@ -2105,7 +1686,7 @@ import Contact from "@/components/sections/Contact.astro";
                           class="p-4 text-center font-semibold bg-primary/8 text-foreground"
                         >
                           <span class="inline-flex flex-col items-center gap-1">
-                            AstroDeck
+                            Nebula
                             <span
                               class="text-xs font-normal text-primary border border-primary/30 rounded-full px-2 py-0.5 leading-tight"
                               >Recommended</span
@@ -2342,19 +1923,12 @@ import Contact from "@/components/sections/Contact.astro";
             <p class="text-muted-foreground">Let visitors reach you with a clean contact form.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.contact} />
+
           <div class="space-y-12">
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Split with Form</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="contactDefault"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-contactDefault">
-                <pre><code>{codeSnippets.contactDefault}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
@@ -2391,9 +1965,9 @@ import Contact from "@/components/sections/Contact.astro";
                             Email
                           </p>
                           <a
-                            href="mailto:hello@astrodeck.dev"
+                            href="mailto:hello@example.com"
                             class="text-sm text-foreground hover:text-primary transition-colors"
-                            >hello@astrodeck.dev</a
+                            >hello@example.com</a
                           >
                         </div>
                       </li>
@@ -2466,7 +2040,7 @@ import Contact from "@/components/sections/Contact.astro";
                     </ul>
                   </div>
                   <div class="rounded-lg border bg-card p-6 md:p-8">
-                    <form action="#" method="POST" novalidate>
+                    <form action="/thanks" method="get">
                       <div class="space-y-5">
                         <div class="space-y-1.5">
                           <label for="demo-contact-name" class="text-sm font-medium leading-none"
@@ -2539,7 +2113,7 @@ import Contact from "@/components/sections/Contact.astro";
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </div>
   </div>
 

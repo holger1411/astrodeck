@@ -1,2 +1,2 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Auto detect text files; force LF on every platform (Prettier + scripts expect LF)
+* text=auto eol=lf

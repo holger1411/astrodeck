@@ -9,11 +9,28 @@ export default defineConfig(
   ...tseslint.configs.recommended,
   ...eslintPluginAstro.configs.recommended,
   {
-    ignores: ['dist/**', 'node_modules/**', '.astro/**'],
+    // brief/ holds user input files (any format); .vibe2prod/ holds audit output. Never lint them.
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      '.astro/**',
+      'tests/fixtures/**',
+      'brief/**',
+      'evals/cases/*/brief/**',
+      '.agents/skills/vibe2prod/**',
+      '.claude/skills/vibe2prod/**',
+      '.vibe2prod/**',
+    ],
   },
   {
     // Node.js tooling scripts (hooks, KPI checks) run outside the browser
-    files: ['.claude/**/*.mjs', 'eslint.config.mjs', 'astro.config.mjs'],
+    files: [
+      '.claude/**/*.mjs',
+      'scripts/**/*.mjs',
+      'tests/**/*.mjs',
+      'eslint.config.mjs',
+      'astro.config.mjs',
+    ],
     languageOptions: {
       globals: globals.node,
     },

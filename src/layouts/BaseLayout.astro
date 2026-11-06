@@ -31,6 +31,8 @@
  */
 import '@/styles/globals.css';
 import Head from '@/components/Head.astro';
+import { site } from '@/config/site';
+import { ui } from '@/config/ui';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import Analytics from '@vercel/analytics/astro';
@@ -49,7 +51,7 @@ interface Props {
 
 const {
   title,
-  description = 'AstroDeck - Modern Astro.js Component Library',
+  description = site.description,
   image,
   type = 'website',
   publishedTime,
@@ -59,11 +61,11 @@ const {
 
 // Vercel Analytics only works on Vercel deployments; rendering it elsewhere
 // (local preview, other hosts) produces a 404 on /_vercel/insights/script.js
-const enableAnalytics = !!process.env.VERCEL;
+const enableAnalytics = site.features.analytics && !!process.env.VERCEL;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={site.lang}>
   <head>
     <Head
       title={title}
@@ -78,9 +80,9 @@ const enableAnalytics = !!process.env.VERCEL;
   <body class="min-h-screen flex flex-col antialiased">
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 bg-primary text-primary-foreground px-4 py-2 rounded-md font-medium"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] bg-primary text-primary-foreground px-4 py-2 rounded-md font-medium"
     >
-      Skip to content
+      {ui.skipToContent}
     </a>
     <Header />
     <main id="main-content" class="flex-1">

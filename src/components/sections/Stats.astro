@@ -38,9 +38,12 @@ interface Props {
 }
 
 const { title, subtitle, stats } = Astro.props;
+
+// A section needs a heading to be a valid landmark; without a title it is a plain block.
+const Wrapper = title ? 'section' : 'div';
 ---
 
-<section class="py-16 md:py-24 px-6 border-y">
+<Wrapper class="py-16 md:py-24 px-6 border-y">
   <div class="container max-w-5xl mx-auto">
     {
       (title || subtitle) && (
@@ -78,4 +81,4 @@ const { title, subtitle, stats } = Astro.props;
       }
     </dl>
   </div>
-</section>
+</Wrapper>

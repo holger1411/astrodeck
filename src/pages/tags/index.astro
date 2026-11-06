@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '@/lib/blog';
 
 // Get all blog posts
-const allPosts = await getCollection('blog');
+const allPosts = await getPublishedPosts();
 
 // Extract all unique tags and count posts per tag
 const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
@@ -18,8 +18,11 @@ const tagsWithCounts = uniqueTags.map((tag) => ({
 tagsWithCounts.sort((a, b) => a.tag.localeCompare(b.tag));
 ---
 
-<BaseLayout title="Tags" description="Browse all blog post tags">
-  <div class="container max-w-4xl mx-auto py-16">
+<BaseLayout
+  title="Tags"
+  description="Browse all tags of the blog and find the posts on the topics you care about."
+>
+  <div class="container max-w-4xl mx-auto py-16 px-6">
     <div class="mb-16">
       <h1 class="text-6xl font-bold tracking-tight mb-6">Tags</h1>
       <p class="text-xl text-muted-foreground">Browse articles by topic.</p>

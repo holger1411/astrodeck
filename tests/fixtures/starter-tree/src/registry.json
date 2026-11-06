@@ -1,0 +1,8 @@
+{
+  "layouts": [{ "name": "AuthLayout", "file": "src/pages/keep.astro", "screenshot": "/screenshots/login.png" }],
+  "pageTemplates": [
+    { "name": "Docs", "file": "src/pages/docs.astro" },
+    { "name": "Blog", "file": "src/pages/blog/index.astro" },
+    { "name": "Kept", "file": "src/pages/keep.astro" }
+  ]
+}

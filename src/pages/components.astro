@@ -1,5 +1,6 @@
 ---
 import FullWidthLayout from '@/layouts/FullWidthLayout.astro';
+import registry from '@/registry.json';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -34,165 +35,37 @@ const components = [
   { id: 'dropdown', label: 'Dropdown Menu' },
 ];
 
-const codeSnippets: Record<string, string> = {
-  button: `---
-import { Button } from "@/components/ui/button";
----
-
-<Button client:load>Default</Button>
-<Button client:load variant="secondary">Secondary</Button>
-<Button client:load variant="outline">Outline</Button>
-<Button client:load variant="ghost">Ghost</Button>
-<Button client:load variant="destructive">Destructive</Button>
-<Button client:load variant="link">Link</Button>
-<Button client:load size="sm">Small</Button>
-<Button client:load size="lg">Large</Button>`,
-
-  badge: `---
-import { Badge } from "@/components/ui/badge";
----
-
-<Badge client:load>Default</Badge>
-<Badge client:load variant="secondary">Secondary</Badge>
-<Badge client:load variant="outline">Outline</Badge>
-<Badge client:load variant="destructive">Destructive</Badge>`,
-
-  card: `---
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
----
-
-<Card client:load>
-  <CardHeader>
-    <CardTitle>Card Title</CardTitle>
-    <CardDescription>Card description goes here.</CardDescription>
-  </CardHeader>
-  <CardContent>
-    <p>Card content and details.</p>
-  </CardContent>
-  <CardFooter>
-    <Button>Action</Button>
-  </CardFooter>
-</Card>`,
-
-  input: `---
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
----
-
-<div class="space-y-2">
-  <Label htmlFor="email">Email</Label>
-  <Input type="email" id="email" placeholder="you@example.com" />
-</div>`,
-
-  dialog: `---
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
----
-
-<Dialog client:load>
-  <DialogTrigger asChild>
-    <Button>Open Dialog</Button>
-  </DialogTrigger>
-  <DialogContent>
-    <DialogHeader>
-      <DialogTitle>Dialog Title</DialogTitle>
-      <DialogDescription>This is a dialog description.</DialogDescription>
-    </DialogHeader>
-    <p>Dialog body content goes here.</p>
-  </DialogContent>
-</Dialog>`,
-
-  accordion: `---
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
----
-
-<Accordion type="single" collapsible client:load>
-  <AccordionItem value="item-1">
-    <AccordionTrigger>Section One</AccordionTrigger>
-    <AccordionContent>Content for section one.</AccordionContent>
-  </AccordionItem>
-  <AccordionItem value="item-2">
-    <AccordionTrigger>Section Two</AccordionTrigger>
-    <AccordionContent>Content for section two.</AccordionContent>
-  </AccordionItem>
-</Accordion>`,
-
-  tabs: `---
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
----
-
-<Tabs defaultValue="tab1" client:load>
-  <TabsList>
-    <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-    <TabsTrigger value="tab2">Tab 2</TabsTrigger>
-    <TabsTrigger value="tab3">Tab 3</TabsTrigger>
-  </TabsList>
-  <TabsContent value="tab1">First tab content.</TabsContent>
-  <TabsContent value="tab2">Second tab content.</TabsContent>
-  <TabsContent value="tab3">Third tab content.</TabsContent>
-</Tabs>`,
-
-  tooltip: `---
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
----
-
-<TooltipProvider client:load>
-  <Tooltip>
-    <TooltipTrigger asChild>
-      <Button variant="outline">Hover me</Button>
-    </TooltipTrigger>
-    <TooltipContent>
-      <p>Tooltip text</p>
-    </TooltipContent>
-  </Tooltip>
-</TooltipProvider>`,
-
-  select: `---
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
----
-
-<Select client:load>
-  <SelectTrigger className="w-[180px]">
-    <SelectValue placeholder="Select option" />
-  </SelectTrigger>
-  <SelectContent>
-    <SelectItem value="option1">Option 1</SelectItem>
-    <SelectItem value="option2">Option 2</SelectItem>
-    <SelectItem value="option3">Option 3</SelectItem>
-  </SelectContent>
-</Select>`,
-
-  dropdown: `---
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
----
-
-<DropdownMenu client:load>
-  <DropdownMenuTrigger asChild>
-    <Button variant="outline">Open Menu</Button>
-  </DropdownMenuTrigger>
-  <DropdownMenuContent>
-    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-    <DropdownMenuSeparator />
-    <DropdownMenuItem>Edit</DropdownMenuItem>
-    <DropdownMenuItem>Duplicate</DropdownMenuItem>
-    <DropdownMenuItem>Delete</DropdownMenuItem>
-  </DropdownMenuContent>
-</DropdownMenu>`,
+// Code snippets come from src/registry.json (single source of truth).
+const snippetUi: Record<string, string> = {
+  button: 'Button',
+  badge: 'Badge',
+  card: 'Card',
+  input: 'Input',
+  dialog: 'Dialog',
+  accordion: 'Accordion',
+  tabs: 'Tabs',
+  tooltip: 'Tooltip',
+  select: 'Select',
+  dropdown: 'DropdownMenu',
 };
+const codeSnippets = Object.fromEntries(
+  Object.entries(snippetUi).map(([key, name]) => {
+    const entry = registry.ui.find((u) => u.name === name);
+    if (!entry) throw new Error(`registry.json has no ui component "${name}"`);
+    return [key, entry.example];
+  })
+) as Record<string, string>;
 ---
 
 <FullWidthLayout
   title="Components"
-  description="Browse all AstroDeck UI components — buttons, cards, dialogs, tabs, and more. Built with shadcn/ui, Radix UI, and Tailwind CSS."
+  description="AstroDeck UI components: buttons, cards, dialogs, tabs and more, built with shadcn/ui, Radix UI and Tailwind CSS. Usage snippets come from the registry."
 >
   <!-- Header -->
   <div class="py-16 px-6 md:px-12">
     <h1 class="text-4xl font-bold tracking-tight md:text-5xl mb-4">Component Library</h1>
     <p class="text-lg text-muted-foreground max-w-3xl">
-      11 UI components built with <a
+      {registry.ui.length} UI components built with <a
         href="https://ui.shadcn.com"
         target="_blank"
         rel="noopener noreferrer"

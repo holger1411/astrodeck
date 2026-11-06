@@ -1,19 +1,9 @@
-# CLAUDE.md
+@AGENTS.md
 
-This project follows the [AGENTS.md standard](https://agents.md).
+## Claude Code only (optional extras; the workflow above works without them)
 
-1. Read **`AGENTS.md`** — all project conventions, patterns, and code standards.
-2. Check **`PROJECT.md`** — project-specific customizations that **override** AGENTS.md defaults.
-
-## AI layer quick reference
-
-| What | Where |
-|------|-------|
-| Main agent (quality guardian) | `.claude/agents/astrodeck.md` |
-| Multi-agent review | `/plenum` (`.claude/commands/plenum.md` + 6 review agents) |
-| Commands | `/audit`, `/launch-check`, `/new-page`, `/new-section`, `/theme`, `/plenum` |
-| Domain skills (KPIs + learnings) | `.claude/skills/` |
-| Static convention checks | `npm run check:kpis` (single source of truth) |
-| Convention guard hook | `.claude/hooks/guard-conventions.mjs` (auto-blocks deprecated patterns) |
-| Canonical design decisions | `system/globals/` |
-| Portable audit prompts (any AI tool) | `system/prompts/` |
+- `.claude/skills/` mirrors `.agents/skills/` via `npm run sync:agents`; edit the source. Add your own Claude-only skills directly in `.claude/skills/`: sync never touches folders it does not manage.
+- Subagent `astrodeck-reviewer` (`.claude/agents/astrodeck-reviewer.md`): read-only review of a
+  change against the design system and content rules, runs `npm run verify`.
+- Hook `.claude/hooks/guard-conventions.mjs` blocks `tailwind.config.*`, `ViewTransitions` and
+  `z` from `astro:content`, and reports other design-rule findings after each edit.

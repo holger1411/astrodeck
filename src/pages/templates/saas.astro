@@ -1,15 +1,26 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Hero from '@/components/sections/Hero.astro';
+import HeroSplit from '@/components/sections/HeroSplit.astro';
 import LogoCloud from '@/components/sections/LogoCloud.astro';
 import Features from '@/components/sections/Features.astro';
-import Stats from '@/components/sections/Stats.astro';
+import ContentBlock from '@/components/sections/ContentBlock.astro';
+import IntegrationGrid from '@/components/sections/IntegrationGrid.astro';
 import Pricing from '@/components/sections/Pricing.astro';
 import Testimonials from '@/components/sections/Testimonials.astro';
 import FAQ from '@/components/sections/FAQ.astro';
 import CTA from '@/components/sections/CTA.astro';
+import type { IconName } from '@/lib/icons';
 
-const features = [
+const logos = [
+  { name: 'Northwind Labs', icon: 'zap' },
+  { name: 'Lumen Works', icon: 'globe' },
+  { name: 'Fernhill', icon: 'users' },
+  { name: 'Quartz & Co', icon: 'shield' },
+  { name: 'Brightwave', icon: 'chart' },
+  { name: 'Oakline', icon: 'lock' },
+] satisfies { name: string; icon: IconName }[];
+
+const features: { title: string; description: string; icon: IconName }[] = [
   {
     title: 'Real-Time Collaboration',
     description:
@@ -48,17 +59,11 @@ const features = [
   },
 ];
 
-const stats = [
-  { value: '120K+', label: 'Active Users', description: 'Teams across 60+ countries' },
-  { value: '99.99%', label: 'Uptime', description: 'Over the last 12 months' },
-  { value: '60+', label: 'Countries', description: 'Global customer footprint' },
-  { value: '4.9/5', label: 'Average Rating', description: 'From 3,200+ verified reviews' },
-];
-
 const tiers = [
   {
     name: 'Free',
     price: '$0',
+    period: '/month',
     description: 'Perfect for individuals and small side projects.',
     features: [
       'Up to 3 projects',
@@ -67,11 +72,12 @@ const tiers = [
       'Basic analytics',
       'Public API access',
     ],
-    cta: { href: '/signup', label: 'Get Started Free' },
+    cta: { href: '/templates/contact', label: 'Request access' },
   },
   {
     name: 'Pro',
     price: '$29',
+    period: '/month',
     description: 'For professionals and growing teams who need more power.',
     features: [
       'Unlimited projects',
@@ -81,7 +87,7 @@ const tiers = [
       'Custom domains',
       'Team collaboration (5 seats)',
     ],
-    cta: { href: '/signup?plan=pro', label: 'Start Free Trial' },
+    cta: { href: '/templates/contact', label: 'Request a trial' },
     highlighted: true,
   },
   {
@@ -96,7 +102,7 @@ const tiers = [
       'SSO & SAML',
       'Audit logs & SIEM',
     ],
-    cta: { href: '/contact', label: 'Talk to Sales' },
+    cta: { href: '/templates/contact', label: 'Talk to Sales' },
   },
 ];
 
@@ -133,7 +139,7 @@ const faqs = [
   {
     question: 'Can I migrate my existing data into Nebula?',
     answer:
-      'Yes. We provide a guided import wizard that supports CSV, JSON, and direct integrations with Notion, Airtable, and Linear. Our onboarding team assists Enterprise customers with custom migrations at no extra cost.',
+      'Yes. We provide a guided import wizard that supports CSV and JSON, plus imports from the popular tools your team already uses. Our onboarding team assists Enterprise customers with custom migrations at no extra cost.',
   },
   {
     question: 'Is Nebula GDPR compliant?',
@@ -152,15 +158,17 @@ const faqs = [
   title="Nebula — Collaborative SaaS Platform"
   description="Nebula is the all-in-one SaaS platform for modern teams. Real-time collaboration, enterprise security, and powerful analytics — all in one place. Start free."
 >
-  <Hero
-    badge="true"
+  <HeroSplit
+    tagline="Collaboration for modern teams"
     title="The platform your team will actually love."
     subtitle="<mark>Nebula</mark> brings real-time collaboration, enterprise-grade security, and actionable analytics together in one beautifully simple platform. <mark>14-day free trial</mark>, no credit card required."
-    primaryCta={{ href: '/signup', label: 'Start for Free' }}
-    secondaryCta={{ href: '/demo', label: 'Watch Demo' }}
+    primaryCta={{ href: '#pricing-heading', label: 'See pricing' }}
+    secondaryCta={{ href: '/templates/contact', label: 'Talk to sales' }}
   />
 
-  <LogoCloud title="Trusted by teams at:" />
+  <div data-demo>
+    <LogoCloud title="Trusted by teams at:" logos={logos} />
+  </div>
 
   <div class="section-muted">
     <Features
@@ -170,12 +178,49 @@ const faqs = [
     />
   </div>
 
-  <div class="section-inverted">
-    <Stats
-      title="Trusted by teams worldwide"
-      subtitle="Numbers that reflect the trust our customers place in us every day."
-      stats={stats}
+  <ContentBlock
+    tagline="How it works"
+    title="From meeting to decisions in one view."
+    description="Nebula turns every conversation into a shared record. Notes, decisions and follow-ups live in one place, so nobody has to ask what was agreed."
+    features={[
+      'Decisions are captured automatically and linked to the discussion',
+      'Every follow-up has an owner and a due date',
+      'A weekly digest keeps the whole team in the loop',
+    ]}
+  />
+
+  <div data-demo>
+    <IntegrationGrid
+      subtitle="Integrations"
+      title="Works with the tools you already use"
+      items={[
+        {
+          name: 'CSV import',
+          subtitle: 'Bring existing data',
+          icon: 'code',
+        },
+        {
+          name: 'JSON export',
+          subtitle: 'Take your data anywhere',
+          icon: 'code',
+        },
+        {
+          name: 'Webhooks',
+          subtitle: 'Trigger your own workflows',
+          icon: 'zap',
+        },
+        {
+          name: 'REST API',
+          subtitle: 'Build on top of Nebula',
+          icon: 'globe',
+        },
+      ]}
+      cta={{ href: '/templates/contact', label: 'Ask about integrations' }}
     />
+  </div>
+
+  <div class="section-muted" data-demo>
+    <Testimonials title="Loved by engineering and product teams" testimonials={testimonials} />
   </div>
 
   <Pricing
@@ -183,10 +228,6 @@ const faqs = [
     subtitle="Start free. Scale as you grow. No hidden fees, no surprises."
     tiers={tiers}
   />
-
-  <div class="section-muted">
-    <Testimonials title="Loved by engineering and product teams" testimonials={testimonials} />
-  </div>
 
   <FAQ
     title="Frequently asked questions"
@@ -197,8 +238,8 @@ const faqs = [
   <div class="section-inverted">
     <CTA
       title="Ready to transform how your team works?"
-      description="Join over 120,000 teams already using Nebula to ship faster, collaborate better, and grow smarter."
-      cta={{ href: '/signup', label: 'Get Started Free' }}
+      description="Start on the free plan and invite your team when you are ready."
+      cta={{ href: '#pricing-heading', label: 'Compare plans' }}
     />
   </div>
 </BaseLayout>

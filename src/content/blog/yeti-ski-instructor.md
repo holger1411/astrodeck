@@ -6,8 +6,6 @@ author: "Winter Sports Paranormal"
 tags: ["humor", "work", "cryptozoology"]
 ---
 
-# Yeti Hired as Ski Instructor, Guests Describe Experience as 'Chilling'
-
 Luxury ski resort Aspen Peaks has hired what they describe as "the most qualified mountain professional in history" — a 9-foot-tall yeti who goes by "Gary."
 
 ## Unmatched Qualifications

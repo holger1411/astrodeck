@@ -6,8 +6,6 @@ author: "Cryptid Social Media Digest"
 tags: ["humor", "social-media", "cryptozoology"]
 ---
 
-# Bigfoot Becomes Instagram Influencer, Still Nobody Believes He's Real
-
 *1.2M followers, zero credibility*
 
 After decades of blurry photos and failed sightings, Bigfoot has taken matters into his own hands—or paws—by launching an Instagram account. Despite posting daily selfies, unboxing videos, and #OOTD content, everyone assumes it's an elaborate hoax.

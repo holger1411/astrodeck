@@ -1,0 +1,27 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import { site } from '@/config/site';
+---
+
+<BaseLayout title="A new website, built with your coding agent" description={site.description}>
+  <Hero title={site.name} subtitle={site.description} />
+  {
+    import.meta.env.DEV && (
+      <section class="container max-w-3xl mx-auto px-4 pb-16">
+        <div class="rounded-lg border bg-card p-6">
+          <h2 class="text-xl font-semibold">Next steps</h2>
+          <p class="mt-2 text-muted-foreground">
+            This note is only visible in the dev server. Open the project in your coding agent and
+            describe the site you want to build. It follows the conventions in AGENTS.md and the
+            brief in PROJECT.md.
+          </p>
+          <p class="mt-2 text-sm text-muted-foreground">
+            Note: starter:clean is a one-shot, destructive operation. It refuses to run again once
+            the starter files are gone.
+          </p>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

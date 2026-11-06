@@ -1,0 +1,334 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  /* Typography — registers the self-hosted Geist fonts (see @font-face above)
+     as Tailwind's default sans/mono stacks */
+  --font-sans:
+    'Geist', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono:
+    'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+
+  /* Light mode colors */
+  /* astrodeck-theme:light:start */
+  --color-background: oklch(100% 0 0);
+  --color-foreground: oklch(9.8% 0.0016 286.75);
+  --color-card: oklch(100% 0 0);
+  --color-card-foreground: oklch(9.8% 0.0016 286.75);
+  --color-popover: oklch(100% 0 0);
+  --color-popover-foreground: oklch(9.8% 0.0016 286.75);
+  --color-primary: oklch(11.2% 0.0079 286.75);
+  --color-primary-foreground: oklch(98% 0.0011 286.75);
+  --color-secondary: oklch(96.1% 0.0011 286.75);
+  --color-secondary-foreground: oklch(11.2% 0.0079 286.75);
+  --color-muted: oklch(96.1% 0.0011 286.75);
+  --color-muted-foreground: oklch(40% 0.0018 286.75);
+  --color-accent: oklch(96.1% 0.0011 286.75);
+  --color-accent-foreground: oklch(11.2% 0.0079 286.75);
+  --color-destructive: oklch(60.2% 0.177 29.23);
+  --color-destructive-foreground: oklch(98% 0.0011 286.75);
+  --color-border: oklch(91.4% 0.009 286.75);
+  --color-input: oklch(91.4% 0.009 286.75);
+  --color-ring: oklch(9.8% 0.0016 286.75);
+
+  --radius: 0.5rem;
+  /* astrodeck-theme:light:end */
+
+  /* Accordion animations */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+.dark {
+  /* astrodeck-theme:dark:start */
+  --color-background: oklch(1.5% 0 0);
+  --color-foreground: oklch(98% 0 0);
+  --color-card: oklch(4% 0 0);
+  --color-card-foreground: oklch(98% 0 0);
+  --color-popover: oklch(4% 0 0);
+  --color-popover-foreground: oklch(98% 0 0);
+  --color-primary: oklch(98% 0 0);
+  --color-primary-foreground: oklch(1.5% 0 0);
+  --color-secondary: oklch(10% 0 0);
+  --color-secondary-foreground: oklch(98% 0 0);
+  --color-muted: oklch(10% 0 0);
+  --color-muted-foreground: oklch(71% 0 0);
+  --color-accent: oklch(10% 0 0);
+  --color-accent-foreground: oklch(98% 0 0);
+  --color-destructive: oklch(30.6% 0.132 29.23);
+  --color-destructive-foreground: oklch(98% 0 0);
+  --color-border: oklch(25% 0 0);
+  --color-input: oklch(25% 0 0);
+  --color-ring: oklch(80% 0 0);
+  /* astrodeck-theme:dark:end */
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+mark {
+  background-color: oklch(92% 0.05 150);
+  color: oklch(25% 0.02 150);
+  font-weight: 600;
+  padding: 0.1em 0.2em;
+  border-radius: 0.2em;
+}
+
+.dark mark {
+  background-color: oklch(35% 0.05 150);
+  color: oklch(95% 0.02 150);
+}
+
+/* ===== Section Background Variants ===== */
+
+/* Subtle gray background */
+.section-muted {
+  background-color: var(--color-muted);
+}
+
+/* Inverted section: dark bg in light mode, light bg in dark mode */
+.section-inverted {
+  /* astrodeck-theme:inverted:start */
+  --color-background: oklch(9.8% 0.0016 286.75);
+  --color-foreground: oklch(98% 0 0);
+  --color-card: oklch(15% 0 0);
+  --color-card-foreground: oklch(98% 0 0);
+  --color-muted: oklch(15% 0 0);
+  --color-muted-foreground: oklch(71% 0 0);
+  --color-border: oklch(25% 0 0);
+  --color-input: oklch(25% 0 0);
+  --color-primary: oklch(98% 0 0);
+  --color-primary-foreground: oklch(9.8% 0 0);
+  --color-accent: oklch(15% 0 0);
+  --color-accent-foreground: oklch(98% 0 0);
+  /* astrodeck-theme:inverted:end */
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+.dark .section-inverted {
+  /* astrodeck-theme:inverted:start */
+  --color-background: oklch(96.1% 0.0011 286.75);
+  --color-foreground: oklch(9.8% 0.0016 286.75);
+  --color-card: oklch(100% 0 0);
+  --color-card-foreground: oklch(9.8% 0.0016 286.75);
+  --color-muted: oklch(93% 0.0011 286.75);
+  --color-muted-foreground: oklch(40% 0.0018 286.75);
+  --color-border: oklch(91.4% 0.009 286.75);
+  --color-input: oklch(91.4% 0.009 286.75);
+  --color-primary: oklch(11.2% 0.0079 286.75);
+  --color-primary-foreground: oklch(98% 0.0011 286.75);
+  --color-accent: oklch(96.1% 0.0011 286.75);
+  --color-accent-foreground: oklch(11.2% 0.0079 286.75);
+  /* astrodeck-theme:inverted:end */
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* ===== Scroll Animations ===== */
+
+/* Base state for animated elements — hidden until observed */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+/* When the element becomes visible */
+[data-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Variant: fade only (no movement) */
+[data-animate='fade'] {
+  transform: none;
+}
+[data-animate='fade'].is-visible {
+  opacity: 1;
+}
+
+/* Variant: slide from left */
+[data-animate='slide-left'] {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+[data-animate='slide-left'].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Variant: slide from right */
+[data-animate='slide-right'] {
+  opacity: 0;
+  transform: translateX(30px);
+}
+[data-animate='slide-right'].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Variant: scale up */
+[data-animate='scale'] {
+  opacity: 0;
+  transform: scale(0.95);
+}
+[data-animate='scale'].is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger delay utilities */
+[data-delay='1'] {
+  transition-delay: 100ms;
+}
+[data-delay='2'] {
+  transition-delay: 200ms;
+}
+[data-delay='3'] {
+  transition-delay: 300ms;
+}
+[data-delay='4'] {
+  transition-delay: 400ms;
+}
+[data-delay='5'] {
+  transition-delay: 500ms;
+}
+
+/* Reduced motion, and no JavaScript (nothing would add .is-visible): show content at once */
+@media (prefers-reduced-motion: reduce), (scripting: none) {
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== shadcn/ui Animation Utilities ===== */
+/* Replaces tailwindcss-animate plugin (not compatible with Tailwind v4) */
+
+@keyframes shadcn-in {
+  from {
+    opacity: var(--tw-enter-opacity, 1);
+    transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0)
+      scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1))
+      rotate(var(--tw-enter-rotate, 0));
+  }
+}
+
+@keyframes shadcn-out {
+  to {
+    opacity: var(--tw-exit-opacity, 1);
+    transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0)
+      scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1))
+      rotate(var(--tw-exit-rotate, 0));
+  }
+}
+
+.animate-in {
+  animation-name: shadcn-in;
+  animation-duration: 150ms;
+  --tw-enter-opacity: initial;
+  --tw-enter-scale: initial;
+  --tw-enter-rotate: initial;
+  --tw-enter-translate-x: initial;
+  --tw-enter-translate-y: initial;
+}
+
+.animate-out {
+  animation-name: shadcn-out;
+  animation-duration: 150ms;
+  --tw-exit-opacity: initial;
+  --tw-exit-scale: initial;
+  --tw-exit-rotate: initial;
+  --tw-exit-translate-x: initial;
+  --tw-exit-translate-y: initial;
+}
+
+/* Fade */
+.fade-in-0 {
+  --tw-enter-opacity: 0;
+}
+.fade-out-0 {
+  --tw-exit-opacity: 0;
+}
+
+/* Zoom */
+.zoom-in-95 {
+  --tw-enter-scale: 0.95;
+}
+.zoom-out-95 {
+  --tw-exit-scale: 0.95;
+}
+
+/* Slide */
+.slide-in-from-top-2 {
+  --tw-enter-translate-y: -0.5rem;
+}
+.slide-in-from-bottom-2 {
+  --tw-enter-translate-y: 0.5rem;
+}
+.slide-in-from-left-2 {
+  --tw-enter-translate-x: -0.5rem;
+}
+.slide-in-from-right-2 {
+  --tw-enter-translate-x: 0.5rem;
+}
+.slide-in-from-top-\[48\%\] {
+  --tw-enter-translate-y: -48%;
+}
+.slide-in-from-left-\[50\%\] {
+  --tw-enter-translate-x: -50%;
+}
+.slide-out-to-top-\[48\%\] {
+  --tw-exit-translate-y: -48%;
+}
+.slide-out-to-left-\[50\%\] {
+  --tw-exit-translate-x: -50%;
+}

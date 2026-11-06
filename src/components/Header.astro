@@ -13,6 +13,8 @@
  */
 import ThemeToggle from './ThemeToggle.astro';
 import Logo from './Logo.astro';
+import { site } from '@/config/site';
+import { ui } from '@/config/ui';
 
 interface Props {
   /** Layout variant - boxed (default) or fullWidth */
@@ -21,14 +23,8 @@ interface Props {
 
 const { variant = 'boxed' } = Astro.props;
 
-const navItems = [
-  { href: '/', label: 'Home' },
-  { href: '/pages', label: 'Pages' },
-  { href: '/sections', label: 'Sections' },
-  { href: '/components', label: 'Components' },
-  { href: '/docs', label: 'Docs' },
-  { href: '/changelog', label: 'Changelog' },
-];
+const navItems = site.nav;
+const cta = site.headerCta;
 
 const currentPath = Astro.url.pathname;
 
@@ -72,27 +68,34 @@ const containerClass =
     <!-- Desktop Actions (hidden on mobile) -->
     <div class="hidden md:flex items-center space-x-2">
       <ThemeToggle />
-      <a
-        href="https://github.com/holger1411/astrodeck"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
-      >
-        GitHub
-        <svg
-          class="h-3 w-3"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-        </svg>
-      </a>
+      {
+        cta && (
+          <a
+            href={cta.href}
+            target={cta.external ? '_blank' : undefined}
+            rel={cta.external ? 'noopener noreferrer' : undefined}
+            class="inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+          >
+            {cta.label}
+            {cta.external && (
+              <svg
+                class="h-3 w-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+            )}
+          </a>
+        )
+      }
     </div>
 
     <!-- Mobile Actions (visible on mobile) -->
@@ -102,7 +105,7 @@ const containerClass =
         id="mobile-menu-button"
         class="inline-flex items-center justify-center rounded-md p-2 hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
         aria-expanded="false"
-        aria-label="Toggle navigation menu"
+        aria-label={ui.menuToggle}
       >
         <span class="w-6 h-6 relative flex flex-col justify-center items-center">
           <span
@@ -150,14 +153,18 @@ const containerClass =
           );
         })
       }
-      <a
-        href="https://github.com/holger1411/astrodeck"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 py-2 px-4 mt-4"
-      >
-        GitHub
-      </a>
+      {
+        cta && (
+          <a
+            href={cta.href}
+            target={cta.external ? '_blank' : undefined}
+            rel={cta.external ? 'noopener noreferrer' : undefined}
+            class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 py-2 px-4 mt-4"
+          >
+            {cta.label}
+          </a>
+        )
+      }
     </div>
   </div>
 </header>

@@ -1,7 +1,14 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
+  "exclude": [
+    "dist",
+    "starter",
+    "tests/fixtures",
+    "brief",
+    ".agents/skills/vibe2prod",
+    ".claude/skills/vibe2prod"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

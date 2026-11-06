@@ -3,117 +3,219 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/sections/Hero.astro';
 import LogoCloud from '@/components/sections/LogoCloud.astro';
 import Features from '@/components/sections/Features.astro';
-import AIFeature from '@/components/sections/AIFeature.astro';
+import ContentBlock from '@/components/sections/ContentBlock.astro';
+import IntegrationGrid from '@/components/sections/IntegrationGrid.astro';
+import type { IconName } from '@/lib/icons';
 import Stats from '@/components/sections/Stats.astro';
 import FAQ from '@/components/sections/FAQ.astro';
+import { kitStats } from '@/components/demos/kit-stats';
 
-const features = [
+const logos = [
+  { name: 'Astro', src: '/icons/tech/astro.svg' },
+  { name: 'Tailwind', src: '/icons/tech/tailwind.svg' },
+  { name: 'React', src: '/icons/tech/react.svg' },
+  { name: 'TypeScript', src: '/icons/tech/typescript.svg' },
+  { name: 'shadcn/ui', src: '/icons/tech/shadcn.svg' },
+];
+
+// Agents tested end to end in the 4.0 dogfood runs (docs/maintainers/dogfood-4.0.md) and agents
+// whose vendor documentation says they read AGENTS.md and Agent Skills
+// (docs/agents/supported-agents.md). Nothing else is listed.
+const agents = [
   {
-    title: 'For Real Websites',
-    description:
-      'Company sites, blogs, portfolios, landing pages — with working example pages for each. Deliberately not built for dashboards or app-heavy products.',
-    icon: 'globe',
+    name: 'Claude Code',
+    href: 'https://code.claude.com/docs/en/overview',
+    subtitle: 'Tested end to end in 4.0',
+    iconSrc: '/icons/ai-tools/claude.svg',
   },
   {
-    title: 'AI Guardrails Built In',
+    name: 'OpenAI Codex',
+    href: 'https://learn.chatgpt.com/docs/agent-configuration/agents-md',
+    subtitle: 'Tested end to end in 4.0',
+    iconSrc: '/icons/ai-tools/openai.svg',
+  },
+  {
+    name: 'Cursor',
+    href: 'https://cursor.com/docs',
+    subtitle: 'AGENTS.md and skills natively',
+    iconSrc: '/icons/ai-tools/cursor.svg',
+  },
+  {
+    name: 'GitHub Copilot',
+    href: 'https://docs.github.com/en/copilot',
+    subtitle: 'Coding agent and VS Code agent mode',
+    iconSrc: '/icons/ai-tools/githubcopilot.svg',
+  },
+  {
+    name: 'Gemini CLI',
+    href: 'https://github.com/google-gemini/gemini-cli',
+    subtitle: 'AGENTS.md via .gemini/settings.json',
+    iconSrc: '/icons/ai-tools/gemini.svg',
+  },
+  {
+    name: 'Windsurf',
+    href: 'https://docs.devin.ai/desktop/cascade/agents-md',
+    subtitle: 'AGENTS.md and skills natively',
+    iconSrc: '/icons/ai-tools/windsurf.svg',
+  },
+];
+
+const features: { title: string; description: string; icon: IconName }[] = [
+  {
+    title: 'Start from whatever you have',
     description:
-      'A convention guard hook blocks off-system edits — hardcoded colors, deprecated patterns — before they ever reach your code.',
+      'One sentence in the chat, a PDF, your notes or a design file in the brief/ folder. The agent asks a few questions, tells you what it assumes, and writes everything down in PROJECT.md.',
+    icon: 'message',
+  },
+  {
+    title: 'One guided workflow',
+    description:
+      'A built-in guide for the agent covers every step from your first sentence to the finished site: brief, demo cleanup, name and colors, pages, checks and handover.',
+    icon: 'rocket',
+  },
+  {
+    title: 'Your brand in one command',
+    description:
+      'Give it one brand color or a design file, and it creates matching colors for light and dark mode. It stops with a suggestion when text would be hard to read.',
+    icon: 'palette',
+  },
+  {
+    title: 'Honest content by design',
+    description:
+      'Your own texts fill the page sections. The rules forbid invented testimonials, customer logos and numbers; anything missing becomes a question for you, not filler on the page.',
     icon: 'shield',
   },
   {
-    title: 'One Design System',
+    title: 'Verified in one command',
     description:
-      'OKLCH color tokens, spacing, and typography defined once. Dark mode included — and your AI assistant cannot break it.',
-    icon: 'chart',
+      'One command checks code style, types and design rules, builds the site and then checks every page for broken links, missing headings and images without descriptions.',
+    icon: 'check',
   },
   {
-    title: 'Docs for Humans & AI',
+    title: 'Checked by vibe2prod',
     description:
-      'Every task is documented two ways: tell your coding assistant what you want, or follow the manual steps yourself.',
-    icon: 'users',
+      'vibe2prod is a launch check that comes with AstroDeck. It tests speed, accessibility, search visibility, security and leftover placeholder content, and gives a clear verdict: ready, not yet or blocked.',
+    icon: 'sparkles',
   },
-  {
-    title: 'Quality Checks in One Command',
-    description:
-      'npm run check:kpis verifies colors, alt texts, meta descriptions, and deprecated imports. Lighthouse scores of 99-100 out of the box.',
-    icon: 'lock',
-  },
-  {
-    title: 'Astro Performance',
-    description:
-      'Static HTML with islands architecture: fast loads, clean SEO, sitemap and RSS included — what content sites actually need.',
-    icon: 'zap',
-  },
+];
+
+const howItWorks = [
+  '1. Get AstroDeck: download it, or paste the prompt above into your coding agent and let it set everything up.',
+  '2. Describe your site in one sentence, or put your texts, logo or design notes into the brief/ folder. The agent asks a few questions.',
+  '3. The agent removes the demo, adds your name, colors and pages, and shows you a preview.',
+  '4. Before it hands the site over, it runs the automatic checks and a launch check, and lists anything still open.',
 ];
 
 const faqs = [
   {
     question: 'Is AstroDeck free?',
     answer:
-      'Yes. AstroDeck is MIT-licensed and completely free — for personal and commercial projects, forever.',
+      'Yes. AstroDeck is MIT-licensed and free for personal and commercial projects, including the bundled vibe2prod audit (also MIT).',
   },
   {
     question: 'What kind of websites is it for?',
     answer:
-      'Company and marketing sites, blogs and editorial sites, portfolios, and landing pages. It is deliberately not built for dashboards or app-heavy products.',
+      'Company and service sites, SaaS and product pages, portfolios, personal sites, event pages and blogs. It is deliberately not built for dashboards or app-heavy products.',
   },
   {
-    question: 'Which AI tools does it work with?',
+    question: 'Which coding agents does it work with?',
     answer:
-      'Any tool that supports the AGENTS.md standard: Claude Code, Cursor, GitHub Copilot, OpenAI Codex, Gemini CLI, Windsurf, Zed, Aider, and more. Claude Code gets the deepest integration — a dedicated agent, domain skills, slash commands, and the convention guard hook.',
+      'Claude Code (through CLAUDE.md and a generated skills mirror) and OpenAI Codex were tested end to end: the 4.0 workflow built the eval sites and ended with all checks passing and a READY launch verdict. Cursor, GitHub Copilot, Gemini CLI and Windsurf read AGENTS.md and Agent Skills according to their vendor docs, but were not run for 4.0. The workflow needs nothing tool-specific; Claude Code additionally gets an optional review subagent and a guard hook.',
   },
   {
-    question: 'Can I use it without AI?',
+    question: 'Do I need to know how to code?',
     answer:
-      'Absolutely. AstroDeck is a normal, well-documented Astro starter kit. Every task in the docs is shown two ways: with AI and manually.',
+      'No. Describe your site in plain words, answer a few questions and look at the preview; the agent runs the commands. If you do code, AstroDeck is a regular Astro project with typed sections, a site config and scripts you can run yourself.',
   },
   {
-    question: 'Do I need to know Astro?',
+    question: 'What happens to the demo content?',
     answer:
-      'It helps, but it is not required. If you work with an AI assistant, it knows the conventions from AGENTS.md and does the heavy lifting. If you prefer to code yourself, the docs walk you through every task.',
+      'The download contains this demo site. The workflow removes it early with npm run starter:clean (with a dry run first), so your site keeps only a minimal home page, the 404 page and, if you want one, the blog.',
   },
   {
-    question: 'How opinionated is it?',
+    question: 'Does it support multilingual sites?',
     answer:
-      'There is one design-token system (OKLCH colors, spacing, typography) and a set of conventions — that is what keeps AI output consistent. Everything is overridable: your own rules go in PROJECT.md, your own brand goes in globals.css or a DESIGN.md.',
+      'Not in 4.0. The site config has one language. For several languages, use Astro’s built-in i18n routing on top.',
   },
 ];
 ---
 
 <BaseLayout
-  title="Astro Starter Kit for AI-Assisted Websites"
-  description="Open-source Astro starter kit for AI-assisted websites. Build company sites, blogs, and portfolios with Claude Code, Cursor & Co. on guarded design rails."
+  title="Build Your Website with a Coding Agent"
+  description="Free, open-source Astro starter kit for building websites with a coding agent. Describe your site in Claude Code, Codex or Cursor and get a checked result."
 >
   <Hero
-    badge="true"
-    title="The starter kit for AI-assisted websites."
-    subtitle="Start from a complete foundation — pages, sections, and a design system — and let <mark>Claude Code, Cursor, or any coding agent</mark> build your <mark>company site, blog, or portfolio</mark>. Conventions via <mark>AGENTS.md</mark>, enforced by <mark>built-in guardrails</mark>, so AI edits never go off-system."
-    prompt="Clone https://github.com/holger1411/astrodeck as the foundation for my new website. Install the dependencies, read AGENTS.md, start the dev server, and give me a short tour of the project."
+    badge={{ label: 'v4.0 — Open Source & MIT', href: '/changelog' }}
+    title="Build your website with your coding agent."
+    subtitle="Download AstroDeck, open it in <mark>Claude Code, Codex, Cursor or another coding agent</mark>, and describe your site — in one sentence or with a full brief. The agent follows a <mark>guided workflow</mark> from brief to finished pages, and the result is checked by <mark>npm run verify</mark> and the bundled <mark>vibe2prod</mark> audit."
+    prompt="Clone https://github.com/holger1411/astrodeck into a new folder, run npm install and follow its AGENTS.md. Then build my website for: [your business or project in one sentence]. If I give you a brief or a DESIGN.md, put it in brief/ and use it."
     primaryCta={{
       href: 'https://github.com/holger1411/astrodeck/releases/latest',
-      label: 'Download',
+      label: 'Download AstroDeck',
     }}
     secondaryCta={{ href: 'https://github.com/holger1411/astrodeck', label: 'GitHub' }}
   />
 
-  <LogoCloud />
+  <LogoCloud title="Built with:" logos={logos} />
 
-  <AIFeature />
+  <ContentBlock
+    tagline="How it works"
+    title="From an idea to a live website in four steps"
+    description="You do not need to know how to code. You describe what you want; the coding agent does the technical work and shows you the result."
+    features={howItWorks}
+  />
+
+  <IntegrationGrid
+    title="Works with the agent you already use"
+    subtitle="Agent-first"
+    items={agents}
+    cta={{ href: '/docs#agents', label: 'Supported agents in detail' }}
+  >
+    <p>
+      AstroDeck speaks the open standards: an{' '}
+      <a href="https://agents.md" target="_blank" rel="noopener noreferrer">AGENTS.md</a> index that names
+      the golden rules and the right skill for each task, and portable{' '}
+      <a href="https://agentskills.io" target="_blank" rel="noopener noreferrer">Agent Skills</a> in .agents/skills/
+      for building a site, adding pages and sections, theming and removing the demo.
+    </p>
+    <p>
+      Nothing in the workflow depends on one vendor. Claude Code reads the same files through a
+      one-line CLAUDE.md import and a generated skills mirror, and gets an optional review subagent
+      and guard hook on top.
+    </p>
+    <p slot="footer">
+      Claude Code and Codex: tested end to end in 4.0. The others: listed because their vendor docs
+      say they read AGENTS.md and Agent Skills; not run for 4.0. Other agents that read AGENTS.md
+      may work too.
+    </p>
+  </IntegrationGrid>
 
   <div class="section-inverted py-8">
     <Stats
       stats={[
-        { value: '16', label: 'Sections', description: 'Hero, pricing, FAQ, team & more' },
-        { value: '11', label: 'UI Components', description: 'shadcn/ui + Radix' },
-        { value: '11', label: 'Example Pages', description: 'SaaS, portfolio, blog & more' },
-        { value: '100', label: 'Lighthouse', description: 'Accessibility, Best Practices & SEO' },
+        {
+          value: String(kitStats.sections),
+          label: 'Sections',
+          description: 'Typed and data-driven',
+        },
+        { value: String(kitStats.ui), label: 'UI Components', description: 'shadcn/ui + Radix' },
+        {
+          value: String(kitStats.skills),
+          label: 'Agent Skills',
+          description: 'Incl. vibe2prod',
+        },
+        {
+          value: String(kitStats.recipes),
+          label: 'Site Recipes',
+          description: 'Sitemaps per site type',
+        },
       ]}
     />
   </div>
 
   <Features
-    title="More than a theme, calmer than an AI builder"
-    subtitle="A complete website foundation — plus the operating layer your AI assistant needs to stay on track."
+    title="From an idea to a verified site"
+    subtitle="A complete Astro foundation plus the workflow, rules and checks your coding agent needs to finish the job."
     features={features}
   />
 
@@ -126,24 +228,26 @@ const faqs = [
   </div>
 
   <div class="section-inverted">
-    <section class="py-20 md:py-32 px-6">
+    <section class="py-16 md:py-24 px-6">
       <div class="container max-w-3xl mx-auto text-center" data-animate="scale">
-        <h2 class="text-3xl font-bold leading-tight md:text-5xl">Start from a clean foundation.</h2>
+        <h2 class="text-3xl font-bold leading-tight md:text-5xl">
+          Describe your site. Ship it checked.
+        </h2>
         <p class="mt-6 text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-          Download AstroDeck, open it in your coding assistant, and say what you want to build. Free
-          and open source — forever.
+          Download AstroDeck, open it in your coding agent and say what you want to build. Free and
+          open source under the MIT license.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 mt-10 justify-center">
           <a
             href="https://github.com/holger1411/astrodeck/releases/latest"
-            class="group relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-semibold ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 h-12 px-12 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 overflow-hidden"
+            class="group relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-semibold ring-offset-background transition-[transform,box-shadow,background-color] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 h-12 px-12 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 overflow-hidden"
           >
             <span
-              class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"
+              class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-primary-foreground/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"
               aria-hidden="true"></span>
             <span
               class="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-0.5"
-              >Download</span
+              >Download AstroDeck</span
             >
           </a>
           <a

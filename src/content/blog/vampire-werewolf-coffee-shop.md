@@ -6,8 +6,6 @@ author: "Night Shift Chronicles"
 tags: ["humor", "business", "supernatural"]
 ---
 
-# Local Vampire and Werewolf Open 24-Hour Coffee Shop, Immediately Regret It
-
 Three weeks ago, longtime rivals Vlad Nightshade (vampire, 437 years old) and Luna Howlington (werewolf, 28 in human years) shocked the supernatural community by announcing their new business venture: **"Fangs & Beans"** - a 24-hour coffee shop catering to night owls, insomniacs, and the eternally damned.
 
 Today, they're already considering closing.

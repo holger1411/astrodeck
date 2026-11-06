@@ -8,11 +8,21 @@ import Team from '@/components/sections/Team.astro';
 import Testimonials from '@/components/sections/Testimonials.astro';
 import Newsletter from '@/components/sections/Newsletter.astro';
 import CTA from '@/components/sections/CTA.astro';
+import type { IconName } from '@/lib/icons';
+
+const logos = [
+  { name: 'Northwind Labs', icon: 'zap' },
+  { name: 'Lumen Works', icon: 'globe' },
+  { name: 'Fernhill', icon: 'users' },
+  { name: 'Quartz & Co', icon: 'shield' },
+  { name: 'Brightwave', icon: 'chart' },
+  { name: 'Oakline', icon: 'lock' },
+] satisfies { name: string; icon: IconName }[];
 
 const stats = [
   { value: '240+', label: 'Projects Completed', description: 'Across web, mobile & brand' },
   { value: '98%', label: 'Happy Clients', description: 'Based on post-project surveys' },
-  { value: '14', label: 'Awards Won', description: 'Including 3 Awwwards Site of the Day' },
+  { value: '14', label: 'Awards Won', description: 'Including 3 site-of-the-day honors' },
   { value: '11', label: 'Years in Business', description: 'Founded in San Francisco, 2014' },
 ];
 
@@ -20,7 +30,7 @@ const members = [
   {
     name: 'Elena Vasquez',
     role: 'Founder & Creative Director',
-    bio: 'Former design lead at Figma. Obsessed with the intersection of craft and business impact.',
+    bio: 'Former design lead at a product studio. Obsessed with the intersection of craft and business impact.',
     social: {
       twitter: 'https://twitter.com/elenavasquez',
       linkedin: 'https://linkedin.com/in/elenavasquez',
@@ -73,35 +83,37 @@ const testimonials = [
 
 <BaseLayout
   title="Acme Studio — Design & Engineering Agency"
-  description="Acme Studio is a full-service design and engineering agency. We craft brands, products, and digital experiences that help ambitious companies grow. Based in San Francisco."
+  description="Acme Studio is a full-service design and engineering agency in San Francisco. We craft brands, products and digital experiences."
 >
   <HeroSplit
-    tagline="Award-winning design & engineering"
+    tagline="Design & engineering studio"
     title="We design products people actually use."
     subtitle="Acme Studio is a full-service design and engineering agency. We partner with ambitious founders and product teams to craft brands, interfaces, and digital experiences that drive real business results."
-    primaryCta={{ href: '/contact', label: 'Start a Project' }}
-    secondaryCta={{ href: '/work', label: 'View Our Work' }}
+    primaryCta={{ href: '/templates/contact', label: 'Start a Project' }}
+    secondaryCta={{ href: '#process', label: 'How we work' }}
   />
 
-  <LogoCloud title="Trusted by leading brands:" />
+  <div data-demo>
+    <LogoCloud title="Trusted by leading brands:" logos={logos} />
+  </div>
 
-  <div class="section-inverted">
+  <div class="section-inverted" data-demo>
     <Stats stats={stats} />
   </div>
 
   <ContentBlock
     tagline="Who We Are"
     title="A small team with an outsized impact."
-    description="We are a team of 18 designers, engineers, and strategists who believe that exceptional craft and clear thinking are not mutually exclusive. Every project starts with a deep understanding of your users, your market, and your goals — then we build backward from there."
+    description="We are a team of designers, engineers, and strategists who believe that exceptional craft and clear thinking are not mutually exclusive. Every project starts with a deep understanding of your users, your market, and your goals — then we build backward from there."
     imageSide="right"
     features={[
       'Strategy-first approach — we understand your business before we touch a pixel',
       'End-to-end delivery from discovery and design through to engineering and launch',
-      'Transparent process with weekly check-ins, shared Figma files, and live staging environments',
+      'Transparent process with weekly check-ins, shared design files, and live staging environments',
     ]}
   />
 
-  <div class="section-muted">
+  <div id="process" class="section-muted">
     <ContentBlock
       tagline="How We Work"
       title="A proven process, adapted to your needs."
@@ -115,18 +127,22 @@ const testimonials = [
     />
   </div>
 
-  <Team
-    title="Meet the team"
-    subtitle="Senior practitioners, not junior staff. You'll work directly with the people doing the work."
-    members={members}
-  />
+  <div data-demo>
+    <Team
+      title="Meet the team"
+      subtitle="Senior practitioners, not junior staff. You'll work directly with the people doing the work."
+      members={members}
+    />
+  </div>
 
-  <div class="section-muted">
+  <div class="section-muted" data-demo>
     <Testimonials title="What our clients say" testimonials={testimonials} />
   </div>
 
   <div class="section-inverted">
     <Newsletter
+      action="/thanks"
+      method="get"
       title="Get Our Newsletter"
       description="Monthly insights on design, product strategy, and the business of building digital products. No fluff, no filler."
       placeholder="your@email.com"
@@ -137,6 +153,6 @@ const testimonials = [
   <CTA
     title="Have a project in mind?"
     description="We take on a limited number of new clients each quarter. Tell us about your project and we'll let you know if we're a good fit."
-    cta={{ href: '/contact', label: 'Get in Touch' }}
+    cta={{ href: '/templates/contact', label: 'Get in Touch' }}
   />
 </BaseLayout>
