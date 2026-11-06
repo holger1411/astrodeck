@@ -85,7 +85,7 @@ process.stdin.on('end', async () => {
       process.exit(2);
     }
   } catch (err) {
-    if (err && typeof err.code === 'number') throw err;
+    process.stderr.write(`guard-conventions: hook disabled (${err?.message ?? err})\n`);
     process.exit(0); // never break the session on hook errors
   }
   process.exit(0);

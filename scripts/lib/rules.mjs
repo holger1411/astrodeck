@@ -40,7 +40,8 @@ function scan(text, re, toHit) {
 }
 
 const COLOR_PREFIX =
-  '(?:bg|text|border|ring|fill|stroke|from|via|to|divide|outline|shadow|decoration|accent|caret)';
+  '(?:bg|text|border|ring|inset-ring|fill|stroke|from|via|to|divide|outline|shadow|decoration|accent|caret|placeholder)';
+const QUALIFIER = '(?:-(?:[trblxyse]|offset))?';
 const PALETTE =
   '(?:red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|slate|gray|zinc|neutral|stone)';
 
@@ -51,10 +52,15 @@ export const RULES = [
     severity: 'error',
     appliesTo: colorScope,
     check: (text) =>
-      scan(text, new RegExp(`(?<![\\w-])${COLOR_PREFIX}-${PALETTE}-\\d{2,3}\\b`, 'g'), (m) => ({
-        message: `Raw Tailwind palette color "${m[0]}" breaks theming and dark mode.`,
-        suggestion: 'Use a semantic token (bg-primary, text-muted-foreground, border-border, ...).',
-      })),
+      scan(
+        text,
+        new RegExp(`(?<![\\w-])${COLOR_PREFIX}${QUALIFIER}-${PALETTE}-\\d{2,3}\\b`, 'g'),
+        (m) => ({
+          message: `Raw Tailwind palette color "${m[0]}" breaks theming and dark mode.`,
+          suggestion:
+            'Use a semantic token (bg-primary, text-muted-foreground, border-border, ...).',
+        })
+      ),
   },
   {
     id: 'hex-or-arbitrary-color',
@@ -74,9 +80,11 @@ export const RULES = [
       const attr = /(?:class|className)\s*=\s*(?:"([^"]*)"|'([^']*)'|\{`([^`]*)`\})/g;
       for (const a of text.matchAll(attr)) {
         const value = a[1] ?? a[2] ?? a[3] ?? '';
-        if (/(?<![\w[-])#[0-9a-fA-F]{3,8}\b/.test(value) && !/-\[#/.test(value)) {
+        const hex = /(?<![\w[-])#[0-9a-fA-F]{3,8}\b/.exec(value);
+        if (hex && !/-\[#/.test(value)) {
+          const valueStart = a.index + a[0].indexOf(value);
           hits.push({
-            line: lineOf(text, a.index),
+            line: lineOf(text, valueStart + hex.index),
             message: 'Hex color inside a class attribute.',
             suggestion: 'Use a semantic token.',
           });
@@ -92,7 +100,10 @@ export const RULES = [
     check: (text) =>
       scan(
         text,
-        new RegExp(`(?<![\\w-])${COLOR_PREFIX}-(?:white|black)(?:/\\d+)?(?![\\w-])`, 'g'),
+        new RegExp(
+          `(?<![\\w-])${COLOR_PREFIX}${QUALIFIER}-(?:white|black)(?:/\\d+)?(?![\\w-])`,
+          'g'
+        ),
         (m) => ({
           message: `Literal black/white "${m[0]}" ignores the theme.`,
           suggestion:
@@ -116,7 +127,7 @@ export const RULES = [
     severity: 'error',
     appliesTo: isMarkup,
     check: (text) =>
-      scan(text, /\bhref\s*=\s*(["'])#\1/g, () => ({
+      scan(text, /\bhref\s*=\s*(?:(["'])#\1|\{\s*(["'])#\2\s*\})/g, () => ({
         message: 'Dead link href="#".',
         suggestion: 'Point to a real route or an in-page anchor like "#section".',
       })),
@@ -126,7 +137,7 @@ export const RULES = [
     severity: 'error',
     appliesTo: isMarkup,
     check: (text) =>
-      scan(text, /\baction\s*=\s*(["'])#\1/g, () => ({
+      scan(text, /\baction\s*=\s*(?:(["'])#\1|\{\s*(["'])#\2\s*\})/g, () => ({
         message: 'Dead form action="#".',
         suggestion: 'Point the form at a real endpoint or remove the form.',
       })),

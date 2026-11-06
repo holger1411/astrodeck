@@ -2,6 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { join } from 'node:path';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { RULES, lintText } from '../scripts/lib/rules.mjs';
 import { formatFindings } from '../scripts/lib/findings.mjs';
 
@@ -51,6 +53,12 @@ const CASES = [
   ['dark-override', 'src/components/A.astro', '<p class="dark:bg-card">', '<p class="bg-card">'],
   ['dead-href', 'src/pages/a.astro', '<a href="#">x</a>', '<a href="#top">x</a>'],
   ['dead-action', 'src/pages/a.astro', '<form action="#">', '<form action="/api/x">'],
+  [
+    'non-oklch-token',
+    'src/styles/globals.css',
+    ':root { --color-x: #fff; }',
+    ':root { --color-x: oklch(98% 0 0); }',
+  ],
   ['tailwind-config', 'tailwind.config.js', 'export default {}', null],
   [
     'view-transitions',
@@ -88,7 +96,7 @@ for (const [id, path, bad, good] of CASES) {
 test('every rule id has a case and valid shape', () => {
   for (const r of RULES) {
     assert.ok(['error', 'warn'].includes(r.severity), r.id);
-    assert.ok(CASES.some((c) => c[0] === r.id) || r.id === 'non-oklch-token', r.id);
+    assert.ok(CASES.some((c) => c[0] === r.id) || false, r.id);
   }
 });
 
@@ -224,3 +232,37 @@ function runHook(payload) {
     env: { ...process.env, CLAUDE_PROJECT_DIR: REPO },
   });
 }
+
+test('bare hex reports the line of the hex, not the attribute start', () => {
+  const f = lintText('src/pages/a.astro', '<div\n  class="p-2\n  #fff">');
+  assert.deepEqual(
+    f.filter((x) => x.rule === 'hex-or-arbitrary-color').map((x) => x.line),
+    [3]
+  );
+});
+
+test('hook: PostToolUse checks the full file on disk', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'hook-'));
+  try {
+    mkdirSync(join(dir, 'src', 'components'), { recursive: true });
+    const file = join(dir, 'src', 'components', 'T.astro');
+    writeFileSync(file, '<div class="bg-red-500">');
+    const run = (newString) =>
+      spawnSync('node', [HOOK], {
+        input: JSON.stringify({
+          hook_event_name: 'PostToolUse',
+          tool_input: { file_path: file, new_string: newString },
+        }),
+        encoding: 'utf8',
+        env: { ...process.env, CLAUDE_PROJECT_DIR: REPO },
+      });
+    // edit text itself is clean, but the file on disk has a violation
+    const r = run('<p>ok</p>');
+    assert.equal(r.status, 2);
+    assert.match(r.stderr, /raw-palette-color/);
+    writeFileSync(file, '<div class="bg-primary">');
+    assert.equal(run('<p>ok</p>').status, 0);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
