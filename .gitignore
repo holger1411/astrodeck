@@ -29,9 +29,5 @@ npm-debug.log*
 # TypeScript
 *.tsbuildinfo
 
-
-# Plenum review reports
-.claude/reports/
-
 # Claude Code local settings (per-developer, not shipped)
 .claude/settings.local.json

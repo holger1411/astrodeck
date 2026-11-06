@@ -3,7 +3,7 @@
  * Docs lint: keeps Markdown docs truthful.
  * Backticked paths covered by starter.manifest.json remove/removeUnlessBlog lists are optional:
  * a cleaned starter has deleted them on purpose, so they are not reported as dead.
- * Rules: dead-path, version-drift, count-drift, site-url-drift.
+ * Rules: dead-path, version-drift, count-drift, site-url-drift, skill-frontmatter.
  * Usage: node scripts/lint-docs.mjs [projectRoot]   (exit 1 on any finding)
  */
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
@@ -24,14 +24,21 @@ const SCAN_DIRS = ['docs', '.agents/skills', '.claude'];
 // Vendored third-party skill docs: not ours to lint.
 const VENDORED_PREFIXES = ['.agents/skills/vibe2prod/', '.claude/skills/vibe2prod/'];
 
-// LEGACY_EXCLUDES: obsolete pre-4.0 agent docs that Task 11 deletes or replaces.
-// Task 11 removes this list together with the files.
-const LEGACY_EXCLUDES = [
-  '.claude/commands/',
-  '.claude/agents/',
-  '.windsurfrules',
-  '.cursor/rules/',
+// Agent Skills spec (agentskills.io): portable front matter fields and limits.
+const SKILLS_DIR = '.agents/skills';
+const VENDORED_SKILLS = ['vibe2prod'];
+const PORTABLE_FIELDS = [
+  'name',
+  'description',
+  'license',
+  'compatibility',
+  'metadata',
+  'allowed-tools',
 ];
+const SKILL_NAME = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const MAX_NAME = 64;
+const MAX_DESCRIPTION = 1024;
+const MAX_BODY_LINES = 500;
 
 const PATH_ROOTS = ['src', 'scripts', 'public', 'docs', 'tests', '.agents', '.claude', '.github'];
 
@@ -53,11 +60,7 @@ function listDocs(root) {
   for (const d of SCAN_DIRS) for (const f of walkMd(join(root, d))) files.add(f);
   return [...files]
     .map((f) => ({ abs: f, rel: relative(root, f).split(sep).join('/') }))
-    .filter(
-      ({ rel }) =>
-        !VENDORED_PREFIXES.some((p) => rel.startsWith(p)) &&
-        !LEGACY_EXCLUDES.some((p) => rel.startsWith(p))
-    )
+    .filter(({ rel }) => !VENDORED_PREFIXES.some((p) => rel.startsWith(p)))
     .sort((a, b) => a.rel.localeCompare(b.rel));
 }
 
@@ -199,7 +202,76 @@ export function lintDocs(root) {
   }
 
   findings.push(...siteUrlDrift(root));
+  findings.push(...skillFrontmatter(root));
   return findings;
+}
+
+/**
+ * Top-level keys of a YAML front matter block. Scalars are unquoted; block scalars
+ * (`>` / `|`) and indented continuation lines are joined with spaces.
+ * @param {string} text
+ * @returns {{ fields: Record<string, string>; bodyLines: number } | null}
+ */
+export function parseFrontmatter(text) {
+  const lines = text.replace(/\r\n/g, '\n').split('\n');
+  if (lines[0] !== '---') return null;
+  const end = lines.indexOf('---', 1);
+  if (end === -1) return null;
+  /** @type {Record<string, string>} */
+  const fields = {};
+  let key = null;
+  for (const line of lines.slice(1, end)) {
+    const kv = line.match(/^([A-Za-z][\w-]*):\s*(.*)$/);
+    if (kv) {
+      key = kv[1];
+      const v = kv[2].trim();
+      fields[key] = /^[>|][+-]?$/.test(v) ? '' : v.replace(/^(["'])(.*)\1$/, '$2');
+    } else if (key && /^\s+\S/.test(line)) {
+      fields[key] = `${fields[key]} ${line.trim()}`.trim();
+    }
+  }
+  const body = lines.slice(end + 1);
+  while (body.length && body.at(-1) === '') body.pop();
+  return { fields, bodyLines: body.length };
+}
+
+/** skill-frontmatter: every own skill in .agents/skills follows the Agent Skills spec. */
+function skillFrontmatter(root) {
+  const out = [];
+  const dir = join(root, SKILLS_DIR);
+  if (!existsSync(dir)) return out;
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (!entry.isDirectory() || VENDORED_SKILLS.includes(entry.name)) continue;
+    const file = `${SKILLS_DIR}/${entry.name}/SKILL.md`;
+    const add = (message) => out.push({ file, rule: 'skill-frontmatter', message });
+    if (!existsSync(join(root, file))) {
+      add('SKILL.md is missing');
+      continue;
+    }
+    const fm = parseFrontmatter(readFileSync(join(root, file), 'utf8'));
+    if (!fm) {
+      add('no YAML front matter (expected a leading --- block with name and description)');
+      continue;
+    }
+    const { name, description } = fm.fields;
+    if (!name) add('name is missing');
+    else {
+      if (name !== entry.name) add(`name "${name}" does not match folder "${entry.name}"`);
+      if (!SKILL_NAME.test(name) || name.length > MAX_NAME)
+        add(`name "${name}" must be lowercase letters, digits and single hyphens, max ${MAX_NAME}`);
+    }
+    if (!description) add('description is missing');
+    else if (description.length > MAX_DESCRIPTION)
+      add(`description is ${description.length} chars (max ${MAX_DESCRIPTION})`);
+    for (const k of Object.keys(fm.fields))
+      if (!PORTABLE_FIELDS.includes(k))
+        add(`field "${k}" is not portable (allowed: ${PORTABLE_FIELDS.join(', ')})`);
+    if (fm.bodyLines >= MAX_BODY_LINES)
+      add(
+        `body has ${fm.bodyLines} lines (must be under ${MAX_BODY_LINES}; move detail to references/)`
+      );
+  }
+  return out;
 }
 
 function siteUrlDrift(root) {

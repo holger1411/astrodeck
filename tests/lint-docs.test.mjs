@@ -82,3 +82,62 @@ test('reports dead paths, stale versions, wrong counts, URL drift', () => {
 test('real repo passes', () => {
   assert.deepEqual(lintDocs(REPO), []);
 });
+
+test('skill-frontmatter: name, description, body length, portable fields only', () => {
+  const skills = mkdtempSync(join(tmpdir(), 'lint-skills-'));
+  const write = (rel, content) => {
+    const p = join(skills, rel);
+    mkdirSync(dirname(p), { recursive: true });
+    writeFileSync(p, content);
+  };
+  try {
+    write(
+      '.agents/skills/good-skill/SKILL.md',
+      '---\nname: good-skill\ndescription: "Use when: good things happen"\nlicense: MIT\nmetadata:\n  author: x\n---\n# Body\n'
+    );
+    write(
+      '.agents/skills/folded/SKILL.md',
+      '---\nname: folded\ndescription: >\n  Folded description\n  over two lines.\n---\nBody\n'
+    );
+    write('.agents/skills/mismatch/SKILL.md', '---\nname: other-name\ndescription: x\n---\n');
+    write('.agents/skills/Bad_Name/SKILL.md', '---\nname: Bad_Name\ndescription: x\n---\n');
+    write('.agents/skills/no-desc/SKILL.md', '---\nname: no-desc\nmodel: opus\n---\n');
+    write(
+      '.agents/skills/long-desc/SKILL.md',
+      `---\nname: long-desc\ndescription: ${'a'.repeat(1025)}\n---\n`
+    );
+    write(
+      '.agents/skills/long-body/SKILL.md',
+      `---\nname: long-body\ndescription: x\n---\n${'line\n'.repeat(500)}`
+    );
+    write('.agents/skills/no-front/SKILL.md', '# No front matter\n');
+    write('.agents/skills/no-skill-file/references/x.md', 'x\n');
+    write('.agents/skills/vibe2prod/SKILL.md', '# vendored, not ours\n');
+    const f = lintDocs(skills).filter((x) => x.rule === 'skill-frontmatter');
+    assert.deepEqual(f.map((x) => x.file).sort(), [
+      '.agents/skills/Bad_Name/SKILL.md',
+      '.agents/skills/long-body/SKILL.md',
+      '.agents/skills/long-desc/SKILL.md',
+      '.agents/skills/mismatch/SKILL.md',
+      '.agents/skills/no-desc/SKILL.md',
+      '.agents/skills/no-desc/SKILL.md',
+      '.agents/skills/no-front/SKILL.md',
+      '.agents/skills/no-skill-file/SKILL.md',
+    ]);
+    const msg = (file) =>
+      f
+        .filter((x) => x.file === `.agents/skills/${file}/SKILL.md`)
+        .map((x) => x.message)
+        .join(' | ');
+    assert.match(msg('mismatch'), /does not match folder/);
+    assert.match(msg('Bad_Name'), /lowercase/);
+    assert.match(msg('no-desc'), /description/);
+    assert.match(msg('no-desc'), /model/);
+    assert.match(msg('long-desc'), /1024/);
+    assert.match(msg('long-body'), /500/);
+    assert.match(msg('no-front'), /front matter/);
+    assert.match(msg('no-skill-file'), /missing/);
+  } finally {
+    rmSync(skills, { recursive: true, force: true });
+  }
+});

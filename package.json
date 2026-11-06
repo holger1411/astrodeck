@@ -22,6 +22,7 @@
     "theme": "node scripts/theme.mjs",
     "check:registry": "node scripts/check-registry.mjs",
     "starter:clean": "node scripts/starter-clean.mjs",
+    "sync:agents": "node scripts/sync-agents.mjs",
     "test": "node --test \"tests/**/*.test.mjs\"",
     "verify": "node scripts/verify.mjs",
     "validate": "node scripts/verify.mjs --skip-build"

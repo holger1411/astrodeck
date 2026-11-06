@@ -906,7 +906,7 @@ AstroDeck includes a dedicated **Claude Code Agent** that acts as your personal 
 
 #### Using the Agent
 
-The agent is located at `.claude/agents/astrodeck.md` and works automatically with [Claude Code](https://claude.ai/code).
+Since 4.0 the agent layer is tool-agnostic: `AGENTS.md` is the index and the skills live in `.agents/skills/` (mirrored to `.claude/skills/` for [Claude Code](https://claude.ai/code)). See `docs/agents/supported-agents.md`.
 
 **Automatic Usage:**
 When you work on AstroDeck with Claude Code, the agent activates automatically for relevant tasks.
@@ -1129,29 +1129,13 @@ The main configuration file containing:
 
 **Note:** Instructions in `PROJECT.md` override these defaults.
 
-#### `.claude/agents/astrodeck.md` - Claude Code Agent
+#### `.agents/skills/` - Skills
 
-Lightweight agent with AstroDeck-specific capabilities:
-- Proactive security, accessibility, SEO, performance warnings
-- Quick reference to AGENTS.md conventions
-- Streamlined for fast activation
-
-**Usage:** Automatically activated when using Claude Code on AstroDeck.
-
-#### `.claude/commands/` - Slash Commands
-
-Pre-built commands for common tasks:
-
-| Command | Description |
-|---------|-------------|
-| `/new-page` | Create a new page with layout and SEO setup |
-| `/new-section` | Create a reusable section component |
-| `/audit` | Run quality checks (lint, accessibility, SEO) |
-| `/theme` | Customize design tokens and colors |
-| `/launch-check` | Pre-launch KPI check across all quality dimensions |
-| `/plenum` | Multi-agent review with parallel domain experts |
-
-**Usage:** Type the command in Claude Code to activate.
+Portable Agent Skills for the main tasks: `astrodeck-build-site`, `astrodeck-new-page`,
+`astrodeck-new-section`, `astrodeck-theme`, `astrodeck-cleanup`. Claude Code reads the generated
+copy in `.claude/skills/` (`npm run sync:agents`). The former slash commands and review agents
+were replaced by these skills and the optional `astrodeck-reviewer` subagent
+(`.claude/agents/astrodeck-reviewer.md`).
 
 ### AI Tool Pathways
 
@@ -1159,11 +1143,8 @@ Different tools get different levels of AstroDeck's hybrid AI architecture. Pick
 
 | Tool | What You Get | Setup |
 |------|-------------|-------|
-| Claude Code | Full features: agents, skills, commands, plenum, skill chains | Works out of the box -- `.claude/` auto-detected |
-| Cursor | Design rules, conventions, code patterns | `.cursor/rules` + `design-system.md` for reference |
-| Windsurf | Design rules, conventions, code patterns | `.windsurfrules` + `design-system.md` for reference |
-| GitHub Copilot | Design rules, conventions, code patterns | `.github/copilot-instructions.md` + `design-system.md` |
-| ChatGPT / Gemini | Portable quality audits | Paste `quality-checklist.md` as the audit brief |
+| Any agent that reads AGENTS.md | Rules, workflow, skills | Open the project; see `docs/agents/supported-agents.md` |
+| Claude Code | Same, plus hook and reviewer subagent | `CLAUDE.md` imports `AGENTS.md`; skills in `.claude/skills/` |
 
 ### Benefits of AI-Friendly Documentation
 
@@ -1216,7 +1197,7 @@ AI: *Checks against AGENTS.md knowledge*
 If you find ways to improve AI assistance for AstroDeck:
 
 1. Suggest updates to `AGENTS.md` for better conventions
-2. Improve the Claude Code agent in `.claude/agents/astrodeck.md`
+2. Improve the skills in `.agents/skills/` (then run `npm run sync:agents`)
 3. Report AI-related issues or confusions
 4. Share successful AI interaction patterns
 

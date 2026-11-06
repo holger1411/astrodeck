@@ -1,24 +1,69 @@
-# PROJECT.md - Project Brief
+# PROJECT.md — Site brief
 
-> Project-specific instructions for AI coding assistants. These override the defaults in `AGENTS.md`.
-> Fill in the sections below, or let your agent interview you and write them.
+> The brief for this website. It overrides the defaults in `AGENTS.md`.
+> Your coding agent fills it from your answers and the files you put in `brief/`
+> (workflow: `.agents/skills/astrodeck-build-site/SKILL.md`). You can edit it any time.
+> Only real facts go here. Anything unknown is listed under "Open questions", never invented.
 
-## Site
+## Goal & audience
 
-- Name: (not set yet)
-- What it is and who it is for: (not set yet)
-- Primary goal of the site: (not set yet)
+<!-- One sentence each. Mark the source of facts, e.g. (chat) or (brief/profile.pdf p. 2). -->
 
-## Brand and tone
+- Site name:
+- What it is:
+- Audience:
+- Primary visitor action:
+- Success looks like:
 
-- Brand color and fonts: (not set yet)
-- Tone of voice: (not set yet)
+## Offer
 
-## Pages and content
+<!-- Products, services, prices (only prices the owner supplied), what makes it different. -->
 
-- Pages needed: (not set yet)
-- Legal pages (imprint, privacy): required before launch, written by the site owner
+-
 
-## Rules
+## Sitemap
 
-- Use only real content that the site owner supplied or approved. No invented testimonials, customers, statistics or team members.
+<!-- Recipe from .agents/skills/astrodeck-build-site/references/recipes/ and one line per page:
+     path | purpose | sections (registry names, in order). -->
+
+- Recipe:
+- Pages:
+
+## Tone & language
+
+- Site language:
+- Tone:
+- Words to use / avoid:
+
+## Brand
+
+<!-- Name, logo file, colors (hex), fonts, corner radius, imagery. Note the design source. -->
+
+- Logo:
+- Colors:
+- Fonts:
+- Radius:
+- Imagery:
+- Design source:
+
+## Content sources
+
+<!-- Every file, link or conversation the facts came from. -->
+
+-
+
+## Must-haves / no-gos
+
+-
+
+## Open questions
+
+<!-- Missing facts and conflicts, with who has to answer. Nothing here may appear on the site. -->
+
+-
+
+## Decisions & defaults
+
+<!-- Every default the agent chose without an explicit answer, so the owner can overrule it. -->
+
+-

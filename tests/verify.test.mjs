@@ -12,6 +12,7 @@ test('STEPS are in the documented order', () => {
       'lint-design',
       'lint-docs',
       'registry',
+      'agents-sync',
       'test',
       'build',
       'dist',

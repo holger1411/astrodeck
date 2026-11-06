@@ -78,7 +78,7 @@ Check each page at 375, 768, 1024 and 1280 px width.
 | Production build succeeds | verify |
 | Images are optimized, sized, lazy-loaded below the fold; hero image eager | vibe2prod, manual |
 | No render-blocking third-party scripts, no unused heavy dependencies added | vibe2prod, manual |
-| Fonts are the self-hosted Geist files only | manual |
+| Fonts are self-hosted (Geist, or the brand fonts from the theme step); no font CDN requests | manual |
 | Lighthouse performance and accessibility at 90 or above on the built site | vibe2prod |
 
 ## 8. SEO and metadata

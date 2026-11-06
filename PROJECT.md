@@ -1,32 +1,72 @@
-# PROJECT.md - Your Project Customizations
+<!-- This copy belongs to the AstroDeck demo (astrodeck.dev). `npm run starter:clean` replaces it
+     with the same empty template. To build your own site, follow the astrodeck-build-site skill. -->
 
-> **Purpose:** Add YOUR project-specific instructions here.
-> **Priority:** These instructions **override** the defaults in `AGENTS.md`.
-> **For:** All AI coding assistants (Claude Code, Cursor, Copilot, Windsurf, etc.)
+# PROJECT.md — Site brief
 
----
+> The brief for this website. It overrides the defaults in `AGENTS.md`.
+> Your coding agent fills it from your answers and the files you put in `brief/`
+> (workflow: `.agents/skills/astrodeck-build-site/SKILL.md`). You can edit it any time.
+> Only real facts go here. Anything unknown is listed under "Open questions", never invented.
 
-## How to Use This File
+## Goal & audience
 
-This file is intentionally blank. Add your customizations below when you need them.
+<!-- One sentence each. Mark the source of facts, e.g. (chat) or (brief/profile.pdf p. 2). -->
 
-**Example Use Case:**
+- Site name:
+- What it is:
+- Audience:
+- Primary visitor action:
+- Success looks like:
 
-```markdown
-## Design Customizations
-Primary color: Electric blue (#0066FF) instead of default blue.
-Use this for all CTAs, buttons, and primary actions.
+## Offer
 
-## Tone of Voice
-Style: Professional but friendly
-Audience: Tech-savvy startup founders
-Language: US English
+<!-- Products, services, prices (only prices the owner supplied), what makes it different. -->
 
-## Project Rules
-- All forms must include Zod validation
-- All images must use Astro's <Image /> component with alt text
-```
+-
 
----
+## Sitemap
 
-<!-- Add your project customizations below this line -->
+<!-- Recipe from .agents/skills/astrodeck-build-site/references/recipes/ and one line per page:
+     path | purpose | sections (registry names, in order). -->
+
+- Recipe:
+- Pages:
+
+## Tone & language
+
+- Site language:
+- Tone:
+- Words to use / avoid:
+
+## Brand
+
+<!-- Name, logo file, colors (hex), fonts, corner radius, imagery. Note the design source. -->
+
+- Logo:
+- Colors:
+- Fonts:
+- Radius:
+- Imagery:
+- Design source:
+
+## Content sources
+
+<!-- Every file, link or conversation the facts came from. -->
+
+-
+
+## Must-haves / no-gos
+
+-
+
+## Open questions
+
+<!-- Missing facts and conflicts, with who has to answer. Nothing here may appear on the site. -->
+
+-
+
+## Decisions & defaults
+
+<!-- Every default the agent chose without an explicit answer, so the owner can overrule it. -->
+
+-

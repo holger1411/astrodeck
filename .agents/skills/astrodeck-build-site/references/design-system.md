@@ -58,7 +58,8 @@ back to back.
 ## 3. Typography
 
 Fonts: Geist (`font-sans`, default) and Geist Mono (`font-mono`), self-hosted in `public/fonts/`.
-Do not add other font families.
+Do not add other font families unless the brand specifies them; then swap them in self-hosted as
+described in `.agents/skills/astrodeck-theme/references/fonts.md`.
 
 | Role | Classes |
 |------|---------|

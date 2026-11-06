@@ -56,6 +56,7 @@ export const STEPS = [
   { id: 'lint-design', cmd: node, args: ['scripts/lint-design.mjs'] },
   { id: 'lint-docs', cmd: node, args: ['scripts/lint-docs.mjs'] },
   { id: 'registry', cmd: node, args: ['scripts/check-registry.mjs'] },
+  { id: 'agents-sync', cmd: node, args: ['scripts/sync-agents.mjs', '--check'] },
   { id: 'test', cmd: node, args: ['--test', 'tests/**/*.test.mjs'] },
   buildStep(),
   { id: 'dist', cmd: node, args: ['scripts/check-dist.mjs'], needsBuild: true },
