@@ -20,6 +20,7 @@
     "check:dist": "node scripts/check-dist.mjs",
     "lint:design": "node scripts/lint-design.mjs",
     "theme": "node scripts/theme.mjs",
+    "icons": "node scripts/icons.mjs",
     "check:registry": "node scripts/check-registry.mjs",
     "starter:clean": "node scripts/starter-clean.mjs",
     "sync:agents": "node scripts/sync-agents.mjs",
