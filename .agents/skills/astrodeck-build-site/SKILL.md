@@ -44,7 +44,8 @@ Do not write `PROJECT.md` yet if the demo is still present (step 2 replaces it).
 Follow the `astrodeck-cleanup` skill (`.agents/skills/astrodeck-cleanup/SKILL.md`). Skip this
 step when `starter/` does not exist (already cleaned).
 
-- `npm run starter:clean -- --dry-run` shows the plan; then
+- A reply to the intake message that does not object counts as agreement; no second
+  confirmation round. `npm run starter:clean -- --dry-run` shows the plan; then
   `npm run starter:clean -- --yes` (add `--keep-blog` if the user wants a blog).
 - Why this early: the cleanup replaces `PROJECT.md`, `src/config/site.ts`,
   `src/config/site-url.mjs`, `src/pages/index.astro`, `public/robots.txt` and `public/llms.txt`
@@ -79,8 +80,8 @@ optional `headerCta`, `footer` (`tagline`, `groups`, `copyright`, optional `cred
 - `src/config/site-url.mjs`: `SITE_URL` = the production URL. Unknown: ask; if still unknown,
   keep the placeholder and make it the first Open question (it must be set before deploying).
 - `public/robots.txt` and `public/llms.txt`: real domain and real pages.
-- Logo: replace the AstroDeck deck icon in `src/components/Logo.astro` (details in the
-  `astrodeck-theme` skill, step 5).
+- Logo: `site.logo` (`text`, and `svg` markup or a `src` file; details in the
+  `astrodeck-theme` skill, step 5). Without a logo the header shows the name as a wordmark.
 - Favicons (`public/favicon.svg`, `favicon-32x32.png`, `apple-touch-icon.png`, `icon-192.png`,
   `icon-512.png`): replace with the user's logo. Without a logo, write a simple monogram
   `favicon.svg` in the brand color and list the PNG icons as an Open question.

@@ -8,6 +8,9 @@ Section names below are registry names (`src/registry.json`); props and examples
 Pages without a hero start with the inline page header from the `astrodeck-new-page` skill.
 In the demo repo, `/templates/portfolio` shows a related structure (demo only; removed by cleanup).
 
+ContentBlock takes `image` only for a real photo or screenshot the user supplied; without it
+the block renders as a single text column and `imageSide` has no effect.
+
 ## Sitemap
 
 | Path | Purpose | Required? |
@@ -24,8 +27,8 @@ In the demo repo, `/templates/portfolio` shows a related structure (demo only; r
 
 - Section: HeroSplit — positioning statement, `tagline` = discipline + location, image = the strongest real project image; CTA = "Start a project" / inquiry
 - Section: LogoCloud — real clients who agreed to be named; omit otherwise
-- Section: ContentBlock — selected project 1 (problem, approach, result), real image
-- Section: ContentBlock — selected project 2, `imageSide="left"`
+- Section: ContentBlock — selected project 1 (problem, approach, result), project image as `image`
+- Section: ContentBlock — selected project 2, project image, `imageSide="left"`
 - Section: Features — services (3 to 6), each with the deliverable, not buzzwords
 - Section: Testimonials — real client quotes with name and role
 - Section: CTA — inquiry, with response time if the owner states one
@@ -71,7 +74,7 @@ quotes with permission, team (optional), inquiry email or form endpoint, locatio
 
 ## Anti-repetition
 
-- Alternate ContentBlock `imageSide` and section backgrounds; never two tinted sections in a row.
+- Alternate ContentBlock `imageSide` (when they have images) and section backgrounds; never two tinted sections in a row.
 - Do not use Features grids to list projects; projects get images and their own pages.
 - One HeroSplit on `/`; subpages use the page header.
 

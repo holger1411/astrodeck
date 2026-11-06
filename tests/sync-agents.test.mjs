@@ -121,3 +121,13 @@ test('CLI --check exits 1 and lists drift; exits 0 when in sync', () => {
 test('real repo mirror is in sync', () => {
   assert.deepEqual(syncAgents(REPO, { check: true }).changed, []);
 });
+
+test('ignores OS junk files (.DS_Store, Thumbs.db) in source and mirror', () => {
+  put('.agents/skills/a/.DS_Store', 'junk');
+  put('.agents/skills/a/references/Thumbs.db', 'junk');
+  const { changed } = syncAgents(root, { check: false });
+  assert.ok(!changed.some((p) => /\.DS_Store|Thumbs\.db/.test(p)), changed.join(','));
+  assert.equal(existsSync(join(root, '.claude/skills/a/.DS_Store')), false);
+  put('.claude/skills/a/.DS_Store', 'junk');
+  assert.deepEqual(syncAgents(root, { check: true }).changed, []);
+});

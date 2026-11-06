@@ -33,9 +33,11 @@ example a brief in `PROJECT.md` or values in `site.ts`), copy those edits somewh
 
 ## 3. Confirm
 
-Tell the user in one or two sentences what will be removed and ask for a yes, unless they
-already agreed to a clean start (for example in the build-site intake message). Ask whether
-they want a blog if that is not decided (default: no blog).
+Inside the build-site workflow, the intake message already announced the clean start: any
+reply that does not object (answers, "ok", "go") is the agreement. Do not ask again.
+
+Used on its own: tell the user in one or two sentences what will be removed and ask for a yes.
+Ask whether they want a blog if that is not decided (default: no blog).
 
 ## 4. Run
 
@@ -52,8 +54,8 @@ npm run starter:clean -- --yes               # or: -- --yes --keep-blog
   one draft post. Section components, layouts, UI components, the theme and all scripts stay.
 - `npm run verify -- --starter` must pass (it also fails on `data-demo` markers and the text
   "AstroDeck" / "astrodeck.dev" in the built pages).
-- Still AstroDeck-branded until you change them (the check above cannot see them): the logo icon in
-  `src/components/Logo.astro`, the favicons in `public/`, and the starter placeholders in
+- Still AstroDeck-branded until you change them (the check above cannot see them): the favicons
+  in `public/`, and the starter placeholders in
   `src/config/site.ts` / `src/config/site-url.mjs` ("Your Site", `https://example.com`). The
   build-site workflow replaces them in its configure and theme steps.
 - `public/icons/` (tech and AI-tool logos used by the demo) stays; delete what the site does not use.

@@ -37,6 +37,8 @@ Record every source you used; it goes into **Content sources** in the brief.
      details, team, customer quotes. Say plainly that you will not make them up.
 2. State, in the same message, what you will do without asking: start from a clean site
    (demo pages removed; a blog only if they want one), the recipe you picked, your defaults.
+   Any reply to this message that does not object (answers, "ok", "go") counts as agreement to
+   the clean start; do not ask a second time before running the cleanup.
 3. If the user answers only partly, or says "just start": proceed with the defaults and record
    each one under **Decisions & defaults**. Unanswered facts go to **Open questions**.
 4. Get to a **first visible version fast**: dev server running, the home page built from the
@@ -62,7 +64,7 @@ Record every source you used; it goes into **Content sources** in the brief.
 |-------|--------|
 | `brief/DESIGN.md` (Google Labs DESIGN.md format, YAML front matter) | `npm run theme -- --from brief/DESIGN.md --dry-run` shows what the theme script reads (`colors.primary`, `colors.accent`, `rounded`). Record other tokens (fonts, spacing feel) in **Brand**. |
 | Link to a design system / brand guide / existing site | Extract: primary and accent color (hex), neutral tone, font families, corner radius, imagery style. Record what you could not find. |
-| Logo file | Record path; it becomes `site.logo` and the favicon source. |
+| Logo file | Record the path. In the configure step it becomes `site.logo.svg` (SVG markup, preferred) or `site.logo.src` (file in `public/`), and the favicon source. |
 | Only words ("calm", "premium", "playful") | Translate into a concrete proposal (one primary color, neutral, radius) and list it under **Decisions & defaults**. |
 
 The actual theme change happens in the theme step (skill `astrodeck-theme`).
@@ -82,7 +84,8 @@ The actual theme change happens in the theme step (skill `astrodeck-theme`).
 
 - Use the structure of `brief-template.md` exactly; keep headings so other agents find things.
 - If the AstroDeck demo is still present (a `starter/` folder exists), run the cleanup step
-  first: `npm run starter:clean` replaces `PROJECT.md` with the empty template, so a brief
+  first (high input: state the clean start in your question round, or ask once if you have no
+  questions): `npm run starter:clean` replaces `PROJECT.md` with the empty template, so a brief
   written before cleanup would be lost.
 - Keep it short and factual: bullet points, sources, no marketing copy.
 - Update it whenever a decision is made later (new page, color change, answered question).

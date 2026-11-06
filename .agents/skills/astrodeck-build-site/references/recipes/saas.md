@@ -9,6 +9,9 @@ Pages without a hero start with the inline page header from the `astrodeck-new-p
 In the demo repo, `/templates/saas` and `/templates/startup` show this structure (demo only;
 removed by cleanup).
 
+ContentBlock takes `image` only for a real photo or screenshot the user supplied; without it
+the block renders as a single text column and `imageSide` has no effect.
+
 ## Sitemap
 
 | Path | Purpose | Required? |
@@ -26,7 +29,7 @@ removed by cleanup).
 - Section: HeroSplit — outcome-first headline, product screenshot from the user as `image`; primary CTA = sign-up/trial/waitlist, secondary = demo or docs
 - Section: LogoCloud — only real customers who agreed, or the tech stack the product integrates with (label it as such, e.g. "Works with")
 - Section: Features — 3 to 6 capabilities, each tied to a user outcome from the brief
-- Section: ContentBlock — one key workflow explained, real screenshot alongside
+- Section: ContentBlock — one key workflow explained, the user's real screenshot as `image`
 - Section: IntegrationGrid — when integrations are a selling point; link each item to a real page
 - Section: Testimonials — real customer quotes only
 - Section: Pricing — 1 to 3 plans if prices are public; otherwise a CTA to contact sales
@@ -37,7 +40,7 @@ removed by cleanup).
 
 - Section: HeroGradient — only if the home page uses HeroSplit; otherwise the page header
 - Section: Features — grouped capabilities
-- Section: ContentBlock — one per major capability, alternating `imageSide`
+- Section: ContentBlock — one per major capability; with screenshots, alternate `imageSide`
 - Section: Comparison — only with an honest, sourced comparison the user approved
 - Section: CTA
 
@@ -72,7 +75,7 @@ contact, docs URL if any.
 ## Anti-repetition
 
 - Use one hero type per page and do not reuse the home hero on subpages.
-- Not every section a card grid: mix Features (grid) with ContentBlock (split) and FAQ (list).
+- Not every section a card grid: mix Features (grid) with ContentBlock (text, or split with a real image) and FAQ (list).
 - Avoid the AI-default combination: dark background + neon accent + purple gradient + glass
   panels (see `content-rules.md` section 7).
 - One Pricing block per site; link to it instead of repeating it.

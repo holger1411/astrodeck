@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "starter", "tests/fixtures"],
+  "exclude": ["dist", "starter", "tests/fixtures", "brief"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

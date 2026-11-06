@@ -51,6 +51,9 @@ must return nothing: resolve each one or remove the element.
 - External links open in the same tab unless the user wants otherwise; if you use
   `target="_blank"`, add `rel="noopener noreferrer"`.
 - Link text says where it goes ("See pricing", "Email us"), never "click here" or "read more" alone.
+- Third-party scripts (booking widgets, maps, chat): prefer a plain link or self-hosted file; if a
+  script from another domain is unavoidable, pin the version and add `integrity` (SRI) and
+  `crossorigin="anonymous"`.
 
 ## 4. Images and alt text
 
@@ -102,7 +105,7 @@ brief or a design source asks for them:
 6. Decorative glassmorphism (`backdrop-blur` on translucent panels)
 
 Differentiate with the brand's own colors via `npm run theme`, left-aligned split layouts
-(HeroSplit, ContentBlock), real imagery and specific copy.
+(HeroSplit, ContentBlock with the user's images), real imagery and specific copy.
 
 ## 8. Check
 

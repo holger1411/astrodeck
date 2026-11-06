@@ -234,8 +234,8 @@
     {
       "name": "ContentBlock",
       "file": "src/components/sections/ContentBlock.astro",
-      "description": "Two-column content section with a text column (tagline, h2, description, optional feature bullet list) and an image placeholder column. The image side can be positioned left or right.",
-      "useWhen": "A text block with a bullet list next to an image placeholder; alternate imageSide for rhythm.",
+      "description": "Content section with a text column (tagline, h2, description, optional feature bullet list) and an optional image. With an image it renders two columns (image left or right); without one it renders a single text column.",
+      "useWhen": "A text block with an optional bullet list, alone or next to a real image (photo, screenshot) the user supplied; alternate imageSide for rhythm. Never pass a stock or placeholder image.",
       "props": {
         "tagline": {
           "type": "string",
@@ -257,17 +257,22 @@
           "required": false,
           "description": "Optional list of feature bullet points rendered with checkmark SVG icons"
         },
+        "image": {
+          "type": "{ src: ImageMetadata | string; alt: string }",
+          "required": false,
+          "description": "Optional image. An imported image (import photo from '@/assets/photo.jpg') is optimized with astro:assets; a string is used as a URL or public/ path and rendered lazily at 4:3. Omit it to render a single text column."
+        },
         "imageSide": {
           "type": "'left' | 'right'",
           "required": false,
           "default": "right",
-          "description": "Controls which side the image placeholder column appears. 'left' uses lg:grid-flow-dense to reorder columns visually."
+          "description": "Which side the image column appears on when image is set. 'left' uses lg:grid-flow-dense to reorder columns visually. Ignored without image."
         }
       },
-      "example": "---\nimport ContentBlock from \"@/components/sections/ContentBlock.astro\";\n---\n\n<ContentBlock\n  tagline=\"How it works\"\n  title=\"Sections you can combine\"\n  description=\"Each section is a typed Astro component that takes plain props.\"\n  features={[\"Typed props\", \"Dark mode\", \"Responsive\"]}\n  imageSide=\"left\"\n/>",
+      "example": "---\nimport ContentBlock from \"@/components/sections/ContentBlock.astro\";\nimport workshop from \"@/assets/workshop.jpg\";\n---\n\n<ContentBlock\n  tagline=\"How we work\"\n  title=\"Every loaf is shaped by hand\"\n  description=\"We start the dough the evening before and bake from four in the morning.\"\n  features={[\"Sourdough fermented for 18 hours\", \"Flour from a mill 30 km away\"]}\n  image={{ src: workshop, alt: \"Baker shaping loaves on a floured wooden table\" }}\n  imageSide=\"left\"\n/>",
       "features": ["responsive", "dark-mode"],
       "category": "content",
-      "notes": "The image area is a placeholder (aspect-square bg-muted with an image SVG icon). Replace the placeholder div with an actual <Image /> or <img> element when customizing."
+      "notes": "Without image the section is a single text column (max-w-3xl); there is no placeholder. Pass image only with a real image the user supplied."
     },
     {
       "name": "LogoCloud",

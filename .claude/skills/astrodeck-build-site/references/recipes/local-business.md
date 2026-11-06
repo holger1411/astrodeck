@@ -8,6 +8,9 @@ Section names below are registry names (`src/registry.json`); props and examples
 Pages without a hero start with the inline page header from the `astrodeck-new-page` skill so
 every page has exactly one `h1`.
 
+ContentBlock takes `image` only for a real photo or screenshot the user supplied; without it
+the block renders as a single text column and `imageSide` has no effect.
+
 ## Sitemap
 
 | Path | Purpose | Required? |
@@ -39,7 +42,7 @@ Small offer → fold services into `/` and keep three pages (`/`, `/about`, `/co
 ## About (`/about`)
 
 - Page header — h1 with the business or owner name
-- Section: ContentBlock — story and approach, `imageSide` opposite to any ContentBlock on `/`
+- Section: ContentBlock — story and approach; with a photo, `imageSide` opposite to any ContentBlock on `/`
 - Section: Team — only real people with roles the owner supplied
 - Section: CTA — get in touch
 
@@ -66,7 +69,7 @@ permission), prices if they should be public.
 
 - Do not open every page with a big hero: only `/` gets HeroSplit/Hero; subpages use the page header.
 - At most one Features grid per page; alternate plain and tinted sections (`section-muted`).
-- If `/` and `/about` both use ContentBlock, flip `imageSide` and change the angle (approach vs. people).
+- If `/` and `/about` both use ContentBlock, flip `imageSide` (if both have images) and change the angle (approach vs. people).
 - Do not repeat the same CTA sentence on every page; same action, different context.
 
 ## Only with real data

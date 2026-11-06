@@ -51,6 +51,14 @@ Rules:
 | `section-muted` | Full `muted` band | Alternate rhythm between plain sections |
 | `section-inverted` | Dark band in light mode, light band in dark mode; re-maps tokens locally | Closing CTA, dense bands |
 
+Sections take no `class` prop: put a band class on a wrapper around the section.
+
+```astro
+<div class="section-muted">
+  <FAQ title="Questions" faqs={faqs} />
+</div>
+```
+
 Inside `section-inverted` keep using semantic utilities; the tokens are remapped for you.
 Alternate plain and tinted sections to create vertical rhythm; never place two tinted sections
 back to back.
@@ -65,6 +73,7 @@ described in `.agents/skills/astrodeck-theme/references/fonts.md`.
 |------|---------|
 | Hero `h1` (Hero, HeroGradient) | `text-5xl font-bold leading-tight tracking-tight md:text-7xl lg:text-8xl lg:leading-[1.1] max-w-5xl` |
 | Split hero `h1` (HeroSplit) | `text-5xl font-bold leading-tight tracking-tight md:text-6xl` |
+| Page header `h1` (subpages without a hero, see the `astrodeck-new-page` skill) | `text-4xl font-bold tracking-tight md:text-5xl` |
 | Section `h2` | `text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl` |
 | Compact `h2` (inside a box or split column: CTA, Newsletter, ContentBlock) | `text-3xl font-bold leading-[1.1] sm:text-3xl md:text-4xl` |
 | Card / item `h3` | `text-xl font-semibold` |

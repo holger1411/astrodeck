@@ -35,6 +35,9 @@ Props and examples: `src/registry.json` (`layouts`).
 - Sections that need real data (Testimonials, Stats, Team, LogoCloud, Pricing) only with real data.
 - Nothing fits: use the `astrodeck-new-section` skill instead of hand-writing a one-off block.
 
+Tinted bands: sections take no `class` prop, so wrap them:
+`<div class="section-muted"><FAQ ... /></div>` (or `section-inverted` for a closing CTA).
+
 Page header pattern (for pages without a hero):
 
 ```astro

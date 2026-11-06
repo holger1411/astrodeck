@@ -22,7 +22,11 @@ export interface SiteConfig {
   /** e.g. '%s | Your Site' */
   titleTemplate: string;
   author: string;
-  logo: { text: string; src?: string; alt?: string };
+  /**
+   * text: wordmark ('' to hide it). svg: inline SVG markup using currentColor (follows dark mode).
+   * src: image path under /public, used when no svg is set. alt: defaults to the site name.
+   */
+  logo: { text: string; svg?: string; src?: string; alt?: string };
   nav: NavItem[];
   /** Optional call-to-action button in the header */
   headerCta?: NavItem;

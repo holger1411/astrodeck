@@ -35,8 +35,11 @@ Why a copy: Claude Code reads skills only from \`.claude/skills/\`, most other a
 on Windows.
 `;
 
+/** OS metadata files that are never mirrored and never count as drift. */
+const IGNORED = new Set(['.DS_Store', 'Thumbs.db']);
+
 /**
- * Walk dir without following symlinks.
+ * Walk dir without following symlinks; skips IGNORED files.
  * @param {string} dir
  * @returns {{ files: string[]; links: string[] }} posix paths relative to dir
  */
@@ -45,6 +48,7 @@ function walk(dir) {
   const links = [];
   const visit = (abs, rel) => {
     for (const entry of readdirSync(abs, { withFileTypes: true })) {
+      if (IGNORED.has(entry.name)) continue;
       const childRel = rel ? `${rel}/${entry.name}` : entry.name;
       if (entry.isSymbolicLink()) links.push(childRel);
       else if (entry.isDirectory()) visit(join(abs, entry.name), childRel);

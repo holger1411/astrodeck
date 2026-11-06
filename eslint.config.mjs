@@ -9,7 +9,8 @@ export default defineConfig(
   ...tseslint.configs.recommended,
   ...eslintPluginAstro.configs.recommended,
   {
-    ignores: ['dist/**', 'node_modules/**', '.astro/**', 'tests/fixtures/**'],
+    // brief/ holds user input files (any format); never lint them
+    ignores: ['dist/**', 'node_modules/**', '.astro/**', 'tests/fixtures/**', 'brief/**'],
   },
   {
     // Node.js tooling scripts (hooks, KPI checks) run outside the browser

@@ -63,14 +63,16 @@ Only when the brand specifies fonts. Follow
 
 ## 5. Logo and icons
 
-- The wordmark text is `site.logo.text` in `src/config/site.ts`. The icon next to it is the
-  AstroDeck deck icon, drawn inline in `src/components/Logo.astro` (header, footer, auth
-  layout): replace that SVG with the user's logo (inline SVG with `currentColor` adapts to dark
-  mode; or an `<img>` from `public/` with `alt` = the organization's name), or remove it for a
-  text-only wordmark. It is AstroDeck branding and must not ship on the user's site.
+- The logo is configured in `site.logo` (`src/config/site.ts`); `src/components/Logo.astro`
+  renders it in header, footer, 404 and auth layout. Never edit the component for a rebrand.
+  - `text`: the wordmark; `''` hides it (when the logo file already contains the name).
+  - `svg`: inline SVG markup of the mark. Preferred: with `fill="currentColor"` it follows the
+    text color and dark mode.
+  - `src`: an image file in `public/` (used when there is no `svg`); `alt` defaults to the site
+    name. A dark logo file needs a variant or background that also works in dark mode.
+  - Neither `svg` nor `src`: the name alone is the logo (the clean starter's default).
 - Favicons in `public/` (`favicon.svg`, `favicon-32x32.png`, `apple-touch-icon.png`,
   `icon-192.png`, `icon-512.png`) come from the logo; hex colors are fine inside these files.
-- A dark logo needs a light variant or a transparent background that works in dark mode.
 
 ## Rules
 

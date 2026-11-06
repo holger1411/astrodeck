@@ -44,7 +44,7 @@ Requires Node >=22.23.4. Run `npm install` once.
 |------|---------|
 | `PROJECT.md` | Site brief and decisions (overrides this file) |
 | `brief/` | User inputs: PDFs, Markdown, `DESIGN.md`, images, links (see `brief/README.md`) |
-| `src/config/site.ts` | Name, description, language, title template, logo text, nav, footer, social, contact, OG image, feature flags |
+| `src/config/site.ts` | Name, description, language, title template, logo, nav, footer, social, contact, OG image, feature flags |
 | `src/config/site-url.mjs` | Production URL (`SITE_URL`), used by `astro.config.mjs` and `site.ts` |
 | `src/styles/globals.css` | Fonts and design tokens (`@theme` + `.dark`); colors are written by `npm run theme` |
 | `src/registry.json` | Catalog of sections, layouts, UI components: props, `useWhen`, example |

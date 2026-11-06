@@ -22,7 +22,11 @@ export interface SiteConfig {
   /** e.g. '%s | AstroDeck' */
   titleTemplate: string;
   author: string;
-  logo: { text: string; src?: string; alt?: string };
+  /**
+   * text: wordmark ('' to hide it). svg: inline SVG markup using currentColor (follows dark mode).
+   * src: image path under /public, used when no svg is set. alt: defaults to the site name.
+   */
+  logo: { text: string; svg?: string; src?: string; alt?: string };
   nav: NavItem[];
   /** e.g. GitHub link in the demo */
   headerCta?: NavItem;
@@ -57,7 +61,11 @@ export const site: SiteConfig = {
   locale: 'en_US',
   titleTemplate: '%s | AstroDeck',
   author: 'Holger Könemann',
-  logo: { text: 'AstroDeck' },
+  logo: {
+    text: 'AstroDeck',
+    // AstroDeck deck mark (demo branding; starter:clean replaces this file)
+    svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor"><rect x="6" y="8" width="14" height="18" rx="2" opacity="0.9"/><rect x="9" y="6" width="14" height="18" rx="2" opacity="0.7"/><rect x="12" y="4" width="14" height="18" rx="2" opacity="0.5"/><path d="M19 12 L20 15 L23 15 L20.5 17 L21.5 20 L19 18 L16.5 20 L17.5 17 L15 15 L18 15 Z" opacity="0.3"/></svg>',
+  },
   nav: [
     { href: '/', label: 'Home' },
     { href: '/pages', label: 'Pages' },
