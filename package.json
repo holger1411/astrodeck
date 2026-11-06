@@ -16,6 +16,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "lint:design": "node scripts/lint-design.mjs",
     "check:registry": "node scripts/check-registry.mjs",
     "check:kpis": "node .claude/scripts/check-kpis.mjs",
     "test": "node --test \"tests/**/*.test.mjs\"",
