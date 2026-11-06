@@ -2,9 +2,10 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
+import { SITE_URL } from './src/config/site-url.mjs';
 
 export default defineConfig({
-  site: 'https://astrodeck.dev',
+  site: SITE_URL,
   integrations: [
     react(),
     sitemap({

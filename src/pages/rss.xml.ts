@@ -2,6 +2,7 @@ import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import MarkdownIt from 'markdown-it';
 import sanitizeHtml from 'sanitize-html';
+import { site } from '@/config/site';
 
 const parser = new MarkdownIt();
 
@@ -10,9 +11,9 @@ export async function GET(context: import('astro').APIContext) {
   const sortedPosts = blog.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
   return rss({
-    title: 'AstroDeck Blog',
-    description: 'Articles, tutorials, and updates from the AstroDeck project',
-    site: context.site ?? 'https://astrodeck.dev',
+    title: `${site.name} Blog`,
+    description: `Articles, tutorials, and updates from the ${site.name} project`,
+    site: context.site ?? site.url,
     items: sortedPosts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,
@@ -25,6 +26,6 @@ export async function GET(context: import('astro').APIContext) {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
       }),
     })),
-    customData: `<language>en-us</language>`,
+    customData: `<language>${site.lang}-us</language>`,
   });
 }

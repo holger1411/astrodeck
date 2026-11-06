@@ -19,6 +19,8 @@
  * />
  * ```
  */
+import { site } from '@/config/site';
+
 interface Props {
   title: string;
   description: string;
@@ -32,10 +34,10 @@ interface Props {
 const {
   title,
   description,
-  image = '/cover.png',
+  image = site.ogImage,
   type = 'website',
   publishedTime,
-  author = 'AstroDeck',
+  author = site.author,
   noindex = false,
 } = Astro.props;
 
@@ -44,7 +46,7 @@ const siteUrl = Astro.site ?? new URL('http://localhost:4321');
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const socialImageURL = new URL(image, siteUrl);
 
-const siteName = 'AstroDeck';
+const siteName = site.name;
 
 // JSON-LD: BlogPosting for articles, WebSite for everything else
 const structuredData =
@@ -95,7 +97,7 @@ const structuredData =
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content={title} />
 <meta property="og:site_name" content={siteName} />
-<meta property="og:locale" content="en_US" />
+<meta property="og:locale" content={site.locale} />
 
 {
   type === 'article' && publishedTime && (
@@ -116,4 +118,9 @@ const structuredData =
 
 <!-- Sitemap & RSS -->
 <link rel="sitemap" href="/sitemap-index.xml" />
-<link rel="alternate" type="application/rss+xml" title="AstroDeck Blog RSS Feed" href="/rss.xml" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={`${site.name} Blog RSS Feed`}
+  href="/rss.xml"
+/>

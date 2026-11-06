@@ -31,6 +31,7 @@
  */
 import '@/styles/globals.css';
 import Head from '@/components/Head.astro';
+import { site } from '@/config/site';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import Analytics from '@vercel/analytics/astro';
@@ -49,7 +50,7 @@ interface Props {
 
 const {
   title,
-  description = 'AstroDeck - Modern Astro.js Component Library',
+  description = site.description,
   image,
   type = 'website',
   publishedTime,
@@ -59,11 +60,11 @@ const {
 
 // Vercel Analytics only works on Vercel deployments; rendering it elsewhere
 // (local preview, other hosts) produces a 404 on /_vercel/insights/script.js
-const enableAnalytics = !!process.env.VERCEL;
+const enableAnalytics = site.features.analytics && !!process.env.VERCEL;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={site.lang}>
   <head>
     <Head
       title={title}

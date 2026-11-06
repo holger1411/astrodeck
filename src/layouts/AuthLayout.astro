@@ -8,17 +8,18 @@
 import '@/styles/globals.css';
 import Head from '@/components/Head.astro';
 import Logo from '@/components/Logo.astro';
+import { site } from '@/config/site';
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = 'Sign in to your AstroDeck account' } = Astro.props;
+const { title, description = `Sign in to your ${site.name} account` } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={site.lang}>
   <head>
     <Head title={title} description={description} noindex={true} />
   </head>

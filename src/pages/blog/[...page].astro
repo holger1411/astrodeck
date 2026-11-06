@@ -29,7 +29,7 @@ function formatDate(date: Date) {
 ---
 
 <BaseLayout
-  title="Blog"
+  title={page.currentPage > 1 ? `Blog (Page ${page.currentPage})` : 'Blog'}
   description="Articles, tutorials, and thoughts on web development with Astro, React, and modern web technologies"
 >
   <div class="container max-w-4xl mx-auto py-20">

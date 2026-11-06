@@ -18,9 +18,10 @@ import { ClientRouter } from 'astro:transitions';
 import SEO from '@/components/SEO.astro';
 import FontPreload from '@/components/FontPreload.astro';
 import ThemeScript from '@/components/ThemeScript.astro';
+import { pageTitle } from '@/config/site';
 
 interface Props {
-  /** Page title — the '| AstroDeck' suffix is appended here */
+  /** Plain page title — the brand suffix comes from site.titleTemplate */
   title: string;
   description: string;
   image?: string;
@@ -40,7 +41,7 @@ const {
   noindex = false,
 } = Astro.props;
 
-const fullTitle = `${title} | AstroDeck`;
+const fullTitle = pageTitle(title);
 ---
 
 <meta charset="UTF-8" />

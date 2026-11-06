@@ -12,6 +12,8 @@
  * <Logo size="lg" />
  * ```
  */
+import { site } from '@/config/site';
+
 interface Props {
   /** Show the "AstroDeck" text next to the icon */
   showText?: boolean;
@@ -56,5 +58,5 @@ const textSizeClasses = {
       fill="currentColor"
       opacity="0.3"></path>
   </svg>
-  {showText && <span class:list={['font-bold', textSizeClasses[size]]}>AstroDeck</span>}
+  {showText && <span class:list={['font-bold', textSizeClasses[size]]}>{site.logo.text}</span>}
 </a>
