@@ -62,9 +62,10 @@ Do not add other font families.
 
 | Role | Classes |
 |------|---------|
-| Hero `h1` | `text-5xl font-bold leading-tight tracking-tight md:text-6xl` (Hero and HeroGradient use larger variants) |
+| Hero `h1` (Hero, HeroGradient) | `text-5xl font-bold leading-tight tracking-tight md:text-7xl lg:text-8xl lg:leading-[1.1] max-w-5xl` |
+| Split hero `h1` (HeroSplit) | `text-5xl font-bold leading-tight tracking-tight md:text-6xl` |
 | Section `h2` | `text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl` |
-| Compact `h2` (inside a box or split column: CTA, Newsletter, ContentBlock) | `text-3xl font-bold md:text-4xl` |
+| Compact `h2` (inside a box or split column: CTA, Newsletter, ContentBlock) | `text-3xl font-bold leading-[1.1] sm:text-3xl md:text-4xl` |
 | Card / item `h3` | `text-xl font-semibold` |
 | Lead paragraph | `text-lg text-muted-foreground` (long copy adds `leading-relaxed`) |
 | Body | `text-base`, secondary body `text-sm text-muted-foreground` |
@@ -100,7 +101,7 @@ Every page section follows one skeleton:
 | Gap between intro and content | `mt-12` (`mt-8` for small groups) |
 | Grid gaps | `gap-6` for cards, `gap-12 md:gap-16` for two-column splits |
 | Card padding | `p-6` (`p-8 md:p-12` for large CTA boxes) |
-| Anchor targets | `scroll-mt-20` on sections that have an `id` |
+| Anchor targets (recommendation) | Add `scroll-mt-20` to sections that have an `id` and are linked to; the shipped section components do not set it, the demo pages do |
 
 Page shells come from `src/layouts/` (`BaseLayout` with header and footer, `FullWidthLayout`,
 `MinimalLayout`, `AuthLayout`, `ArticleLayout`). Pages compose sections inside the layout; the
@@ -112,11 +113,11 @@ Base radius token `--radius: 0.5rem`.
 
 | Element | Radius | Notes |
 |---------|--------|-------|
-| Button, input, select, tooltip, tabs trigger | `rounded-md` | |
+| Button, input, select, tooltip, tabs list | `rounded-md` | |
 | Card, dialog, CTA box, testimonial | `rounded-lg` | `Card` = `rounded-lg border bg-card shadow-sm` |
 | Large grouped panels (feature grid, comparison table, pricing card, team card) | `rounded-xl` | `border`, usually `shadow-lg` for grids |
 | Hero mockups and screenshots | `rounded-2xl` | `shadow-2xl shadow-foreground/10` |
-| Menu items, dialog close button, small hit areas | `rounded-sm` | |
+| Menu items, tabs trigger, dialog close button, small hit areas | `rounded-sm` | |
 | Badges, pills, avatars, dots | `rounded-full` | |
 
 - Borders are always the default `border` (token color); add `border-input` on form fields.
@@ -170,8 +171,8 @@ Mobile-first. Base classes are the mobile layout; `sm:` 640, `md:` 768, `lg:` 10
 
 - Grids stack on mobile: `grid gap-6 md:grid-cols-2 lg:grid-cols-3`.
 - Two-column splits: `grid gap-12 lg:grid-cols-2 lg:gap-16 items-center`.
-- Navigation collapses below `lg` (see `Header.astro`); anything `hidden lg:block` needs an
-  `lg:hidden` mobile equivalent.
+- Navigation collapses below `md` (see `Header.astro`); anything `hidden md:flex` or
+  `hidden lg:block` needs a matching `md:hidden` / `lg:hidden` mobile equivalent.
 - No fixed pixel widths on content; `overflow-x-auto` for tables and code only.
 - Touch targets at least 44x44 px effective (`h-11` buttons for primary actions on mobile).
 
