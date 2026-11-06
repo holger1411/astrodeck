@@ -74,7 +74,7 @@ Two mechanisms enforce the conventions automatically — work WITH them, not aro
    before they are written, and warns on hardcoded colors, inline styles, and
    relative imports. If the hook blocks or warns, fix the code — do not retry
    the same content or bypass the hook.
-2. **KPI check script** — `npm run check:kpis` runs every static convention
+2. **Verify command** — `npm run verify` runs every static convention
    check and is the single source of truth for these checks. Use it instead of
    ad-hoc greps.
 
@@ -86,7 +86,7 @@ changes, performance work — not for trivial text edits):
 ```
 1. DETECT     → Which skill is relevant?
 2. READ       → Read the skill's SKILL.md AND LEARNINGS.md
-3. BASELINE   → Measure the skill's KPIs (before the change) — start with `npm run check:kpis`
+3. BASELINE   → Measure the skill's KPIs (before the change) — start with `npm run verify`
 4. APPLY      → Implement the change (avoid known anti-patterns)
 5. MEASURE    → Measure KPIs again (after the change)
 6. COMPARE    → Better?  → Record the learning in LEARNINGS.md
@@ -111,8 +111,8 @@ Whenever Lighthouse runs, ALWAYS report all 4 scores. Each category belongs to a
 
 ### When to measure KPIs
 
-- **Always**: for changes that require a build → `npm run build` + `npm run check:kpis`
-- **UI changes**: `npm run check:kpis` + Lighthouse Performance
+- **Always**: for changes that require a build → `npm run verify`
+- **UI changes**: `npm run verify` + Lighthouse Performance
 - **Code changes**: TypeScript errors, ESLint + Lighthouse Best Practices
 - **A11y changes**: Lighthouse Accessibility + Pa11y
 - **SEO changes**: Lighthouse SEO
@@ -201,7 +201,7 @@ When reviewing existing code, watch for:
 ```bash
 npm run dev          # Start dev server
 npm run build        # Production build
-npm run check:kpis   # All static convention checks (single source of truth)
+npm run verify       # All checks incl. build (single source of truth)
 npm run lint:fix     # Fix linting issues
 npm run format       # Format with Prettier
 ```

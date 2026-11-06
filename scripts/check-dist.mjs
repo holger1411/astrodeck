@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Built-HTML check: scans every .html file in a build output directory.
- * Rules: h1-count, title-empty, title-unique, internal-link, alt-quality,
+ * Rules: h1-count, title-empty, title-unique, meta-description, internal-link, alt-quality,
  * demo-leftover (starter mode only).
  * Usage: node scripts/check-dist.mjs [--starter] [dir=dist]   (exit 1 on any finding)
  */
@@ -98,6 +98,10 @@ export function checkDist(dir, opts) {
     const title = root.querySelector('title')?.text.trim() ?? '';
     if (!title) add('title-empty', '<title> is missing or empty');
     else titles.set(title, [...(titles.get(title) ?? []), rel]);
+
+    const description = root.querySelector('meta[name="description"]')?.getAttribute('content');
+    if (!description?.trim())
+      add('meta-description', '<meta name="description"> is missing or empty');
 
     for (const a of root.querySelectorAll('a[href], link[href]')) {
       const href = a.getAttribute('href') ?? '';

@@ -13,7 +13,7 @@ This project follows the [AGENTS.md standard](https://agents.md).
 | Multi-agent review | `/plenum` (`.claude/commands/plenum.md` + 6 review agents) |
 | Commands | `/audit`, `/launch-check`, `/new-page`, `/new-section`, `/theme`, `/plenum` |
 | Domain skills (KPIs + learnings) | `.claude/skills/` |
-| Static convention checks | `npm run check:kpis` (single source of truth) |
+| Static convention checks | `npm run verify` (single source of truth) |
 | Convention guard hook | `.claude/hooks/guard-conventions.mjs` (auto-blocks deprecated patterns) |
 | Canonical design decisions | `system/globals/` |
 | Portable audit prompts (any AI tool) | `system/prompts/` |

@@ -18,6 +18,7 @@ test('bad fixture triggers each rule', () => {
     'demo-leftover',
     'h1-count',
     'internal-link',
+    'meta-description',
     'title-empty',
     'title-unique',
   ]);

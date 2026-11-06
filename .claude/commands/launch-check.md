@@ -12,7 +12,7 @@ URL provided by the user (detect a running dev/preview server if empty): $ARGUME
 ## 1. Static convention checks (single source of truth)
 
 ```bash
-npm run check:kpis
+npm run verify
 ```
 
 This covers: hardcoded colors, inline styles, tailwind.config existence,
@@ -70,7 +70,7 @@ npm run check
 ## 6. Content & SEO
 
 - Heading hierarchy: check for skipped levels
-- Meta descriptions: covered by `npm run check:kpis`
+- Meta descriptions: covered by `npm run check:dist` (`meta-description` rule)
 
 ## Output Format
 
@@ -78,7 +78,7 @@ npm run check
 ## Launch Check Results
 
 ### ✅ Static KPI Checks
-[Table from npm run check:kpis]
+[Table from npm run verify]
 
 ### ✅ Astro Framework
 - TypeScript errors: 0

@@ -16,7 +16,7 @@ tailwind.config existence, deprecated Astro patterns, missing alt attributes,
 relative imports, non-OKLCH tokens, and pages without descriptions:
 
 ```bash
-npm run check:kpis
+npm run verify
 ```
 
 Do NOT re-implement these checks with ad-hoc greps — the script is canonical.

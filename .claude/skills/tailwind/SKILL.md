@@ -19,11 +19,11 @@ Tailwind v4 Expertise, @theme Directive, OKLCH, Utilities, Dark Mode
 
 | Metric | Target | Measurement |
 |--------|--------|-------------|
-| Hardcoded Colors | 0 | `npm run check:kpis` |
-| Inline Styles | 0 | `npm run check:kpis` |
-| tailwind.config.mjs | must not exist | `npm run check:kpis` |
+| Hardcoded Colors | 0 | `npm run lint:design` |
+| Inline Styles | 0 | `npm run lint:design` |
+| tailwind.config.mjs | must not exist | `npm run lint:design` |
 
-`npm run check:kpis` (`.claude/scripts/check-kpis.mjs`) is the single source of
+`npm run lint:design` (`scripts/lint-design.mjs`) is the single source of
 truth for these checks — do not re-implement them with ad-hoc greps. The
 convention guard hook additionally warns when a change introduces hardcoded
 colors or inline styles.

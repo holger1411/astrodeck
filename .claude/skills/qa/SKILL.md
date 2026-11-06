@@ -30,14 +30,14 @@ Testing, Validation, Code Quality, Launch Readiness
 
 ```bash
 # Full QA pipeline
-npm run check:kpis    # All static convention checks (single source of truth)
+npm run verify       # All checks incl. build (single source of truth)
 npm run lint          # ESLint errors/warnings
 npm run format:check  # Prettier formatting
 npm run check         # Astro type check — covers .astro templates, which tsc alone does not
 npm run build         # Astro build (0 errors, 0 warnings)
 ```
 
-Shortcut: `npm run validate` runs check:kpis, lint, format:check and check in sequence.
+Shortcut: `npm run validate` runs `verify --skip-build` (everything except build and dist).
 
 ### Pre-Launch Checklist
 

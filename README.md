@@ -1064,8 +1064,6 @@ astrodeck/
     │   └── readme/        # Project documentation
     ├── hooks/
     │   └── guard-conventions.mjs  # 🛡️ Auto-blocks deprecated patterns & design-system drift
-    ├── scripts/
-    │   └── check-kpis.mjs # ✅ All static convention checks (npm run check:kpis)
     └── settings.json      # ⚙️ Hook registration for Claude Code
 ```
 
@@ -1074,7 +1072,7 @@ astrodeck/
 Prompt-based rules can be forgotten — hooks cannot. AstroDeck ships two enforcement layers for Claude Code:
 
 - **Convention guard hook** (`.claude/hooks/guard-conventions.mjs`): blocks deprecated Astro patterns (`ViewTransitions`, `z` from `astro:content`) and `tailwind.config.*` creation *before* they reach your codebase, and warns the assistant when an edit introduces hardcoded Tailwind colors, inline styles, or relative `../` imports — so it self-corrects immediately.
-- **KPI check script** (`npm run check:kpis`): one command that runs every static convention check (hardcoded colors, inline styles, deprecated imports, missing alt attributes, non-OKLCH tokens, missing meta descriptions). It is the single source of truth referenced by `/audit`, `/launch-check`, and the skills — and it works for human contributors and CI, too.
+- **Verify command** (`npm run verify`): one offline command that runs format, ESLint, `astro check`, the design and docs linters, the registry check, the tests, the build and the built-HTML check, then prints a table and `VERIFY PASSED` / `VERIFY FAILED (n)`. It is referenced by `/audit`, `/launch-check`, and the skills — and it works for human contributors and CI, too.
 
 #### Design Knowledge Base (`system/globals/`)
 

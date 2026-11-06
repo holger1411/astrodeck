@@ -16,7 +16,7 @@ Astro 7+ patterns, Islands Architecture, Content Collections, routing, build
 | TypeScript Errors | 0 | `npm run check` (astro check — 0 errors) |
 | Build Warnings | 0 | `npm run build 2>&1 \| grep -i "warn" \| wc -l` |
 | Build Time | <3s | `npm run build` timing output |
-| Deprecated patterns / relative imports | 0 | `npm run check:kpis` |
+| Deprecated patterns / relative imports | 0 | `npm run lint:design` |
 
 ## Rules
 
