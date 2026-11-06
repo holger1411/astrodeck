@@ -281,7 +281,9 @@ Remaining Readiness deductions on the demo, none a gate, none changed:
     change what `rem` media queries resolve to, so the desktop layout (`md:flex` header) is kept
     at 2x text and overflows. Real browser zoom or a larger default font size scales the media
     queries too (the layout switches to the mobile one, which passes Resp1 at 320 px). The check
-    does not model what it names for sites with `rem` breakpoints.
+    does not model what it names for sites with `rem` breakpoints. Caveat: Firefox "Zoom text
+    only" also leaves media queries unchanged, so for those users a 2x overflow of the desktop
+    header can be real; not measured here.
   - `reading-order` (21 inversions on the home page): the heuristic compares DOM order with a
     top-then-left sort. The side-by-side "Works with the agent you already use" block (text column
     left, card grid right, each starting a few pixels apart) and the footer link columns trip it.
@@ -326,6 +328,7 @@ nosniff`, `referrer-policy` come from `vercel.json`; R3 passes (`content-encodin
   `interpolate-size` CSS vocabulary message). The kit's source and `dist/` contain no `vercel.live` reference. The
   gate stays failed in the record: avoiding the injection would mean changing project settings
   (toolbar or protection bypass), which this task must not do. It does not change the band.
+  Unconfirmed on production until the live audit of astrodeck.dev in the release task.
 - Lighthouse `seo` is 0.61 on the preview only: `is-crawlable` fails on Vercel's
   `x-robots-tag: noindex` for previews, and `robots-txt` fails because Lighthouse fetched
   `/robots.txt` without the cookie and parsed the login page. The same audit scores 1.00 locally.
