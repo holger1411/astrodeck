@@ -15,7 +15,12 @@ import {
 import { parseColor, pickForeground, contrast } from '../scripts/lib/color.mjs';
 
 const REPO = join(import.meta.dirname, '..');
+// The project's own globals.css: users change its tokens with `npm run theme`, so tests that use it
+// must hold for any palette.
 const CSS = readFileSync(join(REPO, 'src/styles/globals.css'), 'utf8');
+// Snapshot of the globals.css AstroDeck ships. Tests about the default palette use this, never the
+// project's file (a themed site would otherwise fail `npm run verify`).
+const DEFAULT_CSS = readFileSync(join(REPO, 'tests/fixtures/default-globals.css'), 'utf8');
 
 const allPass = (report) => report.every((r) => r.pass && r.ratio >= 4.5);
 
@@ -79,7 +84,7 @@ test('applyTheme throws when markers are missing', () => {
 
 test('default primary reproduces the shipped tokens within rounding (and css unchanged)', () => {
   const theme = buildTheme({ primary: DEFAULT_PRIMARY });
-  const current = readTokens(CSS);
+  const current = readTokens(DEFAULT_CSS);
   const groups = [
     [current.light, theme.light],
     [current.dark, theme.dark],
@@ -100,8 +105,17 @@ test('default primary reproduces the shipped tokens within rounding (and css unc
       if (b.c > 0.02) assert.ok(Math.abs(a.h - b.h) <= 2, `${k} H`);
     }
   }
-  assert.equal(applyTheme(CSS, theme), CSS);
+  assert.equal(applyTheme(DEFAULT_CSS, theme), DEFAULT_CSS);
 });
+
+// Maintainers only (CI sets ASTRODECK_KIT_CHECKS=1): the snapshot must follow the shipped file.
+test(
+  'tests/fixtures/default-globals.css matches the shipped src/styles/globals.css',
+  { skip: process.env.ASTRODECK_KIT_CHECKS !== '1' && 'kit check (set ASTRODECK_KIT_CHECKS=1)' },
+  () => {
+    assert.equal(CSS.replace(/\r\n/g, '\n'), DEFAULT_CSS.replace(/\r\n/g, '\n'));
+  }
+);
 
 test('dark primary of a near-black brand becomes near-white; mid brands keep their hue', () => {
   assert.ok(parseColor(buildTheme({ primary: '#0a0a0a' }).dark.primary).l > 0.9);

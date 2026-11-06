@@ -63,6 +63,12 @@ Scripts are ES modules in `scripts/` (shared helpers in `scripts/lib/`) with tes
 (`node --test`). They use `node:path` APIs, work on Windows, and need no network access, except
 `sync-vibe2prod.mjs` and `setup-audit.mjs`.
 
+`npm test` also runs inside every user's project (it is part of `npm run verify`), so tests must
+hold for any site built from the kit: never assert on the user's palette, copy or config values.
+Checks that only make sense for the kit itself run when `ASTRODECK_KIT_CHECKS=1` is set (CI does
+this); for example, `tests/fixtures/default-globals.css` must match `src/styles/globals.css`, so
+update the fixture when you change the shipped default palette.
+
 ## Before you open a pull request
 
 ```bash

@@ -20,7 +20,8 @@ test('site.ts takes its url from site-url.mjs', () => {
 });
 
 test('titleTemplate contains the %s placeholder', () => {
-  const match = siteTs.match(/titleTemplate:\s*'([^']*)'/);
+  // Any string literal: '…', "…" or a template literal such as `%s | ${name}`.
+  const match = siteTs.match(/titleTemplate:\s*(['"`])((?:(?!\1).)*)\1/);
   assert.ok(match, 'titleTemplate not found in site.ts');
-  assert.ok(match[1].includes('%s'));
+  assert.ok(match[2].includes('%s'));
 });

@@ -27,6 +27,8 @@ jobs:
       - run: npm ci
       - name: Verify
         run: npm run verify
+        env:
+          ASTRODECK_KIT_CHECKS: '1'
 
   starter:
     name: Clean starter verifies
@@ -47,6 +49,9 @@ jobs:
       - name: Clean to starter
         working-directory: ${{ runner.temp }}/starter
         run: npm run starter:clean -- --yes
+      - name: Customize like a user (brand color)
+        working-directory: ${{ runner.temp }}/starter
+        run: npm run theme -- --primary "#2f7d5b"
       - name: Verify starter
         working-directory: ${{ runner.temp }}/starter
         run: npm run verify -- --starter
