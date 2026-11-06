@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Hero from '@/components/sections/Hero.astro';
+import HeroSplit from '@/components/sections/HeroSplit.astro';
 import LogoCloud from '@/components/sections/LogoCloud.astro';
 import Features from '@/components/sections/Features.astro';
-import Stats from '@/components/sections/Stats.astro';
+import ContentBlock from '@/components/sections/ContentBlock.astro';
+import IntegrationGrid from '@/components/sections/IntegrationGrid.astro';
 import Pricing from '@/components/sections/Pricing.astro';
 import Testimonials from '@/components/sections/Testimonials.astro';
 import FAQ from '@/components/sections/FAQ.astro';
@@ -56,13 +57,6 @@ const features: { title: string; description: string; icon: IconName }[] = [
       'GDPR and CCPA compliant. Your data stays yours — we never sell or share it with third parties.',
     icon: 'lock',
   },
-];
-
-const stats = [
-  { value: '120K+', label: 'Active Users', description: 'Teams across 60+ countries' },
-  { value: '99.99%', label: 'Uptime', description: 'Over the last 12 months' },
-  { value: '60+', label: 'Countries', description: 'Global customer footprint' },
-  { value: '4.9/5', label: 'Average Rating', description: 'From 3,200+ verified reviews' },
 ];
 
 const tiers = [
@@ -164,11 +158,12 @@ const faqs = [
   title="Nebula — Collaborative SaaS Platform"
   description="Nebula is the all-in-one SaaS platform for modern teams. Real-time collaboration, enterprise security, and powerful analytics — all in one place. Start free."
 >
-  <Hero
+  <HeroSplit
+    tagline="Collaboration for modern teams"
     title="The platform your team will actually love."
     subtitle="<mark>Nebula</mark> brings real-time collaboration, enterprise-grade security, and actionable analytics together in one beautifully simple platform. <mark>14-day free trial</mark>, no credit card required."
     primaryCta={{ href: '/login', label: 'Start for Free' }}
-    secondaryCta={{ href: '/templates/startup', label: 'Watch Demo' }}
+    secondaryCta={{ href: '/templates/contact', label: 'Talk to sales' }}
   />
 
   <div data-demo>
@@ -183,12 +178,53 @@ const faqs = [
     />
   </div>
 
-  <div class="section-inverted" data-demo>
-    <Stats
-      title="Trusted by teams worldwide"
-      subtitle="Numbers that reflect the trust our customers place in us every day."
-      stats={stats}
+  <ContentBlock
+    tagline="How it works"
+    title="From meeting to decisions in one view."
+    description="Nebula turns every conversation into a shared record. Notes, decisions and follow-ups live in one place, so nobody has to ask what was agreed."
+    features={[
+      'Decisions are captured automatically and linked to the discussion',
+      'Every follow-up has an owner and a due date',
+      'A weekly digest keeps the whole team in the loop',
+    ]}
+  />
+
+  <div data-demo>
+    <IntegrationGrid
+      subtitle="Integrations"
+      title="Works with the tools you already use"
+      items={[
+        {
+          name: 'CSV import',
+          href: '/templates/contact',
+          subtitle: 'Bring existing data',
+          icon: 'code',
+        },
+        {
+          name: 'JSON export',
+          href: '/templates/contact',
+          subtitle: 'Take your data anywhere',
+          icon: 'code',
+        },
+        {
+          name: 'Webhooks',
+          href: '/templates/contact',
+          subtitle: 'Trigger your own workflows',
+          icon: 'zap',
+        },
+        {
+          name: 'REST API',
+          href: '/templates/contact',
+          subtitle: 'Build on top of Nebula',
+          icon: 'globe',
+        },
+      ]}
+      cta={{ href: '/templates/contact', label: 'Ask about integrations' }}
     />
+  </div>
+
+  <div class="section-muted" data-demo>
+    <Testimonials title="Loved by engineering and product teams" testimonials={testimonials} />
   </div>
 
   <Pricing
@@ -196,10 +232,6 @@ const faqs = [
     subtitle="Start free. Scale as you grow. No hidden fees, no surprises."
     tiers={tiers}
   />
-
-  <div class="section-muted" data-demo>
-    <Testimonials title="Loved by engineering and product teams" testimonials={testimonials} />
-  </div>
 
   <FAQ
     title="Frequently asked questions"

@@ -1073,12 +1073,13 @@
       "file": "src/pages/templates/saas.astro",
       "layout": "BaseLayout",
       "sections": [
-        "Hero",
+        "HeroSplit",
         "LogoCloud",
         "Features",
-        "Stats",
-        "Pricing",
+        "ContentBlock",
+        "IntegrationGrid",
         "Testimonials",
+        "Pricing",
         "FAQ",
         "CTA"
       ],
@@ -1099,7 +1100,6 @@
         "FAQ",
         "CTA"
       ],
-      "recipe": "saas",
       "screenshot": "/screenshots/startup.png"
     },
     {
@@ -1116,7 +1116,6 @@
         "Newsletter",
         "CTA"
       ],
-      "recipe": "agency-portfolio",
       "screenshot": "/screenshots/portfolio.png"
     },
     {

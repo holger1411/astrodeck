@@ -90,6 +90,23 @@ function checkRecipes(root, registry, add) {
     }
   }
 
+  for (const t of registry.pageTemplates ?? []) {
+    if (!t.recipe || !recipeNames.has(t.recipe) || !t.file) continue;
+    const pagePath = join(root, t.file);
+    if (!existsSync(pagePath)) continue;
+    const expected = homeSections(readFileSync(join(dir, `${t.recipe}.md`), 'utf8'));
+    const src = readFileSync(pagePath, 'utf8');
+    const actual = [...src.matchAll(/<([A-Z][A-Za-z0-9]*)[\s/>]/g)]
+      .map((m) => m[1])
+      .filter((n) => sectionNames.has(n));
+    if (expected.join(',') !== actual.join(',')) {
+      add(
+        'recipe-order',
+        `pageTemplates.${t.name}: sections in ${t.file} (${actual.join(', ')}) differ from the home sequence of recipe "${t.recipe}" (${expected.join(', ')})`
+      );
+    }
+  }
+
   for (const f of recipeFiles) {
     const file = `${RECIPES_DIR}/${f}`;
     const lines = readFileSync(join(dir, f), 'utf8').split(/\r?\n/);
@@ -100,6 +117,26 @@ function checkRecipes(root, registry, add) {
       }
     });
   }
+}
+
+/**
+ * Section names of a recipe's home page: the `- Section: <Name>` lines under the first
+ * heading starting with "Home" (e.g. `## Home (/)`), up to the next heading of the same level.
+ */
+function homeSections(markdown) {
+  const names = [];
+  let level = 0;
+  for (const line of markdown.split(/\r?\n/)) {
+    const h = line.match(/^(#{1,6})\s+(.*)$/);
+    if (h) {
+      if (level && h[1].length <= level) break;
+      if (!level && /^Home\b/.test(h[2])) level = h[1].length;
+      continue;
+    }
+    const m = level && line.match(/^- Section:\s*([A-Za-z0-9_]+)/);
+    if (m) names.push(m[1]);
+  }
+  return names;
 }
 
 function compareProps(label, entry, filePath, add) {

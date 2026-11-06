@@ -108,13 +108,13 @@ test('checkRegistry validates recipe references and recipe section names', () =>
     write(
       root,
       'src/pages/p.astro',
-      "---\nimport BaseLayout from '@/layouts/BaseLayout.astro';\nimport Hero from '@/components/sections/Hero.astro';\n---\n"
+      "---\nimport BaseLayout from '@/layouts/BaseLayout.astro';\nimport Hero from '@/components/sections/Hero.astro';\n---\n<Hero />\n"
     );
     const recipes = '.agents/skills/astrodeck-build-site/references/recipes';
     write(
       root,
       `${recipes}/good.md`,
-      '# Good\n\n- Section: Hero - intro\n- Page header - not a section\n'
+      '# Good\n\n## Home (/)\n\n- Section: Hero - intro\n- Page header - not a section\n'
     );
     write(root, `${recipes}/bad.md`, '# Bad\n\n- Section: Hero\n- Section: Nonexistent - typo\n');
     const registry = (recipe) =>
@@ -148,6 +148,17 @@ test('checkRegistry validates recipe references and recipe section names', () =>
     );
     assert.match(findings[0].message, /Nonexistent/);
     assert.match(findings[0].file, /bad\.md$/);
+
+    // recipe-order: page uses Hero only, recipe "ordered" expects Hero then CTA under "## Home (/)"
+    write(
+      root,
+      `${recipes}/ordered.md`,
+      '# O\n\n## Sitemap\n- Section: Hero\n\n## Home (/)\n\n- Section: Hero\n- Section: CTA\n\n## About\n- Section: Hero\n'
+    );
+    write(root, 'src/registry.json', registry('ordered'));
+    const order = checkRegistry(root).filter((f) => f.rule === 'recipe-order');
+    assert.equal(order.length, 1);
+    assert.match(order[0].message, /Hero\) differ.*Hero, CTA/);
 
     write(root, 'src/registry.json', registry('missing'));
     const missing = checkRegistry(root).filter((f) => f.message.includes('"missing"'));

@@ -6,8 +6,9 @@ demo request or waitlist.
 
 Section names below are registry names (`src/registry.json`); props and examples are there.
 Pages without a hero start with the inline page header from the `astrodeck-new-page` skill.
-In the demo repo, `/templates/saas` and `/templates/startup` show this structure (demo only;
-removed by cleanup).
+In the demo repo, `/templates/saas` follows the home structure below exactly (demo only; removed
+by cleanup; `check-registry` enforces the order). Sections that need real data (LogoCloud of
+customers, Testimonials) are omitted for real sites unless supplied.
 
 ContentBlock takes `image` only for a real photo or screenshot the user supplied; without it
 the block renders as a single text column and `imageSide` has no effect.

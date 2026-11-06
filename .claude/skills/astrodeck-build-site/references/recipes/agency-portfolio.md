@@ -6,7 +6,7 @@ turns visitors into project inquiries.
 
 Section names below are registry names (`src/registry.json`); props and examples are there.
 Pages without a hero start with the inline page header from the `astrodeck-new-page` skill.
-In the demo repo, `/templates/portfolio` shows a related structure (demo only; removed by cleanup).
+In the demo repo, `/templates/portfolio` shows a related but different structure (demo only; removed by cleanup).
 
 ContentBlock takes `image` only for a real photo or screenshot the user supplied; without it
 the block renders as a single text column and `imageSide` has no effect.
