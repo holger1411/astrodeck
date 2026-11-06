@@ -18,12 +18,29 @@ test('bad fixture triggers each rule', () => {
     'demo-leftover',
     'h1-count',
     'internal-link',
+    'link-scheme',
     'meta-description',
+    'meta-length',
     'title-empty',
     'title-unique',
   ]);
   assert.equal(f.filter((x) => x.rule === 'alt-quality').length, 3);
   assert.equal(f.filter((x) => x.rule === 'title-unique').length, 2);
+  assert.deepEqual(
+    f.filter((x) => x.rule === 'link-scheme').map((x) => x.message),
+    [
+      'href "tel:0511 000000" contains whitespace (W3C error; write tel:0511000000)',
+      'href "mailto: hallo@example.org" contains whitespace (W3C error; write mailto:hallo@example.org)',
+    ]
+  );
+  // vibe2prod gates S1/S2: home title 30-60 characters, descriptions 50-160 (max on every page)
+  assert.deepEqual(
+    f.filter((x) => x.rule === 'meta-length').map((x) => `${x.file}: ${x.message}`),
+    [
+      'dup.html: meta description is 179 characters (max 160)',
+      'index.html: home page <title> is 4 characters (30-60)',
+    ]
+  );
 });
 
 test('demo-leftover only fires in starter mode', () => {

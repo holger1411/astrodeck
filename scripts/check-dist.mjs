@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 /**
  * Built-HTML check: scans every .html file in a build output directory.
- * Rules: h1-count, title-empty, title-unique, meta-description, internal-link, alt-quality,
- * demo-leftover (starter mode only).
+ * Rules: h1-count, title-empty, title-unique, meta-description, meta-length, internal-link,
+ * link-scheme, alt-quality, demo-leftover (starter mode only).
+ * meta-length mirrors the vibe2prod gates S1/S2: the home page title has 30-60 characters and
+ * its description at least 50; no description is longer than 160 characters.
  * Usage: node scripts/check-dist.mjs [--starter] [dir=dist]   (exit 1 on any finding)
  */
 import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
@@ -102,9 +104,23 @@ export function checkDist(dir, opts) {
     const description = root.querySelector('meta[name="description"]')?.getAttribute('content');
     if (!description?.trim())
       add('meta-description', '<meta name="description"> is missing or empty');
+    const isHome = rel === 'index.html';
+    const descLength = description?.trim().length ?? 0;
+    if (descLength > 160)
+      add('meta-length', `meta description is ${descLength} characters (max 160)`);
+    if (isHome && descLength > 0 && descLength < 50)
+      add('meta-length', `home page meta description is ${descLength} characters (50-160)`);
+    if (isHome && title && (title.length < 30 || title.length > 60))
+      add('meta-length', `home page <title> is ${title.length} characters (30-60)`);
 
     for (const a of root.querySelectorAll('a[href], link[href]')) {
       const href = a.getAttribute('href') ?? '';
+      // "tel:0511 000000" is invalid HTML (the W3C validator rejects spaces after the scheme).
+      if (/^(tel|mailto):/i.test(href) && /\s/.test(href))
+        add(
+          'link-scheme',
+          `href "${href}" contains whitespace (W3C error; write ${href.replace(/\s+/g, '')})`
+        );
       if (!href.startsWith('/') || href.startsWith('//')) continue;
       const path = href.split('#')[0].split('?')[0];
       if (path && !resolves(dir, path)) add('internal-link', `${href} does not resolve to a file`);
