@@ -37,7 +37,7 @@ codex mcp add astro-docs --url https://mcp.docs.astro.build/mcp
 codex mcp add shadcn -- npx shadcn@latest mcp
 ```
 
-Docs: https://developers.openai.com/codex/mcp
+Docs: https://learn.chatgpt.com/docs/extend/mcp?surface=cli
 
 ## Cursor
 

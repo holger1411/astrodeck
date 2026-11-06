@@ -44,7 +44,7 @@ tools read `AGENTS.md` directly, and duplicated rules drift.
 ## Vendor documentation
 
 - Claude Code memory and skills: https://code.claude.com/docs/en/memory, https://code.claude.com/docs/en/skills
-- Codex: https://developers.openai.com/codex
+- Codex: https://learn.chatgpt.com/docs/agent-configuration/agents-md, https://learn.chatgpt.com/docs/build-skills
 - Cursor: https://cursor.com/docs
 - GitHub Copilot: https://docs.github.com/en/copilot
 - Gemini CLI: https://github.com/google-gemini/gemini-cli

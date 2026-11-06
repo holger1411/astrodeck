@@ -5,10 +5,10 @@ import { LoginForm } from '@/components/LoginForm';
 
 <AuthLayout
   title="Login"
-  description="Sign in to your AstroDeck account to manage your projects, settings, and team — secure login with email and password."
+  description="Demo sign-in page for Nebula, a fictional product: AuthLayout with an email and password form."
   testimonial={{
     quote:
-      'AstroDeck gave us the perfect foundation to build our SaaS. Clean code, great design, and saved us months of development time.',
+      'Nebula keeps every product decision in one place. Nobody on our team asks what was agreed anymore.',
     author: 'Sofia Chen',
     role: 'CTO at TechStart (fictional demo testimonial)',
   }}
@@ -19,8 +19,13 @@ import { LoginForm } from '@/components/LoginForm';
   </div>
   <LoginForm client:load />
   <p class="px-8 text-center text-sm text-muted-foreground">
-    Don't have an account?{' '}
-    <a href="/templates/saas" class="underline underline-offset-4 hover:text-primary"> Sign up </a>
+    New to Nebula?{' '}
+    <a
+      href="/templates/saas#pricing-heading"
+      class="underline underline-offset-4 hover:text-primary"
+    >
+      Compare plans
+    </a>
   </p>
   <p class="px-8 text-center text-sm text-muted-foreground">
     <a href="/" class="underline underline-offset-4 hover:text-primary"> Back to home </a>

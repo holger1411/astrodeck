@@ -127,8 +127,8 @@ const faqs = [
     badge="Open Source"
     title="Deploy without the drama."
     subtitle="<mark>Nebula</mark> replaces your patchwork of deployment scripts, CI configs, and cloud consoles with a single platform. Ship to production in seconds — not sprints."
-    primaryCta={{ href: '/login', label: 'Start Building Free' }}
-    secondaryCta={{ href: 'https://github.com/nebula/nebula', label: 'Star on GitHub' }}
+    primaryCta={{ href: '/templates/contact', label: 'Request early access' }}
+    secondaryCta={{ href: '#comparison', label: 'See how it compares' }}
   />
 
   <div class="section-muted">
@@ -139,12 +139,14 @@ const faqs = [
     />
   </div>
 
-  <Comparison
-    title="How we stack up"
-    subtitle="We compared ourselves honestly to the most popular alternatives so you don't have to."
-    columns={comparisonColumns}
-    features={comparisonFeatures}
-  />
+  <div id="comparison">
+    <Comparison
+      title="How we stack up"
+      subtitle="We compared ourselves honestly to the most popular alternatives so you don't have to."
+      columns={comparisonColumns}
+      features={comparisonFeatures}
+    />
+  </div>
 
   <div class="section-inverted">
     <ContentBlock
@@ -181,8 +183,8 @@ const faqs = [
   <div class="section-inverted">
     <CTA
       title="Ship your next project with Nebula."
-      description="Join 85,000+ developers who have already ditched their deployment scripts. The free tier is genuinely generous — no credit card needed."
-      cta={{ href: '/login', label: 'Get Started Free' }}
+      description="Tell us what you deploy today and we will help you move it over. The free tier needs no credit card."
+      cta={{ href: '/templates/contact', label: 'Request early access' }}
     />
   </div>
 </BaseLayout>

@@ -26,6 +26,7 @@ export async function GET(context: import('astro').APIContext) {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
       }),
     })),
-    customData: `<language>${site.lang}-us</language>`,
+    // RSS language code from the locale, e.g. en_US → en-us
+    customData: `<language>${site.locale.replace('_', '-').toLowerCase()}</language>`,
   });
 }

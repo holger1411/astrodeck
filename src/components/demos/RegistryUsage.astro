@@ -1,0 +1,74 @@
+---
+/**
+ * Demo-only (/sections showcase): shows the registry usage example of one or more sections.
+ * Snippets come from src/registry.json, so they always match the component's real props.
+ */
+import registry from '@/registry.json';
+
+interface Props {
+  /** Registry section names, e.g. ['CTA'] */
+  names: string[];
+}
+
+const { names } = Astro.props;
+const entries = names.map((name) => {
+  const entry = registry.sections.find((s) => s.name === name);
+  if (!entry) throw new Error(`registry.json has no section "${name}"`);
+  return entry;
+});
+---
+
+<div class="mb-8 rounded-lg border bg-muted/30 p-4 space-y-3">
+  <p class="text-sm text-muted-foreground">
+    The previews below are layout ideas built with the same design tokens; they can differ from the
+    default rendering of the registry component. Copy the component usage, or ask your agent to add
+    a prop for a variation.
+  </p>
+  {
+    entries.map((entry) => (
+      <div>
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <p class="text-sm">
+            Registry component: <code class="font-mono font-medium">{entry.name}</code>
+            <span class="text-muted-foreground"> ({entry.file})</span>
+          </p>
+          <button
+            type="button"
+            class="copy-btn text-sm px-3 py-1 border rounded-md bg-background hover:bg-muted transition-colors"
+            data-code={entry.name}
+          >
+            Copy Code
+          </button>
+        </div>
+        <div class="code-block" id={`code-${entry.name}`}>
+          <pre>
+            <code>{entry.example}</code>
+          </pre>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .code-block {
+    display: none;
+    margin-top: 0.75rem;
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  .code-block.show {
+    display: block;
+  }
+  .code-block pre {
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+  .code-block code {
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  }
+</style>

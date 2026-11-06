@@ -26,7 +26,7 @@ const hasContactInfo = email || phone || address;
 
 <section class="py-16 md:py-24 px-6">
   <div class="container max-w-5xl mx-auto">
-    <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
+    <div class:list={['grid gap-12 lg:gap-16 items-start', form ? 'md:grid-cols-2' : 'max-w-2xl']}>
       <!-- Left column: info -->
       <div>
         <Heading class="text-3xl font-bold leading-tight md:text-4xl">

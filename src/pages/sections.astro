@@ -1,6 +1,6 @@
 ---
 import FullWidthLayout from '@/layouts/FullWidthLayout.astro';
-import registry from '@/registry.json';
+import RegistryUsage from '@/components/demos/RegistryUsage.astro';
 
 const sections = [
   { id: 'heroes', label: 'Heroes', count: 3 },
@@ -15,38 +15,19 @@ const sections = [
   { id: 'contact', label: 'Contact', count: 1 },
 ];
 
-// Code snippets come from src/registry.json (single source of truth).
-// Each demo variant below maps to the registry section it uses.
-const snippetSection = {
-  heroCentered: 'Hero',
-  heroLeftAligned: 'HeroSplit',
-  heroMinimal: 'HeroGradient',
-  ctaSimple: 'CTA',
-  ctaSplit: 'CTA',
-  ctaBanner: 'CTA',
-  pricingOpenSource: 'Pricing',
-  pricingThreeColumn: 'Pricing',
-  pricingComparison: 'Pricing',
-  pricingToggle: 'Pricing',
-  testimonialsGrid: 'Testimonials',
-  testimonialsFeatured: 'Testimonials',
-  testimonialsScroll: 'Testimonials',
-  newsletterInline: 'Newsletter',
-  newsletterSplit: 'Newsletter',
-  newsletterBar: 'Newsletter',
-  faqDefault: 'FAQ',
-  statsDefault: 'Stats',
-  teamDefault: 'Team',
-  comparisonDefault: 'Comparison',
-  contactDefault: 'Contact',
-} as const;
-const codeSnippets = Object.fromEntries(
-  Object.entries(snippetSection).map(([key, name]) => {
-    const entry = registry.sections.find((s) => s.name === name);
-    if (!entry) throw new Error(`registry.json has no section "${name}"`);
-    return [key, entry.example];
-  })
-) as Record<keyof typeof snippetSection, string>;
+// Registry components per showcase group; RegistryUsage renders their usage from src/registry.json.
+const groupComponents: Record<string, string[]> = {
+  heroes: ['Hero', 'HeroSplit', 'HeroGradient'],
+  ctas: ['CTA'],
+  pricing: ['Pricing'],
+  testimonials: ['Testimonials'],
+  newsletters: ['Newsletter'],
+  faq: ['FAQ'],
+  stats: ['Stats'],
+  team: ['Team'],
+  comparison: ['Comparison'],
+  contact: ['Contact'],
+};
 ---
 
 <FullWidthLayout
@@ -56,25 +37,6 @@ const codeSnippets = Object.fromEntries(
   <style>
     html {
       scroll-behavior: smooth;
-    }
-    .code-block {
-      display: none;
-      margin-top: 1rem;
-      background: hsl(var(--muted));
-      border-radius: 0.5rem;
-      overflow: hidden;
-    }
-    .code-block.show {
-      display: block;
-    }
-    .code-block pre {
-      padding: 1rem;
-      overflow-x: auto;
-      font-size: 0.75rem;
-      line-height: 1.5;
-    }
-    .code-block code {
-      font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
     }
     .nav-link:not(.bg-foreground):hover {
       background-color: var(--color-muted);
@@ -171,20 +133,13 @@ const codeSnippets = Object.fromEntries(
             </p>
           </div>
 
+          <RegistryUsage names={groupComponents.heroes} />
+
           <div class="space-y-12">
             <!-- Hero 1: Centered with Badge -->
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Centered with Badge</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="heroCentered"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-heroCentered">
-                <pre><code>{codeSnippets.heroCentered}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="min-h-[400px] flex items-center">
@@ -228,15 +183,6 @@ const codeSnippets = Object.fromEntries(
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Left Aligned with Visual</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="heroLeftAligned"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-heroLeftAligned">
-                <pre><code>{codeSnippets.heroLeftAligned}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="min-h-[400px] grid lg:grid-cols-2 gap-12 items-center">
@@ -244,7 +190,7 @@ const codeSnippets = Object.fromEntries(
                     <div
                       class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full"
                     >
-                      🚀 Launch Week
+                      Now in beta
                     </div>
                     <h3 class="text-4xl font-bold leading-tight tracking-tight md:text-5xl">
                       Ship your SaaS in days, not months
@@ -260,15 +206,21 @@ const codeSnippets = Object.fromEntries(
                         >Start Building</a
                       >
                       <a
-                        href="/docs"
+                        href="/templates/saas"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium border h-11 px-8"
                         >View Demo</a
                       >
                     </div>
                   </div>
-                  <div class="bg-muted rounded-lg aspect-square flex items-center justify-center">
-                    <p class="text-muted-foreground">Image Placeholder</p>
-                  </div>
+                  <img
+                    src="/screenshots/saas.png"
+                    alt="SaaS demo template with a split hero, logo cloud and feature grid"
+                    width="1280"
+                    height="720"
+                    loading="lazy"
+                    decoding="async"
+                    class="w-full rounded-lg border shadow-lg"
+                  />
                 </div>
               </div>
             </div>
@@ -277,15 +229,6 @@ const codeSnippets = Object.fromEntries(
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Minimal with Stats</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="heroMinimal"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-heroMinimal">
-                <pre><code>{codeSnippets.heroMinimal}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="min-h-[400px] flex items-center">
@@ -295,7 +238,7 @@ const codeSnippets = Object.fromEntries(
                         The complete toolkit for modern development
                       </h3>
                       <p class="text-xl text-muted-foreground">
-                        Join thousands of developers building with AstroDeck
+                        Sample numbers for Nebula, a fictional product
                       </p>
                     </div>
                     <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto pt-8">
@@ -326,31 +269,24 @@ const codeSnippets = Object.fromEntries(
             <p class="text-muted-foreground">Convert visitors with compelling CTAs.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.ctas} />
+
           <div class="space-y-12">
             <!-- CTA 1: Simple Centered -->
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Simple Centered</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="ctaSimple"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-ctaSimple">
-                <pre><code>{codeSnippets.ctaSimple}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="rounded-lg border bg-muted/50 p-12 text-center">
                   <h2 class="text-3xl font-bold mb-4">Ready to get started?</h2>
                   <p class="text-muted-foreground max-w-[600px] mx-auto mb-6">
-                    Join thousands of developers already using AstroDeck to build amazing products.
+                    Start with ready-made sections and focus on your content.
                   </p>
                   <a
                     href="/docs"
                     class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
-                    >Start Free Trial</a
+                    >Get Started</a
                   >
                 </div>
               </div>
@@ -360,15 +296,6 @@ const codeSnippets = Object.fromEntries(
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Split with Features</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="ctaSplit"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-ctaSplit">
-                <pre><code>{codeSnippets.ctaSplit}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="rounded-lg border bg-gradient-to-br from-primary/10 to-primary/5 p-12">
@@ -424,7 +351,7 @@ const codeSnippets = Object.fromEntries(
                       <a
                         href="/docs"
                         class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-11 leading-[44px]"
-                        >Get Started Free</a
+                        >Get Started</a
                       >
                       <a
                         href="/docs"
@@ -441,31 +368,22 @@ const codeSnippets = Object.fromEntries(
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Banner Style</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="ctaBanner"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-ctaBanner">
-                <pre><code>{codeSnippets.ctaBanner}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="rounded-lg bg-foreground text-background p-8">
                   <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div>
-                      <h3 class="text-2xl font-bold mb-2">Try AstroDeck today</h3>
+                      <h3 class="text-2xl font-bold mb-2">Try Nebula today</h3>
                       <p class="opacity-90">Start building your next project with our components</p>
                     </div>
                     <div class="flex gap-3">
                       <a
-                        href="/docs"
+                        href="https://github.com/holger1411/astrodeck/releases/latest"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-background text-foreground hover:bg-background/90 h-10 px-6"
                         >Download Now</a
                       >
                       <a
-                        href="/docs"
+                        href="https://github.com/holger1411/astrodeck"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-background/20 hover:bg-background/10 h-10 px-6"
                         >GitHub</a
                       >
@@ -484,20 +402,13 @@ const codeSnippets = Object.fromEntries(
             <p class="text-muted-foreground">Clear pricing that converts.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.pricing} />
+
           <div class="space-y-12">
             <!-- Pricing 0: Open Source -->
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
-                <h3 class="font-semibold">AstroDeck Open Source</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="pricingOpenSource"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-pricingOpenSource">
-                <pre><code>{codeSnippets.pricingOpenSource}</code></pre>
+                <h3 class="font-semibold">Open Source Tiers</h3>
               </div>
               <div class="border-t pt-6">
                 <div class="text-center mb-8">
@@ -555,7 +466,7 @@ const codeSnippets = Object.fromEntries(
                       </li>
                     </ul>
                     <a
-                      href="/docs"
+                      href="https://github.com/holger1411/astrodeck"
                       class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                       >View on GitHub</a
                     >
@@ -670,7 +581,7 @@ const codeSnippets = Object.fromEntries(
                       </li>
                     </ul>
                     <a
-                      href="/docs"
+                      href="https://github.com/holger1411/astrodeck"
                       class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                       >Star on GitHub</a
                     >
@@ -683,15 +594,6 @@ const codeSnippets = Object.fromEntries(
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Three Column Layout</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="pricingThreeColumn"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-pricingThreeColumn">
-                <pre><code>{codeSnippets.pricingThreeColumn}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="grid md:grid-cols-3 gap-6">
@@ -832,7 +734,7 @@ const codeSnippets = Object.fromEntries(
                       </li>
                     </ul>
                     <a
-                      href="/docs"
+                      href="/templates/contact"
                       class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                       >Contact Sales</a
                     >
@@ -845,15 +747,6 @@ const codeSnippets = Object.fromEntries(
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Comparison Table</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="pricingComparison"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-pricingComparison">
-                <pre><code>{codeSnippets.pricingComparison}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="text-center mb-8">
@@ -902,15 +795,6 @@ const codeSnippets = Object.fromEntries(
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Monthly/Yearly Toggle</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="pricingToggle"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-pricingToggle">
-                <pre><code>{codeSnippets.pricingToggle}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="text-center space-y-6">
@@ -935,7 +819,7 @@ const codeSnippets = Object.fromEntries(
                         >
                       </div>
                       <a
-                        href="/docs"
+                        href="#pricing"
                         class="block w-full text-center rounded-md text-sm font-medium border h-10 leading-10"
                         >Choose Plan</a
                       >
@@ -948,7 +832,7 @@ const codeSnippets = Object.fromEntries(
                         >
                       </div>
                       <a
-                        href="/docs"
+                        href="#pricing"
                         class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 leading-10"
                         >Choose Plan</a
                       >
@@ -967,27 +851,20 @@ const codeSnippets = Object.fromEntries(
             <p class="text-muted-foreground">Build trust with social proof.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.testimonials} />
+
           <div class="space-y-12">
             <!-- Testimonial 1: Grid -->
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Grid Layout</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="testimonialsGrid"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-testimonialsGrid">
-                <pre><code>{codeSnippets.testimonialsGrid}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="grid md:grid-cols-3 gap-6">
                   <div class="rounded-lg border bg-card p-6 space-y-4">
                     <p class="text-sm leading-relaxed">
-                      "AstroDeck saved us weeks of development time. The components are beautiful
-                      and easy to customize."
+                      "Nebula saved us weeks of development time. The components are beautiful and
+                      easy to customize."
                     </p>
                     <div class="flex items-center gap-3">
                       <div class="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
@@ -1046,15 +923,6 @@ const codeSnippets = Object.fromEntries(
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Featured Single</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="testimonialsFeatured"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-testimonialsFeatured">
-                <pre><code>{codeSnippets.testimonialsFeatured}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="rounded-lg bg-muted/50 p-12 text-center max-w-3xl mx-auto">
@@ -1067,9 +935,9 @@ const codeSnippets = Object.fromEntries(
                     ></path></svg
                   >
                   <p class="text-lg leading-relaxed mb-6">
-                    AstroDeck has completely transformed how we build landing pages. The quality of
-                    the components and attention to detail is exceptional. Our development time has
-                    been cut in half.
+                    Nebula has completely transformed how we build landing pages. The quality of the
+                    components and attention to detail is exceptional. Our development time has been
+                    cut in half.
                   </p>
                   <div class="flex items-center justify-center gap-4">
                     <div
@@ -1091,15 +959,6 @@ const codeSnippets = Object.fromEntries(
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Horizontal Scroll</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="testimonialsScroll"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-testimonialsScroll">
-                <pre><code>{codeSnippets.testimonialsScroll}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="flex gap-6 overflow-x-auto pb-4">
@@ -1161,20 +1020,13 @@ const codeSnippets = Object.fromEntries(
             <p class="text-muted-foreground">Capture leads and grow your audience.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.newsletters} />
+
           <div class="space-y-12">
             <!-- Newsletter 1: Inline -->
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Simple Inline</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="newsletterInline"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-newsletterInline">
-                <pre><code>{codeSnippets.newsletterInline}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="rounded-lg border bg-muted/50 p-8 max-w-2xl mx-auto">
@@ -1206,15 +1058,6 @@ const codeSnippets = Object.fromEntries(
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Split with Visual</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="newsletterSplit"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-newsletterSplit">
-                <pre><code>{codeSnippets.newsletterSplit}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="rounded-lg border overflow-hidden grid md:grid-cols-2">
@@ -1249,15 +1092,6 @@ const codeSnippets = Object.fromEntries(
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Bottom Bar</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="newsletterBar"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-newsletterBar">
-                <pre><code>{codeSnippets.newsletterBar}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="border-t bg-muted/30 p-6">
@@ -1295,19 +1129,12 @@ const codeSnippets = Object.fromEntries(
             </p>
           </div>
 
+          <RegistryUsage names={groupComponents.faq} />
+
           <div class="space-y-12">
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Default Accordion</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="faqDefault"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-faqDefault">
-                <pre><code>{codeSnippets.faqDefault}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="max-w-3xl mx-auto">
@@ -1341,10 +1168,9 @@ const codeSnippets = Object.fromEntries(
                         >
                       </summary>
                       <p class="pb-5 text-sm text-muted-foreground leading-relaxed">
-                        AstroDeck is an open-source component library and starter kit for building
-                        Astro.js websites. It provides pre-built, production-ready sections for
-                        landing pages and SaaS websites — fully typed with TypeScript and styled
-                        with Tailwind CSS v4.
+                        AstroDeck is a free, open-source starter kit for building websites with a
+                        coding agent. It ships typed, data-driven sections, a central site config, a
+                        theme script, checks and agent skills, styled with Tailwind CSS v4.
                       </p>
                     </details>
                     <details class="group" name="faq-demo">
@@ -1451,23 +1277,16 @@ const codeSnippets = Object.fromEntries(
             <p class="text-muted-foreground">Highlight key metrics that build credibility.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.stats} />
+
           <div class="space-y-12">
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Four-Column Grid</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="statsDefault"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-statsDefault">
-                <pre><code>{codeSnippets.statsDefault}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="text-center mb-10">
-                  <h2 class="text-3xl font-bold mb-3">Trusted by developers worldwide</h2>
+                  <h2 class="text-3xl font-bold mb-3">Nebula in numbers</h2>
                   <p class="text-muted-foreground">Numbers that speak for themselves</p>
                 </div>
                 <dl
@@ -1506,24 +1325,17 @@ const codeSnippets = Object.fromEntries(
             <p class="text-muted-foreground">Introduce the people behind your product.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.team} />
+
           <div class="space-y-12">
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Card Grid with Initials</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="teamDefault"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-teamDefault">
-                <pre><code>{codeSnippets.teamDefault}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="text-center mb-10">
                   <h2 class="text-3xl font-bold mb-3">Meet Our Team</h2>
-                  <p class="text-muted-foreground">The people building AstroDeck</p>
+                  <p class="text-muted-foreground">The people building Nebula</p>
                 </div>
                 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   <div
@@ -1542,11 +1354,7 @@ const codeSnippets = Object.fromEntries(
                     <div
                       class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center"
                     >
-                      <a
-                        href="/docs"
-                        aria-label="Alex Rivera on GitHub"
-                        class="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      <span class="text-muted-foreground" aria-hidden="true">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -1557,12 +1365,8 @@ const codeSnippets = Object.fromEntries(
                             d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"
                           ></path></svg
                         >
-                      </a>
-                      <a
-                        href="/docs"
-                        aria-label="Alex Rivera on X (Twitter)"
-                        class="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      </span>
+                      <span class="text-muted-foreground" aria-hidden="true">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -1573,7 +1377,7 @@ const codeSnippets = Object.fromEntries(
                             d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"
                           ></path></svg
                         >
-                      </a>
+                      </span>
                     </div>
                   </div>
                   <div
@@ -1592,11 +1396,7 @@ const codeSnippets = Object.fromEntries(
                     <div
                       class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center"
                     >
-                      <a
-                        href="/docs"
-                        aria-label="Sam Chen on GitHub"
-                        class="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      <span class="text-muted-foreground" aria-hidden="true">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -1607,12 +1407,8 @@ const codeSnippets = Object.fromEntries(
                             d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"
                           ></path></svg
                         >
-                      </a>
-                      <a
-                        href="/docs"
-                        aria-label="Sam Chen on LinkedIn"
-                        class="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      </span>
+                      <span class="text-muted-foreground" aria-hidden="true">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -1623,7 +1419,7 @@ const codeSnippets = Object.fromEntries(
                             d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
                           ></path></svg
                         >
-                      </a>
+                      </span>
                     </div>
                   </div>
                   <div
@@ -1642,11 +1438,7 @@ const codeSnippets = Object.fromEntries(
                     <div
                       class="flex items-center gap-3 mt-4 pt-4 border-t border-border w-full justify-center"
                     >
-                      <a
-                        href="/docs"
-                        aria-label="Jordan Lee on X (Twitter)"
-                        class="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      <span class="text-muted-foreground" aria-hidden="true">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -1657,12 +1449,8 @@ const codeSnippets = Object.fromEntries(
                             d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"
                           ></path></svg
                         >
-                      </a>
-                      <a
-                        href="/docs"
-                        aria-label="Jordan Lee on LinkedIn"
-                        class="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      </span>
+                      <span class="text-muted-foreground" aria-hidden="true">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -1673,7 +1461,7 @@ const codeSnippets = Object.fromEntries(
                             d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
                           ></path></svg
                         >
-                      </a>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -1689,25 +1477,18 @@ const codeSnippets = Object.fromEntries(
             <p class="text-muted-foreground">Show how you stack up against the competition.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.comparison} />
+
           <div class="space-y-12">
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Feature Comparison Table</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="comparisonDefault"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-comparisonDefault">
-                <pre><code>{codeSnippets.comparisonDefault}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="text-center mb-10">
                   <h2 class="text-3xl font-bold mb-3">How We Compare</h2>
                   <p class="text-muted-foreground">
-                    See why teams choose AstroDeck over the alternatives
+                    See why teams choose Nebula over the alternatives
                   </p>
                 </div>
                 <div class="overflow-x-auto rounded-xl border shadow-lg">
@@ -1725,7 +1506,7 @@ const codeSnippets = Object.fromEntries(
                           class="p-4 text-center font-semibold bg-primary/8 text-foreground"
                         >
                           <span class="inline-flex flex-col items-center gap-1">
-                            AstroDeck
+                            Nebula
                             <span
                               class="text-xs font-normal text-primary border border-primary/30 rounded-full px-2 py-0.5 leading-tight"
                               >Recommended</span
@@ -1962,19 +1743,12 @@ const codeSnippets = Object.fromEntries(
             <p class="text-muted-foreground">Let visitors reach you with a clean contact form.</p>
           </div>
 
+          <RegistryUsage names={groupComponents.contact} />
+
           <div class="space-y-12">
             <div class="border rounded-lg p-8 bg-card">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold">Split with Form</h3>
-                <button
-                  class="copy-btn text-sm px-3 py-1 border rounded-md hover:bg-muted transition-colors"
-                  data-code="contactDefault"
-                >
-                  Copy Code
-                </button>
-              </div>
-              <div class="code-block" id="code-contactDefault">
-                <pre><code>{codeSnippets.contactDefault}</code></pre>
               </div>
               <div class="border-t pt-6">
                 <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
@@ -2011,9 +1785,9 @@ const codeSnippets = Object.fromEntries(
                             Email
                           </p>
                           <a
-                            href="mailto:hello@astrodeck.dev"
+                            href="mailto:hello@example.com"
                             class="text-sm text-foreground hover:text-primary transition-colors"
-                            >hello@astrodeck.dev</a
+                            >hello@example.com</a
                           >
                         </div>
                       </li>

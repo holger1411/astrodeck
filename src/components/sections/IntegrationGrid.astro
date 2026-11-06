@@ -46,6 +46,8 @@ interface Props {
 
 const { title, subtitle, items, cta } = Astro.props;
 const hasSlot = Astro.slots.has('default');
+/** Only absolute http(s) URLs open in a new tab; internal links stay in the same tab. */
+const isExternal = (href: string) => /^https?:\/\//i.test(href);
 const hasFooter = Astro.slots.has('footer');
 ---
 
@@ -86,8 +88,7 @@ const hasFooter = Astro.slots.has('footer');
             items.map((item) => (
               <a
                 href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(isExternal(item.href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 class="group relative overflow-hidden bg-card px-6 py-6 hover:bg-muted/50 transition-colors"
               >
                 {item.iconSrc ? (
