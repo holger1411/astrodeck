@@ -2,6 +2,16 @@
 
 All notable changes to AstroDeck are documented in this file.
 
+## [3.5.1] - 2026-11-06 — Astro 7.4.7 & Tailwind CSS 4.3.4 — Security Update
+
+### Changed
+
+- Updated Astro from 7.3.1 to 7.4.7 — includes fixes for XSS via unescaped script/style content in JSX/MDX rendering and CSS injection in View Transitions
+- Updated Tailwind CSS from 4.3.3 to 4.3.4
+- Updated @astrojs/react to 6.0.6 and @astrojs/sitemap to 3.7.4; markdown-it and sanitize-html patched
+- Patched postcss-selector-parser (used by @tailwindcss/typography) against a CPU exhaustion issue
+- Now requires Node.js 22.23.4 or higher (Astro 7.4 requirement) — engines field and README updated
+
 ## [3.5.0] - 2026-09-05 — React 19, LLM-Readable Docs, CI & Blog Extras
 
 ### Added

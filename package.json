@@ -1,9 +1,9 @@
 {
   "name": "astrodeck",
   "type": "module",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.23.4"
   },
   "scripts": {
     "dev": "astro dev",
@@ -20,9 +20,9 @@
     "validate": "npm run check:kpis && npm run lint && npm run format:check && npm run check"
   },
   "dependencies": {
-    "@astrojs/react": "^6.0.2",
+    "@astrojs/react": "^6.0.6",
     "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/sitemap": "^3.7.4",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
@@ -32,9 +32,9 @@
     "@radix-ui/react-tabs": "^1.1.13",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tailwindcss/typography": "^0.5.19",
-    "@tailwindcss/vite": "^4.3.3",
+    "@tailwindcss/vite": "^4.3.4",
     "@vercel/analytics": "^1.6.1",
-    "astro": "^7.2.0",
+    "astro": "^7.4.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "markdown-it": "^15.0.1",
@@ -55,8 +55,13 @@
     "globals": "^17.6.0",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
-    "tailwindcss": "^4.3.3",
+    "tailwindcss": "^4.3.4",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.50.1"
+  },
+  "overrides": {
+    "@tailwindcss/typography": {
+      "postcss-selector-parser": "^6.1.5"
+    }
   }
 }

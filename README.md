@@ -7,7 +7,7 @@
 
 # AstroDeck
 
-[![Version](https://img.shields.io/badge/version-3.5.0-blue.svg)](https://github.com/holger1411/astrodeck/releases)
+[![Version](https://img.shields.io/badge/version-3.5.1-blue.svg)](https://github.com/holger1411/astrodeck/releases)
 [![Astro](https://img.shields.io/badge/Astro-7.x-orange.svg)](https://astro.build)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
@@ -84,7 +84,7 @@ AstroDeck uses a three-tier architecture. Everything you need to build a website
 
 Before you begin, ensure you have the following installed on your machine:
 
-- **Node.js** - Version 22.0.0 or higher (latest LTS recommended)
+- **Node.js** - Version 22.23.4 or higher (latest LTS recommended)
 - **npm** - Comes with Node.js (or use yarn/pnpm)
 - **Git** - For cloning the repository
 
@@ -144,11 +144,11 @@ Download the latest release directly:
 
 ```bash
 # Download the latest version
-wget https://github.com/holger1411/astrodeck/archive/refs/tags/v3.5.0.zip
+wget https://github.com/holger1411/astrodeck/archive/refs/tags/v3.5.1.zip
 
 # Extract
-unzip v3.5.0.zip
-cd astrodeck-3.5.0
+unzip v3.5.1.zip
+cd astrodeck-3.5.1
 
 # Install and run
 npm install
@@ -813,7 +813,7 @@ AstroDeck works with:
 All require the same build settings:
 - **Build command**: `npm run build`
 - **Publish directory**: `dist`
-- **Node version**: 22 or higher
+- **Node version**: 22.23.4 or higher
 
 ---
 
