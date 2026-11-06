@@ -30,6 +30,7 @@
     'Courier New', monospace;
 
   /* Light mode colors */
+  /* astrodeck-theme:light:start */
   --color-background: oklch(100% 0 0);
   --color-foreground: oklch(9.8% 0.0016 286.75);
   --color-card: oklch(100% 0 0);
@@ -51,6 +52,7 @@
   --color-ring: oklch(9.8% 0.0016 286.75);
 
   --radius: 0.5rem;
+  /* astrodeck-theme:light:end */
 
   /* Accordion animations */
   --animate-accordion-down: accordion-down 0.2s ease-out;
@@ -76,6 +78,7 @@
 }
 
 .dark {
+  /* astrodeck-theme:dark:start */
   --color-background: oklch(1.5% 0 0);
   --color-foreground: oklch(98% 0 0);
   --color-card: oklch(4% 0 0);
@@ -95,6 +98,7 @@
   --color-border: oklch(25% 0 0);
   --color-input: oklch(25% 0 0);
   --color-ring: oklch(80% 0 0);
+  /* astrodeck-theme:dark:end */
 }
 
 * {
@@ -128,6 +132,7 @@ mark {
 
 /* Inverted section: dark bg in light mode, light bg in dark mode */
 .section-inverted {
+  /* astrodeck-theme:inverted:start */
   --color-background: oklch(9.8% 0.0016 286.75);
   --color-foreground: oklch(98% 0 0);
   --color-card: oklch(15% 0 0);
@@ -140,11 +145,13 @@ mark {
   --color-primary-foreground: oklch(9.8% 0 0);
   --color-accent: oklch(15% 0 0);
   --color-accent-foreground: oklch(98% 0 0);
+  /* astrodeck-theme:inverted:end */
   background-color: var(--color-background);
   color: var(--color-foreground);
 }
 
 .dark .section-inverted {
+  /* astrodeck-theme:inverted:start */
   --color-background: oklch(96.1% 0.0011 286.75);
   --color-foreground: oklch(9.8% 0.0016 286.75);
   --color-card: oklch(100% 0 0);
@@ -157,6 +164,7 @@ mark {
   --color-primary-foreground: oklch(98% 0.0011 286.75);
   --color-accent: oklch(96.1% 0.0011 286.75);
   --color-accent-foreground: oklch(11.2% 0.0079 286.75);
+  /* astrodeck-theme:inverted:end */
   background-color: var(--color-background);
   color: var(--color-foreground);
 }
