@@ -16,6 +16,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "check:registry": "node scripts/check-registry.mjs",
     "check:kpis": "node .claude/scripts/check-kpis.mjs",
     "test": "node --test \"tests/**/*.test.mjs\"",
     "validate": "npm run check:kpis && npm run lint && npm run format:check && npm run check"

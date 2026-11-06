@@ -13,7 +13,13 @@ export default defineConfig(
   },
   {
     // Node.js tooling scripts (hooks, KPI checks) run outside the browser
-    files: ['.claude/**/*.mjs', 'eslint.config.mjs', 'astro.config.mjs'],
+    files: [
+      '.claude/**/*.mjs',
+      'scripts/**/*.mjs',
+      'tests/**/*.mjs',
+      'eslint.config.mjs',
+      'astro.config.mjs',
+    ],
     languageOptions: {
       globals: globals.node,
     },

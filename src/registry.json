@@ -6,7 +6,7 @@
       "name": "Hero",
       "file": "src/components/sections/Hero.astro",
       "description": "Large centered hero with headline, subtitle, optional badge pill, optional copyable starter prompt, primary and secondary CTA buttons, and a decorative GitHub contribution-style SVG grid background.",
-      "variants": 1,
+      "useWhen": "Top of a landing page when you want a centered headline, optional badge, optional copyable starter prompt and up to two CTAs.",
       "props": {
         "title": {
           "type": "string",
@@ -17,11 +17,6 @@
           "type": "string",
           "required": true,
           "description": "Supporting text rendered as paragraph; supports HTML via set:html"
-        },
-        "badge": {
-          "type": "{ label: string; href?: string }",
-          "required": false,
-          "description": "Pill above the headline. Rendered as a link when href is set. Omit to hide it. All text comes from the prop; nothing is hardcoded."
         },
         "primaryCta": {
           "type": "{ href: string; label: string }",
@@ -33,12 +28,18 @@
           "required": false,
           "description": "Secondary outlined button (border-input, bg-background)"
         },
+        "badge": {
+          "type": "{ label: string; href?: string }",
+          "required": false,
+          "description": "Pill above the headline. Rendered as a link when href is set. Omit to hide it. All text comes from the prop; nothing is hardcoded."
+        },
         "prompt": {
           "type": "string",
           "required": false,
           "description": "Optional starter prompt rendered in a copyable code block below the subtitle, with a copy-to-clipboard button. Intended to hand a coding agent a kickoff prompt."
         }
       },
+      "example": "---\nimport Hero from \"@/components/sections/Hero.astro\";\n---\n\n<Hero\n  badge={{ label: \"Open source, MIT licensed\", href: \"/changelog\" }}\n  title=\"Build your site faster\"\n  subtitle=\"Start from ready-made sections and focus on your content.\"\n  primaryCta={{ label: \"Get started\", href: \"/docs\" }}\n  secondaryCta={{ label: \"Browse sections\", href: \"/sections\" }}\n/>",
       "features": ["responsive", "dark-mode", "decorative-svg-background", "view-transitions-safe"],
       "category": "hero",
       "notes": "Min height 70vh. Demo index passes badge={{ label: 'v4.0 — Open Source & MIT', href: '/changelog' }}."
@@ -47,7 +48,7 @@
       "name": "HeroGradient",
       "file": "src/components/sections/HeroGradient.astro",
       "description": "Centered hero with an animated gradient glow background — three large blurred OKLCH orbs that drift slowly via a CSS float animation. Glow intensity is stronger in dark mode. Same content structure as Hero (badge, title, subtitle, two CTAs) without the contribution-grid background.",
-      "variants": 1,
+      "useWhen": "Top of a landing page that should feel premium: centered headline over an animated gradient glow instead of the grid pattern.",
       "props": {
         "title": {
           "type": "string",
@@ -58,11 +59,6 @@
           "type": "string",
           "required": true,
           "description": "Supporting text rendered as paragraph; supports HTML via set:html"
-        },
-        "badge": {
-          "type": "string",
-          "required": false,
-          "description": "Optional pill badge text shown above the headline, linking to /changelog"
         },
         "primaryCta": {
           "type": "{ href: string; label: string }",
@@ -73,8 +69,14 @@
           "type": "{ href: string; label: string }",
           "required": false,
           "description": "Secondary outlined button"
+        },
+        "badge": {
+          "type": "string",
+          "required": false,
+          "description": "Optional pill badge text shown above the headline, linking to /changelog"
         }
       },
+      "example": "---\nimport HeroGradient from \"@/components/sections/HeroGradient.astro\";\n---\n\n<HeroGradient\n  title=\"Ship faster, look better\"\n  subtitle=\"Pre-built Astro components for ambitious teams.\"\n  badge=\"New release\"\n  primaryCta={{ label: \"Browse components\", href: \"/sections\" }}\n  secondaryCta={{ label: \"Read the docs\", href: \"/docs\" }}\n/>",
       "features": ["responsive", "dark-mode", "animated-background", "reduced-motion-safe"],
       "category": "hero",
       "notes": "Orb colors and opacity are defined via CSS custom properties in the component <style> block. Respects prefers-reduced-motion (animation disabled). Use as a premium alternative to Hero on landing pages."
@@ -83,7 +85,7 @@
       "name": "HeroSplit",
       "file": "src/components/sections/HeroSplit.astro",
       "description": "Split-layout hero: text column (tagline pill, h1, subtitle, CTAs) on the left and a visual on the right. Renders a decorative browser-window mock-up when no image is passed. Stacks vertically on mobile (md:grid-cols-2).",
-      "variants": 1,
+      "useWhen": "Product landing pages that need text on the left and a visual or screenshot on the right.",
       "props": {
         "title": {
           "type": "string",
@@ -94,11 +96,6 @@
           "type": "string",
           "required": true,
           "description": "Supporting text rendered as paragraph; supports HTML via set:html"
-        },
-        "tagline": {
-          "type": "string",
-          "required": false,
-          "description": "Small pill above the headline (e.g. \"Now in Beta\"); omit to hide"
         },
         "primaryCta": {
           "type": "{ href: string; label: string }",
@@ -110,12 +107,18 @@
           "required": false,
           "description": "Secondary outlined button"
         },
+        "tagline": {
+          "type": "string",
+          "required": false,
+          "description": "Small pill above the headline (e.g. \"Now in Beta\"); omit to hide"
+        },
         "image": {
           "type": "{ src: string; alt: string }",
           "required": false,
           "description": "Replaces the decorative mock-up with a real image; alt is required for accessibility"
         }
       },
+      "example": "---\nimport HeroSplit from \"@/components/sections/HeroSplit.astro\";\n---\n\n<HeroSplit\n  tagline=\"Now in beta\"\n  title=\"Ship your product faster\"\n  subtitle=\"Pre-built components that just work.\"\n  primaryCta={{ label: \"Get started\", href: \"/docs\" }}\n  secondaryCta={{ label: \"View demo\", href: \"/sections\" }}\n/>",
       "features": ["responsive", "dark-mode", "view-transitions-safe"],
       "category": "hero",
       "notes": "Designed for product landing pages. Left column uses data-animate=\"slide-left\", right column data-animate=\"slide-right\"."
@@ -124,7 +127,7 @@
       "name": "Features",
       "file": "src/components/sections/Features.astro",
       "description": "Feature grid section with icon cards displayed in a bordered, shadowed grid (bg-border gap-px overflow-hidden). Each card shows an SVG icon, title, and description. Icons come from the shared icon set in src/lib/icons.ts.",
-      "variants": 1,
+      "useWhen": "A grid of 3 to 9 benefits, each with a built-in icon, title and description.",
       "props": {
         "title": {
           "type": "string",
@@ -137,11 +140,12 @@
           "description": "Optional supporting text below the heading"
         },
         "features": {
-          "type": "Array<{ title: string; description: string; icon: IconName }>",
+          "type": "Feature[]",
           "required": true,
           "description": "Array of feature cards. icon must be an IconName exported from src/lib/icons.ts (zap, shield, chart, users, globe, lock, heart, star, clock, calendar, map-pin, phone, mail, check, sparkles, leaf, rocket, code, palette, message, camera, book, home, settings). Unknown names are a TypeScript error."
         }
       },
+      "example": "---\nimport Features from \"@/components/sections/Features.astro\";\n---\n\n<Features\n  title=\"Why choose this starter?\"\n  subtitle=\"Everything you need to build fast\"\n  features={[\n    { icon: \"zap\", title: \"Fast by default\", description: \"Static HTML with minimal JavaScript.\" },\n    { icon: \"shield\", title: \"Type safe\", description: \"TypeScript props on every section.\" },\n    { icon: \"globe\", title: \"SEO ready\", description: \"Meta tags, sitemap and structured data.\" },\n  ]}\n/>",
       "features": ["responsive", "dark-mode"],
       "category": "features",
       "notes": "Grid is sm:grid-cols-2 md:grid-cols-3. To add icons, add a key + 24x24 stroke path to src/lib/icons.ts; IconName updates automatically."
@@ -150,7 +154,7 @@
       "name": "Pricing",
       "file": "src/components/sections/Pricing.astro",
       "description": "Pricing tiers section with a responsive 3-column card grid. Supports highlighting one tier (visual emphasis with border-primary, shadow, and scale-105). Highlighted tiers get a filled primary CTA button; others get an outlined button. An optional period (e.g. '/month') is shown after the price; an optional note renders below the tiers.",
-      "variants": 1,
+      "useWhen": "Showing 1 to 3 plans side by side with a feature list and a CTA per plan; one plan can be highlighted.",
       "props": {
         "title": {
           "type": "string",
@@ -163,7 +167,7 @@
           "description": "Optional supporting text below the heading"
         },
         "tiers": {
-          "type": "Array<{ name: string; price: string; period?: string; description: string; features: string[]; cta: { href: string; label: string }; highlighted?: boolean }>",
+          "type": "PricingTier[]",
           "required": true,
           "description": "Array of pricing tiers. Set highlighted: true on at most one tier. price is a free-form string that includes the currency (e.g. '$29', 'Free', 'Custom'). period is optional (e.g. '/month') and is only rendered when set."
         },
@@ -173,6 +177,7 @@
           "description": "Optional small print below the tier cards (e.g. 'Prices exclude VAT.')"
         }
       },
+      "example": "---\nimport Pricing from \"@/components/sections/Pricing.astro\";\n---\n\n<Pricing\n  title=\"Simple pricing\"\n  subtitle=\"Pick the plan that fits\"\n  note=\"Prices exclude VAT.\"\n  tiers={[\n    {\n      name: \"Free\",\n      price: \"$0\",\n      description: \"For side projects\",\n      features: [\"1 project\", \"Community support\"],\n      cta: { label: \"Start free\", href: \"/signup\" },\n    },\n    {\n      name: \"Pro\",\n      price: \"$29\",\n      period: \"/month\",\n      description: \"For teams\",\n      features: [\"Unlimited projects\", \"Priority support\"],\n      cta: { label: \"Subscribe\", href: \"/signup\" },\n      highlighted: true,\n    },\n  ]}\n/>",
       "features": ["responsive", "dark-mode"],
       "category": "pricing",
       "notes": "Grid is lg:grid-cols-3. Nothing is appended to the price automatically; pass period for recurring plans."
@@ -181,7 +186,7 @@
       "name": "Testimonials",
       "file": "src/components/sections/Testimonials.astro",
       "description": "Testimonial card grid section. Each card shows a blockquote, auto-generated avatar initials, author name, role, and company. No image support — avatars are initials-only.",
-      "variants": 1,
+      "useWhen": "Quotes from real people who gave permission. Never invent quotes or companies.",
       "props": {
         "title": {
           "type": "string",
@@ -189,11 +194,12 @@
           "description": "Section heading rendered as h2"
         },
         "testimonials": {
-          "type": "Array<{ quote: string; author: string; role: string; company: string }>",
+          "type": "Testimonial[]",
           "required": true,
           "description": "Array of testimonial objects. Author initials are derived from the author name automatically."
         }
       },
+      "example": "---\nimport Testimonials from \"@/components/sections/Testimonials.astro\";\n---\n\n<Testimonials\n  title=\"What customers say\"\n  testimonials={[\n    {\n      quote: \"Replace this with a real quote you have permission to use.\",\n      author: \"Your Customer\",\n      role: \"Role\",\n      company: \"Company\",\n    },\n  ]}\n/>",
       "features": ["responsive", "dark-mode"],
       "category": "social-proof",
       "notes": "Grid is md:grid-cols-2 lg:grid-cols-3. Avatar is a muted circle with initials — no photo upload needed."
@@ -202,7 +208,7 @@
       "name": "CTA",
       "file": "src/components/sections/CTA.astro",
       "description": "Call-to-action section with a rounded, muted card (bg-muted/50) containing a headline, description text, and a single primary CTA button. Centered layout.",
-      "variants": 1,
+      "useWhen": "A closing call to action with one headline, one sentence and one button.",
       "props": {
         "title": {
           "type": "string",
@@ -220,6 +226,7 @@
           "description": "Single CTA button (primary style)"
         }
       },
+      "example": "---\nimport CTA from \"@/components/sections/CTA.astro\";\n---\n\n<CTA\n  title=\"Ready to get started?\"\n  description=\"Clone the repo and ship your first page today.\"\n  cta={{ label: \"Get started\", href: \"/docs\" }}\n/>",
       "features": ["responsive", "dark-mode"],
       "category": "cta",
       "notes": "No secondary CTA. If two buttons are needed, use a custom section or extend this component."
@@ -228,8 +235,13 @@
       "name": "ContentBlock",
       "file": "src/components/sections/ContentBlock.astro",
       "description": "Two-column content section with a text column (tagline, h2, description, optional feature bullet list) and an image placeholder column. The image side can be positioned left or right.",
-      "variants": 2,
+      "useWhen": "A text block with a bullet list next to an image placeholder; alternate imageSide for rhythm.",
       "props": {
+        "tagline": {
+          "type": "string",
+          "required": false,
+          "description": "Small uppercase label rendered above the heading in primary color"
+        },
         "title": {
           "type": "string",
           "required": true,
@@ -240,11 +252,6 @@
           "required": true,
           "description": "Body text rendered as a paragraph"
         },
-        "tagline": {
-          "type": "string",
-          "required": false,
-          "description": "Small uppercase label rendered above the heading in primary color"
-        },
         "features": {
           "type": "string[]",
           "required": false,
@@ -252,11 +259,12 @@
         },
         "imageSide": {
           "type": "'left' | 'right'",
+          "required": false,
           "default": "right",
-          "options": ["left", "right"],
           "description": "Controls which side the image placeholder column appears. 'left' uses lg:grid-flow-dense to reorder columns visually."
         }
       },
+      "example": "---\nimport ContentBlock from \"@/components/sections/ContentBlock.astro\";\n---\n\n<ContentBlock\n  tagline=\"How it works\"\n  title=\"Sections you can combine\"\n  description=\"Each section is a typed Astro component that takes plain props.\"\n  features={[\"Typed props\", \"Dark mode\", \"Responsive\"]}\n  imageSide=\"left\"\n/>",
       "features": ["responsive", "dark-mode"],
       "category": "content",
       "notes": "The image area is a placeholder (aspect-square bg-muted with an image SVG icon). Replace the placeholder div with an actual <Image /> or <img> element when customizing."
@@ -265,7 +273,7 @@
       "name": "LogoCloud",
       "file": "src/components/sections/LogoCloud.astro",
       "description": "Single-row logo bar with a leading label. Each logo is an image (src), a built-in icon (icon), or just a name, and can link out (href). All content comes from props.",
-      "variants": 1,
+      "useWhen": "A single row of logos (your own stack or real customers who agreed) with a leading label.",
       "props": {
         "title": {
           "type": "string",
@@ -273,11 +281,12 @@
           "description": "Label displayed before the logo row; omitted when not set"
         },
         "logos": {
-          "type": "Array<{ name: string; src?: string; icon?: IconName; href?: string }>",
+          "type": "Logo[]",
           "required": true,
           "description": "Logos to show. src is an image URL (single-colour SVG recommended, inverted in dark mode); icon is a name from src/lib/icons.ts. Only show logos you have the right to display."
         }
       },
+      "example": "---\nimport LogoCloud from \"@/components/sections/LogoCloud.astro\";\n---\n\n<LogoCloud\n  title=\"Built with:\"\n  logos={[\n    { name: \"Astro\", src: \"/icons/tech/astro.svg\", href: \"https://astro.build\" },\n    { name: \"Fast\", icon: \"zap\" },\n  ]}\n/>",
       "features": ["responsive", "dark-mode"],
       "category": "social-proof",
       "notes": "Demo logo files live in public/icons/tech/. Layout: grid on mobile, flex-row on lg."
@@ -286,7 +295,7 @@
       "name": "IntegrationGrid",
       "file": "src/components/sections/IntegrationGrid.astro",
       "description": "Two-column section: pill, heading, optional rich-text slot and optional CTA on the left; bordered 2-column grid of linked items (tools, integrations, partners) on the right with an optional 'footer' slot below the grid.",
-      "variants": 1,
+      "useWhen": "Listing tools, integrations or partners as a grid of linked cards next to a short intro text.",
       "props": {
         "title": {
           "type": "string",
@@ -299,7 +308,7 @@
           "description": "Small pill above the heading"
         },
         "items": {
-          "type": "Array<{ name: string; href: string; subtitle?: string; icon?: IconName; iconSrc?: string }>",
+          "type": "Item[]",
           "required": true,
           "description": "Grid cards. iconSrc (image URL, single-colour SVG, inverted in dark mode) wins over icon (name from src/lib/icons.ts). Links open in a new tab."
         },
@@ -309,6 +318,7 @@
           "description": "Optional outlined button under the left column text"
         }
       },
+      "example": "---\nimport IntegrationGrid from \"@/components/sections/IntegrationGrid.astro\";\n---\n\n<IntegrationGrid\n  title=\"Works with your tools\"\n  subtitle=\"Integrations\"\n  items={[\n    { name: \"GitHub\", href: \"https://github.com\", subtitle: \"Source control\", icon: \"code\" },\n  ]}\n  cta={{ label: \"See all integrations\", href: \"/docs\" }}\n>\n  <p>Longer description shown under the title (optional slot).</p>\n  <p slot=\"footer\">Optional small print under the grid.</p>\n</IntegrationGrid>",
       "features": ["responsive", "dark-mode", "external-links", "slots"],
       "category": "marketing",
       "notes": "Slots: default (left-column body copy, links styled automatically) and 'footer' (small print under the grid). Renamed from AIFeature in 4.0; the AI tool list now lives in src/pages/index.astro."
@@ -317,7 +327,7 @@
       "name": "FAQ",
       "file": "src/components/sections/FAQ.astro",
       "description": "Accordion-style FAQ section using CSS-only <details>/<summary> elements with smooth height animation. Includes Schema.org FAQPage structured data (LD+JSON) for SEO rich results.",
-      "variants": 1,
+      "useWhen": "Answering common questions; renders FAQPage structured data for search engines.",
       "props": {
         "title": {
           "type": "string",
@@ -330,11 +340,12 @@
           "description": "Supporting text below heading"
         },
         "faqs": {
-          "type": "Array<{ question: string; answer: string }>",
+          "type": "FAQ[]",
           "required": true,
           "description": "Array of FAQ items"
         }
       },
+      "example": "---\nimport FAQ from \"@/components/sections/FAQ.astro\";\n---\n\n<FAQ\n  title=\"Frequently asked questions\"\n  subtitle=\"Everything you need to know\"\n  faqs={[\n    { question: \"Is it free?\", answer: \"Yes, it is MIT licensed.\" },\n    { question: \"Does it support dark mode?\", answer: \"Yes, all sections use theme tokens.\" },\n  ]}\n/>",
       "features": [
         "responsive",
         "dark-mode",
@@ -349,7 +360,7 @@
       "name": "Stats",
       "file": "src/components/sections/Stats.astro",
       "description": "Key metrics grid with large values, labels, and optional descriptions. Values are strings for flexible formatting (e.g. '10K+', '99.9%', '$0').",
-      "variants": 1,
+      "useWhen": "Showing a handful of real, verifiable numbers. Do not use invented statistics.",
       "props": {
         "title": {
           "type": "string",
@@ -362,11 +373,12 @@
           "description": "Optional supporting text"
         },
         "stats": {
-          "type": "Array<{ value: string; label: string; description?: string }>",
+          "type": "Stat[]",
           "required": true,
           "description": "Array of stat items"
         }
       },
+      "example": "---\nimport Stats from \"@/components/sections/Stats.astro\";\n---\n\n<Stats\n  title=\"By the numbers\"\n  stats={[\n    { value: \"16\", label: \"Sections\", description: \"Ready to combine\" },\n    { value: \"11\", label: \"UI components\", description: \"Built on Radix UI\" },\n  ]}\n/>",
       "features": ["responsive", "dark-mode", "semantic-html"],
       "category": "social-proof",
       "notes": "Uses <dl>/<dd>/<dt> semantic markup. Grid is 2 cols on mobile, 4 on desktop with dividers. Has border-y for visual framing."
@@ -375,7 +387,7 @@
       "name": "Team",
       "file": "src/components/sections/Team.astro",
       "description": "Team member grid with avatar (image or auto-generated initials), name, role, optional bio, and social links (GitHub, LinkedIn, Twitter/X).",
-      "variants": 1,
+      "useWhen": "Introducing real team members with role, bio and optional social links.",
       "props": {
         "title": {
           "type": "string",
@@ -389,11 +401,12 @@
           "description": "Supporting text"
         },
         "members": {
-          "type": "Array<{ name: string; role: string; bio?: string; image?: string; social?: { github?: string; linkedin?: string; twitter?: string } }>",
+          "type": "TeamMember[]",
           "required": true,
           "description": "Array of team members"
         }
       },
+      "example": "---\nimport Team from \"@/components/sections/Team.astro\";\n---\n\n<Team\n  title=\"Meet the team\"\n  members={[\n    {\n      name: \"Your Name\",\n      role: \"Founder\",\n      bio: \"One sentence about this person.\",\n      social: { github: \"https://github.com/your-handle\" },\n    },\n  ]}\n/>",
       "features": ["responsive", "dark-mode", "accessible", "hover-effects"],
       "category": "team",
       "notes": "Grid: 1 col mobile, 2 tablet, 3 desktop, 4 on xl. Cards have hover lift effect. Initials auto-derived from name when no image provided. Social icons are inline SVGs."
@@ -402,7 +415,7 @@
       "name": "Comparison",
       "file": "src/components/sections/Comparison.astro",
       "description": "Feature comparison table across multiple products/services. Supports boolean (checkmark/dash) and string values. One column can be highlighted.",
-      "variants": 1,
+      "useWhen": "A feature table comparing your product with alternatives across 2 to 4 columns, one column highlighted.",
       "props": {
         "title": {
           "type": "string",
@@ -416,16 +429,17 @@
           "description": "Supporting text"
         },
         "columns": {
-          "type": "Array<{ name: string; highlighted?: boolean }>",
+          "type": "Column[]",
           "required": true,
           "description": "Products/services to compare"
         },
         "features": {
-          "type": "Array<{ name: string; values: (string | boolean)[] }>",
+          "type": "FeatureRow[]",
           "required": true,
           "description": "Feature rows with one value per column"
         }
       },
+      "example": "---\nimport Comparison from \"@/components/sections/Comparison.astro\";\n---\n\n<Comparison\n  title=\"How we compare\"\n  columns={[{ name: \"Us\", highlighted: true }, { name: \"Alternative\" }]}\n  features={[\n    { name: \"Open source\", values: [true, false] },\n    { name: \"Updates per year\", values: [\"Unlimited\", \"4\"] },\n  ]}\n/>",
       "features": ["responsive", "dark-mode", "accessible", "horizontally-scrollable"],
       "category": "comparison",
       "notes": "Semantic <table> with sticky first column on mobile scroll. Highlighted column gets bg-primary/8 tint and 'Recommended' badge. Alternating row stripes."
@@ -434,7 +448,7 @@
       "name": "Newsletter",
       "file": "src/components/sections/Newsletter.astro",
       "description": "Email signup section with centered card layout containing headline, description, inline email form, and privacy note.",
-      "variants": 1,
+      "useWhen": "An email signup form that posts to your newsletter provider or backend (action is required).",
       "props": {
         "action": {
           "type": "string",
@@ -444,8 +458,8 @@
         "method": {
           "type": "'get' | 'post'",
           "required": false,
-          "description": "Form method",
-          "default": "post"
+          "default": "post",
+          "description": "Form method"
         },
         "title": {
           "type": "string",
@@ -471,6 +485,7 @@
           "description": "Submit button text"
         }
       },
+      "example": "---\nimport Newsletter from \"@/components/sections/Newsletter.astro\";\n---\n\n<Newsletter\n  action=\"https://your-provider.example/subscribe\"\n  method=\"post\"\n  title=\"Stay in the loop\"\n  description=\"One email per release. Unsubscribe any time.\"\n  buttonText=\"Subscribe\"\n/>",
       "features": ["responsive", "dark-mode", "accessible"],
       "category": "conversion",
       "notes": "action is required: point it at your provider/backend. The demo pages use action='/thanks' method='get' (a demo-only page explaining how to connect a backend). Has bg-muted/30 background. Includes 'No spam. Unsubscribe anytime.' privacy note."
@@ -479,7 +494,7 @@
       "name": "Contact",
       "file": "src/components/sections/Contact.astro",
       "description": "Two-column contact section with info (email, phone, address) on the left and, when the form prop is given, a 4-field form (name, email, subject, message) on the right.",
-      "variants": 1,
+      "useWhen": "Contact details with an optional contact form posting to your own backend (omit form for info only).",
       "props": {
         "title": {
           "type": "string",
@@ -513,6 +528,7 @@
           "description": "Renders the contact form. Omit to show contact info only (no form is rendered). method defaults to 'post'; submitLabel defaults to 'Send Message'."
         }
       },
+      "example": "---\nimport Contact from \"@/components/sections/Contact.astro\";\n---\n\n<Contact\n  title=\"Get in touch\"\n  subtitle=\"Questions or feedback? Write to us.\"\n  email=\"hello@example.com\"\n  form={{ action: \"https://your-form-backend.example/submit\", method: \"post\", submitLabel: \"Send message\" }}\n/>",
       "features": ["responsive", "dark-mode", "accessible", "semantic-html"],
       "category": "contact",
       "notes": "The demo pages use form={{ action: '/thanks', method: 'get' }} (demo-only page). Required fields marked with red asterisk. Native HTML form elements (no React). Stacked on mobile, side-by-side on desktop."
@@ -523,26 +539,29 @@
       "name": "Button",
       "file": "src/components/ui/button.tsx",
       "description": "shadcn/ui Button component built with class-variance-authority (CVA) and Radix UI Slot. Supports asChild pattern for rendering as any element.",
-      "type": "react",
+      "useWhen": "Any clickable action. Use variant for emphasis; use asChild to style a link as a button.",
       "props": {
         "variant": {
-          "type": "string",
+          "type": "'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'",
+          "required": false,
           "default": "default",
-          "options": ["default", "destructive", "outline", "secondary", "ghost", "link"],
           "description": "Visual style variant"
         },
         "size": {
-          "type": "string",
+          "type": "'default' | 'sm' | 'lg' | 'icon'",
+          "required": false,
           "default": "default",
-          "options": ["default", "sm", "lg", "icon"],
           "description": "Size variant. icon = h-10 w-10 square."
         },
         "asChild": {
           "type": "boolean",
-          "default": false,
+          "required": false,
+          "default": "false",
           "description": "When true, renders as the child element via Radix Slot instead of a <button>"
         }
       },
+      "example": "---\nimport { Button } from \"@/components/ui/button\";\n---\n\n<Button client:load>Default</Button>\n<Button client:load variant=\"secondary\">Secondary</Button>\n<Button client:load variant=\"outline\">Outline</Button>\n<Button client:load variant=\"ghost\">Ghost</Button>\n<Button client:load variant=\"destructive\">Destructive</Button>\n<Button client:load variant=\"link\">Link</Button>\n<Button client:load size=\"sm\">Small</Button>\n<Button client:load size=\"lg\">Large</Button>",
+      "type": "react",
       "exports": ["Button", "buttonVariants"],
       "features": ["dark-mode", "accessible", "keyboard-navigable"],
       "notes": "Use client:load only when wrapping interactive React components. For static anchor links in .astro files, prefer native <a> tags styled with the same Tailwind classes used in section components."
@@ -551,7 +570,7 @@
       "name": "Card",
       "file": "src/components/ui/card.tsx",
       "description": "shadcn/ui Card compound component. Exports Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter sub-components.",
-      "type": "react",
+      "useWhen": "Grouping related content in a bordered surface with header, content and footer parts.",
       "props": {
         "className": {
           "type": "string",
@@ -559,6 +578,8 @@
           "description": "Additional Tailwind classes merged via cn()"
         }
       },
+      "example": "---\nimport { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from \"@/components/ui/card\";\nimport { Button } from \"@/components/ui/button\";\n---\n\n<Card client:load>\n  <CardHeader>\n    <CardTitle>Card Title</CardTitle>\n    <CardDescription>Card description goes here.</CardDescription>\n  </CardHeader>\n  <CardContent>\n    <p>Card content and details.</p>\n  </CardContent>\n  <CardFooter>\n    <Button>Action</Button>\n  </CardFooter>\n</Card>",
+      "type": "react",
       "exports": [
         "Card",
         "CardHeader",
@@ -574,12 +595,12 @@
       "name": "Badge",
       "file": "src/components/ui/badge.tsx",
       "description": "shadcn/ui Badge component built with CVA. Pill-shaped label for status, tags, or categories.",
-      "type": "react",
+      "useWhen": "Small status or category labels.",
       "props": {
         "variant": {
-          "type": "string",
+          "type": "'default' | 'secondary' | 'destructive' | 'outline'",
+          "required": false,
           "default": "default",
-          "options": ["default", "secondary", "destructive", "outline"],
           "description": "Visual style variant"
         },
         "className": {
@@ -588,6 +609,8 @@
           "description": "Additional Tailwind classes merged via cn()"
         }
       },
+      "example": "---\nimport { Badge } from \"@/components/ui/badge\";\n---\n\n<Badge client:load>Default</Badge>\n<Badge client:load variant=\"secondary\">Secondary</Badge>\n<Badge client:load variant=\"outline\">Outline</Badge>\n<Badge client:load variant=\"destructive\">Destructive</Badge>",
+      "type": "react",
       "exports": ["Badge", "badgeVariants"],
       "features": ["dark-mode"],
       "notes": "Renders as a <div> (not a <span>). Use className to override styles."
@@ -596,7 +619,7 @@
       "name": "Input",
       "file": "src/components/ui/input.tsx",
       "description": "shadcn/ui Input component. Styled text input with consistent focus ring, disabled states, and file input support.",
-      "type": "react",
+      "useWhen": "Single-line form fields; pair with Label for accessibility.",
       "props": {
         "type": {
           "type": "string",
@@ -609,6 +632,8 @@
           "description": "Additional Tailwind classes merged via cn()"
         }
       },
+      "example": "---\nimport { Input } from \"@/components/ui/input\";\nimport { Label } from \"@/components/ui/label\";\n---\n\n<div class=\"space-y-2\">\n  <Label htmlFor=\"email\">Email</Label>\n  <Input type=\"email\" id=\"email\" placeholder=\"you@example.com\" />\n</div>",
+      "type": "react",
       "exports": ["Input"],
       "features": ["dark-mode", "accessible", "keyboard-navigable"],
       "notes": "Passes all standard HTMLInputElement attributes through. Height is h-10. Full-width by default (w-full)."
@@ -617,7 +642,7 @@
       "name": "Label",
       "file": "src/components/ui/label.tsx",
       "description": "shadcn/ui Label component built on Radix UI LabelPrimitive. Properly associates with form controls for accessibility.",
-      "type": "react",
+      "useWhen": "Accessible label for a form control; pair with Input.",
       "props": {
         "className": {
           "type": "string",
@@ -625,6 +650,8 @@
           "description": "Additional Tailwind classes merged via cn()"
         }
       },
+      "example": "---\nimport { Input } from \"@/components/ui/input\";\nimport { Label } from \"@/components/ui/label\";\n---\n\n<div class=\"space-y-2\">\n  <Label htmlFor=\"email\">Email</Label>\n  <Input type=\"email\" id=\"email\" placeholder=\"you@example.com\" />\n</div>",
+      "type": "react",
       "exports": ["Label"],
       "features": ["dark-mode", "accessible"],
       "notes": "Use htmlFor to associate with an Input's id. Automatically styles as disabled when peer input is disabled (peer-disabled:opacity-70)."
@@ -633,17 +660,17 @@
       "name": "Accordion",
       "file": "src/components/ui/accordion.tsx",
       "description": "shadcn/ui Accordion built on Radix UI Accordion. Vertically stacked expandable panels with animated open/close (accordion-down / accordion-up keyframes from globals.css).",
-      "type": "react",
+      "useWhen": "Collapsible content groups where the user opens one or several items.",
       "props": {
         "type": {
-          "type": "string",
-          "required": true,
-          "options": ["single", "multiple"],
+          "type": "'single' | 'multiple'",
+          "required": false,
           "description": "single = only one item open at a time; multiple = any number open"
         },
         "collapsible": {
           "type": "boolean",
-          "default": false,
+          "required": false,
+          "default": "false",
           "description": "With type=\"single\", allows closing the open item by clicking it again"
         },
         "className": {
@@ -652,6 +679,8 @@
           "description": "Additional Tailwind classes merged via cn()"
         }
       },
+      "example": "---\nimport { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from \"@/components/ui/accordion\";\n---\n\n<Accordion type=\"single\" collapsible client:load>\n  <AccordionItem value=\"item-1\">\n    <AccordionTrigger>Section One</AccordionTrigger>\n    <AccordionContent>Content for section one.</AccordionContent>\n  </AccordionItem>\n  <AccordionItem value=\"item-2\">\n    <AccordionTrigger>Section Two</AccordionTrigger>\n    <AccordionContent>Content for section two.</AccordionContent>\n  </AccordionItem>\n</Accordion>",
+      "type": "react",
       "exports": ["Accordion", "AccordionItem", "AccordionTrigger", "AccordionContent"],
       "features": ["dark-mode", "accessible", "keyboard-navigable", "animated"],
       "notes": "Each AccordionItem needs a unique value prop. For static FAQ content without JS, prefer the FAQ section (native <details>) instead."
@@ -660,7 +689,7 @@
       "name": "Dialog",
       "file": "src/components/ui/dialog.tsx",
       "description": "shadcn/ui Dialog (modal) built on Radix UI Dialog. Renders in a portal with a backdrop overlay, focus trap, Escape-to-close, and a built-in close button with sr-only label.",
-      "type": "react",
+      "useWhen": "Modal dialogs that interrupt the flow for confirmation or short forms.",
       "props": {
         "open": {
           "type": "boolean",
@@ -678,6 +707,8 @@
           "description": "Additional Tailwind classes merged via cn()"
         }
       },
+      "example": "---\nimport { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from \"@/components/ui/dialog\";\nimport { Button } from \"@/components/ui/button\";\n---\n\n<Dialog client:load>\n  <DialogTrigger asChild>\n    <Button>Open Dialog</Button>\n  </DialogTrigger>\n  <DialogContent>\n    <DialogHeader>\n      <DialogTitle>Dialog Title</DialogTitle>\n      <DialogDescription>This is a dialog description.</DialogDescription>\n    </DialogHeader>\n    <p>Dialog body content goes here.</p>\n  </DialogContent>\n</Dialog>",
+      "type": "react",
       "exports": [
         "Dialog",
         "DialogPortal",
@@ -697,7 +728,7 @@
       "name": "DropdownMenu",
       "file": "src/components/ui/dropdown-menu.tsx",
       "description": "shadcn/ui DropdownMenu built on Radix UI DropdownMenu. Trigger-anchored menu with items, checkbox items, radio groups, labels, separators, keyboard shortcuts hints, and nested sub-menus.",
-      "type": "react",
+      "useWhen": "Action menus attached to a trigger button.",
       "props": {
         "open": {
           "type": "boolean",
@@ -715,6 +746,8 @@
           "description": "Additional Tailwind classes merged via cn()"
         }
       },
+      "example": "---\nimport { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from \"@/components/ui/dropdown-menu\";\nimport { Button } from \"@/components/ui/button\";\n---\n\n<DropdownMenu client:load>\n  <DropdownMenuTrigger asChild>\n    <Button variant=\"outline\">Open Menu</Button>\n  </DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuLabel>Actions</DropdownMenuLabel>\n    <DropdownMenuSeparator />\n    <DropdownMenuItem>Edit</DropdownMenuItem>\n    <DropdownMenuItem>Duplicate</DropdownMenuItem>\n    <DropdownMenuItem>Delete</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>",
+      "type": "react",
       "exports": [
         "DropdownMenu",
         "DropdownMenuTrigger",
@@ -739,7 +772,7 @@
       "name": "Select",
       "file": "src/components/ui/select.tsx",
       "description": "shadcn/ui Select built on Radix UI Select. Custom-styled single-value select with a trigger button, popover list, groups, labels, separators, and scroll buttons for long lists.",
-      "type": "react",
+      "useWhen": "Choosing one option from a list in a form.",
       "props": {
         "value": {
           "type": "string",
@@ -762,6 +795,8 @@
           "description": "Additional Tailwind classes merged via cn()"
         }
       },
+      "example": "---\nimport { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from \"@/components/ui/select\";\n---\n\n<Select client:load>\n  <SelectTrigger className=\"w-[180px]\">\n    <SelectValue placeholder=\"Select option\" />\n  </SelectTrigger>\n  <SelectContent>\n    <SelectItem value=\"option1\">Option 1</SelectItem>\n    <SelectItem value=\"option2\">Option 2</SelectItem>\n    <SelectItem value=\"option3\">Option 3</SelectItem>\n  </SelectContent>\n</Select>",
+      "type": "react",
       "exports": [
         "Select",
         "SelectGroup",
@@ -781,7 +816,7 @@
       "name": "Tabs",
       "file": "src/components/ui/tabs.tsx",
       "description": "shadcn/ui Tabs built on Radix UI Tabs. Horizontal tab list with roving keyboard focus and a content panel per tab.",
-      "type": "react",
+      "useWhen": "Switching between related views in the same space.",
       "props": {
         "defaultValue": {
           "type": "string",
@@ -804,6 +839,8 @@
           "description": "Additional Tailwind classes merged via cn()"
         }
       },
+      "example": "---\nimport { Tabs, TabsList, TabsTrigger, TabsContent } from \"@/components/ui/tabs\";\n---\n\n<Tabs defaultValue=\"tab1\" client:load>\n  <TabsList>\n    <TabsTrigger value=\"tab1\">Tab 1</TabsTrigger>\n    <TabsTrigger value=\"tab2\">Tab 2</TabsTrigger>\n    <TabsTrigger value=\"tab3\">Tab 3</TabsTrigger>\n  </TabsList>\n  <TabsContent value=\"tab1\">First tab content.</TabsContent>\n  <TabsContent value=\"tab2\">Second tab content.</TabsContent>\n  <TabsContent value=\"tab3\">Third tab content.</TabsContent>\n</Tabs>",
+      "type": "react",
       "exports": ["Tabs", "TabsList", "TabsTrigger", "TabsContent"],
       "features": ["dark-mode", "accessible", "keyboard-navigable"],
       "notes": "Each TabsTrigger and TabsContent pair must share the same value. Arrow keys move between tabs; Home/End jump to first/last."
@@ -812,7 +849,7 @@
       "name": "Tooltip",
       "file": "src/components/ui/tooltip.tsx",
       "description": "shadcn/ui Tooltip built on Radix UI Tooltip. Small popover shown on hover or keyboard focus of the trigger, with a fade/zoom animation.",
-      "type": "react",
+      "useWhen": "Short hover/focus hints for icon buttons or abbreviations.",
       "props": {
         "delayDuration": {
           "type": "number",
@@ -821,7 +858,8 @@
         },
         "sideOffset": {
           "type": "number",
-          "default": 4,
+          "required": false,
+          "default": "4",
           "description": "Distance in px between trigger and TooltipContent"
         },
         "className": {
@@ -830,6 +868,8 @@
           "description": "Additional Tailwind classes merged via cn()"
         }
       },
+      "example": "---\nimport { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from \"@/components/ui/tooltip\";\nimport { Button } from \"@/components/ui/button\";\n---\n\n<TooltipProvider client:load>\n  <Tooltip>\n    <TooltipTrigger asChild>\n      <Button variant=\"outline\">Hover me</Button>\n    </TooltipTrigger>\n    <TooltipContent>\n      <p>Tooltip text</p>\n    </TooltipContent>\n  </Tooltip>\n</TooltipProvider>",
+      "type": "react",
       "exports": ["Tooltip", "TooltipTrigger", "TooltipContent", "TooltipProvider"],
       "features": ["dark-mode", "accessible", "keyboard-navigable", "animated"],
       "notes": "Wrap tooltips in a single TooltipProvider per island. Tooltips are for supplementary hints only — never put essential information exclusively in a tooltip."
@@ -840,6 +880,7 @@
       "name": "BaseLayout",
       "file": "src/layouts/BaseLayout.astro",
       "description": "Default layout for content-focused pages. Includes Header, Footer, SEO meta tags (OpenGraph + Twitter Cards), ClientRouter for view transitions, ThemeScript for dark mode persistence, and Vercel Analytics. Content is boxed (max-w-5xl via container).",
+      "useWhen": "Default page shell: header, footer, SEO and a boxed max-w-5xl content area. Use for most content pages.",
       "props": {
         "title": {
           "type": "string",
@@ -849,7 +890,7 @@
         "description": {
           "type": "string",
           "required": false,
-          "default": "AstroDeck - Modern Astro.js Component Library",
+          "default": "site.description",
           "description": "Meta description for SEO and OpenGraph"
         },
         "image": {
@@ -876,10 +917,11 @@
         "noindex": {
           "type": "boolean",
           "required": false,
-          "default": false,
+          "default": "false",
           "description": "Adds <meta name=\"robots\" content=\"noindex, nofollow\"> — for pages that must not be indexed"
         }
       },
+      "example": "---\nimport BaseLayout from \"@/layouts/BaseLayout.astro\";\n---\n\n<BaseLayout title=\"About\" description=\"About this site\">\n  <h1>About</h1>\n</BaseLayout>",
       "features": ["seo", "dark-mode", "view-transitions", "skip-to-content", "analytics"],
       "useCases": ["Landing pages", "Blog post listing", "About/contact pages", "Documentation"],
       "notes": "Includes a visually hidden skip-to-content link for accessibility. Header and Footer are always rendered."
@@ -888,6 +930,7 @@
       "name": "FullWidthLayout",
       "file": "src/layouts/FullWidthLayout.astro",
       "description": "Layout for showcase pages, portfolios, and galleries requiring full viewport width. Same structure as BaseLayout but without max-width constraint on main (w-full). Header and Footer use variant='fullWidth'. No Vercel Analytics.",
+      "useWhen": "Showcase and landing pages whose sections span the full viewport width; keeps header and footer.",
       "props": {
         "title": {
           "type": "string",
@@ -897,7 +940,7 @@
         "description": {
           "type": "string",
           "required": false,
-          "default": "AstroDeck - Modern Astro.js Component Library",
+          "default": "site.description",
           "description": "Meta description for SEO and OpenGraph"
         },
         "image": {
@@ -908,10 +951,11 @@
         "noindex": {
           "type": "boolean",
           "required": false,
-          "default": false,
+          "default": "false",
           "description": "Adds <meta name=\"robots\" content=\"noindex, nofollow\"> — for pages that must not be indexed"
         }
       },
+      "example": "---\nimport FullWidthLayout from \"@/layouts/FullWidthLayout.astro\";\n---\n\n<FullWidthLayout title=\"Showcase\" description=\"Full-width page\">\n  <!-- sections go here -->\n</FullWidthLayout>",
       "features": ["seo", "dark-mode", "view-transitions", "skip-to-content"],
       "useCases": ["Portfolios", "Showcases", "Galleries", "Full-bleed landing pages"],
       "notes": "Does not include Vercel Analytics (unlike BaseLayout). Header and Footer receive variant='fullWidth'."
@@ -920,6 +964,7 @@
       "name": "MinimalLayout",
       "file": "src/layouts/MinimalLayout.astro",
       "description": "Bare layout with no Header or Footer. Full-viewport main area. Ideal for 404 pages, maintenance pages, and standalone landing pages that need complete layout control. Supports optional noindex.",
+      "useWhen": "Standalone pages without header or footer, such as 404, maintenance or a bare landing page.",
       "props": {
         "title": {
           "type": "string",
@@ -929,7 +974,7 @@
         "description": {
           "type": "string",
           "required": false,
-          "default": "AstroDeck - Modern Astro.js Component Library",
+          "default": "site.description",
           "description": "Meta description for SEO and OpenGraph"
         },
         "image": {
@@ -940,10 +985,11 @@
         "noindex": {
           "type": "boolean",
           "required": false,
-          "default": false,
+          "default": "false",
           "description": "When true, adds noindex meta tag to prevent search engine indexing"
         }
       },
+      "example": "---\nimport MinimalLayout from \"@/layouts/MinimalLayout.astro\";\n---\n\n<MinimalLayout title=\"Page not found\">\n  <div class=\"flex min-h-screen items-center justify-center\"><h1>404</h1></div>\n</MinimalLayout>",
       "features": ["seo", "dark-mode", "view-transitions"],
       "useCases": ["404 pages", "Maintenance pages", "Standalone landing pages"],
       "notes": "No skip-to-content link, no Header, no Footer. main has id='main-content' and min-h-screen."
@@ -952,6 +998,7 @@
       "name": "AuthLayout",
       "file": "src/layouts/AuthLayout.astro",
       "description": "Split-screen authentication layout. On desktop (lg+): left panel is a dark branding panel (bg-zinc-900) with Logo and a hardcoded testimonial quote; right panel contains the slot with centered form content (max-w sm:w-[350px]). On mobile: only the right panel is visible. Always sets noindex=true on SEO.",
+      "useWhen": "Login, signup and password-reset pages: split layout without header or footer, always noindex.",
       "props": {
         "title": {
           "type": "string",
@@ -961,10 +1008,12 @@
         "description": {
           "type": "string",
           "required": false,
-          "default": "Sign in to your AstroDeck account",
+          "default": "`Sign in to your ${site.name} account`",
           "description": "Meta description"
         }
       },
+      "example": "---\nimport AuthLayout from \"@/layouts/AuthLayout.astro\";\n---\n\n<AuthLayout title=\"Sign in\">\n  <!-- login form -->\n</AuthLayout>",
+      "screenshot": "/screenshots/login.png",
       "features": ["dark-mode", "view-transitions", "noindex"],
       "useCases": ["Login page", "Signup page", "Password reset page"],
       "notes": "noindex is always true — cannot be overridden via props. The left-panel testimonial quote and attribution are hardcoded in the component. The Logo component is auto-included. Slot content is constrained to sm:w-[350px] for form layout."
@@ -973,6 +1022,7 @@
       "name": "ArticleLayout",
       "file": "src/layouts/ArticleLayout.astro",
       "description": "Blog article layout extending BaseLayout. Renders slot content inside a max-w-3xl article element with prose typography (Tailwind Typography plugin). Shows title as h1, and optionally renders publishDate and author below the heading.",
+      "useWhen": "Long-form text (blog posts, articles) that needs prose typography with title, date and author.",
       "props": {
         "title": {
           "type": "string",
@@ -995,6 +1045,7 @@
           "description": "Author name displayed below the title"
         }
       },
+      "example": "---\nimport ArticleLayout from \"@/layouts/ArticleLayout.astro\";\n---\n\n<ArticleLayout title=\"Post title\" publishDate=\"2026-01-01\" author=\"Your Name\">\n  <p>Markdown or HTML content is styled with prose.</p>\n</ArticleLayout>",
       "features": ["seo", "dark-mode", "view-transitions", "prose-typography", "analytics"],
       "useCases": ["Blog posts", "Documentation articles", "Changelogs"],
       "notes": "Inherits all BaseLayout features including Vercel Analytics. Content is wrapped in prose prose-neutral dark:prose-invert — add standard HTML/Markdown; no extra styling needed."
@@ -1003,52 +1054,78 @@
   "pageTemplates": [
     {
       "name": "SaaS Landing Page",
-      "description": "Complete SaaS landing page combining hero, feature highlights, AI tooling showcase, social proof logos, content marketing blocks, pricing tiers, testimonials, and a conversion-focused CTA.",
+      "file": "src/pages/templates/saas.astro",
+      "layout": "BaseLayout",
       "sections": [
         "Hero",
         "LogoCloud",
         "Features",
-        "IntegrationGrid",
-        "ContentBlock",
+        "Stats",
         "Pricing",
         "Testimonials",
+        "FAQ",
         "CTA"
       ],
+      "recipe": "Product landing page with pricing. Live at /templates/saas.",
+      "screenshot": "/screenshots/saas.png"
+    },
+    {
+      "name": "Startup Landing Page",
+      "file": "src/pages/templates/startup.astro",
       "layout": "BaseLayout",
-      "example": "See src/pages/index.astro for reference"
+      "sections": [
+        "HeroGradient",
+        "Features",
+        "Comparison",
+        "ContentBlock",
+        "Stats",
+        "Testimonials",
+        "FAQ",
+        "CTA"
+      ],
+      "recipe": "Landing page with a gradient hero and a comparison table. Live at /templates/startup.",
+      "screenshot": "/screenshots/startup.png"
     },
     {
       "name": "Portfolio",
-      "description": "Personal or agency portfolio with hero, trust logos, alternating content blocks, social proof, and a CTA.",
-      "sections": ["Hero", "LogoCloud", "ContentBlock", "Testimonials", "CTA"],
-      "layout": "FullWidthLayout"
+      "file": "src/pages/templates/portfolio.astro",
+      "layout": "BaseLayout",
+      "sections": [
+        "HeroSplit",
+        "LogoCloud",
+        "Stats",
+        "ContentBlock",
+        "Team",
+        "Testimonials",
+        "Newsletter",
+        "CTA"
+      ],
+      "recipe": "Personal or studio portfolio. Live at /templates/portfolio.",
+      "screenshot": "/screenshots/portfolio.png"
     },
     {
-      "name": "Product Launch",
-      "description": "Focused launch page with hero, feature grid, a content deep-dive, and a closing CTA.",
-      "sections": ["Hero", "Features", "ContentBlock", "CTA"],
-      "layout": "BaseLayout"
-    },
-    {
-      "name": "Minimal Landing Page",
-      "description": "Stripped-down single-section landing page with no navigation. Useful for coming-soon pages or A/B test variants.",
-      "sections": ["Hero", "CTA"],
-      "layout": "MinimalLayout"
+      "name": "Contact Page",
+      "file": "src/pages/templates/contact.astro",
+      "layout": "BaseLayout",
+      "sections": ["Contact", "FAQ"],
+      "recipe": "Contact details plus form and FAQ. Live at /templates/contact.",
+      "screenshot": "/screenshots/contact.png"
     },
     {
       "name": "Authentication Flow",
-      "description": "Login or signup page with split-screen branding panel and centered form. Use shadcn/ui Input, Label, and Button components inside the slot.",
-      "sections": [],
+      "file": "src/pages/login.astro",
       "layout": "AuthLayout",
-      "uiComponents": ["Input", "Label", "Button"],
-      "example": "See src/pages/login.astro for reference"
+      "sections": [],
+      "recipe": "Login page using AuthLayout and the LoginForm React component. Live at /login.",
+      "screenshot": "/screenshots/login.png"
     },
     {
       "name": "Blog Article",
-      "description": "Reading-optimized article page with prose typography, publish date, and author attribution.",
+      "file": "src/pages/blog/[...slug].astro",
+      "layout": "BaseLayout",
       "sections": [],
-      "layout": "ArticleLayout",
-      "example": "See src/content/blog/ for content collection entries and src/pages/blog/[slug].astro for the route"
+      "recipe": "Article route rendering content collection entries from src/content/blog/. Live at /blog.",
+      "screenshot": "/screenshots/blog.png"
     }
   ]
 }
