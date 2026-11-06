@@ -60,7 +60,7 @@ Requires Node >=22.23.4. Run `npm install` once.
 | `src/lib/icons.ts` | Icon set (`IconName`) for sections |
 | `public/` | Static files: favicons, fonts, OG image, `robots.txt`, `llms.txt` |
 | `.agents/skills/` | Skills (canonical source) |
-| `.claude/skills/` | Generated mirror for Claude Code; do not edit |
+| `.claude/skills/` | Mirror of `.agents/skills/` for Claude Code; do not edit mirrored skills (own Claude-only skills are fine) |
 | `scripts/`, `tests/` | Check, theme, cleanup and sync scripts with their tests |
 | `docs/agents/` | Supported agents, MCP setup |
 
@@ -84,7 +84,7 @@ Requires Node >=22.23.4. Run `npm install` once.
 9. One `h1` per page, headings in order, meaningful `alt`, mobile-first, readable in light and
    dark mode.
 10. Tailwind 4 is CSS-first: no `tailwind.config.*`, no `@astrojs/tailwind`.
-11. Edit skills in `.agents/skills/`, then `npm run sync:agents`. Never edit `.claude/skills/`.
+11. Edit skills in `.agents/skills/`, then `npm run sync:agents`. Never edit mirrored skills in `.claude/skills/`; add your own Claude-only skills directly in `.claude/skills/` (sync never touches folders it does not manage).
 12. Done means `npm run verify` ends with `VERIFY PASSED`. Do not push, publish or deploy unless
     the user asks.
 

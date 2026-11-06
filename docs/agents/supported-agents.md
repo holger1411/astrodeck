@@ -3,7 +3,8 @@
 AstroDeck's agent layer is tool-agnostic: `AGENTS.md` is the always-loaded index and the skills
 in `.agents/skills/` hold the workflows. Claude Code needs two extras, which the repo ships:
 `CLAUDE.md` imports `AGENTS.md` (`@AGENTS.md`), and `.claude/skills/` is a generated copy of
-`.agents/skills/` (`npm run sync:agents`, checked by `npm run verify`).
+`.agents/skills/` (`npm run sync:agents`, checked by `npm run verify`). Add your own Claude-only
+skills directly in `.claude/skills/`: sync never touches folders it does not manage.
 
 ## Support matrix
 

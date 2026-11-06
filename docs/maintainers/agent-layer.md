@@ -39,7 +39,10 @@ Windsurf read `.agents/skills/`. The mirror is real files (symlinks do not survi
 extraction on Windows).
 
 - Edit `.agents/skills/`, then `npm run sync:agents` (`scripts/sync-agents.mjs`): copies every
-  file, removes extraneous ones, writes `.claude/skills/README.md`.
+  file of every skill in `.agents/skills/`, removes stale files inside those skills, writes
+  `.claude/skills/README.md`. Folders in `.claude/skills/` without a counterpart in
+  `.agents/skills/` are user-owned: sync never touches them, `--check` ignores them and only
+  prints an info line naming them. Add your own Claude-only skills directly in `.claude/skills/`.
 - `npm run verify` runs `sync-agents --check` (step `agents-sync`) and fails on drift.
 - Tests: `tests/sync-agents.test.mjs`.
 

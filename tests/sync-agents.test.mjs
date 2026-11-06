@@ -52,18 +52,45 @@ test('mirrors every skill file as a regular file, plus a generated README', () =
   assert.deepEqual(syncAgents(root, { check: false }).changed, [], 'second run is a no-op');
 });
 
-test('removes extraneous files and empty folders from the mirror', () => {
+test('removes stale files and empty folders inside a managed skill', () => {
   syncAgents(root, { check: false });
-  put('.claude/skills/old-skill/SKILL.md', 'stale\n');
   put('.claude/skills/a/extra.md', 'stale\n');
+  put('.claude/skills/a/old-dir/deep.md', 'stale\n');
   const { changed } = syncAgents(root, { check: false });
   assert.deepEqual(changed.sort(), [
     '.claude/skills/a/extra.md',
-    '.claude/skills/old-skill/SKILL.md',
+    '.claude/skills/a/old-dir/deep.md',
   ]);
   assert.equal(existsSync(join(root, '.claude/skills/a/extra.md')), false);
-  assert.equal(existsSync(join(root, '.claude/skills/old-skill')), false);
+  assert.equal(existsSync(join(root, '.claude/skills/a/old-dir')), false);
   assert.equal(existsSync(join(root, '.claude/skills/a/SKILL.md')), true);
+});
+
+test('leaves user-owned skills (no counterpart in .agents/skills) untouched', () => {
+  syncAgents(root, { check: false });
+  put('.claude/skills/my-skill/SKILL.md', '---\nname: my-skill\ndescription: mine\n---\n');
+  put('.claude/skills/my-skill/notes/n.md', 'keep\n');
+  put('.claude/skills/stray.txt', 'keep\n');
+  const run = syncAgents(root, { check: false });
+  assert.deepEqual(run.changed, [], 'no drift reported');
+  assert.deepEqual(run.userOwned, ['my-skill']);
+  assert.equal(readFileSync(join(root, '.claude/skills/my-skill/notes/n.md'), 'utf8'), 'keep\n');
+  assert.equal(existsSync(join(root, '.claude/skills/my-skill/SKILL.md')), true);
+  assert.equal(existsSync(join(root, '.claude/skills/stray.txt')), true);
+  assert.deepEqual(syncAgents(root, { check: true }).changed, []);
+});
+
+test('CLI keeps user-owned skills, check passes and prints an info line naming them', () => {
+  cli();
+  put('.claude/skills/my-skill/SKILL.md', 'mine\n');
+  const check = cli('--check');
+  assert.equal(check.status, 0, check.stderr);
+  assert.match(check.stdout, /my-skill/);
+  assert.match(check.stdout, /not managed/i);
+  const sync = cli();
+  assert.equal(sync.status, 0, sync.stderr);
+  assert.match(sync.stdout, /my-skill/);
+  assert.equal(readFileSync(join(root, '.claude/skills/my-skill/SKILL.md'), 'utf8'), 'mine\n');
 });
 
 test('replaces a symlink in the mirror with a regular file', (t) => {

@@ -250,7 +250,8 @@ still get the workflow, because `AGENTS.md` names every skill file.
 Claude Code extras (optional, never required): a read-only review subagent
 (`.claude/agents/astrodeck-reviewer.md`) and a guard hook that shares its rules with
 `npm run lint:design`. `.claude/skills/` is generated from `.agents/skills/` by
-`npm run sync:agents`; edit the source.
+`npm run sync:agents`; edit the source. Add your own Claude-only skills directly in
+`.claude/skills/`: sync never touches folders it does not manage.
 
 **MCP (optional):** `.mcp.json` declares the Astro Docs MCP server and the shadcn MCP server for
 Claude Code. Setup for Codex, Cursor and VS Code: `docs/agents/mcp-setup.md`.
