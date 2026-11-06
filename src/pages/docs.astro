@@ -44,11 +44,11 @@ const workflow: { title: string; text: string; cmd?: string }[] = [
   },
   {
     title: 'Configure',
-    text: 'src/config/site.ts and SITE_URL from the brief; robots.txt, llms.txt and favicons for the real domain and logo.',
+    text: 'src/config/site.ts and SITE_URL from the brief; interface text in src/config/ui.ts for non-English sites; robots.txt, llms.txt and favicon.svg for the real domain and logo.',
   },
   {
     title: 'Theme',
-    text: 'Brand colors, neutral tone and radius as OKLCH tokens with a contrast gate; fonts only on brand input.',
+    text: 'Brand colors, neutral tone and radius as OKLCH tokens with a contrast gate; fonts only on brand input. npm run icons renders the PNG icons and the social image in the brand color.',
     cmd: 'npm run theme -- --primary "<hex>" --dry-run',
   },
   {
@@ -590,7 +590,8 @@ npm run dev`}</code></pre>
               class={pre}><code class="text-sm font-mono">{`npm run theme -- --primary "#0f766e" --dry-run
 npm run theme -- --primary "#0f766e" --accent "#f59e0b" \\
   --neutral slate --radius 0.75rem
-npm run theme -- --from brief/DESIGN.md`}</code></pre>
+npm run theme -- --from brief/DESIGN.md
+npm run icons   # PNG icons + public/og.png from favicon.svg`}</code></pre>
             <p class="text-sm text-muted-foreground mt-3">
               <code class={ic}>--neutral</code>: zinc, slate, stone, neutral or gray. The token
               regions in <code class={ic}>globals.css</code> are written by the script; do not edit them

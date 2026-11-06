@@ -42,7 +42,8 @@ must return nothing: resolve each one or remove the element.
 ## 3. Links and forms
 
 - Every `href` goes somewhere real: an existing page, an existing `#id` on the page, a real
-  external URL, `mailto:` / `tel:` with the user's real data. No `href="#"`.
+  external URL, `mailto:` / `tel:` with the user's real data. No `href="#"`. No spaces inside
+  `tel:`/`mailto:` (`tel:+49511000000`, display text may keep spaces; `Contact` does this).
 - Links are links: navigation uses `<a href>`, never a clickable `div` or a button that changes
   `location`.
 - Forms post to a real endpoint the user named (form service, mailing list). If there is none,
@@ -76,8 +77,11 @@ must return nothing: resolve each one or remove the element.
   put the site name into the page title yourself.
 - No two pages share a title or description.
 - `public/robots.txt` and `public/llms.txt` name the real domain and pages.
-- OG image: 1200x630 in `public/`, referenced by `site.ogImage`. No image yet → set
-  `ogImage: ''` (tags are omitted) and list it under Open questions.
+- OG image: 1200x630 in `public/`, referenced by `site.ogImage`. No image from the user → run
+  `npm run icons` (writes `og.png` in `public/`: brand color + logo mark, no invented content), set
+  `ogImage: '/og.png'` and list "a real social image (photo)" under Open questions.
+- Lengths (checked by `npm run verify`, same limits as vibe2prod): home page `<title>` 30–60
+  characters, home description 50–160, no description over 160.
 - Structured data only when it is correct and complete; never guess it.
 
 ## 6. Copy quality
@@ -90,6 +94,9 @@ must return nothing: resolve each one or remove the element.
   identical length.
 - Feature and benefit cards state specific facts from the brief. If you only have three generic
   benefits, use fewer cards or a ContentBlock instead.
+- Health, legal and financial services: describe only what the user stated. No outcome or
+  healing promises ("pain-free", "back in your sport in no time"), no claims about effectiveness;
+  general explanations of a treatment go under Decisions & defaults for the owner to check.
 
 ## 7. Avoid the "AI default" look (unless the brief asks for it)
 

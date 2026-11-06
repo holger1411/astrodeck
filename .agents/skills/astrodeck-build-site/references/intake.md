@@ -25,18 +25,18 @@ Record every source you used; it goes into **Content sources** in the brief.
 
 ### Low input: one round of questions, then stated defaults
 
-1. Ask **one** message with **at most 5** questions, only about things that change the site.
+1. Ask **one** message with **at most 5** questions, only about **facts you cannot know**.
    Give your proposed default with each question so "ok" is a valid answer. Pick from:
-   - What it is and who it is for (skip if the message already says it)
-   - The one thing visitors should do (book, call, buy, sign up, visit, get in touch)
-   - Pages (propose the sitemap of the matching recipe in `recipes/`)
-   - Tone and site language (default: the language the user writes in, friendly and plain)
-   - Brand cues: name, logo, a color, fonts (default: AstroDeck's neutral look, see the
-     `astrodeck-theme` skill)
-   - Real facts the site needs and you do not have: address, opening hours, prices, contact
-     details, team, customer quotes. Say plainly that you will not make them up.
+   - Name, what it is and who it is for (skip what the message already says)
+   - The one thing visitors should do and how (call, book online: the URL, visit, email)
+   - Real facts the site needs: address, opening hours, contact details, prices, team, customer
+     quotes. Say plainly that you will not make them up.
+   - What already exists: logo, brand color, photos, production domain
 2. State, in the same message, what you will do without asking: start from a clean site
-   (demo pages removed; a blog only if they want one), the recipe you picked, your defaults.
+   (demo pages removed; a blog only if they want one), the recipe and its pages, site language
+   and tone (default: the user's language, friendly and plain), the look (a color proposal from
+   their words, or AstroDeck's neutral look). Do not ask about colors, layout or pages; the user
+   corrects the stated defaults if they want.
    Any reply to this message that does not object (answers, "ok", "go") counts as agreement to
    the clean start; do not ask a second time before running the cleanup.
 3. If the user answers only partly, or says "just start": proceed with the defaults and record

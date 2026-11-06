@@ -20,6 +20,10 @@ All notable changes to AstroDeck are documented in this file.
 - `.mcp.json` with the Astro Docs MCP and shadcn MCP servers; setup for Codex, Cursor and VS Code in `docs/agents/mcp-setup.md`; supported agents in `docs/agents/supported-agents.md`
 - Eval cases in `evals/` (one-sentence brief, Markdown brief, `DESIGN.md`) for rerunning the workflow with any agent
 - Optional Claude Code review subagent `astrodeck-reviewer`
+- `npm run icons`: renders the PNG icons and a social image (`public/og.png`, brand color + logo mark) from `public/favicon.svg`
+- `src/config/ui.ts`: built-in interface text (skip link, menu and theme buttons, contact labels and form, 404 page) in one place, so non-English sites need no component edits
+- Contact section: `hours` (opening hours) and `mapUrl` props; Hero: `plain` prop without the decorative grid
+- Built-HTML checks: `link-scheme` (spaces in `tel:`/`mailto:` links) and `meta-length` (home title 30–60 characters, descriptions 50–160, as in vibe2prod)
 
 ### Changed
 
@@ -32,6 +36,7 @@ All notable changes to AstroDeck are documented in this file.
 ### Fixed
 
 - Missing or duplicate h1 on several demo pages, dead demo links and decorative icons with alt text (found by the built-HTML check)
+- Found in the 4.0 dogfood runs (`docs/maintainers/dogfood-4.0.md`): `npm test` no longer fails after `npm run theme` or with a template-literal `titleTemplate`; `.vibe2prod/` audit output is ignored by Git, Prettier and ESLint; Contact `tel:` links strip spaces (invalid HTML); the skip link is no longer hidden behind the sticky header when focused
 - Contact section without a form no longer leaves an empty column; IntegrationGrid opens only external links in a new tab and renders items without `href` as plain cards
 - RSS language is derived from `site.locale` instead of a hardcoded `-us` suffix
 

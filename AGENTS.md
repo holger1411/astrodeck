@@ -7,8 +7,9 @@ Windsurf and others). Read this file completely, then `PROJECT.md`, then the ski
 
 AstroDeck is a starter kit for building production-ready websites with a coding agent:
 Astro 7, Tailwind CSS 4, TypeScript, React 19 islands and shadcn/ui (Radix) primitives. It ships
-16 sections, 5 layouts and 11 UI components, a central site config, a theme script, checks
-(`npm run verify`) and skills that walk you from a user's idea to a finished site.
+sections, layouts and UI components (catalog: `src/registry.json`), a central site config, a
+theme script, checks (`npm run verify`) and skills that walk you from a user's idea to a
+finished site.
 
 - `PROJECT.md` is the site brief. It **overrides** the defaults in this file. If it is empty,
   the site has not been planned yet.
@@ -27,12 +28,13 @@ Requires Node >=22.23.4. Run `npm install` once.
 
 | Command | What it does |
 |---------|--------------|
-| `npm run dev` | Dev server on `http://localhost:4321`. Agents: start it **in the background**, then poll `http://localhost:4321/_astro/status` until it returns `{"ok":true}`; never block on it. Stop it when you are done if you started it. |
+| `npm run dev` | Dev server, prints its URL (`http://localhost:4321`, or the next free port). Agents: start it **in the background**, then poll `<url>/_astro/status` until it returns `{"ok":true}`; never block on it. Stop it when you are done if you started it. |
 | `npm run build` / `npm run preview` | Production build to `dist/` / serve the build |
 | `npm run verify` | Every check: format, eslint, astro check, design lint, docs lint, registry, skills mirror, tests, build, built-HTML checks. Must end with `VERIFY PASSED`. |
 | `npm run verify -- --starter` | Same, plus fails on demo leftovers; use after cleanup |
 | `npm run validate` | `verify` without build and built-HTML checks (fast) |
 | `npm run theme -- --primary "<hex>" [--accent] [--neutral] [--radius] [--from brief/DESIGN.md] [--dry-run]` | Brand colors and radius as OKLCH tokens for light and dark mode, with a WCAG contrast gate |
+| `npm run icons [-- --no-og]` | PNG icons and the social image `og.png` in `public/` from `public/favicon.svg` in the brand color |
 | `npm run starter:clean -- --dry-run` / `-- --yes [--keep-blog]` | Remove the demo (one-shot) |
 | `npm run lint:design` / `npm run lint:docs` / `npm run check:registry` | Single checks (also part of verify) |
 | `npm run sync:agents` | Regenerate `.claude/skills/` from `.agents/skills/` |
@@ -46,6 +48,7 @@ Requires Node >=22.23.4. Run `npm install` once.
 | `brief/` | User inputs: PDFs, Markdown, `DESIGN.md`, images, links (see `brief/README.md`) |
 | `src/config/site.ts` | Name, description, language, title template, logo, nav, footer, social, contact, OG image, feature flags |
 | `src/config/site-url.mjs` | Production URL (`SITE_URL`), used by `astro.config.mjs` and `site.ts` |
+| `src/config/ui.ts` | Built-in interface text (skip link, menu/theme buttons, contact labels, 404); translate for non-English sites |
 | `src/styles/globals.css` | Fonts and design tokens (`@theme` + `.dark`); colors are written by `npm run theme` |
 | `src/registry.json` | Catalog of sections, layouts, UI components: props, `useWhen`, example |
 | `src/components/sections/` | Page sections (Hero, Features, Pricing, FAQ, Contact, ...) |

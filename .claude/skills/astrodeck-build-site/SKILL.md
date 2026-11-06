@@ -19,7 +19,7 @@ folder exists: if yes, the AstroDeck demo (astrodeck.dev content) is still in th
 - [ ] 2. Start clean: remove the demo (only if `starter/` exists)
 - [ ] 3. Brief and site plan: `PROJECT.md` filled, recipe and sitemap chosen
 - [ ] 4. Configure: `src/config/site.ts`, `src/config/site-url.mjs`, `public/` basics
-- [ ] 5. Theme: `npm run theme`, fonts if the brand needs them
+- [ ] 5. Theme: `npm run theme`, fonts if the brand needs them, `npm run icons`
 - [ ] 6. Build pages: home first with an early preview, then the rest
 - [ ] 7. Verify and audit: `npm run verify`, vibe2prod, quality checklist
 - [ ] 8. Handover: summary, open questions, deploy steps
@@ -79,12 +79,15 @@ optional `headerCta`, `footer` (`tagline`, `groups`, `copyright`, optional `cred
 
 - `src/config/site-url.mjs`: `SITE_URL` = the production URL. Unknown: ask; if still unknown,
   keep the placeholder and make it the first Open question (it must be set before deploying).
+  Do not hide it (no `noindex`, no removed canonical tags, no edits to `SEO.astro`): vibe2prod
+  then fails gate AI2 on the `example.com` canonical, which is correct until the URL is set.
 - `public/robots.txt` and `public/llms.txt`: real domain and real pages.
+- Site language not English: translate every string in `src/config/ui.ts` (skip link, menu and
+  theme buttons, contact labels, 404 page). Do not edit components for this.
 - Logo: `site.logo` (`text`, and `svg` markup or a `src` file; details in the
   `astrodeck-theme` skill, step 5). Without a logo the header shows the name as a wordmark.
-- Favicons (`public/favicon.svg`, `favicon-32x32.png`, `apple-touch-icon.png`, `icon-192.png`,
-  `icon-512.png`): replace with the user's logo. Without a logo, write a simple monogram
-  `favicon.svg` in the brand color and list the PNG icons as an Open question.
+- `public/favicon.svg`: the user's logo mark, or without a logo a simple monogram drawn with
+  `currentColor`. The PNG icons and the social image are rendered from it in step 5.
 - `features.analytics` loads Vercel Web Analytics only on Vercel; keep it `false` unless the
   user wants it.
 - Never repeat the brand in components or page titles; everything reads from `site`.
@@ -98,6 +101,10 @@ Follow the `astrodeck-theme` skill (`.agents/skills/astrodeck-theme/SKILL.md`).
   without `--dry-run`.
 - Fonts only on brand input: `.agents/skills/astrodeck-theme/references/fonts.md`.
 - No brand input: keep the AstroDeck defaults and record that under Decisions & defaults.
+- Then `npm run icons`: renders `favicon-32x32.png`, `apple-touch-icon.png`, `icon-192.png`,
+  `icon-512.png` and the social image `og.png` in `public/` (brand color + mark) from
+  `public/favicon.svg`. Set `ogImage: '/og.png'` in `site.ts` unless the user supplied a social
+  image (`npm run icons -- --no-og` then). Rerun it after a color change.
 
 ## 6. Build pages
 
@@ -107,8 +114,9 @@ Use the `astrodeck-new-page` skill for each page and `astrodeck-new-section` onl
 registry section fits.
 
 - Home first. Start the dev server in the background (`npm run dev`), poll
-  `http://localhost:4321/_astro/status` until it answers `{"ok":true}`, and give the user the
-  preview URL `http://localhost:4321` as soon as the home page renders. Iterate on feedback.
+  `<url>/_astro/status` until it answers `{"ok":true}`, and give the user the preview URL as soon
+  as the home page renders. Use the URL the command prints: it is `http://localhost:4321` unless
+  that port is busy (then 4322, ...). Iterate on feedback.
 - Compose pages from sections with props filled from the brief, in the recipe's order. Pages
   without a hero start with the page header pattern from `astrodeck-new-page` (one `h1`).
 - Facts come only from the brief. A missing fact becomes an Open question and the element is
@@ -127,7 +135,9 @@ registry section fits.
 - Run the vibe2prod skill, bundled in `.agents/skills/vibe2prod/`, in local project mode on this
   project. Target verdict **READY**. If its runtime (Playwright, Lighthouse, axe) is missing,
   run `npm run setup:audit`; if it still cannot run, report exactly which checks were skipped.
-  No verdict without tools.
+  No verdict without tools. A sandbox that blocks Chromium or localhost (for example Codex's
+  default `workspace-write`) cannot run it: ask the user to allow the audit outside the sandbox.
+- Run `npm run verify -- --starter` again after the audit fixes; it ignores `.vibe2prod/`.
 - Apply technical fixes; propose content changes to the user before making them.
 - Work through the manual items of `references/quality-checklist.md` (widths 375/768/1024/1280,
   dark mode, keyboard, reduced motion).

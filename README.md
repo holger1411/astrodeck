@@ -135,12 +135,15 @@ Other tasks have their own skill:
 `src/config/site.ts` is the single place for name, description, language, title template,
 author, logo, navigation, footer, social links, contact data, OG image and feature flags
 (`blog`, `rss`, `analytics`). The production URL lives in `src/config/site-url.mjs`
-(`SITE_URL`). Pages pass plain titles; the layout adds the brand.
+(`SITE_URL`). Built-in interface text (skip link, menu and theme buttons, contact labels, 404
+page) is in `src/config/ui.ts`; translate it for a non-English site. Pages pass plain titles; the
+layout adds the brand.
 
 ```bash
 npm run theme -- --primary "#0f766e" --dry-run          # preview tokens and contrast report
 npm run theme -- --primary "#0f766e" --accent "#f59e0b" --neutral slate --radius 0.75rem
 npm run theme -- --from brief/DESIGN.md                 # apply a DESIGN.md
+npm run icons                                           # PNG icons + og.png from public/favicon.svg
 ```
 
 The script writes the color tokens in `src/styles/globals.css` for light and dark mode and fails

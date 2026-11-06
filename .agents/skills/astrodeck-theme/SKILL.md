@@ -73,6 +73,9 @@ Only when the brand specifies fonts. Follow
   - Neither `svg` nor `src`: the name alone is the logo (the clean starter's default).
 - Favicons in `public/` (`favicon.svg`, `favicon-32x32.png`, `apple-touch-icon.png`,
   `icon-192.png`, `icon-512.png`) come from the logo; hex colors are fine inside these files.
+  Write `favicon.svg` (the mark, or a monogram drawn with `currentColor`), then
+  `npm run icons` renders the PNG icons and the social image `og.png` in `public/` in the brand
+  color. Rerun it after every color change.
 
 ## Rules
 

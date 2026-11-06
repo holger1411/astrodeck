@@ -25,7 +25,7 @@ Small offer → fold services into `/` and keep three pages (`/`, `/about`, `/co
 
 ## Home (`/`)
 
-- Section: HeroSplit — name + what you do + where, primary CTA = the main action (call/book), image = the user's own photo of the place or work; without a photo use Hero
+- Section: HeroSplit — name + what you do + where, primary CTA = the main action (call/book), image = the user's own photo of the place or work; without a photo use Hero with `plain`
 - Section: Features — 3 to 6 services or reasons, each a concrete fact from the brief, icons from `IconName`
 - Section: ContentBlock — the approach or story in the owner's words, `features` = what a first visit looks like
 - Section: Testimonials — only with real quotes the owner supplied; otherwise omit
@@ -48,7 +48,7 @@ Small offer → fold services into `/` and keep three pages (`/`, `/about`, `/co
 
 ## Contact (`/contact`)
 
-- Section: Contact — `headingLevel="h1"`, real email, phone, address; `form` only with a real endpoint
+- Section: Contact — `headingLevel="h1"`, real email, phone, address, `hours` (opening hours as supplied), `mapUrl` (a map search link for the address); `form` only with a real endpoint
 - Section: FAQ — practical questions (directions, parking, accessibility of the premises)
 
 ## Required inputs

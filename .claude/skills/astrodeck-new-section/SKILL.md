@@ -83,6 +83,8 @@ Add an entry to `sections` in `src/registry.json`: `name`, `file`, `description`
 (one sentence: when to pick it, and any honesty constraint), `props` (every prop with `type`
 exactly as in the code, `required`, `description`), `example` (a minimal valid usage),
 `category`, `features`. `npm run check:registry` compares the props with the code.
+`README.md` states how many sections the kit has; `npm run lint:docs` (part of verify) asks you to
+update that number when you add one.
 
 ## 5. Place it
 
