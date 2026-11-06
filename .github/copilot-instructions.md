@@ -270,24 +270,13 @@ Requires Node.js 22.23+.
 
 ---
 
-## Design Knowledge Base
+## Design Rules
 
-Central design decisions live in `system/globals/`. Read the relevant file BEFORE making design decisions:
+Read `.agents/skills/astrodeck-build-site/references/design-system.md` BEFORE making design decisions.
 
-| Topic | File |
-|-------|------|
-| Colors | `system/globals/colors.md` |
-| Typography | `system/globals/typography.md` |
-| Spacing | `system/globals/spacing.md` |
-| Interaction | `system/globals/interaction.md` |
-| Accessibility | `system/globals/accessibility.md` |
-| Effects | `system/globals/effects.md` |
-| Responsiveness | `system/globals/responsiveness.md` |
-| Imagery | `system/globals/imagery.md` |
+## Quality Checklist
 
-## Self-Audit Prompts
-
-Portable quality checks in `system/prompts/`. Can be used in any tool via copy-paste — no Claude Code required.
+Pre-handover checks: `.agents/skills/astrodeck-build-site/references/quality-checklist.md` (plus `npm run verify`).
 
 ---
 

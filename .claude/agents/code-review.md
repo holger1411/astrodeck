@@ -13,8 +13,7 @@ You are a code quality specialist reviewing an AstroDeck project. Your domain co
 
 1. Read `AGENTS.md` first to understand project conventions.
 2. Read these globals files for token and pattern knowledge:
-   - `system/globals/colors.md`
-   - `system/globals/effects.md`
+   - `.agents/skills/astrodeck-build-site/references/design-system.md`
 
 ## What You Check
 

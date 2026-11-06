@@ -138,19 +138,11 @@ npm run build        # Production build (dist/)
 npm run lint:fix     # ESLint auto-fix
 npm run format       # Prettier formatting
 
-## Design Knowledge Base
-Central design decisions live in `system/globals/`. Read the relevant file BEFORE making design decisions:
-- Colors → system/globals/colors.md
-- Typography → system/globals/typography.md
-- Spacing → system/globals/spacing.md
-- Interaction → system/globals/interaction.md
-- Accessibility → system/globals/accessibility.md
-- Effects → system/globals/effects.md
-- Responsiveness → system/globals/responsiveness.md
-- Imagery → system/globals/imagery.md
+## Design Rules
+Read `.agents/skills/astrodeck-build-site/references/design-system.md` BEFORE making design decisions.
 
-## Self-Audit Prompts
-Portable quality checks in `system/prompts/`. Can be used in any tool via copy-paste.
+## Quality Checklist
+Pre-handover checks: `.agents/skills/astrodeck-build-site/references/quality-checklist.md` (plus `npm run verify`).
 
 ## Never Do
 - Relative imports (always @/ alias)

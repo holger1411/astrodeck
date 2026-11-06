@@ -8,11 +8,7 @@ description: Use when creating or modifying any visible UI element, adjusting sp
 ## Canonical Sources
 
 > This skill references the following globals — read them BEFORE starting work:
-> - `system/globals/typography.md` — Font stack, heading scale, weights
-> - `system/globals/spacing.md` — Section padding, grids, container widths
-> - `system/globals/effects.md` — Border radius, shadows, card pattern
-> - `system/globals/imagery.md` — Image formats, alt text, optimization
-> - `system/globals/responsiveness.md` — Breakpoints, mobile-first rules
+> - `.agents/skills/astrodeck-build-site/references/design-system.md` — design rules (tokens, typography, spacing, radius, motion, imagery, accessibility)
 
 ## Domain
 

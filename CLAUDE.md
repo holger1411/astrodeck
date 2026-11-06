@@ -15,5 +15,5 @@ This project follows the [AGENTS.md standard](https://agents.md).
 | Domain skills (KPIs + learnings) | `.claude/skills/` |
 | Static convention checks | `npm run verify` (single source of truth) |
 | Convention guard hook | `.claude/hooks/guard-conventions.mjs` (auto-blocks deprecated patterns) |
-| Canonical design decisions | `system/globals/` |
-| Portable audit prompts (any AI tool) | `system/prompts/` |
+| Canonical design decisions | `.agents/skills/astrodeck-build-site/references/design-system.md` |
+| Pre-handover checklist (any AI tool) | `.agents/skills/astrodeck-build-site/references/quality-checklist.md` |

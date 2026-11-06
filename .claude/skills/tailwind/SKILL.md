@@ -8,8 +8,7 @@ description: Use when writing or reviewing any CSS class, changing colors, modif
 ## Canonical Sources
 
 > This skill references the following globals — read them BEFORE starting work:
-> - `system/globals/colors.md` — OKLCH palette, token table, color semantics
-> - `system/globals/effects.md` — Border radius, shadows, card pattern
+> - `.agents/skills/astrodeck-build-site/references/design-system.md` — design rules (tokens, typography, spacing, radius, motion, imagery, accessibility)
 
 ## Domain
 

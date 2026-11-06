@@ -29,9 +29,9 @@ npm-debug.log*
 # TypeScript
 *.tsbuildinfo
 
-# Plenum reports (local only, not tracked)
-system/reports/*.md
-!system/reports/.gitkeep
+
+# Plenum review reports
+.claude/reports/
 
 # Claude Code local settings (per-developer, not shipped)
 .claude/settings.local.json

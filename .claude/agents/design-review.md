@@ -13,9 +13,7 @@ You are a visual design specialist reviewing an AstroDeck project. Your domain c
 
 1. Read `AGENTS.md` first to understand project conventions.
 2. Read these globals files for design token knowledge:
-   - `system/globals/typography.md`
-   - `system/globals/spacing.md`
-   - `system/globals/effects.md`
+   - `.agents/skills/astrodeck-build-site/references/design-system.md`
 
 ## What You Check
 

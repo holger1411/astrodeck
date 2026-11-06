@@ -8,8 +8,7 @@ description: Use when creating or modifying any UI element visible to the user, 
 ## Canonical Sources
 
 > This skill references the following globals — read them BEFORE starting work:
-> - `system/globals/accessibility.md` — WCAG rules, ARIA patterns, keyboard nav, focus styles
-> - `system/globals/colors.md` — Contrast ratios, color semantics
+> - `.agents/skills/astrodeck-build-site/references/design-system.md` — design rules (tokens, typography, spacing, radius, motion, imagery, accessibility)
 
 ## Domain
 

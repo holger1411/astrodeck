@@ -13,8 +13,7 @@ You are an accessibility specialist reviewing an AstroDeck project for WCAG 2.1 
 
 1. Read `AGENTS.md` first to understand project conventions.
 2. Read these globals files for accessibility and color knowledge:
-   - `system/globals/accessibility.md`
-   - `system/globals/colors.md`
+   - `.agents/skills/astrodeck-build-site/references/design-system.md`
 
 ## What You Check
 

@@ -972,26 +972,27 @@ npm run preview</code></pre>
         <div class="mb-8">
           <h2 class="text-3xl font-bold mb-2">AI Architecture</h2>
           <p class="text-muted-foreground">
-            AstroDeck includes a hybrid AI system with centralized design knowledge, portable
-            quality prompts, and multi-agent reviews.
+            AstroDeck includes a hybrid AI system with a documented design system, a pre-handover
+            checklist, and multi-agent reviews.
           </p>
         </div>
         <div class="space-y-6">
           <div class="border rounded-xl p-6 bg-card">
-            <h3 class="font-semibold mb-1">Design Knowledge Base</h3>
+            <h3 class="font-semibold mb-1">Design Rules</h3>
             <p class="text-sm text-muted-foreground mb-3">
-              <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">system/globals/</code> —
-              8 canonical design files
+              <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
+                >.agents/skills/astrodeck-build-site/references/design-system.md</code
+              >
             </p>
             <p class="text-sm text-muted-foreground mb-3">
-              Central design decisions (colors, typography, spacing, effects, responsiveness,
-              accessibility, imagery, interaction) live in <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">system/globals/</code
-              >. These files are the single source of truth — referenced by all skills, prompts, and
-              AI tool configurations.
+              Colors, typography, spacing, radius, motion, imagery and accessibility are documented
+              once, aligned with what the code implements. Machine-checkable rules are enforced by
+              <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
+                >npm run lint:design</code
+              >.
             </p>
             <p class="text-sm text-muted-foreground">
-              Read these before making design decisions. Available to all tools.
+              Read this before making design decisions. Available to all tools.
             </p>
           </div>
 
@@ -1024,32 +1025,32 @@ npm run preview</code></pre>
                 class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">@theme</code
               > block in <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
                 >globals.css</code
-              > (hex → OKLCH automatically) and updates <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">system/globals/</code
-              > to match. One-off translation, no sync infrastructure. <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">AGENTS.md</code
+              > (hex → OKLCH automatically) and updates the design-system prose to match. One-off translation,
+              no sync infrastructure. <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
+                >AGENTS.md</code
               > includes a short note so any agent knows what to do.
             </p>
           </div>
 
           <div class="border rounded-xl p-6 bg-card">
-            <h3 class="font-semibold mb-1">Self-Audit Prompts</h3>
+            <h3 class="font-semibold mb-1">Pre-Handover Checklist</h3>
             <p class="text-sm text-muted-foreground mb-3">
-              <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">system/prompts/</code> —
-              7 standalone quality checks
+              <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded"
+                >.agents/skills/astrodeck-build-site/references/quality-checklist.md</code
+              >
             </p>
             <p class="text-sm text-muted-foreground mb-3">
-              Copy-paste quality audits that work in any AI tool — ChatGPT, Gemini, Cursor Chat,
-              Claude. No special setup needed.
+              A tool-independent checklist. Each item names how it is checked: a step of <code
+                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">npm run verify</code
+              >, the vibe2prod audit, or a manual check.
             </p>
             <ul class="space-y-1 text-sm text-muted-foreground">
-              <li><strong>Tokens</strong> — hardcoded colors, inline styles, OKLCH compliance</li>
-              <li><strong>Accessibility</strong> — WCAG 2.1 AA, contrast, keyboard nav</li>
-              <li><strong>Performance</strong> — Lighthouse, Core Web Vitals, images</li>
-              <li><strong>SEO</strong> — meta tags, structured data, heading hierarchy</li>
-              <li><strong>Dark Mode</strong> — token parity, contrast in both modes</li>
-              <li><strong>Responsive</strong> — breakpoints, overflow, touch targets</li>
-              <li><strong>Cascade</strong> — design token consistency across tiers</li>
+              <li><strong>Content</strong> — truthful copy, no placeholders or demo leftovers</li>
+              <li><strong>Accessibility</strong> — alt text, keyboard, contrast, labels</li>
+              <li><strong>Responsive</strong> — 375 / 768 / 1024 / 1280 px</li>
+              <li><strong>Dark mode</strong> — token-only colors, both themes readable</li>
+              <li><strong>Performance</strong> — images, scripts, Lighthouse</li>
+              <li><strong>SEO</strong> — titles, descriptions, canonical, Open Graph</li>
             </ul>
           </div>
 
@@ -1066,9 +1067,9 @@ npm run preview</code></pre>
               prioritized report. Nothing is auto-implemented.
             </p>
             <p class="text-sm text-muted-foreground">
-              Not using Claude Code? Use the self-audit prompts from <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">system/prompts/</code
-              > individually.
+              Not using Claude Code? Work through the pre-handover checklist and run <code
+                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">npm run verify</code
+              >.
             </p>
           </div>
         </div>
@@ -1111,9 +1112,8 @@ npm run preview</code></pre>
             <p class="text-sm text-muted-foreground mt-3">
               In Claude Code, this triggers <code
                 class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">/plenum</code
-              > which spawns parallel review agents. In other tools, use the self-audit prompts from <code
-                class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">system/prompts/</code
-              >.
+              > which spawns parallel review agents. In other tools, use the pre-handover checklist and
+              <code class="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">npm run verify</code>.
             </p>
           </div>
           <div class="border rounded-xl p-6 bg-card">

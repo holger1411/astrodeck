@@ -8,7 +8,7 @@ description: Use when completing any task (final validation step), running audit
 ## Canonical Sources
 
 > This skill references the following globals — read them BEFORE starting work:
-> - `system/globals/responsiveness.md` — Breakpoints, test order, anti-patterns
+> - `.agents/skills/astrodeck-build-site/references/design-system.md` — design rules (tokens, typography, spacing, radius, motion, imagery, accessibility)
 
 ## Domain
 

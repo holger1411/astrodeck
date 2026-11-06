@@ -8,7 +8,7 @@ description: Use when creating or editing pages, blog posts, or content files, a
 ## Canonical Sources
 
 > This skill references the following globals — read them BEFORE starting work:
-> - `system/globals/imagery.md` — Alt text conventions, image formats
+> - `.agents/skills/astrodeck-build-site/references/design-system.md` — design rules (tokens, typography, spacing, radius, motion, imagery, accessibility)
 
 ## Domain
 

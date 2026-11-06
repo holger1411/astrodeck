@@ -29,7 +29,6 @@ const VENDORED_PREFIXES = ['.agents/skills/vibe2prod/', '.claude/skills/vibe2pro
 const LEGACY_EXCLUDES = [
   '.claude/commands/',
   '.claude/agents/',
-  'system/',
   '.windsurfrules',
   '.cursor/rules/',
 ];

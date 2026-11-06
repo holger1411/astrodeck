@@ -13,7 +13,7 @@ You are a performance specialist reviewing an AstroDeck project. Your domain cov
 
 1. Read `AGENTS.md` first to understand project conventions.
 2. Read this globals file for responsive/loading knowledge:
-   - `system/globals/responsiveness.md`
+   - `.agents/skills/astrodeck-build-site/references/design-system.md`
 
 ## What You Check
 

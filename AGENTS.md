@@ -563,20 +563,7 @@ Use these CSS classes on `<section>` elements to alternate visual rhythm:
 
 ## Design Knowledge Base
 
-Central design decisions live in `system/globals/`. These files are the **canonical source** for all design-related rules. Skills and prompts reference them but do NOT duplicate their content.
-
-| File | Content |
-|------|---------|
-| `system/globals/colors.md` | OKLCH palette, contrast table, color semantics |
-| `system/globals/typography.md` | Font stack, heading scale, weights |
-| `system/globals/spacing.md` | Section padding, grid gaps, container widths |
-| `system/globals/interaction.md` | Timing tokens, easing, transitions |
-| `system/globals/imagery.md` | Image formats, optimization, alt text conventions |
-| `system/globals/effects.md` | Border radius, shadows, card pattern |
-| `system/globals/responsiveness.md` | Breakpoints, container widths, mobile-first rules |
-| `system/globals/accessibility.md` | WCAG contrast pairs, focus styles, touch targets |
-
-**Read the relevant globals file BEFORE making design decisions.**
+Design rules (color tokens, typography, spacing, radius, motion, imagery, accessibility) live in `.agents/skills/astrodeck-build-site/references/design-system.md`. Read it BEFORE making design decisions. The pre-handover checklist is `.agents/skills/astrodeck-build-site/references/quality-checklist.md`.
 
 ### Handling a `DESIGN.md` file
 
@@ -586,7 +573,7 @@ If the user drops a `DESIGN.md` file at the project root and asks you to apply i
 2. Translate color tokens into the `@theme` block of `src/styles/globals.css` as `--color-<name>: <oklch>;`. Convert hex (`#RRGGBB`) to OKLCH — AstroDeck uses OKLCH exclusively.
 3. If the file contains a `colors-dark` group (or you can derive sensible dark values), update the `.dark { ... }` block accordingly.
 4. For other groups (typography, spacing, etc.), apply only what maps cleanly to AstroDeck's existing token system; don't introduce new build infrastructure.
-5. This is a **one-off translation**, not a recurring sync — there is no script to maintain. After applying, the values live in `globals.css` and `system/globals/*.md` should be updated to reflect them.
+5. This is a **one-off translation**, not a recurring sync — there is no script to maintain. After applying, the values live in `globals.css`; update the prose in `.agents/skills/astrodeck-build-site/references/design-system.md` if it no longer matches.
 
 ---
 
@@ -603,9 +590,9 @@ Jeder Task-Typ hat eine definierte Skill-Chain. **Kein Task ist fertig, bevor di
 | Blog-Content | content-seo → accessibility |
 | Bugfix/Refactor | qa (am Ende) |
 | Release | package.json → Hero.astro → changelog.astro → CHANGELOG.md → build → commit → tag → push → gh release |
-| Pre-Launch Review | `/plenum` OR all self-audit prompts sequentially |
-| Design System Change | system/globals/ update → tailwind → ui-design → accessibility |
-| New globals Token | globals/[file].md → affected skills check → AGENTS.md update |
+| Pre-Launch Review | `/plenum` OR `quality-checklist.md` + `npm run verify` |
+| Design System Change | design-system.md update → tailwind → ui-design → accessibility |
+| New globals Token | `npm run theme` → design-system.md check → AGENTS.md update |
 
 **Bedeutung:** Jeder Skill in der Chain muss konsultiert und seine Regeln eingehalten werden — in der angegebenen Reihenfolge. Wird ein Skill übersprungen, ist der Task nicht abgeschlossen.
 
@@ -620,11 +607,11 @@ Optional quality-gate workflow. Not for every task — only for:
 - On explicit request
 
 **Trigger in Claude Code:** `/plenum` or "start plenum"
-**In other tools:** Use self-audit prompts from `system/prompts/` individually
+**In other tools:** Work through `.agents/skills/astrodeck-build-site/references/quality-checklist.md`
 
 ### Portable Alternative (for Cursor, Windsurf, Copilot, ChatGPT)
 
-If you're not using Claude Code, run the self-audit prompts in `system/prompts/` manually. Each prompt is standalone and requires no agent system.
+If you're not using Claude Code, work through `.agents/skills/astrodeck-build-site/references/quality-checklist.md` and run `npm run verify`.
 
 ---
 

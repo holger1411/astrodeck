@@ -77,7 +77,7 @@ Order findings by impact:
 
 ## Step 5: Write Report
 
-Write the consolidated report to `system/reports/plenum-[YYYY-MM-DD].md` using this format:
+Write the consolidated report to `.claude/reports/plenum-[YYYY-MM-DD].md` using this format:
 
 ```markdown
 # Plenum Review — [YYYY-MM-DD]

@@ -1019,25 +1019,7 @@ astrodeck/
 ├── .github/copilot-instructions.md  # 📄 GitHub Copilot instructions
 ├── .windsurfrules         # 📄 Windsurf rules
 ├── src/registry.json      # 📦 Machine-readable component catalog
-├── system/
-│   ├── globals/           # 🎨 Canonical design knowledge (8 files)
-│   │   ├── colors.md      # OKLCH palette, token table, semantics
-│   │   ├── typography.md  # Font stack, heading scale
-│   │   ├── spacing.md     # Section padding, grids, containers
-│   │   ├── interaction.md # Timing tokens, easing, transitions
-│   │   ├── imagery.md     # Image formats, alt text conventions
-│   │   ├── effects.md     # Border radius, shadows, card pattern
-│   │   ├── responsiveness.md # Breakpoints, mobile-first rules
-│   │   └── accessibility.md  # WCAG pairs, focus styles, touch targets
-│   ├── prompts/           # 📋 Portable self-audit prompts (7 files)
-│   │   ├── self-audit-tokens.md
-│   │   ├── self-audit-accessibility.md
-│   │   ├── self-audit-performance.md
-│   │   ├── self-audit-seo.md
-│   │   ├── self-audit-darkmode.md
-│   │   ├── self-audit-responsive.md
-│   │   └── self-audit-cascade.md
-│   └── reports/           # 📊 Plenum review reports (gitignored)
+├── .agents/skills/astrodeck-build-site/references/  # 🎨 design-system.md + quality-checklist.md
 └── .claude/
     ├── agents/
     │   ├── astrodeck.md   # 🤖 Main agent (quality guardian)
@@ -1074,35 +1056,25 @@ Prompt-based rules can be forgotten — hooks cannot. AstroDeck ships two enforc
 - **Convention guard hook** (`.claude/hooks/guard-conventions.mjs`): blocks deprecated Astro patterns (`ViewTransitions`, `z` from `astro:content`) and `tailwind.config.*` creation *before* they reach your codebase, and warns the assistant when an edit introduces hardcoded Tailwind colors, inline styles, or relative `../` imports — so it self-corrects immediately.
 - **Verify command** (`npm run verify`): one offline command that runs format, ESLint, `astro check`, the design and docs linters, the registry check, the tests, the build and the built-HTML check, then prints a table and `VERIFY PASSED` / `VERIFY FAILED (n)`. It is referenced by `/audit`, `/launch-check`, and the skills — and it works for human contributors and CI, too.
 
-#### Design Knowledge Base (`system/globals/`)
+#### Design Rules (`design-system.md`)
 
-Central design decisions live in `system/globals/` as 8 standalone Markdown files covering colors, typography, spacing, interaction, imagery, effects, responsiveness, and accessibility. These files are the **canonical source of truth** for every design token and convention in AstroDeck. All skills, prompts, and tool configurations reference them, so changes propagate automatically. Both AI tools and human contributors can consult these files for consistent, informed design decisions without digging through source code.
+The design system is documented once, in `.agents/skills/astrodeck-build-site/references/design-system.md`: color tokens, typography, spacing, radius, motion, imagery and accessibility, aligned with what the code implements. Machine-checkable parts are enforced by `npm run lint:design`.
 
 #### Bring Your Own Design with `DESIGN.md` (optional)
 
 Drop a [Google Stitch `DESIGN.md`](https://github.com/google-labs-code/design.md) file at the project root and tell your coding agent: *"Apply the design from DESIGN.md."* `DESIGN.md` is an open, AI-friendly format that bundles a brand's color palette, typography, spacing, and component styles into a single Markdown file with YAML frontmatter — readable by Claude Code, Cursor, Copilot, Windsurf, and Stitch alike.
 
-The agent will translate the YAML tokens into AstroDeck's `@theme` block in `src/styles/globals.css` (hex values are converted to OKLCH automatically) and update the relevant prose in `system/globals/` to match. This is a **one-off translation** — there is no sync script to maintain and no second source of truth. Edit `globals.css` directly afterwards as you would normally; `DESIGN.md` is just a starting point. AstroDeck includes a short note in `AGENTS.md` so any agent encountering a `DESIGN.md` knows what to do without further prompting.
+The agent will translate the YAML tokens into AstroDeck's `@theme` block in `src/styles/globals.css` (hex values are converted to OKLCH automatically) and update the prose in `design-system.md` to match. This is a **one-off translation** — there is no sync script to maintain and no second source of truth. Edit `globals.css` directly afterwards as you would normally; `DESIGN.md` is just a starting point. AstroDeck includes a short note in `AGENTS.md` so any agent encountering a `DESIGN.md` knows what to do without further prompting.
 
-#### Portable Self-Audit Prompts (`system/prompts/`)
+#### Pre-Handover Checklist (`quality-checklist.md`)
 
-Seven standalone quality-check prompts live in `system/prompts/`. They work in **any tool** -- Claude, ChatGPT, Gemini, Cursor Chat, Copilot Chat -- no special integration required. Copy-paste a prompt into your preferred AI assistant for an instant design or code audit.
-
-| Prompt | What It Checks |
-|--------|---------------|
-| `self-audit-tokens.md` | Design token usage, OKLCH consistency, theme compliance |
-| `self-audit-accessibility.md` | WCAG 2.1 AA, ARIA patterns, keyboard navigation, focus styles |
-| `self-audit-performance.md` | Image optimization, lazy loading, bundle size, Core Web Vitals |
-| `self-audit-seo.md` | Meta tags, structured data, heading hierarchy, OpenGraph |
-| `self-audit-darkmode.md` | Dark mode coverage, contrast ratios, smooth transitions |
-| `self-audit-responsive.md` | Breakpoint behavior, mobile-first patterns, touch targets |
-| `self-audit-cascade.md` | CSS specificity, Tailwind layer order, utility conflicts |
+`.agents/skills/astrodeck-build-site/references/quality-checklist.md` is a tool-independent checklist covering content truthfulness, accessibility, responsive behavior, dark mode, performance and SEO. Each item names how it is checked: a step of `npm run verify`, the vibe2prod audit, or a manual check.
 
 #### Multi-Agent Review (Plenum)
 
 The `/plenum` command spawns domain-specific review agents **in parallel** -- Design, UX, Accessibility, Performance, SEO, and Code -- scoped to whatever changed. Each agent reviews independently, then findings are consolidated into a single prioritized report that surfaces conflicts (e.g., a performance optimization that hurts accessibility). Nothing is auto-implemented; the user reviews the report and decides what to act on.
 
-Plenum is available in **Claude Code** via the agents in `.claude/agents/`. For other tools, use the portable prompts from `system/prompts/` to run equivalent audits manually.
+Plenum is available in **Claude Code** via the agents in `.claude/agents/`. For other tools, use the pre-handover checklist in `quality-checklist.md` to run equivalent checks manually.
 
 #### `PROJECT.md` - Your Project Customization File ⭐
 
@@ -1188,10 +1160,10 @@ Different tools get different levels of AstroDeck's hybrid AI architecture. Pick
 | Tool | What You Get | Setup |
 |------|-------------|-------|
 | Claude Code | Full features: agents, skills, commands, plenum, skill chains | Works out of the box -- `.claude/` auto-detected |
-| Cursor | Design rules, conventions, code patterns | `.cursor/rules` + `system/globals/` for reference |
-| Windsurf | Design rules, conventions, code patterns | `.windsurfrules` + `system/globals/` for reference |
-| GitHub Copilot | Design rules, conventions, code patterns | `.github/copilot-instructions.md` + `system/globals/` |
-| ChatGPT / Gemini | Portable quality audits | Copy-paste prompts from `system/prompts/` |
+| Cursor | Design rules, conventions, code patterns | `.cursor/rules` + `design-system.md` for reference |
+| Windsurf | Design rules, conventions, code patterns | `.windsurfrules` + `design-system.md` for reference |
+| GitHub Copilot | Design rules, conventions, code patterns | `.github/copilot-instructions.md` + `design-system.md` |
+| ChatGPT / Gemini | Portable quality audits | Paste `quality-checklist.md` as the audit brief |
 
 ### Benefits of AI-Friendly Documentation
 

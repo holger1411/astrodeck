@@ -13,7 +13,7 @@ You are a UX and interaction specialist reviewing an AstroDeck project. Your dom
 
 1. Read `AGENTS.md` first to understand project conventions.
 2. Read this globals file for interaction knowledge:
-   - `system/globals/interaction.md`
+   - `.agents/skills/astrodeck-build-site/references/design-system.md`
 
 ## What You Check
 
