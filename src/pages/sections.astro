@@ -1,23 +1,37 @@
 ---
 import FullWidthLayout from '@/layouts/FullWidthLayout.astro';
 import RegistryUsage from '@/components/demos/RegistryUsage.astro';
+import Features from '@/components/sections/Features.astro';
+import ContentBlock from '@/components/sections/ContentBlock.astro';
+import LogoCloud from '@/components/sections/LogoCloud.astro';
+import IntegrationGrid from '@/components/sections/IntegrationGrid.astro';
+import registry from '@/registry.json';
 
+// Sidebar entries; the count is the number of registry components shown in each group.
 const sections = [
-  { id: 'heroes', label: 'Heroes', count: 3 },
-  { id: 'ctas', label: 'CTAs', count: 3 },
-  { id: 'pricing', label: 'Pricing', count: 4 },
-  { id: 'testimonials', label: 'Testimonials', count: 3 },
-  { id: 'newsletters', label: 'Newsletters', count: 3 },
-  { id: 'faq', label: 'FAQ', count: 1 },
-  { id: 'stats', label: 'Stats', count: 1 },
-  { id: 'team', label: 'Team', count: 1 },
-  { id: 'comparison', label: 'Comparison', count: 1 },
-  { id: 'contact', label: 'Contact', count: 1 },
+  { id: 'heroes', label: 'Heroes' },
+  { id: 'features', label: 'Features' },
+  { id: 'content', label: 'Content' },
+  { id: 'logos', label: 'Logo Clouds' },
+  { id: 'integrations', label: 'Integrations' },
+  { id: 'ctas', label: 'CTAs' },
+  { id: 'pricing', label: 'Pricing' },
+  { id: 'testimonials', label: 'Testimonials' },
+  { id: 'newsletters', label: 'Newsletters' },
+  { id: 'faq', label: 'FAQ' },
+  { id: 'stats', label: 'Stats' },
+  { id: 'team', label: 'Team' },
+  { id: 'comparison', label: 'Comparison' },
+  { id: 'contact', label: 'Contact' },
 ];
 
 // Registry components per showcase group; RegistryUsage renders their usage from src/registry.json.
 const groupComponents: Record<string, string[]> = {
   heroes: ['Hero', 'HeroSplit', 'HeroGradient'],
+  features: ['Features'],
+  content: ['ContentBlock'],
+  logos: ['LogoCloud'],
+  integrations: ['IntegrationGrid'],
   ctas: ['CTA'],
   pricing: ['Pricing'],
   testimonials: ['Testimonials'],
@@ -28,6 +42,11 @@ const groupComponents: Record<string, string[]> = {
   comparison: ['Comparison'],
   contact: ['Contact'],
 };
+
+// Every registry section must appear in a group (fails the build otherwise).
+const grouped = Object.values(groupComponents).flat();
+const missing = registry.sections.map((s) => s.name).filter((n) => !grouped.includes(n));
+if (missing.length) throw new Error(`sections.astro: no group for ${missing.join(', ')}`);
 ---
 
 <FullWidthLayout
@@ -91,7 +110,9 @@ const groupComponents: Record<string, string[]> = {
               class="nav-link flex items-center justify-between px-3 py-2 text-sm rounded-md transition-colors"
             >
               <span>{section.label}</span>
-              <span class="text-xs text-muted-foreground">({section.count})</span>
+              <span class="text-xs text-muted-foreground">
+                ({groupComponents[section.id].length})
+              </span>
             </a>
           ))
         }
@@ -115,7 +136,9 @@ const groupComponents: Record<string, string[]> = {
                   class="nav-link flex items-center justify-between px-3 py-2 text-sm rounded-md transition-colors"
                 >
                   <span>{section.label}</span>
-                  <span class="text-xs text-muted-foreground">({section.count})</span>
+                  <span class="text-xs text-muted-foreground">
+                    ({groupComponents[section.id].length})
+                  </span>
                 </a>
               ))
             }
@@ -124,7 +147,7 @@ const groupComponents: Record<string, string[]> = {
       </aside>
 
       <!-- Sections Content -->
-      <main class="flex-1 min-w-0 space-y-16">
+      <div class="flex-1 min-w-0 space-y-16">
         <!-- Heroes -->
         <section id="heroes" class="scroll-mt-20">
           <div class="mb-8">
@@ -215,7 +238,7 @@ const groupComponents: Record<string, string[]> = {
                   </div>
                   <img
                     src="/screenshots/saas.png"
-                    alt="SaaS demo template with a split hero, logo cloud and feature grid"
+                    alt="Nebula SaaS demo hero: headline 'The platform your team will actually love.', See pricing and Talk to sales buttons, and a product mock-up on the right"
                     width="1280"
                     height="720"
                     loading="lazy"
@@ -258,6 +281,156 @@ const groupComponents: Record<string, string[]> = {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Features -->
+        <section id="features" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Feature Grids</h2>
+            <p class="text-muted-foreground">
+              Three to nine benefits, each with an icon, a title and a short description.
+            </p>
+          </div>
+
+          <RegistryUsage names={groupComponents.features} live />
+
+          <div class="space-y-12">
+            <div class="border rounded-lg bg-card overflow-hidden">
+              <div class="flex items-center justify-between p-8 pb-4">
+                <h3 class="font-semibold">Icon Grid</h3>
+              </div>
+              <div class="border-t">
+                <Features
+                  title="Why teams pick Nebula"
+                  subtitle="Everything in one place, nothing to stitch together"
+                  features={[
+                    {
+                      icon: 'users',
+                      title: 'Real-time collaboration',
+                      description: 'Edit together and see changes as they happen.',
+                    },
+                    {
+                      icon: 'lock',
+                      title: 'Secure by default',
+                      description: 'Single sign-on and roles for every workspace.',
+                    },
+                    {
+                      icon: 'chart',
+                      title: 'Clear analytics',
+                      description: 'See what your team ships each week.',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Content Blocks -->
+        <section id="content" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Content Blocks</h2>
+            <p class="text-muted-foreground">
+              A text block with an optional bullet list. With the image prop (a real photo or
+              screenshot) it becomes two columns, as in the usage snippet.
+            </p>
+          </div>
+
+          <RegistryUsage names={groupComponents.content} live />
+
+          <div class="space-y-12">
+            <div class="border rounded-lg bg-card overflow-hidden">
+              <div class="flex items-center justify-between p-8 pb-4">
+                <h3 class="font-semibold">Text Only</h3>
+              </div>
+              <div class="border-t">
+                <ContentBlock
+                  tagline="How it works"
+                  title="One workspace for the whole team"
+                  description="Nebula keeps plans, files and decisions in one place, so nobody has to ask where the latest version is."
+                  features={[
+                    'Shared boards for every project',
+                    'Comments next to the work',
+                    'Weekly summary by email',
+                  ]}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Logo Clouds -->
+        <section id="logos" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Logo Clouds</h2>
+            <p class="text-muted-foreground">
+              One row of logos with a leading label: your stack, or customers who agreed to be
+              shown.
+            </p>
+          </div>
+
+          <RegistryUsage names={groupComponents.logos} live />
+
+          <div class="space-y-12">
+            <div class="border rounded-lg bg-card overflow-hidden">
+              <div class="flex items-center justify-between p-8 pb-4">
+                <h3 class="font-semibold">Single Row</h3>
+              </div>
+              <div class="border-t">
+                <LogoCloud
+                  title="Built with:"
+                  logos={[
+                    { name: 'Astro', src: '/icons/tech/astro.svg', href: 'https://astro.build' },
+                    {
+                      name: 'Tailwind CSS',
+                      src: '/icons/tech/tailwind.svg',
+                      href: 'https://tailwindcss.com',
+                    },
+                    {
+                      name: 'TypeScript',
+                      src: '/icons/tech/typescript.svg',
+                      href: 'https://www.typescriptlang.org',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Integrations -->
+        <section id="integrations" class="scroll-mt-20">
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Integration Grids</h2>
+            <p class="text-muted-foreground">
+              Tools, integrations or partners as a grid of cards next to a short intro. Cards link
+              out only when they have an href.
+            </p>
+          </div>
+
+          <RegistryUsage names={groupComponents.integrations} live />
+
+          <div class="space-y-12">
+            <div class="border rounded-lg bg-card overflow-hidden">
+              <div class="flex items-center justify-between p-8 pb-4">
+                <h3 class="font-semibold">Two-Column Grid</h3>
+              </div>
+              <div class="border-t">
+                <IntegrationGrid
+                  subtitle="Integrations"
+                  title="Works with the tools you already use"
+                  items={[
+                    { name: 'CSV import', subtitle: 'Bring existing data', icon: 'code' },
+                    { name: 'JSON export', subtitle: 'Take your data anywhere', icon: 'code' },
+                    { name: 'Webhooks', subtitle: 'Trigger your own workflows', icon: 'zap' },
+                    { name: 'REST API', subtitle: 'Build on top of Nebula', icon: 'globe' },
+                  ]}
+                >
+                  <p>Move data in and out of Nebula without waiting for us.</p>
+                </IntegrationGrid>
               </div>
             </div>
           </div>
@@ -375,18 +548,18 @@ const groupComponents: Record<string, string[]> = {
                   <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div>
                       <h3 class="text-2xl font-bold mb-2">Try Nebula today</h3>
-                      <p class="opacity-90">Start building your next project with our components</p>
+                      <p class="opacity-90">14 days free, no credit card required.</p>
                     </div>
                     <div class="flex gap-3">
                       <a
-                        href="https://github.com/holger1411/astrodeck/releases/latest"
+                        href="/templates/saas#pricing-heading"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-background text-foreground hover:bg-background/90 h-10 px-6"
-                        >Download Now</a
+                        >See pricing</a
                       >
                       <a
-                        href="https://github.com/holger1411/astrodeck"
+                        href="/templates/contact"
                         class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-background/20 hover:bg-background/10 h-10 px-6"
-                        >GitHub</a
+                        >Talk to sales</a
                       >
                     </div>
                   </div>
@@ -1294,19 +1467,19 @@ const groupComponents: Record<string, string[]> = {
                   class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border border-y"
                 >
                   <div class="flex flex-col items-center text-center px-6 py-8">
-                    <dd class="text-4xl font-bold tracking-tight">50K+</dd>
-                    <dt class="mt-2 text-sm font-semibold">Downloads</dt>
+                    <dd class="text-4xl font-bold tracking-tight">12K+</dd>
+                    <dt class="mt-2 text-sm font-semibold">Teams</dt>
                     <p class="mt-1 text-sm text-muted-foreground">Across 80+ countries</p>
                   </div>
                   <div class="flex flex-col items-center text-center px-6 py-8">
-                    <dd class="text-4xl font-bold tracking-tight">1.2K+</dd>
-                    <dt class="mt-2 text-sm font-semibold">GitHub Stars</dt>
+                    <dd class="text-4xl font-bold tracking-tight">2M+</dd>
+                    <dt class="mt-2 text-sm font-semibold">Projects created</dt>
                     <p class="mt-1 text-sm text-muted-foreground">And growing every week</p>
                   </div>
                   <div class="flex flex-col items-center text-center px-6 py-8">
-                    <dd class="text-4xl font-bold tracking-tight">30+</dd>
-                    <dt class="mt-2 text-sm font-semibold">Components</dt>
-                    <p class="mt-1 text-sm text-muted-foreground">Ready to copy and paste</p>
+                    <dd class="text-4xl font-bold tracking-tight">40+</dd>
+                    <dt class="mt-2 text-sm font-semibold">Integrations</dt>
+                    <p class="mt-1 text-sm text-muted-foreground">With the tools you already use</p>
                   </div>
                   <div class="flex flex-col items-center text-center px-6 py-8">
                     <dd class="text-4xl font-bold tracking-tight">99.9%</dd>
@@ -1934,7 +2107,7 @@ const groupComponents: Record<string, string[]> = {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </div>
   </div>
 

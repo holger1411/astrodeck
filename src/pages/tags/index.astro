@@ -18,7 +18,10 @@ const tagsWithCounts = uniqueTags.map((tag) => ({
 tagsWithCounts.sort((a, b) => a.tag.localeCompare(b.tag));
 ---
 
-<BaseLayout title="Tags" description="Browse all blog post tags">
+<BaseLayout
+  title="Tags"
+  description="Browse all tags of the blog and find the posts on the topics you care about."
+>
   <div class="container max-w-4xl mx-auto py-16 px-6">
     <div class="mb-16">
       <h1 class="text-6xl font-bold tracking-tight mb-6">Tags</h1>

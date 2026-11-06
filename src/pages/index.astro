@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/sections/Hero.astro';
 import LogoCloud from '@/components/sections/LogoCloud.astro';
 import Features from '@/components/sections/Features.astro';
+import ContentBlock from '@/components/sections/ContentBlock.astro';
 import IntegrationGrid from '@/components/sections/IntegrationGrid.astro';
 import type { IconName } from '@/lib/icons';
 import Stats from '@/components/sections/Stats.astro';
@@ -62,39 +63,46 @@ const features: { title: string; description: string; icon: IconName }[] = [
   {
     title: 'Start from whatever you have',
     description:
-      'One sentence in the chat, a PDF, Markdown notes or a DESIGN.md in brief/. The agent asks a few targeted questions, states its defaults, and records everything in a structured brief in PROJECT.md.',
+      'One sentence in the chat, a PDF, your notes or a design file in the brief/ folder. The agent asks a few questions, tells you what it assumes, and writes everything down in PROJECT.md.',
     icon: 'message',
   },
   {
     title: 'One guided workflow',
     description:
-      'The astrodeck-build-site skill takes the agent from intake to handover: brief, demo cleanup, site config, theme, pages composed from registry sections and recipes, verify, vibe2prod.',
+      'A built-in guide for the agent covers every step from your first sentence to the finished site: brief, demo cleanup, name and colors, pages, checks and handover.',
     icon: 'rocket',
   },
   {
     title: 'Your brand in one command',
     description:
-      'npm run theme turns a brand color or a DESIGN.md into OKLCH tokens for light and dark mode, and fails when text contrast misses WCAG.',
+      'Give it one brand color or a design file, and it creates matching colors for light and dark mode. It stops with a suggestion when text would be hard to read.',
     icon: 'palette',
   },
   {
     title: 'Honest content by design',
     description:
-      'Sections take their content as props. The rules forbid invented testimonials, customer logos and numbers; gaps go to open questions instead of onto the page.',
+      'Your own texts fill the page sections. The rules forbid invented testimonials, customer logos and numbers; anything missing becomes a question for you, not filler on the page.',
     icon: 'shield',
   },
   {
     title: 'Verified in one command',
     description:
-      'npm run verify runs formatting, ESLint, astro check, design and docs lint, registry and skills checks, tests, the build and checks on the built HTML.',
+      'One command checks code style, types and design rules, builds the site and then checks every page for broken links, missing headings and images without descriptions.',
     icon: 'check',
   },
   {
     title: 'Checked by vibe2prod',
     description:
-      'The vibe2prod audit ships with AstroDeck: performance, accessibility, SEO, security and AI-slop checks with a READY / NOT YET / BLOCKED verdict. npm run setup:audit installs its tools.',
+      'vibe2prod is a launch check that comes with AstroDeck. It tests speed, accessibility, search visibility, security and leftover placeholder content, and gives a clear verdict: ready, not yet or blocked.',
     icon: 'sparkles',
   },
+];
+
+const howItWorks = [
+  '1. Get AstroDeck: download it, or paste the prompt above into your coding agent and let it set everything up.',
+  '2. Describe your site in one sentence, or put your texts, logo or design notes into the brief/ folder. The agent asks a few questions.',
+  '3. The agent removes the demo, adds your name, colors and pages, and shows you a preview.',
+  '4. Before it hands the site over, it runs the automatic checks and a launch check, and lists anything still open.',
 ];
 
 const faqs = [
@@ -133,7 +141,7 @@ const faqs = [
 
 <BaseLayout
   title="Build Your Website with a Coding Agent"
-  description="Free, open-source Astro starter kit for building websites with a coding agent. Download, open it in Claude Code, Codex or Cursor, describe your site, and get a result checked by npm run verify and vibe2prod."
+  description="Free, open-source Astro starter kit for building websites with a coding agent. Describe your site in Claude Code, Codex or Cursor and get a checked result."
 >
   <Hero
     badge={{ label: 'v4.0 — Open Source & MIT', href: '/changelog' }}
@@ -148,6 +156,13 @@ const faqs = [
   />
 
   <LogoCloud title="Built with:" logos={logos} />
+
+  <ContentBlock
+    tagline="How it works"
+    title="From an idea to a live website in four steps"
+    description="You do not need to know how to code. You describe what you want; the coding agent does the technical work and shows you the result."
+    features={howItWorks}
+  />
 
   <IntegrationGrid
     title="Works with the agent you already use"

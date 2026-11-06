@@ -1,12 +1,34 @@
 /**
  * Demo-only (astrodeck.dev): counts shown on the home and docs pages, computed at build time
  * from src/registry.json and .agents/skills/ so they can never drift from the code.
+ * Fails the build instead of showing a wrong number (missing folder, zero count).
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import registry from '@/registry.json';
 
-const skillsDir = join(process.cwd(), '.agents', 'skills');
+/** Walk up from `start` to the first folder that holds package.json and .agents/skills. */
+function findUp(start: string): string | undefined {
+  let dir = start;
+  for (;;) {
+    if (existsSync(join(dir, 'package.json')) && existsSync(join(dir, '.agents', 'skills')))
+      return dir;
+    const parent = dirname(dir);
+    if (parent === dir) return undefined;
+    dir = parent;
+  }
+}
+
+/** Repo root: from this module's location (dev) or the working directory (bundled build). */
+const root =
+  findUp(dirname(fileURLToPath(import.meta.url))) ??
+  findUp(process.cwd()) ??
+  (() => {
+    throw new Error('kit-stats: repo root with .agents/skills not found');
+  })();
+
+const skillsDir = join(root, '.agents', 'skills');
 const recipesDir = join(skillsDir, 'astrodeck-build-site', 'references', 'recipes');
 
 function listDirs(dir: string): string[] {
@@ -33,12 +55,13 @@ export const recipes = listRecipes(recipesDir);
 /** Tag of the bundled vibe2prod skill, e.g. 'v0.9.1' (from its VERSION file). */
 export const vibe2prodVersion = (() => {
   const file = join(skillsDir, 'vibe2prod', 'VERSION');
-  if (!existsSync(file)) return '';
-  return (
-    readFileSync(file, 'utf8')
-      .match(/^tag=(.+)$/m)?.[1]
-      .trim() ?? ''
-  );
+  const tag = existsSync(file)
+    ? readFileSync(file, 'utf8')
+        .match(/^tag=(.+)$/m)?.[1]
+        ?.trim()
+    : undefined;
+  if (!tag) throw new Error(`kit-stats: no tag= line in ${file}`);
+  return tag;
 })();
 
 export const kitStats = {
@@ -48,3 +71,7 @@ export const kitStats = {
   skills: skills.length,
   recipes: recipes.length,
 };
+
+for (const [name, count] of Object.entries(kitStats)) {
+  if (!count) throw new Error(`kit-stats: ${name} count is 0, check ${root}`);
+}

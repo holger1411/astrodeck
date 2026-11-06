@@ -9,9 +9,11 @@ import CodeBlock from './CodeBlock.astro';
 interface Props {
   /** Registry section names, e.g. ['CTA'] */
   names: string[];
+  /** The previews render the registry component itself (with sample props), not a layout idea */
+  live?: boolean;
 }
 
-const { names } = Astro.props;
+const { names, live = false } = Astro.props;
 const entries = names.map((name) => {
   const entry = registry.sections.find((s) => s.name === name);
   if (!entry) throw new Error(`registry.json has no section "${name}"`);
@@ -21,9 +23,11 @@ const entries = names.map((name) => {
 
 <div class="mb-8 rounded-lg border bg-muted/30 p-4 space-y-3">
   <p class="text-sm text-muted-foreground">
-    The previews below are layout ideas built with the same design tokens; they can differ from the
-    default rendering of the registry component. Copy the component usage, or ask your agent to add
-    a prop for a variation.
+    {
+      live
+        ? 'The previews below render the registry component itself with sample props. Copy the component usage, or ask your agent to add a prop for a variation.'
+        : 'The previews below are layout ideas built with the same design tokens; they can differ from the default rendering of the registry component. Copy the component usage, or ask your agent to add a prop for a variation.'
+    }
   </p>
   {
     entries.map((entry) => (
