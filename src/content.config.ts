@@ -10,6 +10,8 @@ const blog = defineCollection({
       description: z.string(),
       pubDate: z.coerce.date(),
       author: z.string().default('AstroDeck Team'),
+      // Drafts render in dev only; production builds, RSS and tag pages skip them
+      draft: z.boolean().default(false),
       // Cover image, referenced relative to the markdown file (e.g. ./my-post/cover.jpg).
       // The image() helper validates the file and enables Astro's optimized <Image /> output.
       image: image().optional(),

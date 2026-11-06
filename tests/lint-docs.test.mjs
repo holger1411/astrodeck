@@ -33,6 +33,10 @@ before(() => {
     })
   );
   put('src/real.ts', '');
+  put(
+    'starter.manifest.json',
+    JSON.stringify({ remove: ['src/demo.ts', 'src/demo-dir/'], removeUnlessBlog: ['src/blog/'] })
+  );
   put('src/config/site-url.mjs', "export const SITE_URL = 'https://example.com';\n");
   put(
     'src/config/site.ts',
@@ -43,6 +47,7 @@ before(() => {
     'README.md',
     [
       'Uses `src/real.ts` and `src/missing.ts`.',
+      'Optional via manifest: `src/demo.ts`, `src/demo-dir/page.ts`, `src/blog/`.',
       'Globs `src/**/*.ts` and `src/{a,b}.ts` are skipped.',
       'Built on Astro v6 and Tailwind CSS 4.3 with Node.js 22.23.',
       'We ship 15 sections, 1 layouts and 2 UI components.',
@@ -64,8 +69,8 @@ test('reports dead paths, stale versions, wrong counts, URL drift', () => {
     f.map((x) => `${key(x)}:${x.line ?? ''}`).sort(),
     [
       'README.md:dead-path:1',
-      'README.md:version-drift:3',
-      'README.md:count-drift:4',
+      'README.md:version-drift:4',
+      'README.md:count-drift:5',
       'astro.config.mjs:site-url-drift:',
       'src/config/site.ts:site-url-drift:',
     ].sort()

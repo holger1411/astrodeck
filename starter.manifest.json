@@ -1,0 +1,76 @@
+{
+  "remove": [
+    "src/pages/docs.astro",
+    "src/pages/components.astro",
+    "src/pages/sections.astro",
+    "src/pages/pages.astro",
+    "src/pages/changelog.astro",
+    "src/pages/content.astro",
+    "src/pages/login.astro",
+    "src/pages/thanks.astro",
+    "src/pages/privacy.astro",
+    "src/pages/llms-full.txt.ts",
+    "src/pages/templates/",
+    "src/content/blog/bigfoot-influencer.md",
+    "src/content/blog/centaur-delivery-driver.md",
+    "src/content/blog/dragon-hoa.md",
+    "src/content/blog/frankenstein-dating-app.md",
+    "src/content/blog/ghost-remote-work.md",
+    "src/content/blog/kraken-plumber.md",
+    "src/content/blog/medusa-hairstylist.md",
+    "src/content/blog/mummy-museum-job.md",
+    "src/content/blog/predator-alien-grocery-store.md",
+    "src/content/blog/troll-bridge-toll.md",
+    "src/content/blog/unicorn-startup-founder.md",
+    "src/content/blog/vampire-werewolf-coffee-shop.md",
+    "src/content/blog/wizard-tech-support.md",
+    "src/content/blog/yeti-ski-instructor.md",
+    "src/content/blog/zombie-corporate-job.md",
+    "src/components/demos/",
+    "public/screenshots/",
+    "public/cover.png",
+    "cover.png",
+    "evals/",
+    "docs/maintainers/",
+    "starter/"
+  ],
+  "removeUnlessBlog": [
+    "src/pages/blog/",
+    "src/pages/tags/",
+    "src/pages/rss.xml.ts",
+    "src/content/blog/"
+  ],
+  "replace": [
+    {
+      "from": "starter/index.astro",
+      "to": "src/pages/index.astro"
+    },
+    {
+      "from": "starter/site.ts",
+      "to": "src/config/site.ts"
+    },
+    {
+      "from": "starter/site-url.mjs",
+      "to": "src/config/site-url.mjs"
+    },
+    {
+      "from": "starter/PROJECT.md",
+      "to": "PROJECT.md"
+    },
+    {
+      "from": "starter/llms.txt",
+      "to": "public/llms.txt"
+    },
+    {
+      "from": "starter/robots.txt",
+      "to": "public/robots.txt"
+    }
+  ],
+  "replaceIfBlog": [
+    {
+      "from": "starter/welcome.md",
+      "to": "src/content/blog/welcome.md"
+    }
+  ],
+  "demoMarker": "data-demo"
+}

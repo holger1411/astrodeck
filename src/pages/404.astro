@@ -8,6 +8,7 @@
 import MinimalLayout from '@/layouts/MinimalLayout.astro';
 import Logo from '@/components/Logo.astro';
 import { Button } from '@/components/ui/button';
+import { site } from '@/config/site';
 ---
 
 <MinimalLayout
@@ -59,33 +60,42 @@ import { Button } from '@/components/ui/button';
             Back to Home
           </a>
         </Button>
-        <Button variant="outline" asChild>
-          <a href="/blog">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-4 w-4 mr-2"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
-            </svg>
-            Read Blog
-          </a>
-        </Button>
+        {
+          site.features.blog && (
+            <Button variant="outline" asChild>
+              <a href="/blog">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 mr-2"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                </svg>
+                Read Blog
+              </a>
+            </Button>
+          )
+        }
       </div>
 
       <!-- Help text -->
-      <p class="text-sm text-muted-foreground pt-4">
-        If you believe this is an error, please <a
-          href="https://github.com/holger1411/astrodeck/issues"
-          class="text-primary hover:underline">report it on GitHub</a
-        >.
-      </p>
+      {
+        site.contact.email && (
+          <p class="text-sm text-muted-foreground pt-4">
+            If you believe this is an error, please{' '}
+            <a href={`mailto:${site.contact.email}`} class="text-primary hover:underline">
+              contact us
+            </a>
+            .
+          </p>
+        )
+      }
     </div>
   </div>
 </MinimalLayout>

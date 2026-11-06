@@ -1,0 +1,7 @@
+# Your Site
+
+> One-sentence description of your site. Replace this file's content once the site has real pages.
+
+## Pages
+
+- [Home](https://example.com/): Landing page

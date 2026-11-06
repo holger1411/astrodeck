@@ -6,8 +6,14 @@ import { LoginForm } from '@/components/LoginForm';
 <AuthLayout
   title="Login"
   description="Sign in to your AstroDeck account to manage your projects, settings, and team — secure login with email and password."
+  testimonial={{
+    quote:
+      'AstroDeck gave us the perfect foundation to build our SaaS. Clean code, great design, and saved us months of development time.',
+    author: 'Sofia Chen',
+    role: 'CTO at TechStart (fictional demo testimonial)',
+  }}
 >
-  <div class="flex flex-col space-y-2 text-center">
+  <div data-demo class="flex flex-col space-y-2 text-center">
     <h1 class="text-2xl font-semibold tracking-tight">Welcome back</h1>
     <p class="text-sm text-muted-foreground">Enter your credentials to sign in to your account</p>
   </div>

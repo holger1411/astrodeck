@@ -1,5 +1,5 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '@/lib/blog';
 import MarkdownIt from 'markdown-it';
 import sanitizeHtml from 'sanitize-html';
 import { site } from '@/config/site';
@@ -7,7 +7,7 @@ import { site } from '@/config/site';
 const parser = new MarkdownIt();
 
 export async function GET(context: import('astro').APIContext) {
-  const blog = await getCollection('blog');
+  const blog = await getPublishedPosts();
   const sortedPosts = blog.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
   return rss({

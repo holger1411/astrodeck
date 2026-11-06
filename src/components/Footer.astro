@@ -21,7 +21,7 @@ interface Props {
 
 const { variant = 'boxed' } = Astro.props;
 
-const { groups, tagline, copyright } = site.footer;
+const { groups, tagline, copyright, credit } = site.footer;
 
 const containerClass =
   variant === 'fullWidth' ? 'w-full px-4' : 'container max-w-5xl mx-auto px-4 sm:px-6';
@@ -33,9 +33,7 @@ const containerClass =
       <!-- Brand -->
       <div class="col-span-2 md:col-span-1">
         <Logo />
-        <p class="mt-4 text-sm text-muted-foreground">
-          {tagline}
-        </p>
+        {tagline && <p class="mt-4 text-sm text-muted-foreground">{tagline}</p>}
       </div>
 
       {
@@ -58,35 +56,40 @@ const containerClass =
         ))
       }
 
-      <!-- Creator -->
-      <div>
-        <h3 class="font-semibold mb-4">Creator</h3>
-        <p class="text-sm text-muted-foreground">Created by {site.author}</p>
-        <p class="text-sm text-muted-foreground mt-1">
-          for <a
-            href="https://templatedeck.com"
-            class="font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1 py-1"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            templatedeck.com
-            <svg
-              class="h-3 w-3"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-              ></path>
-            </svg>
-          </a>
-        </p>
-      </div>
+      <!-- Creator (only when site.footer.credit is set) -->
+      {
+        credit && (
+          <div>
+            <h3 class="font-semibold mb-4">Creator</h3>
+            <p class="text-sm text-muted-foreground">Created by {site.author}</p>
+            <p class="text-sm text-muted-foreground mt-1">
+              for{' '}
+              <a
+                href={credit.href}
+                class="font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1 py-1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {credit.label}
+                <svg
+                  class="h-3 w-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  />
+                </svg>
+              </a>
+            </p>
+          </div>
+        )
+      }
     </div>
 
     <!-- Copyright -->

@@ -1,12 +1,13 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '@/lib/blog';
 import type { GetStaticPaths, Page } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import { getReadingTime } from '@/lib/reading-time';
+import { site } from '@/config/site';
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const allPosts = await getCollection('blog');
+  const allPosts = await getPublishedPosts();
   const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
   return paginate(sortedPosts, { pageSize: 7 });
@@ -35,12 +36,10 @@ function formatDate(date: Date) {
   <div class="container max-w-4xl mx-auto py-20">
     <div class="mb-20">
       <h1 class="text-7xl font-bold tracking-tight mb-8">Blog</h1>
-      <p class="text-xl text-muted-foreground">
-        Where ancient monsters navigate modern bureaucracy, mythical creatures struggle with
-        technology, and the supernatural discovers that HOA violations are scarier than
-        dragonslayers.
-      </p>
+      {site.blogIntro && <p class="text-xl text-muted-foreground">{site.blogIntro}</p>}
     </div>
+
+    {page.data.length === 0 && <p class="text-muted-foreground">No posts yet.</p>}
 
     <div class="space-y-8">
       {

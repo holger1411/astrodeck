@@ -31,6 +31,8 @@ export interface SiteConfig {
     tagline?: string;
     groups: { title: string; links: NavItem[] }[];
     copyright: string;
+    /** Optional credit block, e.g. { label: 'example.com', href: 'https://example.com' } */
+    credit?: { label: string; href: string };
   };
   social: {
     label: string;
@@ -41,6 +43,8 @@ export interface SiteConfig {
   /** Path under /public */
   ogImage: string;
   features: { blog: boolean; rss: boolean; analytics: boolean };
+  /** Optional intro paragraph on the blog index page */
+  blogIntro?: string;
 }
 
 export const site: SiteConfig = {
@@ -89,11 +93,14 @@ export const site: SiteConfig = {
     ],
     // The footer renders "© <year> " in front of this text
     copyright: 'AstroDeck. MIT License. Open Source.',
+    credit: { label: 'templatedeck.com', href: 'https://templatedeck.com' },
   },
   social: [{ label: 'GitHub', href: 'https://github.com/holger1411/astrodeck', icon: 'github' }],
   contact: {},
   ogImage: '/cover.png',
   features: { blog: true, rss: true, analytics: true },
+  blogIntro:
+    'Where ancient monsters navigate modern bureaucracy, mythical creatures struggle with technology, and the supernatural discovers that HOA violations are scarier than dragonslayers.',
 };
 
 /** Full document title: applies the title template, or falls back to the site name. */

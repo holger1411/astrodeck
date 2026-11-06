@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '@/lib/blog';
 
 // Get all blog posts and sort by date (newest first)
-const allPosts = await getCollection('blog');
+const allPosts = await getPublishedPosts();
 const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 // Format date helper

@@ -13,9 +13,11 @@ import { site } from '@/config/site';
 interface Props {
   title: string;
   description?: string;
+  /** Optional quote shown in the branding panel. Nothing is rendered when omitted. */
+  testimonial?: { quote: string; author: string; role?: string };
 }
 
-const { title, description = `Sign in to your ${site.name} account` } = Astro.props;
+const { title, description = `Sign in to your ${site.name} account`, testimonial } = Astro.props;
 ---
 
 <!doctype html>
@@ -34,15 +36,19 @@ const { title, description = `Sign in to your ${site.name} account` } = Astro.pr
         <div class="relative z-20 flex items-center text-lg font-medium">
           <Logo />
         </div>
-        <div class="relative z-20 mt-auto">
-          <blockquote class="space-y-2">
-            <p class="text-lg">
-              "AstroDeck gave us the perfect foundation to build our SaaS. Clean code, great design,
-              and saved us months of development time."
-            </p>
-            <footer class="text-sm">Sofia Chen, CTO at TechStart</footer>
-          </blockquote>
-        </div>
+        {
+          testimonial && (
+            <div class="relative z-20 mt-auto">
+              <blockquote class="space-y-2">
+                <p class="text-lg">&ldquo;{testimonial.quote}&rdquo;</p>
+                <footer class="text-sm">
+                  {testimonial.author}
+                  {testimonial.role && `, ${testimonial.role}`}
+                </footer>
+              </blockquote>
+            </div>
+          )
+        }
       </div>
       <main id="main-content" class="lg:p-8">
         <div class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">

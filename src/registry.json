@@ -1003,7 +1003,7 @@
     {
       "name": "AuthLayout",
       "file": "src/layouts/AuthLayout.astro",
-      "description": "Split-screen authentication layout. On desktop (lg+): left panel is a dark branding panel (bg-zinc-900) with Logo and a hardcoded testimonial quote; right panel contains the slot with centered form content (max-w sm:w-[350px]). On mobile: only the right panel is visible. Always sets noindex=true on SEO.",
+      "description": "Split-screen authentication layout. On desktop (lg+): left panel is a dark branding panel (bg-zinc-900) with Logo and an optional testimonial quote (only rendered when the testimonial prop is passed); right panel contains the slot with centered form content (max-w sm:w-[350px]). On mobile: only the right panel is visible. Always sets noindex=true on SEO.",
       "useWhen": "Login, signup and password-reset pages: split layout without header or footer, always noindex.",
       "props": {
         "title": {
@@ -1016,13 +1016,18 @@
           "required": false,
           "default": "`Sign in to your ${site.name} account`",
           "description": "Meta description"
+        },
+        "testimonial": {
+          "type": "{ quote: string; author: string; role?: string }",
+          "required": false,
+          "description": "Optional quote shown in the branding panel. Nothing is rendered when omitted. Use only a real quote you have permission to use."
         }
       },
       "example": "---\nimport AuthLayout from \"@/layouts/AuthLayout.astro\";\n---\n\n<AuthLayout title=\"Sign in\">\n  <!-- login form -->\n</AuthLayout>",
       "screenshot": "/screenshots/login.png",
       "features": ["dark-mode", "view-transitions", "noindex"],
       "useCases": ["Login page", "Signup page", "Password reset page"],
-      "notes": "noindex is always true — cannot be overridden via props. The left-panel testimonial quote and attribution are hardcoded in the component. The Logo component is auto-included. Slot content is constrained to sm:w-[350px] for form layout."
+      "notes": "noindex is always true — cannot be overridden via props. The left-panel testimonial is optional and passed through the testimonial prop. The Logo component is auto-included. Slot content is constrained to sm:w-[350px] for form layout."
     },
     {
       "name": "ArticleLayout",

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /**
  * Docs lint: keeps Markdown docs truthful.
+ * Backticked paths covered by starter.manifest.json remove/removeUnlessBlog lists are optional:
+ * a cleaned starter has deleted them on purpose, so they are not reported as dead.
  * Rules: dead-path, version-drift, count-drift, site-url-drift.
  * Usage: node scripts/lint-docs.mjs [projectRoot]   (exit 1 on any finding)
  */
@@ -87,6 +89,12 @@ function readJson(path) {
   }
 }
 
+/** Repo paths the starter cleanup may delete (from starter.manifest.json). @returns {string[]} */
+function optionalPaths(root) {
+  const m = readJson(join(root, 'starter.manifest.json'));
+  return [...(m?.remove ?? []), ...(m?.removeUnlessBlog ?? [])].map((p) => p.replace(/\/+$/, ''));
+}
+
 function parseVer(range) {
   const m = String(range ?? '').match(/(\d+)(?:\.(\d+))?/);
   return m ? { major: +m[1], minor: m[2] === undefined ? 0 : +m[2] } : null;
@@ -104,6 +112,8 @@ export function lintDocs(root) {
   const astroV = parseVer(pkg?.dependencies?.astro ?? pkg?.devDependencies?.astro);
   const twV = parseVer(pkg?.devDependencies?.tailwindcss ?? pkg?.dependencies?.tailwindcss);
   const nodeV = parseVer(pkg?.engines?.node);
+  const optional = optionalPaths(root);
+  const isOptional = (p) => optional.some((o) => p === o || p.startsWith(`${o}/`));
   const counts = registry
     ? [
         [/\b(\d+)\s+sections\b/gi, 'sections', registry.sections?.length],
@@ -127,7 +137,7 @@ export function lintDocs(root) {
         p = p.replace(/[#:]\d*[\w-]*$/, '').replace(/[.,;]+$/, '');
         const first = p.split('/')[0];
         if (!p.includes('/') || !PATH_ROOTS.includes(first)) continue;
-        if (!existsSync(join(root, p)))
+        if (!existsSync(join(root, p)) && !isOptional(p))
           findings.push({
             file: rel,
             line: ln,
