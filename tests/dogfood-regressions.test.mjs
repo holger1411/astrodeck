@@ -47,6 +47,9 @@ test('Hero h1 and Features titles wrap long words on narrow phones', { skip: KIT
   const h1 = hero.match(/<h1\s+class="([^"]+)"/)?.[1] ?? '';
   assert.match(h1, /\bbreak-words\b/);
   assert.match(h1, /(^|\s)text-4xl(\s|$)/, 'Hero h1 starts at text-4xl below sm');
+  // Auto-hyphenation only on small screens: on desktop it split "Han-nover-List" in dogfood 2a.
+  if (/(^|\s)hyphens-auto(\s|$)/.test(h1))
+    assert.match(h1, /(^|\s)md:hyphens-manual(\s|$)/, 'Hero h1 must not auto-hyphenate from md up');
   const features = read('src/components/sections/Features.astro');
   const h3 = features.match(/<h3\s+class="([^"]+)"/)?.[1] ?? '';
   assert.match(h3, /\bbreak-words\b/);
