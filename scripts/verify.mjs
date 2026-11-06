@@ -28,7 +28,7 @@ function bin(pkg, name = pkg) {
 const viaNode = (pkg, ...args) => ({ cmd: node, args: [bin(pkg), ...args] });
 
 /**
- * @typedef {{ id: string; cmd: string; args: string[]; needsBuild?: boolean }} Step
+ * @typedef {{ id: string; cmd: string; args: string[]; needsBuild?: boolean; shell?: boolean }} Step
  * @type {Step[]}
  */
 export const STEPS = [
@@ -57,8 +57,7 @@ export const STEPS = [
   { id: 'lint-docs', cmd: node, args: ['scripts/lint-docs.mjs'] },
   { id: 'registry', cmd: node, args: ['scripts/check-registry.mjs'] },
   { id: 'test', cmd: node, args: ['--test', 'tests/**/*.test.mjs'] },
-  // `npm run build` keeps package.json the single source of truth for the build command.
-  { id: 'build', cmd: 'npm', args: ['run', 'build'], needsBuild: true },
+  buildStep(),
   { id: 'dist', cmd: node, args: ['scripts/check-dist.mjs'], needsBuild: true },
 ];
 
@@ -85,6 +84,23 @@ export function nodeSatisfies(version, range) {
   return true;
 }
 
+/**
+ * Build step: run npm's CLI through node when invoked via `npm run` (no shim, no shell).
+ * Otherwise fall back to the `npm` command, through a shell only on Windows (npm.cmd).
+ */
+function buildStep() {
+  const npmCli = process.env.npm_execpath;
+  if (npmCli && /\.c?js$/.test(npmCli))
+    return { id: 'build', cmd: node, args: [npmCli, 'run', 'build'], needsBuild: true };
+  return {
+    id: 'build',
+    cmd: 'npm',
+    args: ['run', 'build'],
+    needsBuild: true,
+    shell: process.platform === 'win32',
+  };
+}
+
 function runStep(step) {
   const start = Date.now();
   let output = '';
@@ -94,7 +110,7 @@ function runStep(step) {
       cwd: ROOT,
       encoding: 'utf8',
       maxBuffer: 64 * 1024 * 1024,
-      shell: process.platform === 'win32',
+      shell: step.shell ?? false,
     });
     output = `${r.stdout ?? ''}${r.stderr ?? ''}`;
     if (r.error) output += `\n${r.error.message}`;
@@ -105,34 +121,50 @@ function runStep(step) {
   return { id: step.id, ok, ms: Date.now() - start, output };
 }
 
+/**
+ * Run all steps (never stops at the first failure), print the table and failure tails.
+ * A step that needs the build is skipped when the `build` step failed.
+ * @param {Step[]} steps
+ * @param {(line: string) => void} [log]
+ * @returns {number} exit code
+ */
+export function run(steps, log = console.log) {
+  const results = [];
+  let buildFailed = false;
+  for (const step of steps) {
+    if (buildFailed && step.needsBuild && step.id !== 'build') {
+      results.push({ id: step.id, ok: true, skipped: true, ms: 0, output: '' });
+      continue;
+    }
+    log(`running ${step.id} ...`);
+    const r = runStep(step);
+    if (step.id === 'build' && !r.ok) buildFailed = true;
+    results.push(r);
+  }
+
+  const width = Math.max(...results.map((r) => r.id.length), 4);
+  const label = (r) => (r.skipped ? 'skipped (build failed)' : r.ok ? 'ok' : 'FAIL');
+  log(`\n${'step'.padEnd(width)} | result | duration`);
+  log(`${'-'.repeat(width)}-|--------|---------`);
+  for (const r of results)
+    log(`${r.id.padEnd(width)} | ${label(r).padEnd(6)} | ${(r.ms / 1000).toFixed(1)}s`);
+
+  const failed = results.filter((r) => !r.ok);
+  for (const r of failed) {
+    const lines = r.output.trimEnd().split('\n');
+    log(`\n--- ${r.id} (last ${Math.min(TAIL_LINES, lines.length)} lines) ---`);
+    log(lines.slice(-TAIL_LINES).join('\n'));
+  }
+  log(failed.length ? `\nVERIFY FAILED (${failed.length})` : '\nVERIFY PASSED');
+  return failed.length ? 1 : 0;
+}
+
 function main() {
   const argv = process.argv.slice(2);
   const engines = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')).engines?.node;
   if (engines && !nodeSatisfies(process.version, engines))
     console.warn(`WARNING: Node ${process.version} is below the required ${engines}.\n`);
-
-  const results = [];
-  for (const step of selectSteps(argv)) {
-    process.stdout.write(`running ${step.id} ...\n`);
-    results.push(runStep(step));
-  }
-
-  const width = Math.max(...results.map((r) => r.id.length), 4);
-  console.log(`\n${'step'.padEnd(width)} | result | duration`);
-  console.log(`${'-'.repeat(width)}-|--------|---------`);
-  for (const r of results)
-    console.log(
-      `${r.id.padEnd(width)} | ${(r.ok ? 'ok' : 'FAIL').padEnd(6)} | ${(r.ms / 1000).toFixed(1)}s`
-    );
-
-  const failed = results.filter((r) => !r.ok);
-  for (const r of failed) {
-    const lines = r.output.trimEnd().split('\n');
-    console.log(`\n--- ${r.id} (last ${Math.min(TAIL_LINES, lines.length)} lines) ---`);
-    console.log(lines.slice(-TAIL_LINES).join('\n'));
-  }
-  console.log(failed.length ? `\nVERIFY FAILED (${failed.length})` : '\nVERIFY PASSED');
-  process.exit(failed.length ? 1 : 0);
+  process.exit(run(selectSteps(argv)));
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
