@@ -98,7 +98,7 @@ automatically, open the file and follow it.
 | Colors, fonts, radius, logo, rebrand, DESIGN.md, design-system link | `astrodeck-theme` |
 | To remove the demo / start clean | `astrodeck-cleanup` |
 | Copy, headlines, alt text, meta descriptions | `.agents/skills/astrodeck-build-site/references/content-rules.md` |
-| An audit, "is it ready to ship?", a launch check | the vibe2prod skill (bundled in .agents/skills/vibe2prod/), plus `.agents/skills/astrodeck-build-site/references/quality-checklist.md` |
+| An audit, "is it ready to ship?", a launch check | the vibe2prod skill (bundled in `.agents/skills/vibe2prod/`), plus `.agents/skills/astrodeck-build-site/references/quality-checklist.md` |
 | A review of a change (Claude Code, optional) | subagent `astrodeck-reviewer` |
 
 ## Astro 7 / Tailwind 4 gotchas

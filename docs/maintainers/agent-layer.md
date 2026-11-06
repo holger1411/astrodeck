@@ -14,7 +14,7 @@ drift. Users never need this file; it is removed by `npm run starter:clean`.
 | Tool pointers | `CLAUDE.md`, `.github/copilot-instructions.md`, `.gemini/settings.json` | Per tool; no duplicated rules |
 | Claude extras | `.claude/agents/astrodeck-reviewer.md`, `.claude/hooks/guard-conventions.mjs`, `.claude/settings.json` | Claude Code only, never required by the workflow |
 | Mirror | `.claude/skills/**` | Generated copy of `.agents/skills/**` for Claude Code |
-| Vendored | the vibe2prod skill in .agents/skills/vibe2prod/ | Synced from upstream, never edited here |
+| Vendored | the vibe2prod skill in `.agents/skills/vibe2prod/` | Synced from upstream, never edited here |
 
 Critical rules belong in `AGENTS.md`: skills are not always auto-invoked, so the index must name
 the skill for each task and carry the golden rules.
@@ -55,3 +55,17 @@ extraction on Windows).
 `npm run starter:clean` replaces `PROJECT.md`, `src/config/site.ts`, `src/config/site-url.mjs`,
 `src/pages/index.astro`, `public/robots.txt` and `public/llms.txt`. The build-site workflow
 therefore removes the demo right after intake (step 2), before the brief and config are written.
+
+## Updating the vendored vibe2prod skill
+
+`.agents/skills/vibe2prod/` is a copy of the upstream vibe2prod skill (MIT, by the same owner,
+https://github.com/holger1411/vibe2prod). Never edit it by hand.
+
+- Update (maintainers only, needs network and git): `npm run sync:vibe2prod -- --tag vX.Y.Z`.
+  Without `--tag` the highest semver git tag is used. The script copies `skills/vibe2prod/`
+  with symlinks resolved, adds the upstream `LICENSE`, writes `VERSION` (tag, commit, date) and
+  runs `npm run sync:agents`.
+- The vendored folder is excluded from Prettier, ESLint, TypeScript and the docs lint.
+- License: the upstream `LICENSE` ships inside the folder and must stay there.
+- Audit runtime: `npm run setup:audit -- --check` reports what is missing (exit 2), and
+  `npm run setup:audit` installs only the missing pieces.

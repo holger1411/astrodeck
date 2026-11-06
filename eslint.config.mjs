@@ -10,7 +10,15 @@ export default defineConfig(
   ...eslintPluginAstro.configs.recommended,
   {
     // brief/ holds user input files (any format); never lint them
-    ignores: ['dist/**', 'node_modules/**', '.astro/**', 'tests/fixtures/**', 'brief/**'],
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      '.astro/**',
+      'tests/fixtures/**',
+      'brief/**',
+      '.agents/skills/vibe2prod/**',
+      '.claude/skills/vibe2prod/**',
+    ],
   },
   {
     // Node.js tooling scripts (hooks, KPI checks) run outside the browser

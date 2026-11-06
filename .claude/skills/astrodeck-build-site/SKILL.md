@@ -124,7 +124,7 @@ registry section fits.
   (demo kept). It must end with `VERIFY PASSED`. Fix causes; never silence a rule, delete a
   test or edit generated output.
 - `grep -rn "TODO(brief)" src` returns nothing.
-- Run the vibe2prod skill, bundled in .agents/skills/vibe2prod/, in local project mode on this
+- Run the vibe2prod skill, bundled in `.agents/skills/vibe2prod/`, in local project mode on this
   project. Target verdict **READY**. If its runtime (Playwright, Lighthouse, axe) is missing,
   run `npm run setup:audit`; if it still cannot run, report exactly which checks were skipped.
   No verdict without tools.

@@ -5,3 +5,5 @@ node_modules
 package-lock.json
 tests/fixtures
 brief
+.agents/skills/vibe2prod
+.claude/skills/vibe2prod
