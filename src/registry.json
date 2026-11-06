@@ -71,12 +71,12 @@
           "description": "Secondary outlined button"
         },
         "badge": {
-          "type": "string",
+          "type": "{ label: string; href?: string }",
           "required": false,
-          "description": "Optional pill badge text shown above the headline, linking to /changelog"
+          "description": "Pill above the headline. Rendered as a link when href is set. Omit to hide it. All text comes from the prop; nothing is hardcoded."
         }
       },
-      "example": "---\nimport HeroGradient from \"@/components/sections/HeroGradient.astro\";\n---\n\n<HeroGradient\n  title=\"Ship faster, look better\"\n  subtitle=\"Pre-built Astro components for ambitious teams.\"\n  badge=\"New release\"\n  primaryCta={{ label: \"Browse components\", href: \"/sections\" }}\n  secondaryCta={{ label: \"Read the docs\", href: \"/docs\" }}\n/>",
+      "example": "---\nimport HeroGradient from \"@/components/sections/HeroGradient.astro\";\n---\n\n<HeroGradient\n  title=\"Ship faster, look better\"\n  subtitle=\"Pre-built Astro components for ambitious teams.\"\n  badge={{ label: \"New release\", href: \"/changelog\" }}\n  primaryCta={{ label: \"Browse components\", href: \"/sections\" }}\n  secondaryCta={{ label: \"Read the docs\", href: \"/docs\" }}\n/>",
       "features": ["responsive", "dark-mode", "animated-background", "reduced-motion-safe"],
       "category": "hero",
       "notes": "Orb colors and opacity are defined via CSS custom properties in the component <style> block. Respects prefers-reduced-motion (animation disabled). Use as a premium alternative to Hero on landing pages."
@@ -299,8 +299,8 @@
     {
       "name": "IntegrationGrid",
       "file": "src/components/sections/IntegrationGrid.astro",
-      "description": "Two-column section: pill, heading, optional rich-text slot and optional CTA on the left; bordered 2-column grid of linked items (tools, integrations, partners) on the right with an optional 'footer' slot below the grid.",
-      "useWhen": "Listing tools, integrations or partners as a grid of linked cards next to a short intro text.",
+      "description": "Two-column section: pill, heading, optional rich-text slot and optional CTA on the left; bordered 2-column grid of items (tools, integrations, partners; linked when href is set) on the right with an optional 'footer' slot below the grid.",
+      "useWhen": "Listing tools, integrations or partners as a grid of cards (linked or plain) next to a short intro text.",
       "props": {
         "title": {
           "type": "string",
@@ -315,7 +315,7 @@
         "items": {
           "type": "Item[]",
           "required": true,
-          "description": "Grid cards. iconSrc (image URL, single-colour SVG, inverted in dark mode) wins over icon (name from src/lib/icons.ts). Links open in a new tab."
+          "description": "Grid cards. href is optional: with it the card is a link (http(s) URLs open in a new tab), without it a plain card. iconSrc (image URL, single-colour SVG, inverted in dark mode) wins over icon (name from src/lib/icons.ts)."
         },
         "cta": {
           "type": "{ href: string; label: string }",

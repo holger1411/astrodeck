@@ -3,8 +3,9 @@
  * IntegrationGrid Section Component
  *
  * Two-column section: heading, rich-text slot and optional CTA on the left,
- * a bordered grid of linked items (tools, integrations, partners) on the right.
- * Items show an image (`iconSrc`) or a built-in icon (`icon`).
+ * a bordered grid of items (tools, integrations, partners) on the right.
+ * Items show an image (`iconSrc`) or a built-in icon (`icon`); items with `href` are links,
+ * items without it render as plain cards.
  *
  * @example
  * ```astro
@@ -29,7 +30,8 @@ import { icons, type IconName } from '@/lib/icons';
 
 interface Item {
   name: string;
-  href: string;
+  /** Optional link; without it the card is not clickable */
+  href?: string;
   subtitle?: string;
   icon?: IconName;
   /** Image URL (single-colour SVG recommended); wins over `icon` */
@@ -85,48 +87,58 @@ const hasFooter = Astro.slots.has('footer');
       <div class="space-y-4">
         <div class="grid grid-cols-2 gap-px bg-border overflow-hidden rounded-xl border shadow-lg">
           {
-            items.map((item) => (
-              <a
-                href={item.href}
-                {...(isExternal(item.href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                class="group relative overflow-hidden bg-card px-6 py-6 hover:bg-muted/50 transition-colors"
-              >
-                {item.iconSrc ? (
-                  <div class="mb-3 h-8 w-8">
-                    <img
-                      src={item.iconSrc}
-                      alt=""
-                      width="32"
-                      height="32"
-                      class="h-8 w-8 dark:invert"
-                      loading="lazy"
-                    />
-                  </div>
-                ) : (
-                  item.icon && (
+            items.map((item) => {
+              const Card = item.href ? 'a' : 'div';
+              return (
+                <Card
+                  {...(item.href
+                    ? {
+                        href: item.href,
+                        ...(isExternal(item.href)
+                          ? { target: '_blank', rel: 'noopener noreferrer' }
+                          : {}),
+                        class:
+                          'group relative overflow-hidden bg-card px-6 py-6 hover:bg-muted/50 transition-colors',
+                      }
+                    : { class: 'relative overflow-hidden bg-card px-6 py-6' })}
+                >
+                  {item.iconSrc ? (
                     <div class="mb-3 h-8 w-8">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="h-8 w-8"
-                        aria-hidden="true"
-                      >
-                        <path d={icons[item.icon]} />
-                      </svg>
+                      <img
+                        src={item.iconSrc}
+                        alt=""
+                        width="32"
+                        height="32"
+                        class="h-8 w-8 dark:invert"
+                        loading="lazy"
+                      />
                     </div>
-                  )
-                )}
-                <h3 class="text-xl font-semibold mb-1 group-hover:text-primary transition-colors">
-                  {item.name}
-                </h3>
-                {item.subtitle && <p class="text-sm text-muted-foreground">{item.subtitle}</p>}
-              </a>
-            ))
+                  ) : (
+                    item.icon && (
+                      <div class="mb-3 h-8 w-8">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="h-8 w-8"
+                          aria-hidden="true"
+                        >
+                          <path d={icons[item.icon]} />
+                        </svg>
+                      </div>
+                    )
+                  )}
+                  <h3 class="text-xl font-semibold mb-1 group-hover:text-primary transition-colors">
+                    {item.name}
+                  </h3>
+                  {item.subtitle && <p class="text-sm text-muted-foreground">{item.subtitle}</p>}
+                </Card>
+              );
+            })
           }
         </div>
         {
