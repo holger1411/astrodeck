@@ -31,3 +31,6 @@ npm-debug.log*
 
 # Claude Code local settings (per-developer, not shipped)
 .claude/settings.local.json
+
+# vibe2prod audit runs (reports, Lighthouse/axe JSON, screenshots)
+.vibe2prod/

@@ -9,7 +9,7 @@ export default defineConfig(
   ...tseslint.configs.recommended,
   ...eslintPluginAstro.configs.recommended,
   {
-    // brief/ holds user input files (any format); never lint them
+    // brief/ holds user input files (any format); .vibe2prod/ holds audit output. Never lint them.
     ignores: [
       'dist/**',
       'node_modules/**',
@@ -19,6 +19,7 @@ export default defineConfig(
       'evals/cases/*/brief/**',
       '.agents/skills/vibe2prod/**',
       '.claude/skills/vibe2prod/**',
+      '.vibe2prod/**',
     ],
   },
   {
