@@ -62,13 +62,18 @@ export function contrast(a, b) {
 }
 
 /**
- * Near-white or near-black text color, whichever contrasts more with `bg`.
- * Callers must still check the result against 4.5 (mid-tone backgrounds can fail both).
+ * Near-white or near-black text color for `bg`; falls back to pure white / black
+ * only when neither near-tone reaches 4.5. Returns the best candidate even if none passes.
  * @param {string} bg
  * @returns {string} oklch() string
  */
 export function pickForeground(bg) {
-  return contrast(NEAR_WHITE, bg) >= contrast(NEAR_BLACK, bg) ? NEAR_WHITE : NEAR_BLACK;
+  const best = (candidates) =>
+    candidates.map((c) => [c, contrast(c, bg)]).sort((x, y) => y[1] - x[1])[0];
+  const near = best([NEAR_WHITE, NEAR_BLACK]);
+  if (near[1] >= 4.5) return near[0];
+  const pure = best(['oklch(100% 0 0)', 'oklch(0% 0 0)']);
+  return pure[1] > near[1] ? pure[0] : near[0];
 }
 
 /** Hex string for an oklch() / any parseable color (for CLI messages). */

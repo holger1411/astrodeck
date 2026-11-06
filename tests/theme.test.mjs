@@ -9,6 +9,7 @@ import {
   applyTheme,
   readTokens,
   parseDesignMd,
+  checkPairs,
   main,
 } from '../scripts/theme.mjs';
 import { parseColor, pickForeground, contrast } from '../scripts/lib/color.mjs';
@@ -28,6 +29,21 @@ test('buildTheme({ primary: #FFD600 }) passes every pair in light and dark', () 
   const { report } = buildTheme({ primary: '#FFD600' });
   assert.equal(report.length, 10);
   assert.ok(allPass(report));
+});
+
+test('mid-tone brands (#e11d48, #747474) pass via pure white/black fallback', () => {
+  for (const primary of ['#e11d48', '#747474']) {
+    const { report } = buildTheme({ primary });
+    assert.ok(allPass(report), primary);
+  }
+});
+
+test('checkPairs flags a failing pair with a suggested adjustment', () => {
+  const t = buildTheme({ primary: '#0066ff' });
+  const light = { ...t.light, 'primary-foreground': 'oklch(60% 0 0)', primary: 'oklch(55% 0 0)' };
+  const row = checkPairs({ light, dark: t.dark }).find((r) => !r.pass);
+  assert.equal(row.fg, 'primary-foreground');
+  assert.match(row.suggestion, /^#[0-9a-f]{6}$/);
 });
 
 test('every neutral family with a brand and accent passes', () => {
@@ -136,7 +152,7 @@ const quiet = (fn) => {
   }
 };
 
-test('CLI: --dry-run writes nothing, a real run writes, a failing pair exits 1 without writing', () => {
+test('CLI: --dry-run writes nothing, a real run writes, a mid-tone brand still writes', () => {
   const root = fixtureRoot();
   try {
     const file = join(root, 'src/styles/globals.css');
@@ -151,12 +167,11 @@ test('CLI: --dry-run writes nothing, a real run writes, a failing pair exits 1 w
     );
     const written = readFileSync(file, 'utf8');
     assert.notEqual(written, CSS);
-    // A mid-tone grey (luminance ~0.175) fails with both near-white and near-black text.
+    // Mid-tone brands now pass via the pure white/black fallback.
     assert.equal(
       quiet(() => main(['--primary', '#747474'], root)),
-      1
+      0
     );
-    assert.equal(readFileSync(file, 'utf8'), written);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
