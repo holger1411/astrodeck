@@ -37,7 +37,7 @@ The report has six top-level sections in this order. **2Prod is the headline** �
 Mode: <remote | local-project> | Date: <today's date>
 
 ### 2Prod: <color emoji> <band label> — <pct>% (<passed>/<denominator> gates passed)
-# denominator = 27 (remote) or 24 (local-project, Sec1–Sec3 deferred), minus any inconclusive gates
+# denominator = 27 (remote) or 23 (local-project, Sec1–Sec3 and R3 deferred), minus any inconclusive gates
 Failed gates: <comma-separated list of failed gate IDs>
 
 # If any veto failed, replace the line above with:

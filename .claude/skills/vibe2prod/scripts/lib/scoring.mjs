@@ -15,8 +15,8 @@ export const GATES = [
   'AI1', 'AI2', 'AI3',
 ];
 
-// Hosting-layer headers a localhost prod server cannot serve.
-export const LOCAL_DEFERRED = ['Sec1', 'Sec2', 'Sec3'];
+// Hosting-layer headers a localhost prod server cannot serve (security headers, Content-Encoding).
+export const LOCAL_DEFERRED = ['Sec1', 'Sec2', 'Sec3', 'R3'];
 
 export const BANDS = [
   { min: 95, band: 'READY', color: '🟢' },
@@ -162,7 +162,7 @@ export function computeTwoProd(m) {
     notes.push(`capped at NOT YET: veto ${vetosInconclusive.join(', ')} inconclusive — verdict provisional`);
   }
   if (inconclusive.length) notes.push(`audit confidence: reduced (inconclusive: ${inconclusive.join(', ')})`);
-  if (local) notes.push('Local 2Prod (code-only): verify Sec1–Sec3 + HTTPS against the deployed URL before relying on a READY verdict.');
+  if (local) notes.push('Local 2Prod (code-only): verify Sec1–Sec3, R3 (compression) + HTTPS against the deployed URL before relying on a READY verdict.');
 
   return {
     band, color, pct, passed, denominator, failed, deferred, inconclusive,

@@ -281,7 +281,7 @@ Computation has two stages: 5 veto gates first, then 27 regular gates. Cat 10 (S
 
 **Static HTML rule:** S6 byte count and H1 W3C validation operate on the **raw HTML response body** of the final response — not the post-hydration DOM. CSR-only sites get reduced coverage on these gates; that's a known limitation, not a configurable setting.
 
-**Local Project Mode gate handling:** three regular gates read hosting-layer response headers that a plain localhost prod server cannot serve — Sec1 (HSTS), Sec2 (`X-Content-Type-Options`), Sec3 (Referrer-Policy). In Local Project Mode these three are marked **DEFERRED** and excluded from **both** numerator and denominator, so the local denominator is **24, not 27**. (V2 HTTPS is already auto-passed on localhost per its own bypass.) This is what makes a 🟢 READY verdict *reachable* locally — otherwise a perfectly-built project would cap at ~89 % purely because security headers belong to a host it hasn't been deployed to yet. The local report labels the verdict **"Local 2Prod (code-only)"** and always lists the deferred gates with the note: *"Verify Sec1–Sec3 + HTTPS against the deployed URL before relying on a READY verdict."* Remote-URL mode evaluates all 27 gates with no deferral — that is the canonical, full 2Prod.
+**Local Project Mode gate handling:** four regular gates read hosting-layer response headers that a plain localhost prod server cannot serve — Sec1 (HSTS), Sec2 (`X-Content-Type-Options`), Sec3 (Referrer-Policy), R3 (`Content-Encoding`: `astro preview`, `vite preview` and similar never compress). In Local Project Mode these four are marked **DEFERRED** and excluded from **both** numerator and denominator, so the local denominator is **23, not 27**. (V2 HTTPS is already auto-passed on localhost per its own bypass.) This is what makes a 🟢 READY verdict *reachable* locally — otherwise a perfectly-built project would cap at ~89 % purely because security headers belong to a host it hasn't been deployed to yet. The local report labels the verdict **"Local 2Prod (code-only)"** and always lists the deferred gates with the note: *"Verify Sec1–Sec3, R3 (compression) + HTTPS against the deployed URL before relying on a READY verdict."* Report R3 like the Sec gates: "deferred — checked on the live URL". Remote-URL mode evaluates all 27 gates with no deferral — that is the canonical, full 2Prod.
 
 **Inconclusive-measurement rule (tooling failure ≠ site failure):** distinguish two reasons a gate can't pass. (a) The site genuinely lacks the thing → the gate **fails** normally. (b) The *auditing tool or external service* is unreachable (W3C validator down, registry 5xx, Playwright crash) → mark the gate **INCONCLUSIVE**, exclude it from both numerator and denominator for that run, and add an **"audit confidence: reduced"** banner listing which gates were inconclusive. Never silently convert a tooling outage into a site defect — that produces a misleadingly low 2Prod the user can't act on. An inconclusive run is not reproducible by definition; note that in the report.
 
@@ -299,7 +299,7 @@ If any veto fails, 2Prod = 🔴 BLOCKED. Display the failed veto ID(s) inline. D
 
 #### Regular gates (each binary, equal weight)
 
-27 gates. One gate = `1/27 = 3.704 %`. (In Local Project Mode, Sec1–Sec3 are deferred → 24 gates, one gate = `1/24 = 4.167 %`.)
+27 gates. One gate = `1/27 = 3.704 %`. (In Local Project Mode, Sec1–Sec3 and R3 are deferred → 23 gates, one gate = `1/23 = 4.348 %`.)
 
 | ID | Gate | Pass condition |
 |---|---|---|
@@ -328,7 +328,7 @@ If any veto fails, 2Prod = 🔴 BLOCKED. Display the failed veto ID(s) inline. D
 | **Robustness** |
 | R1 | No console errors | Playwright `page.on('console')` captures 0 events with `type === 'error'` during page load |
 | R2 | 404 returns 404 | `GET <url>/this-page-does-not-exist-404-test` returns HTTP status 404 |
-| R3 | Compression active | `content-encoding` header on the final HTML response is `br` or `gzip` |
+| R3 | Compression active | `content-encoding` header on the final HTML response is `br` or `gzip` (deferred in Local Project Mode) |
 | R4 | No broken sub-resources | Playwright `page.on('response')` captures 0 sub-resource responses (images, scripts, stylesheets, fonts, XHR/fetch) with status ≥ 400. Catches 404s on resources that don't throw `console.error`. |
 | **Assets** |
 | As1 | Favicon | `link[rel=icon]` is present in HTML, OR `<url>/favicon.ico` returns HTTP 200 |
@@ -336,7 +336,7 @@ If any veto fails, 2Prod = 🔴 BLOCKED. Display the failed veto ID(s) inline. D
 | Resp1 | No horizontal overflow | `documentElement.scrollWidth > clientWidth` is false at all five canonical breakpoints (xs, sm, md, lg, xl — the xxl report-only breakpoint is not gate-evaluated) |
 | Resp2 | Tap-targets ≥ 24×24 px on mobile | at xs (320 px) AND sm (375 px) breakpoints, the count of **eligible** `button, a, input, select, [role=button]` (after the Cat 9 exclusions: visually-hidden, WCAG 2.5.8 Inline, WCAG 2.5.8 Spacing) with bounding-box width < 24 OR height < 24 is 0 |
 | **AI-slop** |
-| AI1 | No placeholder text | Cat 8.1 placeholder-content scan returns 0 matches in rendered text |
+| AI1 | No placeholder text | Cat 8.1 placeholder-content scan returns 0 matches in rendered text (descriptive mentions of the word in ordinary prose are not matches) |
 | AI2 | No placeholder URLs | Cat 8.2 placeholder-URL scan returns 0 matches in `href`/`src` values |
 | AI3 | No placeholder images | Cat 8.3 placeholder-image scan (placeholder services, dummy `src` paths, builder-bundled placeholder assets) returns 0 matches |
 
@@ -345,7 +345,7 @@ If any veto fails, 2Prod = 🔴 BLOCKED. Display the failed veto ID(s) inline. D
 #### Computation steps
 
 1. Evaluate the five vetos. If any fail → `2Prod = { band: "BLOCKED", color: "🔴", failed_vetos: [...] }`. Stop, no percentage.
-2. All vetos pass → evaluate the regular gates. Each gate is strictly binary per the table. `denominator = 27` in remote mode, `24` in Local Project Mode (Sec1–Sec3 deferred). Subtract any **INCONCLUSIVE** gates (tooling outage) from both `passed_count` and `denominator`.
+2. All vetos pass → evaluate the regular gates. Each gate is strictly binary per the table. `denominator = 27` in remote mode, `23` in Local Project Mode (Sec1–Sec3 and R3 deferred). Subtract any **INCONCLUSIVE** gates (tooling outage) from both `passed_count` and `denominator`.
 3. Compute `pct = passed_count / denominator × 100`, rounded to one decimal.
 4. Map `pct` to a band:
 
@@ -381,7 +381,7 @@ Do not do this arithmetic by hand. Write every gate result and every scored chec
 }
 ```
 
-- Gates and vetos: `"pass"`, `"fail"`, or `"inconclusive"`. In Local Project Mode, Sec1–Sec3 may be omitted — they are deferred whatever they say.
+- Gates and vetos: `"pass"`, `"fail"`, or `"inconclusive"`. In Local Project Mode, Sec1–Sec3 and R3 may be omitted — they are deferred whatever they say.
 - Checks: `null` when the check passes or does not apply, otherwise the severity of its finding, or a list of severities when it has several (`["HIGH", "LOW"]`). Every key of the category must be present.
 - `stack`: `null` in remote-URL mode; in Local Project Mode the three fixed keys plus one `pkg:<name>` per detected watch-list package.
 - Lighthouse scores are the 0–1 values from the JSON (`categories.<id>.score`), the performance one being the median of the three runs.

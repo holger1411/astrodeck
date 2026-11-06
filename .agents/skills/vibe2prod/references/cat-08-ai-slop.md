@@ -11,12 +11,15 @@ Extract `textContent` from `page.html` (strip tags), the full HTML, and — for 
 Flag occurrences (case-insensitive, word-boundary) of:
 - `Lorem ipsum`, `dolor sit amet`, `consectetur adipiscing`
 - `Your text here`, `Your heading here`, `Your title here`
-- `Placeholder`, `[placeholder]`, `[...]`, `<placeholder>`
+- `[placeholder]`, `<placeholder>`, `[...]`, and template phrases such as `placeholder text`, `placeholder here`, `placeholder image`, `insert … here`
+- The bare word `Placeholder` only when it is an element's **entire** visible text (a heading, button, or card title that reads just "Placeholder")
 - `TODO`, `FIXME`, `XXX:` (visible in rendered text, not in code comments)
 - `Coming soon`, `Content coming soon`, `Under construction`
 - `Example Company`, `Company Name`, `Your Company`, `Acme Corp` (unless the site is actually for Acme)
 - Triple-dot hanging sentences in headlines (`"We believe in…"` with no follow-up)
 - Repeated identical paragraphs under different headings
+
+**Not a match:** the word *placeholder* used descriptively inside an ordinary sentence. A page about quality checks may say "It tests speed, accessibility, SEO and leftover placeholder content" — that sentence *talks about* placeholders, it is not leftover placeholder content. Judge the element, not the token: if removing the sentence would not leave a visibly unfinished page, it is not a match. Real artifacts (Lorem ipsum, "Your headline here", "[Company Name]", a block that is only "Coming soon") still match.
 
 Severity: **HIGH** if in a headline, hero, or primary CTA. **MEDIUM** elsewhere.
 

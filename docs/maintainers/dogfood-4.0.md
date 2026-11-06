@@ -192,8 +192,10 @@ agent run was made for them.
 ## vibe2prod findings not fixed here
 
 The vendored skill is not edited. Per the owner decision in the 4.0 design, genuine false
-positives are fixed upstream in `holger1411/vibe2prod` and synced with `npm run sync:vibe2prod`;
-these two are not yet filed there.
+positives are fixed upstream in `holger1411/vibe2prod` and synced with `npm run sync:vibe2prod`.
+Both are fixed in vibe2prod v0.9.2 (upstream commit `4ba4484`), which the kit now bundles: R3 is
+deferred in Local Project Mode (local denominator 23), and Cat 8.1 no longer matches the word
+"placeholder" used descriptively in a sentence. The runs above used v0.9.1.
 
 - **R3 (compression) in Local Project Mode.** SKILL.md prescribes `npm run build && npm run
   preview` (`astro preview`) for Astro projects, and `astro preview` never sends
